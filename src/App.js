@@ -7,12 +7,14 @@ import ReactGA from 'react-ga';
 
 // Layouts
 import LayoutDefault from './layouts/LayoutDefault';
+import WhiteLayout from './layouts/WhiteLayout';
 
 // Views 
 import Home from './views/Home';
 import Welcome from './views/Welcome';
 import User from './views/User';
 import Room from './views/Room';
+import RoomView from './views/Room/RoomView';
 
 // Initialize Google Analytics
 ReactGA.initialize(process.env.REACT_APP_GA_CODE);
@@ -42,6 +44,7 @@ const App = () => {
           <AppRoute exact path="/" component={Home} layout={LayoutDefault}  />
           <AppRoute exact path="/welcome" component={Welcome} layout={LayoutDefault} />
           <AppRoute exact path="/user" component={User} layout={LayoutDefault} />
+          <AppRoute exact path="/room" component={RoomView} layout={WhiteLayout}/>
           <AppRoute path="/:roomId" component={Room} layout={LayoutDefault}/>
         </Switch>
       )} />

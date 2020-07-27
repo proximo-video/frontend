@@ -3,6 +3,7 @@ function Socket(action, userId, roomId, connections, updateConnection, addStream
     let socket;
     const connectToWebSocket = () => {
         const webSocketConnection = "wss://proximo-video.herokuapp.com/ws";
+        // const webSocketConnection = "ws://localhost:8080/ws";
         if (!socket)
             socket = new WebSocket(webSocketConnection);
         socket.onopen = function (event) {
@@ -116,14 +117,16 @@ function Socket(action, userId, roomId, connections, updateConnection, addStream
                     break;
                 case "disconnected":
                     console.log("Web RTC Peer Connection Disconnected. Please reload the page to reconnect.");
-                    deleteStream(toUser);
+                    // deleteStream(toUser);
+                    connection.restartIce();
                     break;
                 case "failed":
                     console.log("Web RTC Peer Connection Failed. Please reload the page to reconnect.");
+                    deleteStream(toUser);
                     console.log(event);
                     break;
                 case "closed":
-                    console.log("Web RTC Peer Connection Failed. Please reload the page to reconnect.");
+                    console.log("Web RTC Peer Connection Closed. Please reload the page to reconnect.");
                     deleteStream(toUser);
                     break;
                 default:
