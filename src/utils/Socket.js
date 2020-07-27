@@ -206,7 +206,7 @@ function Socket(action, userId, roomId, connections, updateConnection, addStream
         if (!connections.has(toUser))
             createRTCPeerConnection(toUser, socket);
         // Avoid accepting the Offer if this is a message created by the current peer
-        if (userId != id) {
+        if (userId !== id) {
             console.log("Recieved The Offer.");
             console.log(toUser, userId, connections)
             connections.get(toUser).setRemoteDescription(new RTCSessionDescription(offer));
@@ -221,7 +221,7 @@ function Socket(action, userId, roomId, connections, updateConnection, addStream
     */
     const handleAnswer = (answer, id, toUser) => {
         // Avoid accepting the Answer if this is a message created by the current peer
-        if (userId != id) {
+        if (userId !== id) {
             console.log("Recieved The Answer");
             connections.get(toUser).setRemoteDescription(new RTCSessionDescription(answer));
         }

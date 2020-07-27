@@ -6,14 +6,15 @@ function User(props) {
     const [id, setID] = useState(0);
     const [roomIdInput, setRoomIdInput] = useState("");
     const [name, setName] = useState("");
-    const [rooms, setRooms] = useState(new Array())
+    const [rooms, setRooms] = useState([]);
     const [isAuth, setAuth] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
             let response = await fetch('https://proximo-video.herokuapp.com/getUser', { credentials: 'include' });
             if (response.ok) {
                 let data = await response.json()
-                console.log(data)
+                console.log(data);
+                console.log("id",id);
                 setID(data.id);
                 setName(data.name);
                 if (data.rooms)
@@ -25,6 +26,7 @@ function User(props) {
             }
         }
         fetchData();
+         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const roomInputHandle = (event) => {

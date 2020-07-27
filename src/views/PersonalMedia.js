@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import GetLocalWebCamFeed from '../utils/GetLocalWebCamFeed';
 
 const PersonalMedia = React.forwardRef((props, ref) => {
@@ -24,9 +24,12 @@ const PersonalMedia = React.forwardRef((props, ref) => {
         console.log("PersonalMedia mounted")
         return () => {
             console.log("PersonalMedia Unmounted")
+             // eslint-disable-next-line
             ref.current.srcObject.getVideoTracks()[0].stop();
+             // eslint-disable-next-line
             ref.current.srcObject.getAudioTracks()[0].stop();
           }
+          // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     const toggleVideo = () => {

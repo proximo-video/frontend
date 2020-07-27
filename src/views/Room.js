@@ -4,7 +4,7 @@ import Socket from '../utils/Socket';
 import { Link } from 'react-router-dom'
 
 function Room(props) {
-    let videoRefArray = new Array();
+    let videoRefArray = [];
     const localStream = useRef()
     const [iceServer, setIceServer] = useState()
     const [mediaSuccess, setMediaSuccess] = useState(false);
