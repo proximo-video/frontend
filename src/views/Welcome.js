@@ -26,7 +26,7 @@ function Welcome() {
         fetchData();
     }, []);
 
-    return (sucess?<Redirect to={{pathname:"/user"}}></Redirect>:<div></div>)
+    return (sucess?<Redirect to={{pathname:"/user"}}></Redirect>:<></>)
 
 }
 

@@ -20,8 +20,10 @@ const PersonalMedia = React.forwardRef((props, ref) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVideo]);
 
-    useState(()=>{
+    useEffect(()=>{
+        console.log("PersonalMedia mounted")
         return () => {
+            console.log("PersonalMedia Unmounted")
             ref.current.srcObject.getVideoTracks()[0].stop();
             ref.current.srcObject.getAudioTracks()[0].stop();
           }
