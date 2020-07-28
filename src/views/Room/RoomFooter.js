@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import {FiVideoOff, FiVideo, FiMic, FiMicOff} from "react-icons/fi";
+import React from 'react';
 import { IconContext } from "react-icons";
+import {buttonsData} from './buttonsData';
 
 function ControlButton(props) {
     return (
         <button className={`cntrlButton`} onClick={props.onClick}>
             <figure className="cntrlButtonFigure">
-                <IconContext.Provider value={{ color: "white"}}>
-                    <div className={"cntrlButtonWrap " + (props.isOff ? "isOff" : "")} >
+                <IconContext.Provider value={{ color: props.iconColor}}>
+                    <div className={"cntrlButtonWrap " + props.className} >
                          {props.icon}
                     </div>
                 </IconContext.Provider>
@@ -17,48 +17,26 @@ function ControlButton(props) {
     );
 }
 
-function RoomFooter() {
-    const [camButton, setCamButton] = useState(true);
-    const [micButton, setMicButton] = useState(false);
-    
-    function handleCamButtonClick() {
-        setCamButton(!camButton);
-    }
-    
-    function handleMicButtonClick() {
-        setMicButton(!micButton);
-    }
-
+function RoomFooter(props) {
+    console.log(props.buttons);
+    const buttons = props.buttons.map((isOff, i) =>
+        <ControlButton
+            key={i}
+            className={(isOff ? buttonsData[i].offClass : buttonsData[i].onClass)}
+            legend={(isOff ? buttonsData[i].offLegend : buttonsData[i].onLegend)}
+            icon={(isOff ? buttonsData[i].offIcon : buttonsData[i].onIcon)}
+            iconColor={(isOff ? buttonsData[i].offIconColor : buttonsData[i].onIconColor)}
+            onClick={() => props.onClick(i)}
+            isOff={isOff}
+        />
+    );
     return (
         <div className="roomFooter">
             <div className="videoControlsContainer">
                 <div className="videoControls">
                     <div className="buttonCenterWrapper">
                         <div className="buttonWrapper"> 
-                            <ControlButton 
-                                className="toggle-video" 
-                                legend="Cam" isOff={camButton} 
-                                icon={(camButton ? <FiVideoOff /> : <FiVideo />)}
-                                onClick={handleCamButtonClick}
-                            />
-                            <ControlButton 
-                                className="toggle-mic" 
-                                legend="Mic" isOff={micButton} 
-                                icon={(micButton ? <FiMicOff /> : <FiMic />)}
-                                onClick={handleMicButtonClick}
-                            />
-                            <ControlButton 
-                                className="toggle-video" 
-                                legend="Cam" isOff={camButton} 
-                                icon={(camButton ? <FiVideoOff /> : <FiVideo />)}
-                                onClick={handleCamButtonClick}
-                            />
-                            <ControlButton 
-                                className="toggle-mic" 
-                                legend="Mic" isOff={micButton} 
-                                icon={(micButton ? <FiMicOff /> : <FiMic />)}
-                                onClick={handleMicButtonClick}
-                            />
+                            {buttons}
                         </div>
                     </div>
                 </div>
