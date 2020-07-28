@@ -18,8 +18,7 @@ function ControlButton(props) {
 }
 
 function RoomFooter(props) {
-    console.log(props.buttons);
-    const buttons = props.buttons.map((isOff, i) =>
+    const buttons = props.buttonsState.map((isOff, i) =>
         <ControlButton
             key={i}
             className={(isOff ? buttonsData[i].offClass : buttonsData[i].onClass)}
