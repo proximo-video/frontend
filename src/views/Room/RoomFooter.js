@@ -28,17 +28,20 @@ function RoomFooter(props) {
             onClick={() => props.onClick(i)}
             isOff={isOff}
         />
-    );
+    );  
     return (
         <div className="roomFooter">
-            <div className="videoControlsContainer">
+            {/* <div className="videoControlsContainer">
                 <div className="videoControls">
                     <div className="buttonCenterWrapper">
                         <div className="buttonWrapper"> 
                             {buttons}
-                        </div>
+                        </div> 
                     </div>
                 </div>
+            </div> */}
+            <div className="buttonWrapper"> 
+                {buttons}
             </div>
         </div>
     );

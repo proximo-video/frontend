@@ -73,33 +73,33 @@ $spacing-2: 8px;
     flex-flow: row nowrap;
     width: 100%;
     height: 100%;
-    --help-button-width: 60px;
-    padding-right: var(--help-button-width);
+    justify-content: center;
+    align-items: center;
 }
 
-.videoControlsContainer {
-    flex: 1 1 auto;
-    width: 100%;
-    height: 100%;
-}
+// .videoControlsContainer {
+//     flex: 1 1 auto;
+//     width: 100%;
+//     height: 100%;
+// }
 
-.videoControls {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    padding-top: $spacing-1;
-}
+// .videoControls {
+//     position: relative;
+//     width: 100%;
+//     height: 100%;
+//     padding-top: $spacing-1;
+// }
 
-.buttonCenterWrapper {
-    display: flex;
-    flex-flow: row nowrap;
-    margin: 0 auto;
-}
+// .buttonCenterWrapper {
+//     display: flex;
+//     flex-flow: row nowrap;
+//     margin: 0 auto;
+// }
 
-.buttonCenterWrapper.buttonCenterWrapper:after, .buttonCenterWrapper.buttonCenterWrapper:before {
-    content: "";
-    margin: auto;
-}
+// .buttonCenterWrapper.buttonCenterWrapper:after, .buttonCenterWrapper.buttonCenterWrapper:before {
+//     content: "";
+//     margin: auto;
+// }
 
 .buttonWrapper {
     padding: $spacing-1;
