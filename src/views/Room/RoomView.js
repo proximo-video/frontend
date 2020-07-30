@@ -7,7 +7,7 @@ import RoomFooter from './RoomFooter';
 function RoomView() {
     // 5 buttons 0=>cam, 1=>mic, 2=>screen, 3=>chat, 4=>leave, buttons array denoting the 
     const [buttonsState, setButtonsState] = useState([false, false, true, false, false]);
-    function handleButtonClick(i) {
+    const handleButtonClick = (i) => {
         const newButtonsState = buttonsState.slice();
         newButtonsState[i] = !buttonsState[i];
         setButtonsState(newButtonsState);
