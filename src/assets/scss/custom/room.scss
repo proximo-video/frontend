@@ -100,10 +100,32 @@ $spacing-2: 8px;
 //     content: "";
 //     margin: auto;
 // }
+@import "../../../../node_modules/bulma/bulma.sass";
 
 .buttonWrapper {
     padding: $spacing-1;
     display: grid;
     grid-gap: 12px;
     grid-auto-flow: column;
+}
+
+.maximize {
+    cursor: pointer;
+    background-color: rgba(10, 10, 10, 0.2);
+    border-radius: 290486px;
+}
+
+// .VideoStage {
+//     // height: 100vh;
+//     // overflow: hidden;
+// }
+
+.sideContent {
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.addVideo {
+    position: absolute;
+    bottom: 0;
 }
