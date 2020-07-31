@@ -1,3 +1,4 @@
+@import "../../../../node_modules/bulma/bulma.sass";
 $color-red: #c35037;
 $border-radius-large: 12px;
 $color-grey-dark: #313c42;
@@ -100,7 +101,6 @@ $spacing-2: 8px;
 //     content: "";
 //     margin: auto;
 // }
-@import "../../../../node_modules/bulma/bulma.sass";
 
 .buttonWrapper {
     padding: $spacing-1;
@@ -128,4 +128,8 @@ $spacing-2: 8px;
 .addVideo {
     position: absolute;
     bottom: 0;
+}
+
+.box {
+    background: #1e2232;
 }

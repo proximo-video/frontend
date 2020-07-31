@@ -1,4 +1,4 @@
-import '../../assets/scss/custom/room.scss'
+import '../../assets/scss/custom/room.scss';
 import React, { useState } from 'react';
 import { LoremIpsum } from "lorem-ipsum";
 import "./RoomFooter";
@@ -15,7 +15,7 @@ const lorem = new LoremIpsum({
       max: 16,
       min: 4
     }
-  });
+});
 
 function RoomView() {
     // 5 buttons 0=>cam, 1=>mic, 2=>screen, 3=>chat, 4=>leave, buttons array denoting the 
@@ -71,7 +71,7 @@ function RoomView() {
             />
             <button className="button is-primary addVideo" onClick={() => addUser()}>Primary</button>
             <RoomFooter buttonsState={buttonsState} onClick={(i) => handleButtonClick(i)}/>
-      </div>
+        </div>
     );
 }
 

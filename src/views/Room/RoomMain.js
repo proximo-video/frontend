@@ -1,6 +1,6 @@
 import React from 'react';
-import '../../assets/scss/custom/room.scss'
-import {classes} from './videoData'
+import '../../assets/scss/custom/room.scss';
+import {classes} from './videoData';
 import {FiMaximize, FiMinimize} from 'react-icons/fi';
 
 function WebRTCMediaCell(props) {
@@ -21,6 +21,11 @@ function WebRTCMediaCell(props) {
             </div>
           </div>
           <figure className="image is-16by9">
+          {/* <img className="is-rounded" src="https://bulma.io/images/placeholders/128x128.png"/> */}
+          {/* <span className="is-rounded" >
+          OH
+          </span> */}
+          
             <iframe className="has-ratio" width="640" height="360" src="https://www.youtube.com/embed/YE7VzlLtp-4?showinfo=0" frameBorder="0" allowFullScreen></iframe>
           </figure>
         </div>
@@ -79,7 +84,7 @@ export default function RoomMain(props) {
     return (
         <div className="columns is-multiline is-centered">
         {maxWebRTCMedia}
-        <div className={"column sideContent is-two-thirds-desktop" + (normalWebRTCMedia.length===0 ? " is-hidden" : "")}>
+        <div className={"column" + (normalWebRTCMedia.length===0 ? " is-hidden" : "") + (maxWebRTCMedia===null ? " is-two-thirds-desktop" : " sideContent")}>
             <div className="columns is-mobile is-multiline is-centered">
             {normalWebRTCMedia}
             </div>
