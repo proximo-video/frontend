@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
 function Welcome() {
-    const [sucess,setSuccess] = useState(false);
+    const [success,setSuccess] = useState(false);
     useEffect(() => {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
@@ -26,7 +26,7 @@ function Welcome() {
         fetchData();
     }, []);
 
-    return (sucess?<Redirect to={{pathname:"/user"}}></Redirect>:<></>)
+    return (success?<Redirect to={{pathname:"/user"}}></Redirect>:<></>)
 
 }
 

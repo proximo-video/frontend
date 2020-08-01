@@ -132,3 +132,24 @@
 	max-height: 32px;
 	margin: 0px 10px !important;
 }
+
+.is-center{
+	margin:0 auto;
+}
+.room-entry-container{
+	display: block;
+	max-width: 50vw;
+	margin: 0 auto;
+}
+
+.self-video{
+	width: 320px;
+	height : 240px;
+	margin: 0 auto;
+}
+
+@media only screen and (max-width: 768px) {
+	.margin-bottom-mobile {
+	  margin-bottom: 10px;
+	}
+  }

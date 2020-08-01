@@ -1,13 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
-import PersonalMedia from './PersonalMedia';
 import Socket from '../utils/Socket';
 import { Link } from 'react-router-dom'
+import RoomEntry from './RoomEntry';
 
 function Room(props) {
     let videoRefArray = [];
     const localStream = useRef()
     const [iceServer, setIceServer] = useState()
     const [mediaSuccess, setMediaSuccess] = useState(false);
+    const [iceSuccess,setIceSuccess] = useState(false)
     const [remoteStreams, setRemoteStreams] = useState(new Map());
     const addStream = (k, v) => {
         setRemoteStreams(new Map(remoteStreams.set(k, v)));
@@ -52,6 +53,7 @@ function Room(props) {
                 if (response.ok) {
                     let data = await response.json()
                     console.log(data.iceServers);
+                    setIceSuccess(true);
                     setIceServer(data.iceServers);
                 }
             }
@@ -85,8 +87,7 @@ function Room(props) {
     videoRefArray = []
     return (
         <>
-            <PersonalMedia mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess} ref={localStream}></PersonalMedia>
-            <button disabled={!mediaSuccess} onClick={createSocket}>Start</button>
+            <RoomEntry createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess} ref={localStream}></RoomEntry>
 
             <div><Link to={{ pathname: "/" }}>Hello</Link></div>    
             {Array.from(remoteStreams).map((v) => {

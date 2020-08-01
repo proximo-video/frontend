@@ -53,9 +53,11 @@ const PersonalMedia = React.forwardRef((props, ref) => {
 
     return (
         <>
-            {ref ? <video ref={ref} autoPlay muted></video> : <div></div>}
+            {ref ? <video class="self-video" ref={ref} autoPlay muted></video> : <div></div>}
+            <div>
             <button disabled={!props.mediaSuccess} onClick={toggleAudio}>Audio Toggle</button>
             <button disabled={!props.mediaSuccess} onClick={toggleVideo}>Video Toggle</button>
+            </div>
         </>
     )
 })
