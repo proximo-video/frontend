@@ -23,7 +23,7 @@ export const buttonsData = [
         offIconColor: "white",
         onClass: "",
         offClass: "isOff",
-        isOff: false
+        isOff: false,
     },
     {
         onIcon: <FiMonitor/>,
@@ -34,7 +34,7 @@ export const buttonsData = [
         offIconColor: "white",
         onClass: "",
         offClass: "",
-        isOff: true
+        isOff: true,
     },
     {
         onIcon: <FiMessageSquare/>,

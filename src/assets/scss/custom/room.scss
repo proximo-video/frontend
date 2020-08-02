@@ -103,6 +103,8 @@ $button-background: black;
   }
   position: absolute;
   bottom: 0;
+  color: $button-background;
+  
 }
 
 .buttonWrapper {
@@ -111,7 +113,7 @@ $button-background: black;
   grid-gap: 12px;
   grid-auto-flow: column;
   position: absolute;
-  bottom: 10px;
+  bottom: 20px;
   background: $button-background;
   border-radius: 8px;
 }
@@ -154,6 +156,12 @@ $button-background: black;
   height: 100%;
   width: 100%;
   border-radius: 8px;
+}
+
+.tooltip {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  border-radius: 8px !important;
 }
 
 

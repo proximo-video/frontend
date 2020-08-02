@@ -1,6 +1,7 @@
 {
   "name": "open-react-template",
   "version": "0.1.0",
+  "contributors": ["Aniket Singh <aniketsingh0104@gmail.com>", "Rishabh Tripathi <imristri@gmail.com>"],
   "private": true,
   "dependencies": {
     "bulma": "^0.9.0",
@@ -13,7 +14,8 @@
     "react-ga": "^2.7.0",
     "react-icons": "^3.10.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.1"
+    "react-scripts": "^3.4.1",
+    "react-tooltip": "^4.2.7"
   },
   "repository": {
     "type": "git",
