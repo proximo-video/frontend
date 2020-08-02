@@ -1,4 +1,4 @@
-@import "~bulma/bulma.sass";
+// @import "~bulma/bulma.sass";
 $color-red: #c35037;
 $border-radius-large: 12px;
 $color-grey-dark: #313c42;
@@ -10,6 +10,20 @@ $drop-shadow-small: 0px 1px 4px rgba(0, 0, 0, 0.16);
 $spacing-1: 4px;
 $spacing-2: 8px;
 $background-color: #181a26;
+$button-background: black;
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --per-row: 1;
+  --rows: 1;
+  --video-padding: 3px;
+  @media only screen and (max-width: 700px) {
+    --video-padding: 0px;
+  }
+}
 
 .cntrlButton {
   border-radius: 0;
@@ -39,7 +53,7 @@ $background-color: #181a26;
   width: 48px;
   height: 48px;
   border-radius: $border-radius-large;
-  background: $color-grey;
+  background: $button-background;
   transition: background-color $transition-button-hover;
 }
 
@@ -77,96 +91,69 @@ $background-color: #181a26;
   //   height: 100%;
   justify-content: center;
   align-items: center;
+  &:hover .buttonWrapper {
+    display: grid;
+  }
 }
 
-// .videoControlsContainer {
-//     flex: 1 1 auto;
-//     width: 100%;
-//     height: 100%;
-// }
-
-// .videoControls {
-//     position: relative;
-//     width: 100%;
-//     height: 100%;
-//     padding-top: $spacing-1;
-// }
-
-// .buttonCenterWrapper {
-//     display: flex;
-//     flex-flow: row nowrap;
-//     margin: 0 auto;
-// }
-
-// .buttonCenterWrapper.buttonCenterWrapper:after, .buttonCenterWrapper.buttonCenterWrapper:before {
-//     content: "";
-//     margin: auto;
-// }
+.button-hover {
+  &:hover + .buttonWrapper {
+    display: grid;
+    z-index: 2;
+  }
+  position: absolute;
+  bottom: 0;
+}
 
 .buttonWrapper {
   padding: $spacing-1;
   display: grid;
   grid-gap: 12px;
   grid-auto-flow: column;
+  position: absolute;
+  bottom: 10px;
+  background: $button-background;
+  border-radius: 8px;
 }
 
-.maximize {
-  cursor: pointer;
-  background-color: rgba(10, 10, 10, 0.2);
-  border-radius: 290486px;
-}
-
-.VideoStage {
-  height: 100vh;
+.room-main {
   display: flex;
   flex-direction: column;
-  overflow-y: hidden;
-  & > div:nth-child(1) {
-    flex-grow: 1;
-    overflow-y: auto;
-  }
-  //     // height: 100vh;
-  //     // overflow: hidden;
-}
-
-.sideContent {
   height: 100vh;
-  overflow-y: auto;
-}
-
-.addVideo {
-  position: absolute;
-  bottom: 0;
-}
-
-.box {
-  background: $background-color;
-  padding: 0;
-}
-.message-header {
-  display: none;
-}
-.columns.is-mobile.is-multiline.is-centered {
-  height: 100%;
-  overflow-y: auto;
-  & > div {
-    display: flex;
-    .box {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      figure {
-        width: 100%;
-      }
-    }
+  overflow: hidden;
+  position: relative;
+  .addVideo {
+    position: absolute;
+    bottom: 0;
+    left: 0;
   }
 }
 
-.is-two-thirds-desktop {
-    height: 100%;
+.video-container {
+  display: flex;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  // height: 100vh;
+  // width: 100vw;
+  overflow: hidden;
 }
 
-.h-50 {
-    height: 50%;
+.video {
+  width: calc(100%/var(--per-row));
+  padding: var(--video-padding);
+  height: calc(100%/var(--rows));
 }
+
+.inner {
+  height: 100%;
+}
+
+.video-stream, iframe {
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+}
+
+

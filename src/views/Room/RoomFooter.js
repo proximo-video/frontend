@@ -4,14 +4,14 @@ import {buttonsData} from './buttonsData';
 
 function ControlButton(props) {
     return (
-        <button className={`cntrlButton`} onClick={props.onClick}>
+        <button className={"cntrlButton"} onClick={props.onClick}>
             <figure className="cntrlButtonFigure">
                 <IconContext.Provider value={{ color: props.iconColor}}>
                     <div className={"cntrlButtonWrap " + props.className} >
                          {props.icon}
                     </div>
                 </IconContext.Provider>
-                <figcaption className="cntrlButtonLegend">{props.legend}</figcaption>
+                {/* <figcaption className="cntrlButtonLegend">{props.legend}</figcaption> */}
             </figure>
         </button>
     );
@@ -31,15 +31,9 @@ function RoomFooter(props) {
     );  
     return (
         <div className="roomFooter">
-            {/* <div className="videoControlsContainer">
-                <div className="videoControls">
-                    <div className="buttonCenterWrapper">
-                        <div className="buttonWrapper"> 
-                            {buttons}
-                        </div> 
-                    </div>
-                </div>
-            </div> */}
+            <div className="button-hover">
+                Abc
+            </div>
             <div className="buttonWrapper"> 
                 {buttons}
             </div>
