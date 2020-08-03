@@ -16,16 +16,20 @@ function RoomView() {
         setButtonsState(newButtonsState);
     }
 
-    // const isMobile = () => {
-    //     return window.innerWidth <= 700;
-    // }
+    const isMobile = () => {
+        return window.innerWidth <= 700;
+    }
 
     const setVideosLayout = (n) => {
         const cont = document.querySelector(':root');
         let perRow = Math.ceil(Math.sqrt(n));
-        // if (isMobile())
-        //     perRow = 2;
-        console.log("Perrow: ", perRow);
+        if (isMobile()) {
+            if(n==2)
+                perRow = 1;
+            else
+                perRow = 2;
+        }
+        // console.log("Perrow: ", perRow);
         cont.style.setProperty('--per-row', perRow);
         const noOfRows = Math.ceil(n/perRow);
         cont.style.setProperty('--rows', noOfRows);

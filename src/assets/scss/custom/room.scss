@@ -20,8 +20,8 @@ $button-background: black;
   --per-row: 1;
   --rows: 1;
   --video-padding: 3px;
-  @media only screen and (max-width: 700px) {
-    --video-padding: 0px;
+  @media only screen and (max-width: 600px) {
+    --video-padding: 1.5px;
   }
 }
 
@@ -55,6 +55,9 @@ $button-background: black;
   border-radius: $border-radius-large;
   background: $button-background;
   transition: background-color $transition-button-hover;
+  svg {
+    font-size: 25px;
+  }
 }
 
 .cntrlButtonWrap.isOff {
@@ -96,24 +99,41 @@ $button-background: black;
   }
 }
 
-.button-hover {
-  &:hover + .buttonWrapper {
-    display: grid;
-    z-index: 2;
-  }
-  position: absolute;
-  bottom: 0;
-  color: $button-background;
-  
-}
+// .button-hover-up {
+//   &:hover + .buttonWrapper {
+//     display: grid;
+//     z-index: 2;
+//   }
+//   &:hover {
+//     background: hsla(0,0%,100%,.2);
+//     backdrop-filter: blur(2px);
+//     -webkit-backdrop-filter: blur(2px);
+//   }
+//   position: absolute;
+//   bottom: 0;
+//   cursor: pointer;
+//   fill: #fff;
+// }
+
+// .button-hover-down {
+//   &:hover + .buttonWrapper {
+//     display: none;
+//     z-index: 0;
+//   }
+//   position: absolute;
+//   bottom: 0;
+//   color: $button-background;
+//   display: none;
+//   cursor: pointer;
+// }
 
 .buttonWrapper {
   padding: $spacing-1;
-  display: grid;
-  grid-gap: 12px;
+  display: none;
+  grid-gap: 22px;
   grid-auto-flow: column;
   position: absolute;
-  bottom: 20px;
+  bottom: 25px;
   background: $button-background;
   border-radius: 8px;
 }
@@ -142,10 +162,21 @@ $button-background: black;
   overflow: hidden;
 }
 
+@media only screen and (max-width: 600px) {
+  .video {
+    flex-grow: 1;
+  }
+  .buttonWrapper {
+    grid-gap: 8px;
+    padding: 2px;
+  }
+}
+
 .video {
   width: calc(100%/var(--per-row));
   padding: var(--video-padding);
   height: calc(100%/var(--rows));
+  // flex-grow: 1;
 }
 
 .inner {
@@ -163,5 +194,40 @@ $button-background: black;
   padding-bottom: 0 !important;
   border-radius: 8px !important;
 }
+
+#pin-toolbar-button {
+  // width: 20px;
+  position: absolute;
+  bottom: 5px;
+  border-radius: 7px;
+  cursor: pointer;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  &:hover {
+    background: hsla(0,0%,100%,.2);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+}
+
+.pinned {
+  + .buttonWrapper {
+    display: grid;
+  }
+}
+
+.unpinned {
+  + .buttonWrapper {
+    display: none;
+  }
+  &:hover + .buttonWrapper {
+    display: grid;
+  }
+}
+
+
 
 

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IconContext } from "react-icons";
 import {buttonsData} from './buttonsData';
 import ReactTooltip from "react-tooltip";
-import {FiChevronUp} from "react-icons/fi";
+import {FaChevronCircleUp, FaChevronUp, FaChevronDown} from "react-icons/fa";
 
 function ControlButton(props) {
     return (
@@ -27,6 +27,12 @@ function ControlButton(props) {
 }
 
 function RoomFooter(props) {
+    const [isPinned, setIsPinned] = useState(false);
+
+    const handlePinButtonClick = () => {
+        setIsPinned(!isPinned);
+    }
+
     const buttons = props.buttonsState.map((isOff, i) =>
         <ControlButton
             key={i}
@@ -40,9 +46,10 @@ function RoomFooter(props) {
     );  
     return (
         <div className="roomFooter">
-            <IconContext.Provider value={{ color: 'black'}}>
-                <FiChevronUp className="button-hover"/>
-            </IconContext.Provider>
+                <ReactTooltip id="pin-toolbar" place="right" type="dark" effect="float" className="tooltip"/>
+                <button className={"cntrlButton" + (isPinned ? " pinned" : " unpinned")} onClick={() => handlePinButtonClick()} data-for="pin-toolbar" data-tip={isPinned ? "unpin toolbar" : "pin toolbar"} id="pin-toolbar-button">
+                    {isPinned ? <FaChevronDown className="button-hover-down"/> : <FaChevronUp className="button-hover-up"/>}
+                </button>
             <div className="buttonWrapper"> 
                 {buttons}
             </div>
