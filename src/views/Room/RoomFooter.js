@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { IconContext } from "react-icons";
-import {buttonsData} from './buttonsData';
+import { buttonsData } from './buttonsData';
 import ReactTooltip from "react-tooltip";
-import {FaChevronCircleUp, FaChevronUp, FaChevronDown} from "react-icons/fa";
+import { FaChevronCircleUp, FaChevronUp, FaChevronDown } from "react-icons/fa";
 
 function ControlButton(props) {
     return (
@@ -14,7 +14,7 @@ function ControlButton(props) {
             </ReactTooltip>
             <button className={"cntrlButton"} onClick={props.onClick} data-for={props.legend} data-tip>
                 <figure className="cntrlButtonFigure">
-                    <IconContext.Provider value={{ color: props.iconColor}}>
+                    <IconContext.Provider value={{ color: props.iconColor }}>
                         <div className={"cntrlButtonWrap " + props.className} >
                             {props.icon}
                         </div>
@@ -43,14 +43,14 @@ function RoomFooter(props) {
             onClick={() => props.onClick(i)}
             isOff={isOff}
         />
-    );  
+    );
     return (
-        <div className="roomFooter">
-                <ReactTooltip id="pin-toolbar" place="right" type="dark" effect="float" className="tooltip"/>
-                <button className={"cntrlButton" + (isPinned ? " pinned" : " unpinned")} onClick={() => handlePinButtonClick()} data-for="pin-toolbar" data-tip={isPinned ? "unpin toolbar" : "pin toolbar"} id="pin-toolbar-button">
-                    {isPinned ? <FaChevronDown className="button-hover-down"/> : <FaChevronUp className="button-hover-up"/>}
-                </button>
-            <div className="buttonWrapper"> 
+        <div className="room-footer">
+            <ReactTooltip id="pin-toolbar" place="right" type="dark" effect="float" className="tooltip" />
+            <button className={"cntrlButton" + (isPinned ? " pinned" : " unpinned")} onClick={() => handlePinButtonClick()} data-for="pin-toolbar" data-tip={isPinned ? "unpin toolbar" : "pin toolbar"} id="pin-toolbar-button">
+                {isPinned ? <FaChevronDown className="button-hover-down" /> : <FaChevronUp className="button-hover-up" />}
+            </button>
+            <div className="buttonWrapper">
                 {buttons}
             </div>
         </div>

@@ -11,6 +11,7 @@ $spacing-1: 4px;
 $spacing-2: 8px;
 $background-color: #181a26;
 $button-background: black;
+$white: #fff;
 
 * {
   box-sizing: border-box;
@@ -87,7 +88,10 @@ $button-background: black;
   max-width: 48px;
 }
 
-.roomFooter {
+.room-footer {
+  position: absolute;
+  bottom: 0;
+  height: 30px;
   display: flex;
   flex-flow: row nowrap;
   width: 100%;
@@ -96,6 +100,7 @@ $button-background: black;
   align-items: center;
   &:hover .buttonWrapper {
     display: grid;
+    bottom: 25px;
   }
 }
 
@@ -129,13 +134,16 @@ $button-background: black;
 
 .buttonWrapper {
   padding: $spacing-1;
-  display: none;
+  display: grid;
   grid-gap: 22px;
   grid-auto-flow: column;
   position: absolute;
-  bottom: 25px;
+  // bottom: 25px;
+  bottom: -65px;
   background: $button-background;
   border-radius: 8px;
+  transition: bottom 0.5s;
+  transition-timing-function: linear;
 }
 
 .room-main {
@@ -195,13 +203,41 @@ $button-background: black;
   border-radius: 8px !important;
 }
 
+@keyframes colorChange {
+  from {
+    color: white;
+  }
+  to {
+    color: black;
+  }
+}
+
+@keyframes rotateButtons {
+  0% {
+    transform: rotate(0deg);
+  } 
+  50% {
+    transform: rotate(180deg) scale(2);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 #pin-toolbar-button {
   // width: 20px;
   position: absolute;
   bottom: 5px;
   border-radius: 7px;
   cursor: pointer;
-  color: #fff;
+  color: $white;
+  animation: colorChange 1s infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+  // color: linear-gradient(red, yellow);
+  // background: -webkit-linear-gradient(red, yellow); 
+  // -webkit-background-clip: text; 
+  // -webkit-text-fill-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -215,18 +251,19 @@ $button-background: black;
 
 .pinned {
   + .buttonWrapper {
-    display: grid;
+    bottom: 25px;
+    animation: rotateButtons 1s;
   }
 }
 
-.unpinned {
-  + .buttonWrapper {
-    display: none;
-  }
-  &:hover + .buttonWrapper {
-    display: grid;
-  }
-}
+// .unpinned {
+//   + .buttonWrapper {
+//     bottom: -65px;
+//   }
+//   &:hover + .buttonWrapper {
+//     bottom: 25px;
+//   }
+// }
 
 
 
