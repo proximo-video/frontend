@@ -6,7 +6,7 @@ export function videoElement(videoRef, isMax, userId, title) {
 }
 
 export const videoData = new Map();
-videoData.set("389237982nikwebdj", new videoElement(null, false, "389237982nikwebdj", "first"));  
+videoData.set("389237982nikwebdj", new videoElement(null, true, "389237982nikwebdj", "first"));  
 
 export const classes = [
     {

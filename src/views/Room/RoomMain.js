@@ -1,13 +1,11 @@
 import React from 'react';
 import '../../assets/scss/custom/room.scss';
-// import {classes} from './videoData';
-// import {FiMaximize, FiMinimize} from 'react-icons/fi';
 
 function WebRTCMediaCell() {
   return (
       <div className="video">
         <div className="inner">
-          <iframe className="has-ratio" src="https://www.youtube.com/embed/YE7VzlLtp-4?showinfo=0" frameBorder="0" allowFullScreen></iframe>
+          <video src="/videos/Big Buck Bunny.mp4" className="video-stream" poster="/images/big_buck_bunny.jpg"/>
       </div>
       </div>
   );

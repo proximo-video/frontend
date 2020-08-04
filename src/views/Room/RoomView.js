@@ -2,8 +2,8 @@ import '../../assets/scss/custom/room.scss';
 import React, { useState } from 'react';
 import "./RoomFooter";
 import RoomFooter from './RoomFooter';
-import RoomMain from './RoomMain';
 import {videoData, videoElement} from './videoData';
+import RoomMainExpand from './RoomMainExpand';
 
 function RoomView() {
     // 5 buttons 0=>cam, 1=>mic, 2=>screen, 3=>chat, 4=>leave, buttons array denoting the 
@@ -29,7 +29,6 @@ function RoomView() {
             else
                 perRow = 2;
         }
-        // console.log("Perrow: ", perRow);
         cont.style.setProperty('--per-row', perRow);
         const noOfRows = Math.ceil(n/perRow);
         cont.style.setProperty('--rows', noOfRows);
@@ -46,7 +45,8 @@ function RoomView() {
     return (
         <div className="room-main">
             <div className="video-container">
-                <RoomMain videoElements={videoElements}/>
+                {/* <RoomMain videoElements={videoElements}/> */}
+                <RoomMainExpand videoElements={videoElements} />
             </div>
             <button className="button is-primary addVideo" onClick={() => addUser()}>Primary</button>
             <RoomFooter buttonsState={buttonsState} onClick={(i) => handleButtonClick(i)}/>
