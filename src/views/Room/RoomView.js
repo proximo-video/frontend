@@ -14,17 +14,17 @@ function RoomView() {
         const newButtonsState = buttonsState.slice();
         newButtonsState[i] = !buttonsState[i];
         setButtonsState(newButtonsState);
-    }
+    };
 
     const isMobile = () => {
         return window.innerWidth <= 700;
-    }
+    };
 
     const setVideosLayout = (n) => {
         const cont = document.querySelector(':root');
         let perRow = Math.ceil(Math.sqrt(n));
         if (isMobile()) {
-            if(n==2)
+            if(n === 2)
                 perRow = 1;
             else
                 perRow = 2;
@@ -32,7 +32,7 @@ function RoomView() {
         cont.style.setProperty('--per-row', perRow);
         const noOfRows = Math.ceil(n/perRow);
         cont.style.setProperty('--rows', noOfRows);
-    }
+    };
 
     const addUser = () => {
         // generate some random key, para and title
@@ -40,7 +40,7 @@ function RoomView() {
         const newVideoElement = new videoElement(null, false, userId, "crap");
         setVideosLayout(videoElements.size + 1);
         setVideoElements(new Map(videoElements.set(userId, newVideoElement)));
-    }
+    };
 
     return (
         <div className="room-main">

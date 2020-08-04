@@ -104,34 +104,6 @@ $white: #fff;
   }
 }
 
-// .button-hover-up {
-//   &:hover + .buttonWrapper {
-//     display: grid;
-//     z-index: 2;
-//   }
-//   &:hover {
-//     background: hsla(0,0%,100%,.2);
-//     backdrop-filter: blur(2px);
-//     -webkit-backdrop-filter: blur(2px);
-//   }
-//   position: absolute;
-//   bottom: 0;
-//   cursor: pointer;
-//   fill: #fff;
-// }
-
-// .button-hover-down {
-//   &:hover + .buttonWrapper {
-//     display: none;
-//     z-index: 0;
-//   }
-//   position: absolute;
-//   bottom: 0;
-//   color: $button-background;
-//   display: none;
-//   cursor: pointer;
-// }
-
 .buttonWrapper {
   padding: $spacing-1;
   display: grid;
