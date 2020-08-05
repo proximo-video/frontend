@@ -5,12 +5,14 @@ import RoomFooter from './RoomFooter';
 import {videoData, videoElement} from './videoData';
 import RoomMainExpand from './RoomMainExpand';
 import RoomMain from "./RoomMain";
+import RoomMainFullscreen from "./RoomMainFullscreen";
 
 function RoomView() {
     // 5 buttons 0=>cam, 1=>mic, 2=>screen, 3=>chat, 4=>leave, buttons array denoting the 
     const [buttonsState, setButtonsState] = useState([false, false, true, false, false]);
     const [videoElements, setVideoElements] = useState(videoData);
     const [isAnyVideoMax, setIsAnyVideoMax] = useState(false);
+    const [isAnyVideoFullscreen, setIsAnyVideoFullscreen] = useState(false);
 
     const handleButtonClick = (i) => {
         const newButtonsState = buttonsState.slice();
@@ -39,7 +41,7 @@ function RoomView() {
     const addUser = () => {
         // generate some random key, para and title
         const userId = Math.random().toString(36).slice(2);
-        const newVideoElement = new videoElement(null, false, userId, "crap");
+        const newVideoElement = new videoElement(null, false, false, userId, "crap");
         setVideosLayout(videoElements.size + 1);
         setVideoElements(new Map(videoElements.set(userId, newVideoElement)));
     };
@@ -50,13 +52,51 @@ function RoomView() {
             const newVideoElements = new Map(videoElements);
             newVideoElements.get(userId).isMax = !videoElements.get(userId).isMax;
             setIsAnyVideoMax(newVideoElements.get(userId).isMax);
-            for (let [key] of newVideoElements.entries()) {
+            for (let key of newVideoElements.keys()) {
                 if (key !== userId)
                     newVideoElements.get(key).isMax = false;
             }
             setVideoElements(newVideoElements);
         }
     };
+
+    const handleFullscreenButtonClick = async (userId) => {
+        if (videoElements.has(userId)) {
+            // console.log("fullscreen request from user:", userId);
+            const newVideoElements = new Map(videoElements);
+            newVideoElements.get(userId).isFullscreen = !videoElements.get(userId).isFullscreen;
+            for (let key of newVideoElements.keys()) {
+                if (key !== userId)
+                    newVideoElements.get(key).isFullscreen = false;
+            }
+            console.log("fullscreen request from user:", userId, newVideoElements.get(userId).isFullscreen)
+            if (newVideoElements.get(userId).isFullscreen) {
+                const elem = document.documentElement;
+                if (elem.requestFullscreen) {
+                    await elem.requestFullscreen();
+                } else if (elem.mozRequestFullScreen) { /* Firefox */
+                    await elem.mozRequestFullScreen();
+                } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+                    await elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) { /* IE/Edge */
+                    await elem.msRequestFullscreen();
+                }
+                // await document.documentElement.requestFullscreen();
+            } else if(document.fullscreenElement || document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement) {
+                if (document.exitFullscreen) {
+                    await document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) { /* Firefox */
+                    await document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+                    await document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) { /* IE/Edge */
+                    await document.msExitFullscreen();
+                }
+            }
+            setIsAnyVideoFullscreen(newVideoElements.get(userId).isFullscreen);
+            setVideoElements(newVideoElements);
+        }
+    }
 
     // const handleDeleteUser = (userId) => {
     //     if(videoElements.has(userId)) {
@@ -75,11 +115,16 @@ function RoomView() {
         <div className="room-main">
             <div className="video-container">
                 {
-                    isAnyVideoMax ?
-                        <RoomMainExpand videoElements={videoElements}
-                                        onMaximizeClick={(userId) => handleMaximizeButtonClick(userId)}/> :
-                        <RoomMain videoElements={videoElements}
-                                  onMaximizeClick={(userId) => handleMaximizeButtonClick(userId)}/>
+                    isAnyVideoFullscreen ?
+                        <RoomMainFullscreen videoElements={videoElements}
+                                            onFullscreenClick={(userId) => handleFullscreenButtonClick(userId)}/> : (
+                            isAnyVideoMax ?
+                                <RoomMainExpand videoElements={videoElements}
+                                                onMaximizeClick={(userId) => handleMaximizeButtonClick(userId)}
+                                                onFullscreenClick={(userId) => handleFullscreenButtonClick(userId)}/> :
+                                <RoomMain videoElements={videoElements}
+                                          onMaximizeClick={(userId) => handleMaximizeButtonClick(userId)}
+                                          onFullscreenClick={(userId) => handleFullscreenButtonClick(userId)}/>)
                 }
             </div>
             <button className="button is-primary addVideo" onClick={() => addUser()}>Primary</button>

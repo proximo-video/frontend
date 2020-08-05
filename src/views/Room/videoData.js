@@ -1,12 +1,13 @@
-export function videoElement(videoRef, isMax, userId, title) {
+export function videoElement(videoRef, isMax, isFullscreen, userId, title) {
     this.videoRef = videoRef;
     this.isMax = isMax;
+    this.isFullscreen = isFullscreen;
     this.userId = userId;
     this.title = title;
 }
 
 export const videoData = new Map();
-videoData.set("389237982nikwebdj", new videoElement(null, false, "389237982nikwebdj", "first"));
+videoData.set("389237982nikwebdj", new videoElement(null, false, false, "389237982nikwebdj", "first"));
 
 // export const classes = [
 //     {

@@ -7,7 +7,7 @@ import Dropdown from "../../components/elements/Dropdown";
 function WebRTCMediaCell(props) {
     const normalOptionsMenu = [
         new DropdownOption(<FiMaximize2/>, 'Maximize', props.onMaximizeClick),
-        new DropdownOption(<FiMaximize/>, 'Fullscreen', () => console.log("clicked something")),
+        new DropdownOption(<FiMaximize/>, 'Fullscreen', props.onFullscreenClick),
     ];
     return (
         <div className="video">
@@ -22,7 +22,7 @@ function WebRTCMediaCell(props) {
 export default function RoomMain(props) {
     const normalWebRTCMedia = [];
     for (let key of props.videoElements.keys()) {
-        normalWebRTCMedia.push(<WebRTCMediaCell key={key} onMaximizeClick={() => props.onMaximizeClick(key)}/>);
+        normalWebRTCMedia.push(<WebRTCMediaCell key={key} onMaximizeClick={() => props.onMaximizeClick(key)} onFullscreenClick={() => props.onFullscreenClick(key)}/>);
     }
     return (
         <>

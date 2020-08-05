@@ -8,7 +8,7 @@ import {DropdownOption} from "./expandedRoomData";
 function WebRTCMediaCell(props) {
     const normalOptionsMenu = [
         new DropdownOption(<FiMaximize2/>, 'Maximize', props.onMaximizeClick),
-        new DropdownOption(<FiMaximize/>, 'Fullscreen', () => console.log("clicked something")),
+        new DropdownOption(<FiMaximize/>, 'Fullscreen', props.onFullscreenClick),
     ];
     return (
         <div className="webrtc-media-cell">
@@ -25,14 +25,14 @@ export default function RoomMainExpand(props) {
     for (let [key, value] of props.videoElements.entries()) {
         if (value.isMax) {
             maxWebRTCMedia =
-                <video src="/videos/Big Buck Bunny.mp4" className="video-stream" poster="/images/big_buck_bunny.jpg"/>;
+                <video key={key} src="/videos/Big Buck Bunny.mp4" className="video-stream" poster="/images/big_buck_bunny.jpg"/>;
             maxOptionsMenu = [
                 new DropdownOption(<FiMinimize2/>, 'Minimize', () => props.onMaximizeClick(key)),
-                new DropdownOption(<FiMaximize/>, 'Fullscreen', () => console.log("clicked something")),
+                new DropdownOption(<FiMaximize/>, 'Fullscreen', () => props.onFullscreenClick(key)),
             ];
         }
         else
-            normalWebRTCMedia.push(<WebRTCMediaCell key={key} onMaximizeClick={() => props.onMaximizeClick(key)}/>);
+            normalWebRTCMedia.push(<WebRTCMediaCell key={key} onMaximizeClick={() => props.onMaximizeClick(key)} onFullscreenClick={() => props.onFullscreenClick(key)}/>);
     }
     return (
         <>
