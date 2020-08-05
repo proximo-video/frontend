@@ -1,10 +1,12 @@
-import {FiMoreVertical} from "react-icons/fi";
-import React from "react";
-
-export function DropdownOption(prefixIcon, label, onClick) {
+export function DropdownOption(prefixIcon, label,  onClick, onClickArgument) {
+    // this.onPrefixIcon = onPrefixIcon;
+    // this.offPrefixIcon = offPrefixIcon;
+    // this.onLabel = onLabel;
+    // this.offLabel = offLabel;
     this.prefixIcon = prefixIcon;
     this.label = label;
     this.onClick = onClick;
+    this.onClickArgument = onClickArgument;
 }
 
 // export const optionsMenu = [

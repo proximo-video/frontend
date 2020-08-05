@@ -18,7 +18,7 @@ export function DropdownContent({backdropClick, options, dropdownClasses}) {
     }, []);
     dropdownClasses = Array.isArray(dropdownClasses) ? dropdownClasses.join(' ') : dropdownClasses;
     return (
-        <div className={"dropdown-content show " + dropdownClasses || ''}>
+        <div className={"dropdown-content show " + (dropdownClasses !== void 0 ? dropdownClasses : '')}>
             {options.map((option, i) => (
                 <div key={i} className={"option"} onClick={option.onClick}>
                     {option.prefixIcon}

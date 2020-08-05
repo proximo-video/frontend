@@ -95,6 +95,7 @@ $white: #fff;
   display: flex;
   flex-flow: row nowrap;
   width: 100%;
+  z-index: 1;
   //   height: 100%;
   justify-content: center;
   align-items: center;
@@ -128,6 +129,7 @@ $white: #fff;
     position: absolute;
     bottom: 0;
     left: 0;
+    z-index: 1;
   }
 }
 
@@ -161,6 +163,10 @@ $white: #fff;
 
 .inner {
   height: 100%;
+  position: relative;
+  &:hover .dropdown-button {
+    display: block;
+  }
 }
 
 .video-stream, iframe {

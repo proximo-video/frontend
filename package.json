@@ -1,9 +1,13 @@
 {
   "name": "open-react-template",
   "version": "0.1.0",
-  "contributors": ["Aniket Singh <aniketsingh0104@gmail.com>", "Rishabh Tripathi <imristri@gmail.com>"],
+  "contributors": [
+    "Aniket Singh <aniketsingh0104@gmail.com>",
+    "Rishabh Tripathi <imristri@gmail.com>"
+  ],
   "private": true,
   "dependencies": {
+    "@types/react": "^16.9.44",
     "bulma": "^0.9.0",
     "classnames": "^2.2.6",
     "lodash": "^4.17.15",

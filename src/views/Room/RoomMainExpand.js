@@ -1,35 +1,43 @@
 import React from 'react';
-import {FiMoreVertical} from "react-icons/fi";
+import {FiMaximize2, FiMinimize2, FiMinimize, FiMaximize} from "react-icons/fi";
 import '../../assets/scss/custom/roomExpand.scss';
 import Dropdown from "../../components/elements/Dropdown";
 import {DropdownOption} from "./expandedRoomData";
 
-function WebRTCMediaCell() {
-    const optionsMenu = [
-        new DropdownOption(<FiMoreVertical/>, 'something', () => console.log("clicked something")),
-        new DropdownOption(<FiMoreVertical/>, 'something', () => console.log("clicked something")),
-    ]
+
+function WebRTCMediaCell(props) {
+    const normalOptionsMenu = [
+        new DropdownOption(<FiMaximize2/>, 'Maximize', props.onMaximizeClick),
+        new DropdownOption(<FiMaximize/>, 'Fullscreen', () => console.log("clicked something")),
+    ];
     return (
         <div className="webrtc-media-cell">
-            <Dropdown options={optionsMenu}/>
+            <Dropdown options={normalOptionsMenu}/>
             <video src="/videos/Big Buck Bunny.mp4" className="video-stream" poster="/images/big_buck_bunny.jpg"/>
         </div>
     );
 }
 
 export default function RoomMainExpand(props) {
+    let maxOptionsMenu;
     let maxWebRTCMedia = null;
     const normalWebRTCMedia = [];
     for (let [key, value] of props.videoElements.entries()) {
-        if (value.isMax)
+        if (value.isMax) {
             maxWebRTCMedia =
                 <video src="/videos/Big Buck Bunny.mp4" className="video-stream" poster="/images/big_buck_bunny.jpg"/>;
+            maxOptionsMenu = [
+                new DropdownOption(<FiMinimize2/>, 'Minimize', () => props.onMaximizeClick(key)),
+                new DropdownOption(<FiMaximize/>, 'Fullscreen', () => console.log("clicked something")),
+            ];
+        }
         else
-            normalWebRTCMedia.push(<WebRTCMediaCell key={key}/>);
+            normalWebRTCMedia.push(<WebRTCMediaCell key={key} onMaximizeClick={() => props.onMaximizeClick(key)}/>);
     }
     return (
         <>
             <div className="room-expanded">
+                <Dropdown options={maxOptionsMenu}/>
                 {maxWebRTCMedia}
             </div>
             <div className="side-video-container">
