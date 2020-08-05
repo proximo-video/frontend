@@ -1,8 +1,21 @@
-import React from 'react';
+import React, {ReactElement} from 'react';
 import {FiVideoOff, FiVideo, FiMic, FiMicOff, FiMonitor, FiMessageSquare} from "react-icons/fi";
 import {FaRegHandSpock} from "react-icons/fa";
 
-export const buttonsData = [
+export interface ButtonsData {
+    onIcon: ReactElement;
+    offIcon: ReactElement;
+    onLegend: string;
+    offLegend: string;
+    onIconColor: string;
+    offIconColor: string;
+    onClass: string;
+    offClass: string;
+    isOff: boolean;
+}
+
+
+export const buttonsData: ButtonsData[] = [
     {
         onIcon: <FiVideo/>,
         offIcon: <FiVideoOff/>,

@@ -1,17 +1,24 @@
-import {DropdownOption} from "./expandedRoomData";
 import {FiMinimize} from "react-icons/fi";
-import React, {useEffect} from "react";
+import React, {ReactElement, useEffect} from "react";
 import '../../assets/scss/custom/roomFullscreen.scss';
+import {RoomMainExpandProps} from "./RoomMainExpand";
+import {VideoElement} from "./videoData";
 
+declare global {
+    interface Document {
+        webkitIsFullScreen: any;
+        mozFullScreen: any;
+        msFullscreenElement: any;
+    }
+}
 
-export default function RoomMainFullscreen(props) {
+export default function RoomMainFullscreen(props: RoomMainExpandProps) {
     // let fullscreenElement;
-    let fullscreenWebRTCMedia = null;
-    let fullscreenUserId = "";
-    const exitHandler = (e) => {
+    let fullscreenWebRTCMedia: ReactElement | null = null;
+    let fullscreenUserId:string = "";
+    const exitHandler = (e: any) => {
         e.preventDefault();
         e.stopPropagation();
-        // console.log("Existing fullscreen mode:", fullscreenUserId);
         if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
             props.onFullscreenClick(fullscreenUserId);
         }
@@ -31,15 +38,13 @@ export default function RoomMainFullscreen(props) {
             // document.removeEventListener('keydown', handleKeydown);
         }
     }, []);
-
-    for (let [key, value] of props.videoElements.entries()) {
+    props.videoElements.forEach((value: VideoElement, key: string) => {
         if (value.isFullscreen) {
             fullscreenUserId = key;
             fullscreenWebRTCMedia =
                 <video src="/videos/Big Buck Bunny.mp4" className="video-stream" poster="/images/big_buck_bunny.jpg"/>;
         }
-    }
-
+    });
     return (
         <div className={"room-fullscreen"}>
             <div className="exit-fullscreen" onClick={() => props.onFullscreenClick(fullscreenUserId)}>

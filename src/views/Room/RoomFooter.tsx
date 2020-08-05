@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import React, {ReactElement, useState} from 'react';
 import { IconContext } from "react-icons";
 import { buttonsData } from './buttonsData';
 import ReactTooltip from "react-tooltip";
-import { FaChevronCircleUp, FaChevronUp, FaChevronDown } from "react-icons/fa";
+import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 
-function ControlButton(props) {
+export interface ControlButtonProps {
+    legend: string;
+    onClick: () => void;
+    iconColor: string;
+    className: string;
+    icon: ReactElement;
+}
+
+function ControlButton(props: ControlButtonProps) {
     return (
         <>
             <ReactTooltip id={props.legend} place="top" type="dark" effect="solid" className="tooltip">
@@ -26,14 +34,19 @@ function ControlButton(props) {
     );
 }
 
-function RoomFooter(props) {
+export interface RoomFooterProps {
+    buttonsState: boolean[];
+    onClick: (i: number) => void;
+}
+
+function RoomFooter(props: RoomFooterProps) {
     const [isPinned, setIsPinned] = useState(false);
 
     const handlePinButtonClick = () => {
         setIsPinned(!isPinned);
     }
 
-    const buttons = props.buttonsState.map((isOff, i) =>
+    const buttons = props.buttonsState.map((isOff: boolean, i: number) =>
         <ControlButton
             key={i}
             className={(isOff ? buttonsData[i].offClass : buttonsData[i].onClass)}
@@ -41,7 +54,7 @@ function RoomFooter(props) {
             icon={(isOff ? buttonsData[i].offIcon : buttonsData[i].onIcon)}
             iconColor={(isOff ? buttonsData[i].offIconColor : buttonsData[i].onIconColor)}
             onClick={() => props.onClick(i)}
-            isOff={isOff}
+            // isOff={isOff}
         />
     );
     return (
