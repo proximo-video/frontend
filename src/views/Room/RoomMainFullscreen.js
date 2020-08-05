@@ -1,5 +1,5 @@
 import {DropdownOption} from "./expandedRoomData";
-import {FiMaximize, FiMinimize2} from "react-icons/fi";
+import {FiMinimize} from "react-icons/fi";
 import React, {useEffect} from "react";
 import '../../assets/scss/custom/roomFullscreen.scss';
 
@@ -42,6 +42,10 @@ export default function RoomMainFullscreen(props) {
 
     return (
         <div className={"room-fullscreen"}>
+            <div className="exit-fullscreen" onClick={() => props.onFullscreenClick(fullscreenUserId)}>
+                <FiMinimize/>
+                <span>Exit full screen</span>
+            </div>
             {fullscreenWebRTCMedia}
         </div>
     )

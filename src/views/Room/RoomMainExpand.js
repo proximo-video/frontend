@@ -1,5 +1,5 @@
 import React from 'react';
-import {FiMaximize2, FiMinimize2, FiMinimize, FiMaximize} from "react-icons/fi";
+import {FiMaximize2, FiMinimize2, FiMaximize} from "react-icons/fi";
 import '../../assets/scss/custom/roomExpand.scss';
 import Dropdown from "../../components/elements/Dropdown";
 import {DropdownOption} from "./expandedRoomData";

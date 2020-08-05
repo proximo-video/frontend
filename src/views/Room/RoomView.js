@@ -69,7 +69,7 @@ function RoomView() {
                 if (key !== userId)
                     newVideoElements.get(key).isFullscreen = false;
             }
-            console.log("fullscreen request from user:", userId, newVideoElements.get(userId).isFullscreen)
+            // console.log("fullscreen request from user:", userId, newVideoElements.get(userId).isFullscreen)
             if (newVideoElements.get(userId).isFullscreen) {
                 const elem = document.documentElement;
                 if (elem.requestFullscreen) {
