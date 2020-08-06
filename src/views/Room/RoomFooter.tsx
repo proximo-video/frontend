@@ -40,7 +40,7 @@ export interface RoomFooterProps {
 }
 
 function RoomFooter(props: RoomFooterProps) {
-    const [isPinned, setIsPinned] = useState(false);
+    const [isPinned, setIsPinned] = useState(true);
 
     const handlePinButtonClick = () => {
         setIsPinned(!isPinned);
