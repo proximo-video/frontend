@@ -90,6 +90,24 @@
 	}
 }
 
+.button-danger {
+	color: color(button-dark);
+    background-color: color-bg(button-danger);
+	border-color: color-border(button-danger);
+
+    &:hover {
+        background-color: color-bg(button-danger-hover);
+		border-color: color-border(button-danger-hover);
+    }
+
+	&.is-loading {
+
+		&::after {
+			border-color: color(button-danger);
+		}
+	}
+}
+
 .button-primary {
 	color: color(button-primary);
     background-color: color-bg(button-primary);

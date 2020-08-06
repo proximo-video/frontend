@@ -24,7 +24,9 @@ $button--bg: (
 	button-primary-hover: 	lighten(get-color(primary, 1), 2%),
 	button-secondary: 		get-color(secondary, 1),
 	button-secondary-hover:	lighten(get-color(secondary, 1), 2%),
-	button-disabled: 		get-color(light, 3)
+	button-disabled: 		get-color(light, 3),
+	button-danger:			get-color(alert,error),
+	button-danger-hover:	lighten(get-color(alert, error), 5%)
 );
 
 // Buttons: border color
@@ -80,7 +82,7 @@ $form--bg: (
 	input-focus: 					null,
 	input-disabled: 				get-color(dark, 3),
 	check-radio-checked: 			get-color(primary, 1),
-	switch:							get-color(dark, 3),
+	switch:							get-color(light, 3),
     switch-checked:					get-color(primary, 1),
     range-track:                    get-color(light, 2),
     range-thumb:                    get-color(primary, 1),    

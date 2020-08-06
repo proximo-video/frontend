@@ -57,10 +57,10 @@ const PersonalMedia = React.forwardRef((props, ref) => {
         <>
             <div className="is-relative">
                 {ref ? <video className="self-video" ref={ref} autoPlay muted></video> : <div></div>}
-                <div className="is-flex is-center-flex video-controls">
+                <div className="is-center-flex video-controls">
                     <div className="button-wrapper">
-                        <button className="button is-medium px-1 mx-2 icon-button" disabled={!props.mediaSuccess} onClick={toggleAudio}>{isAudio ? <IoMdMic className="cntrl-button" /> : <IoMdMicOff className="cntrl-button" />}</button>
-                        <button className="button is-medium px-1 mx-2 icon-button" disabled={!props.mediaSuccess} onClick={toggleVideo}>{isVideo ? <RiCameraLine className="cntrl-button" /> : <RiCameraOffLine className="cntrl-button" />}</button>
+                        <button className="icon-button" disabled={!props.mediaSuccess} onClick={toggleAudio}>{isAudio ? <IoMdMic className="cntrl-button medium-icon" /> : <IoMdMicOff className="cntrl-button" />}</button>
+                        <button className="icon-button" disabled={!props.mediaSuccess} onClick={toggleVideo}>{isVideo ? <RiCameraLine className="cntrl-button medium-icon" /> : <RiCameraOffLine className="cntrl-button" />}</button>
                     </div>
                 </div>
             </div>
