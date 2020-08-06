@@ -1,5 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import GetLocalWebCamFeed from '../utils/GetLocalWebCamFeed';
+import { IoMdMic, IoMdMicOff } from 'react-icons/io';
+import { RiCameraLine, RiCameraOffLine } from 'react-icons/ri';
 
 const PersonalMedia = React.forwardRef((props, ref) => {
     const [isAudio, setAudio] = useState(true);
@@ -20,12 +22,17 @@ const PersonalMedia = React.forwardRef((props, ref) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVideo]);
 
-    useState(()=>{
+    useEffect(() => {
+        console.log("PersonalMedia mounted")
         return () => {
+            console.log("PersonalMedia Unmounted")
+            // eslint-disable-next-line
             ref.current.srcObject.getVideoTracks()[0].stop();
+            // eslint-disable-next-line
             ref.current.srcObject.getAudioTracks()[0].stop();
-          }
-    },[])
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const toggleVideo = () => {
         if (isVideo) {
@@ -48,9 +55,15 @@ const PersonalMedia = React.forwardRef((props, ref) => {
 
     return (
         <>
-            {ref ? <video ref={ref} autoPlay muted></video> : <div></div>}
-            <button disabled={!props.mediaSuccess} onClick={toggleAudio}>Audio Toggle</button>
-            <button disabled={!props.mediaSuccess} onClick={toggleVideo}>Video Toggle</button>
+            <div className="is-relative">
+                {ref ? <video className="self-video" ref={ref} autoPlay muted></video> : <div></div>}
+                <div className="is-flex is-center-flex video-controls">
+                    <div className="button-wrapper">
+                        <button className="button is-medium px-1 mx-2 icon-button" disabled={!props.mediaSuccess} onClick={toggleAudio}>{isAudio ? <IoMdMic className="cntrl-button" /> : <IoMdMicOff className="cntrl-button" />}</button>
+                        <button className="button is-medium px-1 mx-2 icon-button" disabled={!props.mediaSuccess} onClick={toggleVideo}>{isVideo ? <RiCameraLine className="cntrl-button" /> : <RiCameraOffLine className="cntrl-button" />}</button>
+                    </div>
+                </div>
+            </div>
         </>
     )
 })
