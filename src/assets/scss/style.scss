@@ -133,12 +133,16 @@
 	margin: 0px 10px !important;
 }
 
+.is-center-flex{
+	justify-content: center;
+}
+
 .is-center{
 	margin:0 auto;
 }
 .room-entry-container{
 	display: block;
-	max-width: 50vw;
+	max-width: 380px;;
 	margin: 0 auto;
 }
 
@@ -148,6 +152,51 @@
 	margin: 0 auto;
 }
 
+.icon-button {
+    background-color: transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+.icon-button:hover{
+	outline: transparent;
+	background: transparent;
+}
+
+.cntrl-button {
+	border-radius: 0;
+	border: none;
+	background: transparent;
+	color:white;
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+	outline: transparent;
+  }
+
+
+.button-wrapper {
+	padding: 4px;
+	display: grid;
+	grid-gap: 12px;
+	grid-auto-flow: column;
+	background: rgba(0,0,0,0.4);
+	border-radius: 8px;
+	z-index: 99;
+  }
+
+.video-controls{
+	position: absolute;
+	bottom:0;
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+	text-align: center;
+}
+  
 @media only screen and (max-width: 768px) {
 	.margin-bottom-mobile {
 	  margin-bottom: 10px;

@@ -2,8 +2,8 @@ import React, { useEffect, useState,useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Switch from '../components/elements/Switch';
 import Button from '../components/elements/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
+
+import { FaTrash } from 'react-icons/fa';
 
 function User(props) {
     const modalRef = useRef();
@@ -136,7 +136,7 @@ function User(props) {
                     <div className="level">
                         <div className="level-left">
                             <span className="has-text-white-ter	">{value.room_id}</span>
-                            <button className="ml-6 button is-danger" roomid={value.room_id} onClick={openDeleteModal}><FontAwesomeIcon className="has-text-white" icon={faTrash} /></button>
+                            <button className="ml-6 button is-danger" roomid={value.room_id} onClick={openDeleteModal}><FaTrash className="has-text-white"/></button>
                         </div>
                         <div className="level-right">
                             <div className="margin-bottom-mobile"><Switch roomid={value.room_id} className="has-text-white-ter mr-6" checked={value.is_locked || false} onChange={toggleRoom}>{value.is_locked ? "Locked" : "Open"}</Switch></div>
