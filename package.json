@@ -1,11 +1,16 @@
 {
   "name": "open-react-template",
   "version": "0.1.0",
+  "contributors": [
+    "Aniket Singh <aniketsingh0104@gmail.com>",
+    "Rishabh Tripathi <imristri@gmail.com>"
+  ],
   "private": true,
   "dependencies": {
     "bulma": "^0.9.0",
     "classnames": "^2.2.6",
     "lodash": "^4.17.15",
+    "lorem-ipsum": "^2.0.3",
     "node-sass": "^4.13.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -13,6 +18,8 @@
     "react-icons": "^3.10.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.1",
+    "react-tooltip": "^4.2.7",
+    "typescript": "^3.9.7"
     "react-useportal": "^1.0.13",
     "uuid": "^8.3.0"
   },
@@ -41,5 +48,7 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/react": "^16.9.44"
+  }
 }

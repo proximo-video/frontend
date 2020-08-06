@@ -1,0 +1,250 @@
+// @import "~bulma/bulma.sass";
+$color-red: #c35037;
+$border-radius-large: 12px;
+$color-grey-dark: #313c42;
+$color-grey: #4c5f77;
+$color-meeting-red: #f26b4d;
+$transition-button-hover: 100ms;
+$font-weight-medium: 500;
+$drop-shadow-small: 0px 1px 4px rgba(0, 0, 0, 0.16);
+$spacing-1: 4px;
+$spacing-2: 8px;
+$background-color: #181a26;
+$button-background: black;
+$white: #fff;
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --per-row: 1;
+  --rows: 1;
+  --video-padding: 3px;
+  @media only screen and (max-width: 600px) {
+    --video-padding: 1.5px;
+  }
+}
+
+.cntrlButton {
+  border-radius: 0;
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.cntrlButtonFigure {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 0;
+  position: relative;
+}
+
+.cntrlButtonWrap:hover {
+  background: $color-grey-dark;
+}
+
+.cntrlButtonWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: $border-radius-large;
+  background: $button-background;
+  transition: background-color $transition-button-hover;
+  svg {
+    font-size: 25px;
+  }
+}
+
+.cntrlButtonWrap.isOff {
+  background: $color-meeting-red;
+}
+
+.cntrlButtonWrap.isOff:focus,
+.cntrlButtonWrap.isOff:hover {
+  background: $color-red;
+}
+
+.cntrlButtonLegend {
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: $font-weight-medium;
+  color: #fff;
+  width: 100%;
+  text-align: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  text-shadow: $drop-shadow-small;
+  margin-top: $spacing-2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 48px;
+}
+
+.room-footer {
+  position: absolute;
+  bottom: 0;
+  height: 30px;
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  z-index: 1;
+  //   height: 100%;
+  justify-content: center;
+  align-items: center;
+  &:hover .buttonWrapper {
+    display: grid;
+    bottom: 25px;
+  }
+}
+
+
+.buttonWrapper {
+  padding: $spacing-1;
+  display: grid;
+  grid-gap: 22px;
+  grid-auto-flow: column;
+  position: absolute;
+  // bottom: 25px;
+  bottom: -65px;
+  background: $button-background;
+  border-radius: 8px;
+  transition: bottom 0.5s;
+  transition-timing-function: linear;
+}
+
+.room-main {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  .addVideo {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+  }
+}
+
+.video-container {
+  display: flex;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  // height: 100vh;
+  // width: 100vw;
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 600px) {
+  .video {
+    flex-grow: 1;
+  }
+  .buttonWrapper {
+    grid-gap: 8px;
+    padding: 2px;
+  }
+}
+
+.video {
+  width: calc(100%/var(--per-row));
+  padding: var(--video-padding);
+  height: calc(100%/var(--rows));
+  // flex-grow: 1;
+}
+
+.inner {
+  height: 100%;
+  position: relative;
+  &:hover .dropdown-button {
+    display: block;
+  }
+}
+
+.video-stream, iframe {
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.tooltip {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  border-radius: 8px !important;
+}
+
+@keyframes colorChange {
+  from {
+    color: white;
+  }
+  to {
+    color: black;
+  }
+}
+
+@keyframes rotateButtons {
+  0% {
+    transform: rotate(0deg);
+  } 
+  50% {
+    transform: rotate(180deg) scale(2);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+#pin-toolbar-button {
+  // width: 20px;
+  position: absolute;
+  bottom: 5px;
+  border-radius: 7px;
+  cursor: pointer;
+  color: $white;
+  animation: colorChange 1s infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+  // color: linear-gradient(red, yellow);
+  // background: -webkit-linear-gradient(red, yellow); 
+  // -webkit-background-clip: text; 
+  // -webkit-text-fill-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  &:hover {
+    background: hsla(0,0%,100%,.2);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+}
+
+.pinned {
+  + .buttonWrapper {
+    bottom: 25px;
+    animation: rotateButtons 1s;
+  }
+}
+
+// .unpinned {
+//   + .buttonWrapper {
+//     bottom: -65px;
+//   }
+//   &:hover + .buttonWrapper {
+//     bottom: 25px;
+//   }
+// }
+
+
+
+
