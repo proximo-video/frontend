@@ -3,7 +3,7 @@ import { useLocation, Switch } from 'react-router-dom';
 import AppRoute from './utils/AppRoute';
 import ReactGA from 'react-ga';
 import { useDispatch } from 'react-redux';
-import { login } from './redux/actions';
+import { login,setId,setName,setRooms,logout} from './redux/actions';
 import './App.css';
 //import 'bulma/css/bulma.min.css';
 
@@ -33,14 +33,18 @@ const App = (props) => {
   let location = useLocation();
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        let response = await fetch('https://proximo-video.herokuapp.com/getSession', { credentials: 'include' });
-        if (response.ok) {
-          dispatch(login());
-        }
+      let response = await fetch('https://proximo-video.herokuapp.com/getUser', { credentials: 'include' });
+      if (response.ok) {
+        let data = await response.json()
+        console.log(data);
+        dispatch(login())
+        dispatch(setId(data.id));
+        dispatch(setName(data.name));
+        if (data.rooms)
+          dispatch(setRooms(data.rooms));
       }
-      catch (e) {
-        console.log(e);
+      else {
+       dispatch(logout())
       }
       setFetched(true);
     }
@@ -56,14 +60,14 @@ const App = (props) => {
   }, [location]);
 
   return (fetched ?
-        <Switch>
-          <AppRoute exact path="/" component={Home} layout={LayoutDefault} />
-          <AppRoute exact path="/welcome" component={Welcome} layout={LayoutDefault} />
-          <AppRoute exact path="/user" component={User} layout={LayoutDefault} />
-          <AppRoute exact path="/room" component={RoomView} layout={WhiteLayout} />
-          <AppRoute path="/:roomId" component={Room} layout={WhiteLayout} />
-        </Switch>
-        : <></>
+    <Switch>
+      <AppRoute exact path="/" component={Home} layout={LayoutDefault} />
+      <AppRoute exact path="/welcome" component={Welcome} layout={LayoutDefault} />
+      <AppRoute exact path="/user" component={User} layout={LayoutDefault} />
+      <AppRoute exact path="/room" component={RoomView} layout={WhiteLayout} />
+      <AppRoute path="/:roomId" component={Room} layout={WhiteLayout} />
+    </Switch>
+    : <></>
   );
 }
 

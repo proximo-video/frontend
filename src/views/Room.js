@@ -2,13 +2,20 @@ import React, { useState, useRef, useEffect } from 'react';
 import Socket from '../utils/Socket';
 import RoomEntry from './RoomEntry';
 import { v4 as uuidv4 } from 'uuid';
-
+import LayoutDefault from '../layouts/LayoutDefault'
+import {useDispatch,useSelector} from 'react-redux';
+import {setId} from '../redux/actions';
 function Room(props) {
+    const dispatch = useDispatch();
+    const id = useSelector(state=>state.id);
+    const name = useSelector(state=>state.name);
+    const rooms = useSelector(state=>state.rooms);
+    const isLogged = useSelector(state=>state.isLogged);
     let videoRefArray = [];
     // auth=0 Checking, 1 - loggedin & owner, 2 -loggedin &guest, 3- Not Logged-in guest
-    const [auth, setAuth] = useState(0);
-    const [name, setName] = useState("");
-    const [id, setID] = useState(0);
+    const [fetched, setFetched] = useState(false);
+    // const [name, setName] = useState("");
+    // const [id, setID] = useState(0);
     const localStream = useRef()
     const [iceServer, setIceServer] = useState()
     const [mediaSuccess, setMediaSuccess] = useState(false);
@@ -65,9 +72,12 @@ function Room(props) {
                 console.log(e);
             }
         }
-        fetchData();
+        if(!isLogged){
+            dispatch(setId(uuidv4()))
+        }
         checkRoom();
         getIceServer();
+        setFetched(true);
         return () => {
             console.log("Byee Room")
             if (connections) {
@@ -79,26 +89,6 @@ function Room(props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const fetchData = async () => {
-        let response = await fetch('https://proximo-video.herokuapp.com/getUser', { credentials: 'include' });
-        if (response.ok) {
-            let data = await response.json()
-            console.log(data);
-            console.log("id", id);
-            setID(data.id);
-            setName(data.name);
-            console.log(data)
-            if(roomId===data.rooms.find(element => element.room_id===roomId).room_id)
-                setAuth(1);
-            else
-                setAuth(2);
-        }
-        else {
-            setID(uuidv4());
-            setAuth(3);
-        }
-    }
-
     useEffect(() => {
         const sa = Array.from(remoteStreams);
         for (const videoElement in videoRefArray) {
@@ -107,13 +97,13 @@ function Room(props) {
     })
 
     const createSocket = () => {
-        Socket(auth === 1 ? "START" : "JOIN", id, roomId, connections, updateConnection, addStream, deleteStream, localStream.current.srcObject, iceServer);
+        Socket(isLogged? "START" : "JOIN", id, roomId, connections, updateConnection, addStream, deleteStream, localStream.current.srcObject, iceServer);
     }
     videoRefArray = []
-    console.log(auth)
-    return (auth===0?<></>:auth===1 || auth===2?
+    return (<LayoutDefault>
+        {!fetched?<></>:isLogged?
         <>
-            
+                
                 <RoomEntry logged={true} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess} ref={localStream}></RoomEntry>
             {
                 Array.from(remoteStreams).map((v) => {
@@ -123,7 +113,8 @@ function Room(props) {
                     return videoNode
                 })}
 
-            </>: <RoomEntry setName={setName} logged={false} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess} ref={localStream}></RoomEntry>
+            </>: <RoomEntry logged={false} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess} ref={localStream}></RoomEntry>}
+            </LayoutDefault>
     )
 }
 

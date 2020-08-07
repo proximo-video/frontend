@@ -13,17 +13,10 @@ function User(props) {
     const id = useSelector(state=>state.id);
     const name = useSelector(state=>state.name);
     const rooms = useSelector(state=>state.rooms);
+    const isLogged = useSelector(state=>state.isLogged);
     const [showModal,setShowModal] =useState(false);
     const [deleteRoomId, setDeleteRoomId] = useState("");
-    // const [id, setID] = useState(0);
     const [roomIdInput, setRoomIdInput] = useState("");
-    // const [name, setName] = useState("");
-    // const [rooms, setRooms] = useState([]);
-    const isLogged = useSelector(state=>state.isLogged)
-    useEffect(() => {
-        fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     const roomInputHandle = (event) => {
         setRoomIdInput(event.target.value)

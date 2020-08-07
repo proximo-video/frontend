@@ -2,10 +2,13 @@ import React from 'react';
 import Button from '../components/elements/Button';
 import Input from '../components/elements/Input'
 import PersonalMedia from './PersonalMedia';
+import {useDispatch} from 'react-redux';
+import {setName} from '../redux/actions';
 
 const RoomEntry = React.forwardRef((props, ref) => {
+    const dispatch = useDispatch();
     const nameInputHandler = (e)=>{
-        props.setName(e.target.value);
+        dispatch(setName(e.target.value));
     }
     return (
         <>

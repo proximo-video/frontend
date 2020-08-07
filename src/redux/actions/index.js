@@ -4,6 +4,13 @@ export const login = () =>{
     }
 }
 
+export const logout = () =>{
+    return {
+        type:'LOGOUT'
+    }
+}
+
+
 export const setName = (name) =>{
     return{
         type:'SET_NAME',
