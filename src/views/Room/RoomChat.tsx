@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import 'emoji-mart/css/emoji-mart.css'
 import {Picker} from 'emoji-mart'
 import {FiSmile} from 'react-icons/fi';
-import Tab from "./Tab";
+import ChatMain from "./ChatMain";
 
 // function ChatBackdrop({backdropClick}) {
 //     let sideChat: Element;
@@ -77,7 +77,7 @@ export default function RoomChat({isChatOpen, onClose}) {
                     <div>X</div>
                 </div>
                 <div className="chat-main">
-                    <Tab>Hi I am aniket</Tab>
+                    <ChatMain/>
                     {isEmojiContainerOpen && <EmojiContainer addEmoji={addEmoji} handleEmojiOpenButton={handleEmojiOpenButton}/>}
                 </div>
                 <div className="chat-footer">
