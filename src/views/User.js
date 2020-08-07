@@ -5,15 +5,21 @@ import Button from '../components/elements/Button';
 import Modal from '../components/elements/Modal';
 import Input from '../components/elements/Input';
 import { FaTrash } from 'react-icons/fa';
+import {useDispatch,useSelector} from 'react-redux';
+import {setName,setRooms,setId} from '../redux/actions';
 
 function User(props) {
+    const dispatch = useDispatch();
+    const id = useSelector(state=>state.id);
+    const name = useSelector(state=>state.name);
+    const rooms = useSelector(state=>state.rooms);
     const [showModal,setShowModal] =useState(false);
     const [deleteRoomId, setDeleteRoomId] = useState("");
-    const [id, setID] = useState(0);
+    // const [id, setID] = useState(0);
     const [roomIdInput, setRoomIdInput] = useState("");
-    const [name, setName] = useState("");
-    const [rooms, setRooms] = useState([]);
-    const [isAuth, setAuth] = useState(false);
+    // const [name, setName] = useState("");
+    // const [rooms, setRooms] = useState([]);
+    const isLogged = useSelector(state=>state.isLogged)
     useEffect(() => {
         fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -28,11 +34,10 @@ function User(props) {
             let data = await response.json()
             console.log(data);
             console.log("id", id);
-            setID(data.id);
-            setName(data.name);
+            dispatch(setId(data.id));
+            dispatch(setName(data.name));
             if (data.rooms)
-                setRooms(data.rooms);
-            setAuth(true)
+            dispatch(setRooms(data.rooms));
         }
         else {
             props.history.push("/");
@@ -126,7 +131,7 @@ function User(props) {
 
     const genRooms = (value, key) => {
         return (
-            <div className="card has-background-dark mb-3" key={key}>
+            <div className="card has-background-dark mb-32" key={key}>
                 <div className="card-content">
                     <div className="level">
                         <div className="level-left">
@@ -143,7 +148,7 @@ function User(props) {
             </div>)
     }
 
-    return isAuth ? (
+    return isLogged ? (
         <div className="section">
             <div className="container">
                 <div className="h2 mb-32  ta-c">Welcome {name}</div>
