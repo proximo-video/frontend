@@ -28,7 +28,7 @@ function RoomView() {
     const [videoElements, setVideoElements] = useState<Map<string, VideoElement>>(videoData);
     const [isAnyVideoMax, setIsAnyVideoMax] = useState<boolean>(false);
     const [isAnyVideoFullscreen, setIsAnyVideoFullscreen] = useState<boolean>(false);
-    const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
+    const [isChatOpen, setIsChatOpen] = useState<boolean>(true);
 
     const handleButtonClick = (i: number) => {
         const newButtonsState = buttonsState.slice();

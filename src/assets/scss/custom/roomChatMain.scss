@@ -5,6 +5,12 @@ $font-color: #bfbebe;
 $avatar-background: #107ad1;
 $message-body-color: #bfbebe;
 $message-body-background: #3f475f;
+$url-color: #ACADFF;
+
+:root {
+  --message-avatar-size: 30px;
+  --max-message-avatar-size: 30px;
+}
 
 .react-tabs {
   height: 100%;
@@ -57,11 +63,19 @@ $message-body-background: #3f475f;
 .message-component {
   display: inline-flex;
   padding: 7px 10px 7px 10px;
+  max-width: 80%;
 }
 
 .avatar {
   color: white;
   background-color: $avatar-background;
+  min-height: var(--max-message-avatar-size);
+  min-width: var(--max-message-avatar-size);
+  height: var(--message-avatar-size);
+  width:var(--message-avatar-size);
+  span {
+    font-size: calc(var(--message-avatar-size)/2);
+  }
 }
 
 .message-body-container {
@@ -70,10 +84,17 @@ $message-body-background: #3f475f;
   background: $message-body-background;
   padding: 0 10px !important;
   color: $font-color;
+  max-width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  word-wrap: break-word;
+  a {
+    color: $url-color !important;
+  }
   &.right {
-    border-radius: 10px 0 10px 10px;
+    border-radius: 15px 0 15px 15px;
   }
   &.left {
-    border-radius: 0 10px 10px 10px;
+    border-radius: 0 15px 15px 15px;
   }
 }
