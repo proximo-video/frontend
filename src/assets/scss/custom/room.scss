@@ -23,8 +23,18 @@ $bg-dark-chat: #1e2337;
   --rows: 1;
   --video-padding: 3px;
   --chat-width: 27%;
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 500px) {
     --video-padding: 1.5px;
+    --chat-width: 100%;
+  }
+  @media only screen and (min-width: 500px) {
+    --chat-width: 55%;
+  }
+  @media only screen and (min-width: 768px) {
+    --chat-width: 40%;
+  }
+  @media only screen and (min-width: 992px) {
+    --chat-width: 27%;
   }
 }
 

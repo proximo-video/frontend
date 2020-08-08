@@ -58,8 +58,18 @@ const initialUsers: User[] = [
 
 export function MessageArea() {
     const [chatMessages, setChatMessages] = useState<Message[]>(initialMessages);
+    let messagesEnd: Element;
+
+    const scrollToBottom = () => {
+        messagesEnd.scrollIntoView();
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    });
+
     return (
-        <>
+        <div>
             {
                 chatMessages.map((Mess: Message) =>
                     <div className={"message-container" + (Mess.userId === loggedInUser ? " right" : "")}>
@@ -75,7 +85,8 @@ export function MessageArea() {
                     </div>
                 )
             }
-        </>
+            <div style={{ float:"left", clear: "both" }} ref={(el) => { messagesEnd = el; }}/>
+        </div>
     );
 }
 
@@ -93,16 +104,6 @@ export function UserArea() {
 }
 
 export default function ChatMain(props) {
-    let messagesEnd: Element;
-
-    const scrollToBottom = () => {
-        messagesEnd.scrollIntoView({ behavior: "smooth" });
-    };
-
-    useEffect(() => {
-        scrollToBottom();
-    });
-
     return (
         <Tabs>
             <TabList>
@@ -111,7 +112,6 @@ export default function ChatMain(props) {
             </TabList>
             <TabPanel className={"message-area"}>
                 <MessageArea/>
-                <div style={{ float:"left", clear: "both" }} ref={(el) => { messagesEnd = el; }}/>
             </TabPanel>
             <TabPanel className={"user-area"}>
                 <UserArea/>
