@@ -1,6 +1,6 @@
 import React, {ReactElement, useState} from 'react';
 import { IconContext } from "react-icons";
-import { buttonsData } from './buttonsData';
+import { buttonsData } from './buttonsDataType';
 import ReactTooltip from "react-tooltip";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 

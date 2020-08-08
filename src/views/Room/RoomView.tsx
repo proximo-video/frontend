@@ -2,7 +2,7 @@ import '../../assets/scss/custom/room.scss';
 import React, {useState} from 'react';
 import "./RoomFooter";
 import RoomFooter from './RoomFooter';
-import {videoData, VideoElement} from './videoData';
+import {videoDataType, VideoElement} from './videoDataType';
 import RoomMainExpand from './RoomMainExpand';
 import RoomMain from "./RoomMain";
 import RoomMainFullscreen from "./RoomMainFullscreen";
@@ -25,10 +25,10 @@ declare global {
 function RoomView() {
     // 5 buttons 0=>cam, 1=>mic, 2=>screen, 3=>chat, 4=>leave, buttons array denoting the 
     const [buttonsState, setButtonsState] = useState<boolean[]>([false, false, true, false, false]);
-    const [videoElements, setVideoElements] = useState<Map<string, VideoElement>>(videoData);
+    const [videoElements, setVideoElements] = useState<Map<string, VideoElement>>(videoDataType);
     const [isAnyVideoMax, setIsAnyVideoMax] = useState<boolean>(false);
     const [isAnyVideoFullscreen, setIsAnyVideoFullscreen] = useState<boolean>(false);
-    const [isChatOpen, setIsChatOpen] = useState<boolean>(true);
+    const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
 
     const handleButtonClick = (i: number) => {
         const newButtonsState = buttonsState.slice();

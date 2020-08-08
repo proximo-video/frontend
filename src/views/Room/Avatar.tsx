@@ -71,6 +71,5 @@ export default function Avatar(props: AvatarProps) {
 }
 
 Avatar.defaultProps = {
-    className: '',
-    round: true
+    className: ''
 }

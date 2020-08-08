@@ -2,7 +2,7 @@ import React, {ReactElement} from 'react';
 import {FiVideoOff, FiVideo, FiMic, FiMicOff, FiMonitor, FiMessageSquare} from "react-icons/fi";
 import {FaRegHandSpock} from "react-icons/fa";
 
-export interface ButtonsData {
+export interface ButtonsDataType {
     onIcon: ReactElement;
     offIcon: ReactElement;
     onLegend: string;
@@ -15,7 +15,7 @@ export interface ButtonsData {
 }
 
 
-export const buttonsData: ButtonsData[] = [
+export const buttonsData: ButtonsDataType[] = [
     {
         onIcon: <FiVideo/>,
         offIcon: <FiVideoOff/>,

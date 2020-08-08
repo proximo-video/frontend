@@ -22,13 +22,13 @@ export default function MessageComponent({message, displayName, avatarPosition, 
             {
                 avatarPosition === 'left' ?
                     <>
-                        <Avatar name={displayName} className={avatarClassName + ' avatar'}/>
+                        <Avatar round={true} name={displayName} className={avatarClassName + ' avatar'}/>
                         <Linkify componentDecorator={componentDecorator}><p className={messageBodyClassName + ' message-body-container'}>{message}</p></Linkify>
                     </>
                     :
                     <>
                         <Linkify componentDecorator={componentDecorator}><p className={messageBodyClassName + ' message-body-container'}>{message}</p></Linkify>
-                        <Avatar name={displayName} className={avatarClassName + ' avatar'}/>
+                        <Avatar round={true} name={displayName} className={avatarClassName + ' avatar'}/>
                     </>
             }
         </div>

@@ -1,10 +1,10 @@
 import React, {ReactElement} from 'react';
 import '../../assets/scss/custom/room.scss';
-import DropdownOption from "./expandedRoomData";
+import DropdownOption from "./expandedRoomDataType";
 import {FiMaximize, FiMaximize2} from "react-icons/fi";
 import Dropdown from "./Dropdown";
 import {WebRTCMediaCellProps, RoomMainExpandProps} from "./RoomMainExpand";
-import {VideoElement} from './videoData';
+import {VideoElement} from './videoDataType';
 
 
 function WebRTCMediaCell(props: WebRTCMediaCellProps) {
