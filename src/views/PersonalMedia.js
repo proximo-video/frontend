@@ -2,25 +2,39 @@ import React, { useEffect, useState } from 'react';
 import GetLocalWebCamFeed from '../utils/GetLocalWebCamFeed';
 import { IoMdMic, IoMdMicOff } from 'react-icons/io';
 import { RiCameraLine, RiCameraOffLine } from 'react-icons/ri';
+import { localStream } from '../middleware/getUserMedia';
+import {getUserMedia} from '../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const PersonalMedia = React.forwardRef((props, ref) => {
-    const [isAudio, setAudio] = useState(true);
-    const [isVideo, setVideo] = useState(true);
+    const dispatch = useDispatch();
+    const userMedia = useSelector(state => state.userMedia);
+    const isAudio = useSelector(state => state.userMediaPreference.isAudio);
+    const isVideo = useSelector(state => state.userMediaPreference.isVideo);
     useEffect(() => {
-        const getFeed = async () => {
-            try {
-                ref.current.srcObject = await GetLocalWebCamFeed(isAudio, isVideo);
-                if (ref.current.srcObject) {
-                    props.setMediaSuccess(true);
-                }
+        // const getFeed = async () => {
+        //     try {
+        //         ref.current.srcObject = await GetLocalWebCamFeed(isAudio, isVideo);
+        //         if (ref.current.srcObject) {
+        //             props.setMediaSuccess(true);
+        //         }
+        //     }
+        //     catch (e) {
+        //         console.log(e)
+        //     }
+        // }
+        // getFeed();
+        if (userMedia) {
+            ref.current.srcObject = localStream
+            if (ref.current.srcObject) {
+                props.setMediaSuccess(true);
             }
-            catch (e) {
-                console.log(e)
-            }
+        } else{
+            dispatch(getUserMedia(true));
         }
-        getFeed();
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isVideo]);
+    }, [userMedia]);
 
     useEffect(() => {
         console.log("PersonalMedia mounted")
@@ -38,17 +52,17 @@ const PersonalMedia = React.forwardRef((props, ref) => {
         if (isVideo) {
             ref.current.srcObject.getVideoTracks()[0].stop();
             ref.current.srcObject.getAudioTracks()[0].stop();
-            setVideo(false);
+            //setVideo(false);
         }
         else {
             ref.current.srcObject.getAudioTracks()[0].stop();
-            setVideo(true);
+            //setVideo(true);
         }
     }
 
     const toggleAudio = () => {
         ref.current.srcObject.getAudioTracks()[0].enabled = !isAudio;
-        setAudio(!isAudio);
+        //setAudio(!isAudio);
     }
 
 

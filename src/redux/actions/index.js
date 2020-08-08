@@ -11,6 +11,15 @@ export const logout = () =>{
 }
 
 
+export const getUserMedia = (value)=>{
+    return {
+        type:'GETUSERMEDIA',
+        value
+    }
+}
+
+
+
 export const setName = (name) =>{
     return{
         type:'SET_NAME',

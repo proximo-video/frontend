@@ -8,6 +8,7 @@ import { FaTrash } from 'react-icons/fa';
 import {useDispatch,useSelector} from 'react-redux';
 import {setName,setRooms,setId} from '../redux/actions';
 
+
 function User(props) {
     const dispatch = useDispatch();
     const id = useSelector(state=>state.id);
@@ -21,6 +22,7 @@ function User(props) {
     const roomInputHandle = (event) => {
         setRoomIdInput(event.target.value)
     }
+
     const fetchData = async () => {
         let response = await fetch('https://proximo-video.herokuapp.com/getUser', { credentials: 'include' });
         if (response.ok) {

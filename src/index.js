@@ -2,16 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
-import {createStore} from 'redux';
+import {createStore, applyMiddleware,compose} from 'redux';
 import allReducers from './redux/reducers';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {Provider} from 'react-redux';
+import 'reflect-metadata';
 
 //import './App.css';
 import './assets/scss/style.scss';
+import getUserMediaMiddleware from './middleware/getUserMedia';
 
-const store = createStore(allReducers,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const store = createStore(allReducers,compose(applyMiddleware(getUserMediaMiddleware),window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
 const history = createBrowserHistory();
 
 ReactDOM.render(

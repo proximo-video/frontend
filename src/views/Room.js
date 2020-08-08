@@ -4,7 +4,7 @@ import RoomEntry from './RoomEntry';
 import { v4 as uuidv4 } from 'uuid';
 import LayoutDefault from '../layouts/LayoutDefault'
 import {useDispatch,useSelector} from 'react-redux';
-import {setId} from '../redux/actions';
+import {setId,saveStream} from '../redux/actions';
 function Room(props) {
     const dispatch = useDispatch();
     const id = useSelector(state=>state.id);
