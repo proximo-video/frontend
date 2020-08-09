@@ -78,6 +78,7 @@ function Socket(action, userId, roomId, connections, updateConnection, addStream
         connection.ontrack = event => {
             console.log("Recieved Stream.");
             addStream(toUser, event.streams);
+            console.log(event.streams)
             // document.getElementById("remoteVideo").srcObject = event.streams[0];
             console.log(event.streams)
         }

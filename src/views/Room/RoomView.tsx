@@ -1,11 +1,15 @@
 import '../../assets/scss/custom/room.scss';
-import React, {useState} from 'react';
+import React, {useState, useRef,useEffect} from 'react';
 import "./RoomFooter";
 import RoomFooter from './RoomFooter';
 import {videoData, VideoElement} from './videoData';
 import RoomMainExpand from './RoomMainExpand';
 import RoomMain from "./RoomMain";
 import RoomMainFullscreen from "./RoomMainFullscreen";
+import { localStream } from '../../middleware/getUserMedia';
+import { getUserMedia, toggleAudio, toggleVideo } from '../../redux/actions';
+import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
+import { detect } from 'detect-browser';
 declare global {
     interface Document {
         mozCancelFullScreen?: () => Promise<void>;
@@ -24,9 +28,27 @@ declare global {
 function RoomView() {
     // 5 buttons 0=>cam, 1=>mic, 2=>screen, 3=>chat, 4=>leave, buttons array denoting the 
     const [buttonsState, setButtonsState] = useState<boolean[]>([false, false, true, false, false]);
+    const browser = detect();
+    const dispatch = useDispatch();
+    const userMedia = useSelector((state:RootStateOrAny) => state.userMedia);
+    const isAudio = useSelector((state:RootStateOrAny) => state.userMediaPreference.isAudio);
+    const isVideo = useSelector((state:RootStateOrAny) => state.userMediaPreference.isVideo);
+    const selfVideo = useRef();
+    videoData.set("389237982nikwebdj", new VideoElement(selfVideo, false, false, "389237982nikwebdj", "first"));
     const [videoElements, setVideoElements] = useState<Map<string, VideoElement>>(videoData);
     const [isAnyVideoMax, setIsAnyVideoMax] = useState<boolean>(false);
     const [isAnyVideoFullscreen, setIsAnyVideoFullscreen] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (userMedia) {
+            if(selfVideo.current!==void 0)
+            //@ts-ignore
+                selfVideo.current.srcObject = localStream
+        } else {
+            dispatch(getUserMedia(true));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userMedia]);
 
     const handleButtonClick = (i: number) => {
         const newButtonsState = buttonsState.slice();

@@ -5,22 +5,12 @@ import FeaturesTiles from '../components/sections/FeaturesTiles';
 import FeaturesSplit from '../components/sections/FeaturesSplit';
 import Testimonial from '../components/sections/Testimonial';
 import Cta from '../components/sections/Cta';
+import {useSelector} from 'react-redux';
 
 const Home = (props) => {
-  useEffect(() => {
-    const fetchData = async () => {
-      try{let response = await fetch('https://proximo-video.herokuapp.com/getSession', { credentials: 'include' });
-      if (response.ok) {
-        props.history.push("/user")
-      }
-    }
-    catch(e){
-      console.log(e);
-    }
-    }
-    fetchData();
-     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const isLogged = useSelector(state => state.isLogged);
+  if(isLogged)
+    props.history.push('/user');
   return  (
     <>
       <Hero className="illustration-section-01" />

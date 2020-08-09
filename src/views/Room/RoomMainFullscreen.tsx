@@ -42,7 +42,7 @@ export default function RoomMainFullscreen(props: RoomMainExpandProps) {
         if (value.isFullscreen) {
             fullscreenUserId = key;
             fullscreenWebRTCMedia =
-                <video src="/videos/Big Buck Bunny.mp4" className="video-stream" poster="/images/big_buck_bunny.jpg"/>;
+                <video ref={value.videoRef} autoPlay className="video-stream"/>;
         }
     });
     return (

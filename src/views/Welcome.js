@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-
+import {useDispatch} from 'react-redux';
+import { login } from '../redux/actions';
 function Welcome() {
     const [success,setSuccess] = useState(false);
+    const dispatch = useDispatch();
     useEffect(() => {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
@@ -20,6 +22,7 @@ function Welcome() {
                 body: JSON.stringify({ service: service, code: code })
             });
             if (response.ok) {
+                dispatch(login());
                 setSuccess(true);
             }
         }
