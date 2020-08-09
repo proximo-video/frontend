@@ -7,7 +7,7 @@ export interface NotificationsProps {
     notifications: any[];
     onRequestHide?: (i: any) => void;
     enterTimeout: number;
-    leaveTimeout: number;
+    exitTimeout: number;
 }
 
 export default function Notifications(props: NotificationsProps) {
@@ -19,7 +19,7 @@ export default function Notifications(props: NotificationsProps) {
         }
     };
 
-    const { notifications, enterTimeout, leaveTimeout } = props;
+    const { notifications, enterTimeout, exitTimeout } = props;
     const className = classnames('notification-container', {
         'notification-container-empty': notifications.length === 0
     });
@@ -33,7 +33,7 @@ export default function Notifications(props: NotificationsProps) {
                         <CSSTransition
                             key={key}
                             classNames="notification"
-                            timeout={{ enter: enterTimeout, exit: leaveTimeout }}
+                            timeout={{ enter: enterTimeout, exit: exitTimeout}}
                         >
                             <Notification
                                 type={notification.type}
@@ -56,5 +56,5 @@ Notifications.defaultProps = {
     onRequestHide: () => {
     },
     enterTimeout: 400,
-    leaveTimeout: 100000000000
+    exitTimeout: 400
 }

@@ -256,42 +256,10 @@ $font-color: #bfbebe;
   width: calc(100% - var(--chat-width));
 }
 
-.message-snackbar {
-  border-radius: 10px;
-  background: $bg-dark-chat;
-  color: $font-color;
-  overflow-y: auto;
-  padding: 10px;
-  font-size: medium;
-  //visibility: hidden;
-  .message-component {
-    padding: 0 !important;
-  }
-}
-
 .side-message-body {
   background: #272c47 !important;
+  border-radius: 0 10px 10px 10px;
 }
-
-.example-enter {
-  opacity: 0.01;
-}
-
-.example-enter.example-enter-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
-}
-
-.example-leave {
-  opacity: 1;
-}
-
-.example-leave.example-leave-active {
-  opacity: 0.01;
-  transition: opacity 300ms ease-in;
-}
-
-
 
 
 

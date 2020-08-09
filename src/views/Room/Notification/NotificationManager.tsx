@@ -11,7 +11,7 @@ const createUUID = () => {
 
 const Constants = {
     CHANGE: 'change',
-    INFO: 'info',
+    MESSAGE: 'message',
     SUCCESS: 'success',
     WARNING: 'warning',
     ERROR: 'error'
@@ -19,11 +19,11 @@ const Constants = {
 
 export interface Notify {
     id?: string;
-    type: 'info' | 'success' | 'warning' | 'error';
+    type: 'message' | 'success' | 'warning' | 'error';
     title?: any;
     message: any;
     timeOut: number;
-    priority?: number;
+    priority?: boolean;
     onClick?: any;
 }
 
@@ -33,10 +33,10 @@ let listNotify: Notify[] = [];
 export const create = (notify: Notify) => {
     const defaultNotify = {
         id: createUUID(),
-        type: 'info',
+        type: 'MESSAGE',
         title: null,
         message: null,
-        timeOut: 1000000
+        timeOut: 5000,
     };
     if (notify.priority) {
         listNotify.unshift(Object.assign(defaultNotify, notify));
@@ -46,10 +46,10 @@ export const create = (notify: Notify) => {
     emitChange();
 }
 
-export const info = (message?: any, title?: any, timeOut?: number, onClick?: () => void, priority?: number) => {
+export const Message = (message?: any, title?: any, timeOut?: number, onClick?: () => void, priority?: boolean) => {
     create({
         // @ts-ignore
-        type: Constants.INFO,
+        type: Constants.MESSAGE,
         message,
         title,
         timeOut,
@@ -58,7 +58,7 @@ export const info = (message?: any, title?: any, timeOut?: number, onClick?: () 
     });
 }
 
-export const success = (message?: any, title?: any, timeOut?: number, onClick?: () => void, priority?: number) => {
+export const Success = (message?: any, title?: any, timeOut?: number, onClick?: () => void, priority?: boolean) => {
     create({
         // @ts-ignore
         type: Constants.SUCCESS,
@@ -70,7 +70,7 @@ export const success = (message?: any, title?: any, timeOut?: number, onClick?: 
     });
 }
 
-export const warning = (message?: any, title?: any, timeOut?: number, onClick?: () => void, priority?: number) => {
+export const Warning = (message?: any, title?: any, timeOut?: number, onClick?: () => void, priority?: boolean) => {
     create({
         // @ts-ignore
         type: Constants.WARNING,
@@ -82,7 +82,7 @@ export const warning = (message?: any, title?: any, timeOut?: number, onClick?: 
     });
 }
 
-export const error = (message?: any, title?: any, timeOut?: number, onClick?: () => void, priority?: number) => {
+export const Error = (message?: any, title?: any, timeOut?: number, onClick?: () => void, priority?: boolean) => {
     create({
         // @ts-ignore
         type: Constants.ERROR,

@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import classnames from 'classnames';
 
 export interface NotificationProps {
-    type: "info" | "success" | "warning" | "error",
+    type: "message" | "success" | "warning" | "error",
     title: any,
     message: any,
     timeOut: number,
@@ -47,7 +47,7 @@ export default function Notification(props: NotificationProps) {
     title = title ? (<h4 className="title">{title}</h4>) : null;
     return (
         <div className={className} onClick={handleClick}>
-            <div className="notification-message" role="alert">
+            <div className="notification-message-container" role="alert">
                 {title}
                 <div className="message">{message}</div>
             </div>

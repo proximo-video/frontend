@@ -7,7 +7,7 @@ import RoomMainExpand from './RoomMainExpand';
 import RoomMain from "./RoomMain";
 import RoomMainFullscreen from "./RoomMainFullscreen";
 import RoomChat from "./RoomChat";
-import MessageSnackbar from "./MessageSnackbar";
+import MessageNotification from "./MessageNotification";
 import { localStream } from '../../middleware/getUserMedia';
 import { getUserMedia, toggleAudio, toggleVideo } from '../../redux/actions';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
@@ -177,7 +177,7 @@ function RoomView() {
             </div>
             <RoomChat isChatOpen={isChatOpen} onClose={backdropClick}/>
             <button className="button is-primary addVideo" onClick={() => addUser()}>Primary</button>
-            <MessageSnackbar/>
+            <MessageNotification/>
             <RoomFooter buttonsState={buttonsState} onClick={(i: number) => handleButtonClick(i)}/>
         </div>
     );

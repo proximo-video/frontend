@@ -4,7 +4,7 @@ import Notifications from './Notifications';
 
 export interface NotificationContainerProps {
     enterTimeout: number;
-    leaveTimeout: number;
+    exitTimeout: number;
 }
 
 export default function NotificationContainer(props: NotificationContainerProps) {
@@ -25,12 +25,12 @@ export default function NotificationContainer(props: NotificationContainerProps)
         remove(notification);
     };
 
-    const { enterTimeout, leaveTimeout } = props;
+    const { enterTimeout, exitTimeout } = props;
 
     return (
         <Notifications
             enterTimeout={enterTimeout}
-            leaveTimeout={leaveTimeout}
+            exitTimeout={exitTimeout}
             notifications={notifications}
             onRequestHide={handleRequestHide}
         />
@@ -39,5 +39,5 @@ export default function NotificationContainer(props: NotificationContainerProps)
 
 NotificationContainer.defaultProps = {
     enterTimeout: 400,
-    leaveTimeout: 400,
+    exitTimeout: 400,
 }
