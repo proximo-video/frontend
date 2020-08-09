@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import NotificationContainer from "./Notification/NotificationContainer";
 import {Message} from "./Notification/NotificationManager";
-import '../../assets/scss/custom/Notification/notifications.scss';
+import '../../assets/scss/custom/notifications.scss';
 import MessageComponent from "./MessageComponent";
 
 export interface MessageSnackbarProps {
