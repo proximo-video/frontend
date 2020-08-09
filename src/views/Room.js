@@ -4,7 +4,9 @@ import RoomEntry from './RoomEntry';
 import { v4 as uuidv4 } from 'uuid';
 import LayoutDefault from '../layouts/LayoutDefault'
 import {useDispatch,useSelector} from 'react-redux';
-import {setId,saveStream} from '../redux/actions';
+import {localStream} from '../middleware/getUserMedia'
+import {setId,closeMedia,getUserMedia} from '../redux/actions';
+
 function Room(props) {
     const dispatch = useDispatch();
     const id = useSelector(state=>state.id);
@@ -16,7 +18,6 @@ function Room(props) {
     const [fetched, setFetched] = useState(false);
     // const [name, setName] = useState("");
     // const [id, setID] = useState(0);
-    const localStream = useRef()
     const [iceServer, setIceServer] = useState()
     const [mediaSuccess, setMediaSuccess] = useState(false);
     const [iceSuccess, setIceSuccess] = useState(false)
@@ -85,6 +86,8 @@ function Room(props) {
                     value.close();
                 })
             }
+            dispatch(closeMedia());
+            dispatch(getUserMedia(false));            
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -97,14 +100,14 @@ function Room(props) {
     })
 
     const createSocket = () => {
-        Socket(isLogged? "START" : "JOIN", id, roomId, connections, updateConnection, addStream, deleteStream, localStream.current.srcObject, iceServer);
+        Socket(isLogged? "START" : "JOIN", id, roomId, connections, updateConnection, addStream, deleteStream, localStream, iceServer);
     }
     videoRefArray = []
     return (<LayoutDefault>
         {!fetched?<></>:isLogged?
         <>
                 
-                <RoomEntry logged={true} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess} ref={localStream}></RoomEntry>
+                <RoomEntry logged={true} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess}></RoomEntry>
             {
                 Array.from(remoteStreams).map((v) => {
                     const videoRef = React.createRef();
@@ -113,7 +116,7 @@ function Room(props) {
                     return videoNode
                 })}
 
-            </>: <RoomEntry logged={false} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess} ref={localStream}></RoomEntry>}
+            </>: <RoomEntry logged={false} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess}></RoomEntry>}
             </LayoutDefault>
     )
 }

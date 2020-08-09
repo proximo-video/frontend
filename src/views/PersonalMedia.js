@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import GetLocalWebCamFeed from '../utils/GetLocalWebCamFeed';
+import React, { useEffect, useState,useRef } from 'react';
 import { IoMdMic, IoMdMicOff } from 'react-icons/io';
 import { RiCameraLine, RiCameraOffLine } from 'react-icons/ri';
 import { localStream } from '../middleware/getUserMedia';
-import {getUserMedia} from '../redux/actions';
+import { getUserMedia, toggleAudio, toggleVideo } from '../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import { detect } from 'detect-browser';
 
-const PersonalMedia = React.forwardRef((props, ref) => {
+const PersonalMedia = (props) => {
+    const browser = detect();
+    const videoRef = useRef();
     const dispatch = useDispatch();
     const userMedia = useSelector(state => state.userMedia);
     const isAudio = useSelector(state => state.userMediaPreference.isAudio);
@@ -25,44 +27,35 @@ const PersonalMedia = React.forwardRef((props, ref) => {
         // }
         // getFeed();
         if (userMedia) {
-            ref.current.srcObject = localStream
-            if (ref.current.srcObject) {
+            videoRef.current.srcObject = localStream
+            if (videoRef.current.srcObject) {
                 props.setMediaSuccess(true);
             }
-        } else{
+        } else {
             dispatch(getUserMedia(true));
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userMedia]);
-
-    useEffect(() => {
-        console.log("PersonalMedia mounted")
-        return () => {
-            console.log("PersonalMedia Unmounted")
-            // eslint-disable-next-line
-            ref.current.srcObject.getVideoTracks()[0].stop();
-            // eslint-disable-next-line
-            ref.current.srcObject.getAudioTracks()[0].stop();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-    const toggleVideo = () => {
-        if (isVideo) {
-            ref.current.srcObject.getVideoTracks()[0].stop();
-            ref.current.srcObject.getAudioTracks()[0].stop();
-            //setVideo(false);
-        }
-        else {
-            ref.current.srcObject.getAudioTracks()[0].stop();
-            //setVideo(true);
-        }
+    const toggleVideoStream = () => {
+        // if (isVideo) {
+        //     ref.current.srcObject.getVideoTracks()[0].stop();
+        //     ref.current.srcObject.getAudioTracks()[0].stop();
+        //     //setVideo(false);
+        // }
+        // else {
+        //     ref.current.srcObject.getAudioTracks()[0].stop();
+        //     //setVideo(true);
+        // }
+        dispatch(toggleVideo());
+        if (!(browser &&  browser.name=== 'firefox'))
+            dispatch(getUserMedia(false));
     }
 
-    const toggleAudio = () => {
-        ref.current.srcObject.getAudioTracks()[0].enabled = !isAudio;
-        //setAudio(!isAudio);
+    const toggleAudioStream = () => {
+        // ref.current.srcObject.getAudioTracks()[0].enabled = !isAudio;
+        // //setAudio(!isAudio);
+        dispatch(toggleAudio());
     }
 
 
@@ -70,16 +63,16 @@ const PersonalMedia = React.forwardRef((props, ref) => {
     return (
         <>
             <div className="is-relative">
-                {ref ? <video className="self-video" ref={ref} autoPlay muted></video> : <div></div>}
+                {<video className="self-video" ref={videoRef} autoPlay muted></video>}
                 <div className="is-center-flex video-controls">
                     <div className="button-wrapper">
-                        <button className="icon-button" disabled={!props.mediaSuccess} onClick={toggleAudio}>{isAudio ? <IoMdMic className="cntrl-button medium-icon" /> : <IoMdMicOff className="cntrl-button" />}</button>
-                        <button className="icon-button" disabled={!props.mediaSuccess} onClick={toggleVideo}>{isVideo ? <RiCameraLine className="cntrl-button medium-icon" /> : <RiCameraOffLine className="cntrl-button" />}</button>
+                        <button className="icon-button" disabled={!props.mediaSuccess} onClick={toggleAudioStream}>{isAudio ? <IoMdMic className="cntrl-button medium-icon" /> : <IoMdMicOff className="cntrl-button" />}</button>
+                        <button className="icon-button" disabled={!props.mediaSuccess} onClick={toggleVideoStream}>{isVideo ? <RiCameraLine className="cntrl-button medium-icon" /> : <RiCameraOffLine className="cntrl-button" />}</button>
                     </div>
                 </div>
             </div>
         </>
     )
-})
+}
 
 export default PersonalMedia;

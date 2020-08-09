@@ -7,7 +7,6 @@ import allReducers from './redux/reducers';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {Provider} from 'react-redux';
-import 'reflect-metadata';
 
 //import './App.css';
 import './assets/scss/style.scss';

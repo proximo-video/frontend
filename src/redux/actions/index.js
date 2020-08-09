@@ -18,6 +18,24 @@ export const getUserMedia = (value)=>{
     }
 }
 
+export const toggleAudio = ()=>{
+    return {
+        type:'TOGGLEAUDIO'
+    }
+}
+
+export const toggleVideo = ()=>{
+    return {
+        type:'TOGGLEVIDEO',
+    }
+}
+
+export const closeMedia = ()=>{
+    return {
+        type:'CLOSEMEDIA',
+    }
+}
+
 
 
 export const setName = (name) =>{
