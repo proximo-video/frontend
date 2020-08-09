@@ -1,37 +1,38 @@
-import React, { useEffect, useState,useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Switch from '../components/elements/Switch';
 import Button from '../components/elements/Button';
-
+import Modal from '../components/elements/Modal';
+import Input from '../components/elements/Input';
 import { FaTrash } from 'react-icons/fa';
+import {useDispatch,useSelector} from 'react-redux';
+import {setName,setRooms,setId} from '../redux/actions';
+
 
 function User(props) {
-    const modalRef = useRef();
+    const dispatch = useDispatch();
+    const id = useSelector(state=>state.id);
+    const name = useSelector(state=>state.name);
+    const rooms = useSelector(state=>state.rooms);
+    const isLogged = useSelector(state=>state.isLogged);
+    const [showModal,setShowModal] =useState(false);
     const [deleteRoomId, setDeleteRoomId] = useState("");
-    const [id, setID] = useState(0);
     const [roomIdInput, setRoomIdInput] = useState("");
-    const [name, setName] = useState("");
-    const [rooms, setRooms] = useState([]);
-    const [isAuth, setAuth] = useState(false);
-    useEffect(() => {
-        fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     const roomInputHandle = (event) => {
         setRoomIdInput(event.target.value)
     }
+
     const fetchData = async () => {
         let response = await fetch('https://proximo-video.herokuapp.com/getUser', { credentials: 'include' });
         if (response.ok) {
             let data = await response.json()
             console.log(data);
             console.log("id", id);
-            setID(data.id);
-            setName(data.name);
+            dispatch(setId(data.id));
+            dispatch(setName(data.name));
             if (data.rooms)
-                setRooms(data.rooms);
-            setAuth(true)
+            dispatch(setRooms(data.rooms));
         }
         else {
             props.history.push("/");
@@ -77,15 +78,14 @@ function User(props) {
 
     const openDeleteModal = (e) => {
         const id = e.currentTarget.getAttribute("roomid");
-        console.log(id)
-        modalRef.current.classList.add("is-active");
-        setDeleteRoomId(id)
-        console.log(modalRef)
+        console.log(id);
+        setDeleteRoomId(id);
+        setShowModal(true);
     }
 
     const closeDeleteModal = () => {
         setDeleteRoomId("");
-        modalRef.current.classList.remove("is-active");
+        setShowModal(false);
     }
 
     const deleteRoom = async(e)=>{
@@ -104,58 +104,54 @@ function User(props) {
         }
         setDeleteRoomId("");
         element.removeAttribute("disabled");
-        modalRef.current.classList.remove("is-active");
+        setShowModal(false);
     }
 
 
     const showDeleteModal = () => {
         return (
-                <div ref={modalRef} className="modal">
-                    <div className="modal-background"></div>
-                    <div className="modal-card">
-                        <header className="modal-card-head">
-                            <p className="modal-card-title">Warning</p>
-                            <button onClick={closeDeleteModal} className="delete" aria-label="close"></button>
-                        </header>
-                        <section className="modal-card-body">
-                            {deleteRoomId} will be deleted
-                        </section>
-                        <footer className="modal-card-foot">
-                            <button onClick={deleteRoom} className="button is-danger">Delete</button>
-                            <button onClick={closeDeleteModal} className="button">Cancel</button>
-                        </footer>
+                <Modal show={showModal} handleClose={closeDeleteModal}>
+                    <div>                
+                            <h3>Warning</h3>
+                       
+                            <p>{deleteRoomId} will be deleted</p>
+                        
+                            <Button color="danger" onClick={deleteRoom} className="m-8">Delete</Button>
+                            <Button onClick={closeDeleteModal}  className="m-8">Cancel</Button>
+                      
                     </div>
-                </div>
+                </Modal>
         )
     }
 
     const genRooms = (value, key) => {
         return (
-            <div className="card has-background-dark mb-3" key={key}>
+            <div className="card has-background-dark mb-32" key={key}>
                 <div className="card-content">
                     <div className="level">
                         <div className="level-left">
                             <span className="has-text-white-ter	">{value.room_id}</span>
-                            <button className="ml-6 button is-danger" roomid={value.room_id} onClick={openDeleteModal}><FaTrash className="has-text-white"/></button>
+                            
                         </div>
                         <div className="level-right">
-                            <div className="margin-bottom-mobile"><Switch roomid={value.room_id} className="has-text-white-ter mr-6" checked={value.is_locked || false} onChange={toggleRoom}>{value.is_locked ? "Locked" : "Open"}</Switch></div>
-                            <div className="has-text-centered"><Button color="primary"><Link to={{ pathname: "/" + value.room_id }}>Go To Room</Link></Button></div>
+                            <div className="margin-bottom-mobile m-16"><Switch roomid={value.room_id} className="has-text-white-ter mr-6" checked={value.is_locked || false} onChange={toggleRoom}>{value.is_locked ? "Locked" : "Open"}</Switch></div>
+                            <div className=" m-8"><Button color="primary"><Link to={{ pathname: "/" + value.room_id }}>Go To Room</Link></Button></div>
+                            <Button color="danger" className="ml-8" roomid={value.room_id} onClick={openDeleteModal}><FaTrash className="has-text-white"/></Button>
                         </div>
                     </div>
                 </div>
             </div>)
     }
 
-    return isAuth ? (
+    return isLogged ? (
         <div className="section">
             <div className="container">
-                <div className="is-size-3 is-size-4-mobile mb-5 has-text-centered">Welcome {name}</div>
+                <div className="h2 mb-32  ta-c">Welcome {name}</div>
                 <div className="columns">
                     <div className="column is-four-fifths">
-                        <input value={roomIdInput} onChange={roomInputHandle} className="input"></input>
+                        <Input value={roomIdInput} onChange={roomInputHandle}></Input>
                     </div>
-                    <div className="column has-text-center">
+                    <div className="column ta-c">
                         <Button color="primary" onClick={addRoom}>Add Room</Button>
                     </div>
                     {showDeleteModal()}

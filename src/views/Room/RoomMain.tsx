@@ -16,7 +16,7 @@ function WebRTCMediaCell(props: WebRTCMediaCellProps) {
         <div className="video">
             <div className="inner">
                 <Dropdown options={normalOptionsMenu}/>
-                <video src="/videos/Big Buck Bunny.mp4" className="video-stream" poster="/images/big_buck_bunny.jpg"/>
+                <video ref={props.videoRef} autoPlay  className="video-stream" />
             </div>
         </div>
     );
@@ -25,7 +25,7 @@ function WebRTCMediaCell(props: WebRTCMediaCellProps) {
 export default function RoomMain(props: RoomMainExpandProps) {
     const normalWebRTCMedia: ReactElement[] = [];
     props.videoElements.forEach((value: VideoElement, key: string) => {
-        normalWebRTCMedia.push(<WebRTCMediaCell key={key} onMaximizeClick={() => props.onMaximizeClick(key)}
+        normalWebRTCMedia.push(<WebRTCMediaCell videoRef={value.videoRef} key={key} onMaximizeClick={() => props.onMaximizeClick(key)}
                                                 onFullscreenClick={() => props.onFullscreenClick(key)}/>);
     })
     return (

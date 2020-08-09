@@ -14,5 +14,5 @@ export class VideoElement {
 }
 
 export const videoDataType = new Map<string, VideoElement>();
-videoDataType.set("389237982nikwebdj", new VideoElement(null, false, false, "389237982nikwebdj", "first"));
+
 
