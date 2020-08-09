@@ -139,7 +139,6 @@ function RoomView() {
     }
 
     const backdropClick = () => {
-        console.log("BackDropclick:");
         const newButtonsState = buttonsState.slice();
         setIsChatOpen(false);
         newButtonsState[3] = false;

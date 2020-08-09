@@ -1,7 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import MessageComponent from "./MessageComponent";
-import {CSSTransition} from "react-transition-group";
-import { TransitionGroup } from 'react-transition-group';
+import Styles from '../../assets/scss/custom/snackbar.module.scss';
+import NotificationContainer from "./Notification/NotificationContainer";
+import {info} from "./Notification/NotificationManager";
+import '../../assets/scss/custom/Notification/notifications.scss';
 
 export interface SnackbarProps {
     className?: string;
@@ -44,8 +46,9 @@ export function Snackbar({children, className, position, color}: SnackbarProps) 
         right: right,
         bottom: bottom,
         top: top,
-        color: (color ?? '')
-    };
+        color: (color ?? ''),
+        position: 'absolute'
+    } as React.CSSProperties;
     return (
         <div className={className + ' snackbar'} style={snackbarStyles}>
             {children}
@@ -66,23 +69,31 @@ export interface MessageSnackbarProps {
 export default function MessageSnackbar(props: MessageSnackbarProps) {
     // let snackbarRef: Element;
     const [message, setMessage] = useState<string>('');
+    // let message: string = '';
+    // const [isActive, setIsActive] = useState<boolean>(false);
     // const [classname, setClassname] = useState<string>('');
-    const handleClick = () => {
-        const userId = Math.random().toString(36).slice(2);
-        setMessage(userId);
-        // setClassname('show');
-    }
+    const createNotification = () => {
+        info(message);
+    };
+    const openSnackBar = () => {
+        const newMessage = Math.random().toString(36).slice(2);
+        setMessage(newMessage);
+        createNotification();
+    };
+
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setMessage('');
+    //     }, 10000000);
+    // }, [message]);
+
     return (
         <div>
-            <button className={"temp-button"} onClick={handleClick} style={{position:"absolute", top: 0}}>Mess</button>
-            <TransitionGroup
-                className='example'
-                transitionEnterTimeout={500}
-                transitionLeaveTimeout={300}>
-                <Snackbar position={"bottom-left"} className={"message-snackbar"}>
-                    <MessageComponent userId={"342432412rtr"} message={"www.stackoverflow.com There are many variations " + message} displayName={"oh crap"} messageBodyClassName={"side-message-body"}/>
-                </Snackbar>
-            </TransitionGroup>
+            <button className={"temp-button"} onClick={openSnackBar} style={{position:"absolute", top: 0}}>Mess</button>
+                {/*<Snackbar position={"bottom-left"} className = {"message-snackbar " + (message !== '' ? [Styles.snackbar, Styles.show].join(" ") : Styles.snackbar)}>*/}
+                {/*    <MessageComponent userId={"342432412rtr"} message={"www.stackoverflow.com There are many variations " + message} displayName={"oh crap"} messageBodyClassName={"side-message-body"}/>*/}
+                {/*</Snackbar>*/}
+            <NotificationContainer enterTimeout={500} leaveTimeout={400}/>
         </div>
     );
 }

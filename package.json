@@ -7,10 +7,10 @@
   ],
   "private": true,
   "dependencies": {
-    "@types/react-transition-group": "^4.4.0",
     "classnames": "^2.2.6",
-    "emoji-mart": "^3.0.0",
     "detect-browser": "^5.1.1",
+    "emoji-mart": "^3.0.0",
+    "events": "^3.2.0",
     "lodash": "^4.17.15",
     "node-sass": "^4.13.1",
     "react": "^16.13.1",
