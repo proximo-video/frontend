@@ -18,6 +18,20 @@ export const getUserMedia = (value)=>{
     }
 }
 
+export const setIceServers = (value)=>{
+    return {
+        type:'SETICESERVERS',
+        value
+    }
+}
+
+export const connectSocket = (value)=>{
+    return {
+        type:'CONNECTSOCKET',
+        value
+    }
+}
+
 export const toggleAudio = ()=>{
     return {
         type:'TOGGLEAUDIO'

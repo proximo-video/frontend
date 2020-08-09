@@ -36,10 +36,12 @@ function RoomView() {
     const browser = detect();
     const dispatch = useDispatch();
     const userMedia = useSelector((state:RootStateOrAny) => state.userMedia);
+    const id = useSelector((state:RootStateOrAny) => state.id);
+    const name = useSelector((state:RootStateOrAny) => state.name);
     const isAudio = useSelector((state:RootStateOrAny) => state.userMediaPreference.isAudio);
     const isVideo = useSelector((state:RootStateOrAny) => state.userMediaPreference.isVideo);
     const selfVideo = useRef();
-    videoDataType.set("389237982nikwebdj", new VideoElement(selfVideo, false, false, "389237982nikwebdj", "first"));
+    videoDataType.set(id, new VideoElement(selfVideo, false, false,id, name));
     const [videoElements, setVideoElements] = useState<Map<string, VideoElement>>(videoDataType);
     const [isAnyVideoMax, setIsAnyVideoMax] = useState<boolean>(false);
     const [isAnyVideoFullscreen, setIsAnyVideoFullscreen] = useState<boolean>(false);

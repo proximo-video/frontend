@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import LayoutDefault from '../layouts/LayoutDefault'
 import {useDispatch,useSelector} from 'react-redux';
 import {localStream} from '../middleware/getUserMedia'
-import {setId,closeMedia,getUserMedia} from '../redux/actions';
+import {setId,closeMedia,getUserMedia,setIceServers, connectSocket} from '../redux/actions';
 
 function Room(props) {
     const dispatch = useDispatch();
@@ -18,7 +18,7 @@ function Room(props) {
     const [fetched, setFetched] = useState(false);
     // const [name, setName] = useState("");
     // const [id, setID] = useState(0);
-    const [iceServer, setIceServer] = useState()
+    const iceServers = useSelector(state=> state.iceServers);
     const [mediaSuccess, setMediaSuccess] = useState(false);
     const [iceSuccess, setIceSuccess] = useState(false)
     const [remoteStreams, setRemoteStreams] = useState(new Map());
@@ -64,9 +64,8 @@ function Room(props) {
                 let response = await fetch('https://proximo-video.herokuapp.com/iceserver');
                 if (response.ok) {
                     let data = await response.json()
-                    console.log(data.iceServers);
                     setIceSuccess(true);
-                    setIceServer(data.iceServers);
+                    dispatch(setIceServers(data.iceServers))
                 }
             }
             catch (e) {
@@ -100,7 +99,8 @@ function Room(props) {
     })
 
     const createSocket = () => {
-        Socket(isLogged? "START" : "JOIN", id, roomId, connections, updateConnection, addStream, deleteStream, localStream, iceServer);
+        //Socket(isLogged? "START" : "JOIN", id, roomId, connections, updateConnection, addStream, deleteStream, localStream, iceServers);
+        dispatch(connectSocket({action:"JOIN",id:id,roomId:roomId}))
     }
     videoRefArray = []
     return (<LayoutDefault>
