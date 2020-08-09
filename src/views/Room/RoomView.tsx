@@ -7,6 +7,7 @@ import RoomMainExpand from './RoomMainExpand';
 import RoomMain from "./RoomMain";
 import RoomMainFullscreen from "./RoomMainFullscreen";
 import RoomChat from "./RoomChat";
+import MessageSnackbar from "./MessageSnackbar";
 
 declare global {
     interface Document {
@@ -155,6 +156,7 @@ function RoomView() {
             </div>
             <RoomChat isChatOpen={isChatOpen} onClose={backdropClick}/>
             <button className="button is-primary addVideo" onClick={() => addUser()}>Primary</button>
+            <MessageSnackbar/>
             <RoomFooter buttonsState={buttonsState} onClick={(i: number) => handleButtonClick(i)}/>
         </div>
     );
