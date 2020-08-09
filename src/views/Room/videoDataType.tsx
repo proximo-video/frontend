@@ -13,5 +13,6 @@ export class VideoElement {
     }
 }
 
-export const videoData = new Map<string, VideoElement>();
+export const videoDataType = new Map<string, VideoElement>();
+
 

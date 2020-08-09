@@ -5,7 +5,6 @@ import ReactGA from 'react-ga';
 import { useDispatch } from 'react-redux';
 import { login,setId,setName,setRooms,logout} from './redux/actions';
 import './App.css';
-//import 'bulma/css/bulma.min.css';
 
 
 // Layouts

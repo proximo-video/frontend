@@ -2,8 +2,8 @@ import React, { ReactElement } from 'react';
 import { FiMaximize2, FiMinimize2, FiMaximize } from 'react-icons/fi';
 import '../../assets/scss/custom/roomExpand.scss';
 import Dropdown from './Dropdown';
-import DropdownOption from './expandedRoomData';
-import { VideoElement } from './videoData';
+import DropdownOption from './expandedRoomDataType';
+import {VideoElement} from './videoDataType';
 
 export interface WebRTCMediaCellProps {
     videoRef: any;

@@ -1,6 +1,6 @@
 import {FiMoreVertical} from 'react-icons/fi';
 import React, {useEffect, useState} from 'react';
-import DropdownOption from './expandedRoomData';
+import DropdownOption from './expandedRoomDataType';
 
 // export interface DropdownOption {
 //     prefixIcon: React.FC;

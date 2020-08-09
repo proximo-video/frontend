@@ -12,6 +12,8 @@ $spacing-2: 8px;
 $background-color: #181a26;
 $button-background: black;
 $white: #fff;
+$bg-dark-chat: #1e2337;
+$font-color: #bfbebe;
 
 * {
   box-sizing: border-box;
@@ -21,8 +23,24 @@ $white: #fff;
   --per-row: 1;
   --rows: 1;
   --video-padding: 3px;
-  @media only screen and (max-width: 600px) {
+  --chat-width: 27%;
+  --message-snackbar-width: 200px;
+  --message-snackbar-height: 70px;
+  --message-snackbar-left: 20px;
+  --message-snackbar-bottom: 40px;
+
+  @media only screen and (max-width: 500px) {
     --video-padding: 1.5px;
+    --chat-width: 100%;
+  }
+  @media only screen and (min-width: 500px) {
+    --chat-width: 55%;
+  }
+  @media only screen and (min-width: 768px) {
+    --chat-width: 40%;
+  }
+  @media only screen and (min-width: 992px) {
+    --chat-width: 27%;
   }
 }
 
@@ -143,6 +161,8 @@ $white: #fff;
   // height: 100vh;
   // width: 100vw;
   overflow: hidden;
+  transition: width 0.3s ease-out;
+  width: 100%;
 }
 
 @media only screen and (max-width: 600px) {
@@ -236,14 +256,54 @@ $white: #fff;
   }
 }
 
-// .unpinned {
-//   + .buttonWrapper {
-//     bottom: -65px;
-//   }
-//   &:hover + .buttonWrapper {
-//     bottom: 25px;
-//   }
-// }
+.video-container.chat-open {
+  width: calc(100% - var(--chat-width));
+}
+
+.message-snackbar {
+  min-height: var(--message-snackbar-height);
+  min-width: var(--message-snackbar-width);
+  max-height: calc(3*var(--message-snackbar-height));
+  max-width: calc(1.5*var(--message-snackbar-width));
+  position: absolute;
+  //left: var(--message-snackbar-left);
+  //bottom: var(--message-snackbar-bottom);
+  z-index: 2;
+  border-radius: 10px;
+  background: $bg-dark-chat;
+  color: $font-color;
+  overflow-y: auto;
+  padding: 10px;
+  font-size: medium;
+  //visibility: hidden;
+  .message-component {
+    padding: 0 !important;
+  }
+}
+
+.side-message-body {
+  background: #272c47 !important;
+}
+
+.example-enter {
+  opacity: 0.01;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.example-leave {
+  opacity: 1;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
+
+
 
 
 

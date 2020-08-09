@@ -2,7 +2,7 @@ import {FiMinimize} from "react-icons/fi";
 import React, {ReactElement, useEffect} from "react";
 import '../../assets/scss/custom/roomFullscreen.scss';
 import {RoomMainExpandProps} from "./RoomMainExpand";
-import {VideoElement} from "./videoData";
+import {VideoElement} from "./videoDataType";
 
 declare global {
     interface Document {
