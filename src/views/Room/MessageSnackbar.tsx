@@ -1,7 +1,5 @@
 import React, {useState} from "react";
 import MessageComponent from "./MessageComponent";
-import {CSSTransition} from "react-transition-group";
-import { TransitionGroup } from 'react-transition-group';
 
 export interface SnackbarProps {
     className?: string;
@@ -75,14 +73,14 @@ export default function MessageSnackbar(props: MessageSnackbarProps) {
     return (
         <div>
             <button className={"temp-button"} onClick={handleClick} style={{position:"absolute", top: 0}}>Mess</button>
-            <TransitionGroup
+            {/* <TransitionGroup
                 className='example'
                 transitionEnterTimeout={500}
                 transitionLeaveTimeout={300}>
                 <Snackbar position={"bottom-left"} className={"message-snackbar"}>
                     <MessageComponent userId={"342432412rtr"} message={"www.stackoverflow.com There are many variations " + message} displayName={"oh crap"} messageBodyClassName={"side-message-body"}/>
                 </Snackbar>
-            </TransitionGroup>
+            </TransitionGroup> */}
         </div>
     );
 }

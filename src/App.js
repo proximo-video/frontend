@@ -63,7 +63,6 @@ const App = (props) => {
       <AppRoute exact path="/" component={Home} layout={LayoutDefault} />
       <AppRoute exact path="/welcome" component={Welcome} layout={LayoutDefault} />
       <AppRoute exact path="/user" component={User} layout={LayoutDefault} />
-      <AppRoute exact path="/room" component={RoomView} layout={WhiteLayout} />
       <AppRoute path="/:roomId" component={Room} layout={WhiteLayout} />
     </Switch>
     : <></>

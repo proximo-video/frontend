@@ -1,12 +1,13 @@
 import {localStream} from './getUserMedia';
+import {addRemoteStream,deleteRemoteStream} from '../redux/actions'
 let socket;
 let iceServers;
 let connections= new Map();
-let remoteStreams = new Map();
+export let remoteStreams = new Map();
 const webRTCMiddleware = store => next => action => {
         switch(action.type){
             case 'CONNECTSOCKET':
-                connectToWebSocket(action.value);
+                socketAndWebRTC(action.value,store);
             break;
             case 'SETICESERVERS':
                 iceServers = action.value;
@@ -16,8 +17,8 @@ const webRTCMiddleware = store => next => action => {
 }
 export default webRTCMiddleware;
 
-
-const connectToWebSocket = (params) => {
+const socketAndWebRTC = (params,store) =>{
+const connectToWebSocket = () => {
     const webSocketConnection = "wss://proximo-video.herokuapp.com/ws";
     // const webSocketConnection = "ws://localhost:8080/ws";
     if (!socket)
@@ -40,22 +41,22 @@ const connectToWebSocket = (params) => {
             console.log("Got Ready")
             let toUser = jsonData.from;
             if (!connections.has(toUser))
-                createRTCPeerConnection(toUser,params);
-            createAndSendOffer(toUser,params);
+                createRTCPeerConnection(toUser);
+            createAndSendOffer(toUser);
         }
 
         switch (jsonData.type) {
             case 'CANDIDATE':
                 console.log('Received The Candidate');
-                handleCandidate(jsonData.data, jsonData.id, jsonData.from,params);
+                handleCandidate(jsonData.data, jsonData.id, jsonData.from);
                 break;
             case 'OFFER':
                 console.log('Received The Offer');
-                handleOffer(jsonData.data, jsonData.id, jsonData.from,params);
+                handleOffer(jsonData.data, jsonData.id, jsonData.from);
                 break;
             case 'ANSWER':
                 console.log('Received The Answer');
-                handleAnswer(jsonData.data, jsonData.id, jsonData.from,params);
+                handleAnswer(jsonData.data, jsonData.id, jsonData.from);
                 break;
             default:
                 break
@@ -76,7 +77,7 @@ const connectToWebSocket = (params) => {
 
 
 
-const createRTCPeerConnection = (toUser,params) => {
+const createRTCPeerConnection = (toUser) => {
     const configuration = {
         iceServers: iceServers
     }
@@ -92,7 +93,8 @@ const createRTCPeerConnection = (toUser,params) => {
     // This event handles displaying remote video and audio feed from the other peer
     connection.ontrack = event => {
         console.log("Recieved Stream.");
-        remoteStreams.set(toUser, event.streams);
+        remoteStreams = new Map(remoteStreams.set(toUser, event.streams));
+        store.dispatch(addRemoteStream())
         console.log(remoteStreams)
     }
 
@@ -137,11 +139,13 @@ const createRTCPeerConnection = (toUser,params) => {
             case "failed":
                 console.log("Web RTC Peer Connection Failed. Please reload the page to reconnect.");
                 remoteStreams.delete(toUser);
+                store.dispatch(deleteRemoteStream());
                 console.log(event);
                 break;
             case "closed":
                 console.log("Web RTC Peer Connection Closed. Please reload the page to reconnect.");
                 remoteStreams.delete(toUser);
+                store.dispatch(deleteRemoteStream());
                 break;
             default:
                 break;
@@ -152,7 +156,7 @@ const createRTCPeerConnection = (toUser,params) => {
     // document.getElementById("sendOfferButton").disabled = false;
 }
 
-const createAndSendOffer = (toUser,params) => {
+const createAndSendOffer = (toUser) => {
     // if (channel) {
     //     channel.close();
     // }
@@ -205,9 +209,9 @@ const setChannelEvents = (channel) => {
     };
 }
 
-const handleCandidate = (candidate, id, toUser,params) => {
+const handleCandidate = (candidate, id, toUser) => {
     if (!connections.has(toUser))
-        createRTCPeerConnection(toUser,params);
+        createRTCPeerConnection(toUser);
     // Avoid accepting the ice candidate if this is a message created by the current peer
     if (params.id !== id) {
         console.log("Adding Ice Candidate - " + candidate.candidate);
@@ -218,14 +222,14 @@ const handleCandidate = (candidate, id, toUser,params) => {
 /*
     Accepts Offer received from the Caller
 */
-const handleOffer = (offer, id, toUser,params) => {
+const handleOffer = (offer, id, toUser) => {
     if (!connections.has(toUser))
-        createRTCPeerConnection(toUser,params);
+        createRTCPeerConnection(toUser);
     // Avoid accepting the Offer if this is a message created by the current peer
     if (params.id !== id) {
         console.log("Recieved The Offer.");
         connections.get(toUser).setRemoteDescription(new RTCSessionDescription(offer));
-        createAndSendAnswer(toUser, params)
+        createAndSendAnswer(toUser)
         // document.getElementById("answerButton").disabled = false;
         // document.getElementById("sendOfferButton").disabled = true;
     }
@@ -234,7 +238,7 @@ const handleOffer = (offer, id, toUser,params) => {
 /*
     Accetps Answer received from the Receiver
 */
-const handleAnswer = (answer, id, toUser,params) => {
+const handleAnswer = (answer, id, toUser) => {
     // Avoid accepting the Answer if this is a message created by the current peer
     if (params.id !== id) {
         console.log("Recieved The Answer");
@@ -242,7 +246,7 @@ const handleAnswer = (answer, id, toUser,params) => {
     }
 }
 
-const createAndSendAnswer = (toUser,params) => {
+const createAndSendAnswer = (toUser) => {
 
     // Create Answer
     connections.get(toUser).createAnswer().then(
@@ -269,4 +273,6 @@ const createAndSendAnswer = (toUser,params) => {
             console.error(error);
         }
     );
+}
+    connectToWebSocket();
 }

@@ -16,7 +16,7 @@ function WebRTCMediaCell(props: WebRTCMediaCellProps) {
         <div className="video">
             <div className="inner">
                 <Dropdown options={normalOptionsMenu}/>
-                <video ref={props.videoRef} autoPlay  className="video-stream" />
+                <video ref={props.videoRef} autoPlay className="video-stream" />
             </div>
         </div>
     );

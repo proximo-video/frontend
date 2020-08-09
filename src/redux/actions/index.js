@@ -10,6 +10,18 @@ export const logout = () =>{
     }
 }
 
+export const addRemoteStream  = () =>{
+    return {
+        type:'ADDREMOTESTREAM',
+    }
+}
+
+export const deleteRemoteStream  = () =>{
+    return {
+        type:'DELETEREMOTESTREAM',
+    }
+}
+
 
 export const getUserMedia = (value)=>{
     return {

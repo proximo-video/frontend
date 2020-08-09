@@ -6,6 +6,7 @@ import LayoutDefault from '../layouts/LayoutDefault'
 import {useDispatch,useSelector} from 'react-redux';
 import {localStream} from '../middleware/getUserMedia'
 import {setId,closeMedia,getUserMedia,setIceServers, connectSocket} from '../redux/actions';
+import RoomView from './Room/RoomView';
 
 function Room(props) {
     const dispatch = useDispatch();
@@ -22,6 +23,7 @@ function Room(props) {
     const [mediaSuccess, setMediaSuccess] = useState(false);
     const [iceSuccess, setIceSuccess] = useState(false)
     const [remoteStreams, setRemoteStreams] = useState(new Map());
+    const [startRoomView,setStartRoomView] = useState(false);
     const addStream = (k, v) => {
         setRemoteStreams(new Map(remoteStreams.set(k, v)));
     }
@@ -101,9 +103,10 @@ function Room(props) {
     const createSocket = () => {
         //Socket(isLogged? "START" : "JOIN", id, roomId, connections, updateConnection, addStream, deleteStream, localStream, iceServers);
         dispatch(connectSocket({action:"JOIN",id:id,roomId:roomId}))
+        setStartRoomView(true);
     }
     videoRefArray = []
-    return (<LayoutDefault>
+    return (!startRoomView?<LayoutDefault>
         {!fetched?<></>:isLogged?
         <>
                 
@@ -118,6 +121,7 @@ function Room(props) {
 
             </>: <RoomEntry logged={false} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess}></RoomEntry>}
             </LayoutDefault>
+            : <RoomView></RoomView>
     )
 }
 
