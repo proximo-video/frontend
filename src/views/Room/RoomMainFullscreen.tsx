@@ -37,6 +37,7 @@ export default function RoomMainFullscreen(props: RoomMainExpandProps) {
             document.removeEventListener('MSFullscreenChange', exitHandler);
             // document.removeEventListener('keydown', handleKeydown);
         }
+        // eslint-disable-next-line
     }, []);
     props.videoElements.forEach((value: VideoElement, key: string) => {
         if (value.isFullscreen) {

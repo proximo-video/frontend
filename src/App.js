@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, Switch } from 'react-router-dom';
 import AppRoute from './utils/AppRoute';
 import ReactGA from 'react-ga';
@@ -16,7 +16,6 @@ import Home from './views/Home';
 import Welcome from './views/Welcome';
 import User from './views/User';
 import Room from './views/Room';
-import RoomView from './views/Room/RoomView';
 
 // Initialize Google Analytics
 ReactGA.initialize(process.env.REACT_APP_GA_CODE);
@@ -48,6 +47,7 @@ const App = (props) => {
       setFetched(true);
     }
     fetchData();
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {

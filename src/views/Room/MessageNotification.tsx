@@ -8,6 +8,7 @@ export interface MessageSnackbarProps {
 }
 
 export default function MessageNotification(props: MessageSnackbarProps) {
+    // eslint-disable-next-line
     const [message, setMessage] = useState<string>('');
 
     const createNotification = (message) => {

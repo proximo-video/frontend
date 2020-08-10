@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from 'react';
+import React, { useEffect,useRef } from 'react';
 import { IoMdMic, IoMdMicOff } from 'react-icons/io';
 import { RiCameraLine, RiCameraOffLine } from 'react-icons/ri';
 import { localStream } from '../middleware/getUserMedia';

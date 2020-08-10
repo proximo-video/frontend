@@ -1,44 +1,38 @@
-import React, { useState, useRef, useEffect } from 'react';
-import Socket from '../utils/Socket';
+import React, { useState, useEffect } from 'react';
 import RoomEntry from './RoomEntry';
 import { v4 as uuidv4 } from 'uuid';
 import LayoutDefault from '../layouts/LayoutDefault'
 import {useDispatch,useSelector} from 'react-redux';
-import {localStream} from '../middleware/getUserMedia'
 import {setId,closeMedia,getUserMedia,setIceServers, connectSocket} from '../redux/actions';
 import RoomView from './Room/RoomView';
 
 function Room(props) {
     const dispatch = useDispatch();
     const id = useSelector(state=>state.id);
+    // eslint-disable-next-line
     const name = useSelector(state=>state.name);
+    // eslint-disable-next-line
     const rooms = useSelector(state=>state.rooms);
     const isLogged = useSelector(state=>state.isLogged);
-    let videoRefArray = [];
     // auth=0 Checking, 1 - loggedin & owner, 2 -loggedin &guest, 3- Not Logged-in guest
     const [fetched, setFetched] = useState(false);
     // const [name, setName] = useState("");
     // const [id, setID] = useState(0);
-    const iceServers = useSelector(state=> state.iceServers);
     const [mediaSuccess, setMediaSuccess] = useState(false);
     const [iceSuccess, setIceSuccess] = useState(false)
-    const [remoteStreams, setRemoteStreams] = useState(new Map());
     const [startRoomView,setStartRoomView] = useState(false);
-    const addStream = (k, v) => {
-        setRemoteStreams(new Map(remoteStreams.set(k, v)));
-    }
-    const deleteStream = (k) => {
-        setRemoteStreams(new Map(getDeletedMap(remoteStreams, k)))
-    }
-    const getDeletedMap = (remoteStreams, k) => {
-        remoteStreams.delete(k);
-        console.log(remoteStreams)
-        return remoteStreams;
-    }
-    const [connections, setConnection] = useState(new Map());
-    const updateConnection = (k, v) => {
-        setConnection(new Map(connections.set(k, v)));
-    }
+    // const deleteStream = (k) => {
+    //     setRemoteStreams(new Map(getDeletedMap(remoteStreams, k)))
+    // }
+    // const getDeletedMap = (remoteStreams, k) => {
+    //     remoteStreams.delete(k);
+    //     console.log(remoteStreams)
+    //     return remoteStreams;
+    // }
+    // const [connections, setConnection] = useState(new Map());
+    // const updateConnection = (k, v) => {
+    //     setConnection(new Map(connections.set(k, v)));
+    // }
     const { match } = props;
     const roomId = match.params.roomId;
     useEffect(() => {
@@ -81,43 +75,42 @@ function Room(props) {
         getIceServer();
         setFetched(true);
         return () => {
-            console.log("Byee Room")
-            if (connections) {
-                connections.forEach((value) => {
-                    value.close();
-                })
-            }
+            // console.log("Byee Room")
+            // if (connections) {
+            //     connections.forEach((value) => {
+            //         value.close();
+            //     })
+            // }
             dispatch(closeMedia());
             dispatch(getUserMedia(false));            
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    useEffect(() => {
-        const sa = Array.from(remoteStreams);
-        for (const videoElement in videoRefArray) {
-            videoRefArray[videoElement].current.srcObject = sa[videoElement][1][0];
-        }
-    })
+    // useEffect(() => {
+    //     const sa = Array.from(remoteStreams);
+    //     for (const videoElement in videoRefArray) {
+    //         videoRefArray[videoElement].current.srcObject = sa[videoElement][1][0];
+    //     }
+    // })
 
     const createSocket = () => {
         //Socket(isLogged? "START" : "JOIN", id, roomId, connections, updateConnection, addStream, deleteStream, localStream, iceServers);
         dispatch(connectSocket({action:"JOIN",id:id,roomId:roomId}))
         setStartRoomView(true);
     }
-    videoRefArray = []
     return (!startRoomView?<LayoutDefault>
         {!fetched?<></>:isLogged?
         <>
                 
                 <RoomEntry logged={true} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess}></RoomEntry>
-            {
+            {/* {
                 Array.from(remoteStreams).map((v) => {
                     const videoRef = React.createRef();
                     const videoNode = <video key={v[0]} ref={videoRef} autoPlay />
                     videoRefArray.push(videoRef)
                     return videoNode
-                })}
+                })} */}
 
             </>: <RoomEntry logged={false} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess}></RoomEntry>}
             </LayoutDefault>

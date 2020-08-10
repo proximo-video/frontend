@@ -5,6 +5,8 @@ export const remoteStreamCountReducer = (state=0,action)=>{
             return state+1;
         case 'DELETEREMOTESTREAM':
             return state-1;
+        default:
+            break;
     }
     return state;
 }

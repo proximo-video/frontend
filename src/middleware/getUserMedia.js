@@ -36,6 +36,8 @@ const getUserMediaMiddleware = store => next => async (action) => {
                 track.stop();
             });
             break;
+        default:
+            break;
 
     }
     return next(action)

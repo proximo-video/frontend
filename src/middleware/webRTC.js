@@ -5,7 +5,7 @@ let iceServers;
 let connections = new Map();
 let channels = new Map();
 export let remoteStreams = new Map();
-export let messages = new Array();
+export let messages = [];
 const webRTCMiddleware = store => next => action => {
     switch (action.type) {
         case 'CONNECTSOCKET':
@@ -14,11 +14,13 @@ const webRTCMiddleware = store => next => action => {
         case 'SETICESERVERS':
             iceServers = action.value;
             break;
+        default:
+            break;
     }
     return next(action)
 }
 export default webRTCMiddleware;
-
+// eslint-disable-next-line
 const sendMessage = (params) => {
     channels.forEach(channel => {
         channel.send(JSON.stringify({
