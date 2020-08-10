@@ -27,6 +27,7 @@ function Welcome() {
             }
         }
         fetchData();
+        // eslint-disable-next-line
     }, []);
 
     return (success?<Redirect to={{pathname:"/user"}}></Redirect>:<></>)

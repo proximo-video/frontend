@@ -21,6 +21,7 @@ export function DropdownContent({backdropClick, options, dropdownClasses}: Dropd
             backdropClick();
     }
     useEffect(() => {
+        // eslint-disable-next-line
         dropdown = document.querySelector('.dropdown-content.show') as Element;
         document.addEventListener('click', handleClick);
         return () => {

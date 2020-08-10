@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import 'emoji-mart/css/emoji-mart.css'
 import {Picker} from 'emoji-mart'
 import {FiSmile} from 'react-icons/fi';
@@ -33,6 +33,7 @@ export function EmojiContainer({handleEmojiOpenButton, addEmoji}) {
     };
 
     useEffect( () => {
+        // eslint-disable-next-line
         emojiContainer = document.querySelector('.emoji-container') as Element;
         document.addEventListener('click', handleClick);
         return () => {
@@ -48,7 +49,7 @@ export function EmojiContainer({handleEmojiOpenButton, addEmoji}) {
 
 export default function RoomChat({isChatOpen, onClose}) {
     // let textarea: Element;
-    let formRef: HTMLFormElement;
+    const formRef = useRef();
     const [inputValue, setInputValue] = useState<string>('');
     const [isEmojiContainerOpen, setIsEmojiContainerOpen] = useState<boolean>(false);
     const handleInputChange = (event: any) => {
@@ -65,7 +66,7 @@ export default function RoomChat({isChatOpen, onClose}) {
     };
 
     const onEnterPress = (event: any) => {
-        if(event.keyCode == 13 && event.shiftKey == false) {
+        if(event.keyCode === 13 && event.shiftKey === false) {
             event.preventDefault();
             // formRef.submit();
             handleSubmit(event);
@@ -86,14 +87,14 @@ export default function RoomChat({isChatOpen, onClose}) {
             <div className={"room-chat" + (isChatOpen ? " open" : "")}>
                 <div className="chat-header">
                     <div className="title">Meeting Details</div>
-                    <a href="javascript:void(0)" className="close-btn" onClick={onClose}>&times;</a>
+                    <button className="close-btn" onClick={onClose}>&times;</button>
                 </div>
                 <div className="chat-main">
                     <ChatMain/>
                     {isEmojiContainerOpen && <EmojiContainer addEmoji={addEmoji} handleEmojiOpenButton={handleEmojiOpenButton}/>}
                 </div>
                 <div className="chat-footer">
-                    <form action='#' ref={el => formRef = el} onSubmit={handleSubmit} id={"chat-form"}>
+                    <form action='#' ref={formRef} onSubmit={handleSubmit} id={"chat-form"}>
                         <div className={"emoji-open-button"}><FiSmile onClick={handleEmojiOpenButton}/></div>
                         <textarea onKeyDown={onEnterPress} className={"chat-message-input"} placeholder={"Send a chat message..."}
                                value={inputValue} onChange={handleInputChange}/>

@@ -57,6 +57,7 @@ const initialUsers: User[] = [
 ];
 
 export function MessageArea() {
+    // eslint-disable-next-line
     const [chatMessages, setChatMessages] = useState<Message[]>(initialMessages);
     let messagesEnd: Element;
 
@@ -91,6 +92,7 @@ export function MessageArea() {
 }
 
 export function UserArea() {
+    // eslint-disable-next-line
     const [users, setUsers] = useState<User[]>(initialUsers);
     return (
         <>

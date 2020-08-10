@@ -17,6 +17,7 @@ export default function Notification(props: NotificationProps) {
     useEffect(() => {
         const {timeOut} = props;
         if (timeOut !== 0) {
+            // eslint-disable-next-line
             timer = setTimeout(requestHide, timeOut);
         }
         return () => {

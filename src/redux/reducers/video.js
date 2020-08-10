@@ -13,7 +13,9 @@ export const getUserMediaPreferenceReducer = (state={isVideo:true,isAudio:true},
             return {...state,isVideo:!isVideo}
         case 'TOGGLEAUDIO':
             const isAudio = state.isAudio;
-            return {...state,isAudio:!isAudio}        
+            return {...state,isAudio:!isAudio}
+        default:
+            break;        
     }
     return state;
 }

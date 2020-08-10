@@ -10,6 +10,7 @@ import RoomChat from "./RoomChat";
 import MessageNotification from "./MessageNotification";
 import { localStream } from '../../middleware/getUserMedia';
 import { remoteStreams } from '../../middleware/webRTC';
+// eslint-disable-next-line
 import { getUserMedia, toggleAudio, toggleVideo } from '../../redux/actions';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { detect } from 'detect-browser';
@@ -31,12 +32,15 @@ declare global {
 function RoomView() {
     // 5 buttons 0=>cam, 1=>mic, 2=>screen, 3=>chat, 4=>leave, buttons array denoting the
     const [buttonsState, setButtonsState] = useState<boolean[]>([false, false, true, false, false]);
+    // eslint-disable-next-line
     const browser = detect();
     const dispatch = useDispatch();
     const userMedia = useSelector((state: RootStateOrAny) => state.userMedia);
     const id = useSelector((state: RootStateOrAny) => state.id);
     const name = useSelector((state: RootStateOrAny) => state.name);
+    // eslint-disable-next-line
     const isAudio = useSelector((state: RootStateOrAny) => state.userMediaPreference.isAudio);
+    // eslint-disable-next-line
     const isVideo = useSelector((state: RootStateOrAny) => state.userMediaPreference.isVideo);
     const remoteStreamCount = useSelector((state: RootStateOrAny) => state.remoteStreamCount);
     const selfVideo = useRef();
@@ -75,6 +79,7 @@ function RoomView() {
             }
 
         })
+        // eslint-disable-next-line
     }, [remoteStreams]);
 
     useEffect(() => {
@@ -94,6 +99,7 @@ function RoomView() {
                     videoElements.get(key).videoRef.current.srcObject = value[0];
             }
         })
+        // eslint-disable-next-line
     }, [remoteStreamCount,isAnyVideoMax,isAnyVideoFullscreen]);
 
     const handleButtonClick = (i: number) => {
