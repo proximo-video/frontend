@@ -6,11 +6,8 @@ import { videoDataType, VideoElement } from './videoDataType';
 import RoomMainExpand from './RoomMainExpand';
 import RoomMain from "./RoomMain";
 import RoomMainFullscreen from "./RoomMainFullscreen";
-
 import RoomChat from "./RoomChat";
-import MessageSnackbar from "./MessageSnackbar";
-
-
+import MessageNotification from "./MessageNotification";
 import { localStream } from '../../middleware/getUserMedia';
 import { remoteStreams } from '../../middleware/webRTC';
 import { getUserMedia, toggleAudio, toggleVideo } from '../../redux/actions';
@@ -78,9 +75,10 @@ function RoomView() {
             }
 
         })
-    }, [remoteStreams])
+    }, [remoteStreams]);
 
     useEffect(() => {
+        console.log("self video: ", selfVideo);
         if (selfVideo.current){
             //@ts-ignore
             selfVideo.current.srcObject = localStream
@@ -96,7 +94,7 @@ function RoomView() {
                     videoElements.get(key).videoRef.current.srcObject = value[0];
             }
         })
-    }, [remoteStreamCount,isAnyVideoMax,isAnyVideoFullscreen])
+    }, [remoteStreamCount,isAnyVideoMax,isAnyVideoFullscreen]);
 
     const handleButtonClick = (i: number) => {
         const newButtonsState = buttonsState.slice();
@@ -184,7 +182,6 @@ function RoomView() {
     }
 
     const backdropClick = () => {
-        console.log("BackDropclick:");
         const newButtonsState = buttonsState.slice();
         setIsChatOpen(false);
         newButtonsState[3] = false;
@@ -223,7 +220,7 @@ function RoomView() {
             </div>
             <RoomChat isChatOpen={isChatOpen} onClose={backdropClick} />
             <button className="button is-primary addVideo" onClick={() => addUser()}>Primary</button>
-            <MessageSnackbar />
+            <MessageNotification/>
             <RoomFooter buttonsState={buttonsState} onClick={(i: number) => handleButtonClick(i)} />
         </div>
     );

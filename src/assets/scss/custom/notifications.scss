@@ -1,0 +1,113 @@
+$notifications-transition-time: 0.4s;
+$notifications-container-width: 320px;
+$notifications-container-top-padding: 0px;
+$notifications-container-max-height: calc(100% - 30px);
+$notifications-container-right-padding: 15px;
+$notifications-color: #fff;
+$notifications-background-color: #ccc;
+$notifications-box-shadow: 0 0 12px #999;
+$notifications-font-size: 1em;
+$notifications-line-height: 1.2em;
+$notifications-opacity: 0.9;
+$notifications-margin-bottom: 15px;
+$notifications-hover-opacity: 1;
+$notifications-title-font-size: 1em;
+$notifications-title-line-height: 1.2em;
+$notifications-title-font-weight: bold;
+$notifications-title-margin: 0 0 5px 0;
+//$notifications-message-background-color: #2f96b4;
+$notifications-message-background-color: #1e2337;
+$notifications-success-background-color: #51a351;
+$notifications-warning-background-color: #f89406;
+$notifications-error-background-color: #bd362f;
+
+.notification-container {
+  box-sizing: border-box;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  width: $notifications-container-width;
+  padding: $notifications-container-top-padding $notifications-container-right-padding;
+  max-height: $notifications-container-max-height;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.notification {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 7px 3px;
+  border-radius: 2px;
+  color: $notifications-color;
+  background-color: $notifications-background-color;
+  box-shadow: $notifications-box-shadow;
+  cursor: pointer;
+  font-size: $notifications-font-size;
+  line-height: $notifications-line-height;
+  position: relative;
+  opacity: $notifications-opacity;
+  margin-bottom: $notifications-margin-bottom;
+
+  .title {
+    font-size: $notifications-title-font-size;
+    line-height: $notifications-title-line-height;
+    font-weight: $notifications-title-font-weight;
+    margin: $notifications-title-margin;
+  }
+
+  &:hover, &:focus {
+    opacity: $notifications-hover-opacity;
+  }
+}
+
+.notification-enter {
+  visibility: hidden;
+  transform: translate3d(-100%, 0, 0);
+}
+
+.notification-enter.notification-enter-active {
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+  transition: all $notifications-transition-time;
+}
+
+.notification-exit {
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+}
+
+.notification-exit.notification-exit-active {
+  visibility: hidden;
+  transform: translate3d(-100%, 0, 0);
+  transition: all $notifications-transition-time;
+}
+
+.notification-message {
+  background-color: $notifications-message-background-color;
+  //&:before {
+  //  content: $notifications-info-content;
+  //}
+}
+
+.notification-success {
+  background-color: $notifications-success-background-color;
+  //&:before {
+  //  content: $notifications-success-content;
+  //}
+}
+
+.notification-warning {
+  background-color: $notifications-warning-background-color;
+  //&:before {
+  //  content: $notifications-warning-content;
+  //}
+}
+
+.notification-error {
+  background-color: $notifications-error-background-color;
+  //&:before {
+  //  content: $notifications-error-content;
+  //}
+}

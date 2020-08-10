@@ -42,7 +42,7 @@ export default function RoomMainFullscreen(props: RoomMainExpandProps) {
         if (value.isFullscreen) {
             fullscreenUserId = key;
             fullscreenWebRTCMedia =
-                <video ref={value.videoRef} autoPlay className="video-stream"/>;
+                <video muted ref={value.videoRef} autoPlay className="video-stream"/>;
         }
     });
     return (

@@ -1,28 +1,10 @@
 import React, { ReactElement } from 'react';
-import { FiMaximize2, FiMinimize2, FiMaximize } from 'react-icons/fi';
+import { FiMinimize2, FiMaximize } from 'react-icons/fi';
 import '../../assets/scss/custom/roomExpand.scss';
 import Dropdown from './Dropdown';
 import DropdownOption from './expandedRoomDataType';
 import {VideoElement} from './videoDataType';
-
-export interface WebRTCMediaCellProps {
-    videoRef: any;
-    onMaximizeClick: () => void;
-    onFullscreenClick: () => void;
-}
-
-function WebRTCMediaCell(props: WebRTCMediaCellProps) {
-    const normalOptionsMenu: DropdownOption[] = [
-        new DropdownOption(<FiMaximize2 />, 'Maximize', props.onMaximizeClick),
-        new DropdownOption(<FiMaximize />, 'Fullscreen', props.onFullscreenClick),
-    ];
-    return (
-        <div className="webrtc-media-cell">
-            <Dropdown options={normalOptionsMenu} />
-            <video ref={props.videoRef} autoPlay className="video-stream" />
-        </div>
-    );
-}
+import {WebRTCMediaCell} from "./RoomMain";
 
 export interface RoomMainExpandProps {
     videoElements: Map<string, VideoElement>;
@@ -37,7 +19,7 @@ export default function RoomMainExpand(props: RoomMainExpandProps) {
     props.videoElements.forEach((value: VideoElement, key: string) => {
         if (value.isMax) {
             maxWebRTCMedia =
-                <video ref={value.videoRef} key={key} autoPlay className="video-stream"
+                <video muted ref={value.videoRef} key={key} autoPlay className="video-stream"
                 />;
             maxOptionsMenu = [
                 new DropdownOption(<FiMinimize2 />, 'Minimize', () => props.onMaximizeClick(key)),

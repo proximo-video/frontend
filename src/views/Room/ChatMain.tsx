@@ -71,8 +71,8 @@ export function MessageArea() {
     return (
         <div>
             {
-                chatMessages.map((Mess: Message) =>
-                    <div className={"message-container" + (Mess.userId === loggedInUser ? " right" : "")}>
+                chatMessages.map((Mess: Message, key:number) =>
+                    <div key={key} className={"message-container" + (Mess.userId === loggedInUser ? " right" : "")}>
                         {
                             Mess.userId === loggedInUser ?
                                 <MessageComponent messageBodyClassName={'right'} avatarPosition={'right'}
