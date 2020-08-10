@@ -151,7 +151,8 @@ function RoomView() {
     };
 
     const handleFullscreenButtonClick = async (userId) => {
-        console.log("fullscreen on/off request from user: ", userId, fullscreenVideoId);
+        console.log("fullscreen on/off request from userId:", userId);
+        console.log("Current fullscreenId:", fullscreenVideoId);
         if (videoElements.has(userId) && videoElements.size > 1) {
             if (fullscreenVideoId !== userId) {
                 console.log("Received fullscreen request from user: ", userId);
@@ -178,6 +179,10 @@ function RoomView() {
                 } else if (document.msExitFullscreen) { /* IE/Edge */
                     await document.msExitFullscreen();
                 }
+                setFullscreenVideoId('');
+            }
+            else {
+                console.log("Fullscreen already removed:", userId);
                 setFullscreenVideoId('');
             }
         }

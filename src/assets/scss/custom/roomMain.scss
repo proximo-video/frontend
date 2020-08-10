@@ -1,6 +1,7 @@
 $dark: #181a26;
 $light: #ffffff;
 $dark-hover: #33363a;
+$blur-bg: rgba(0, 0, 0, 0.56);
 
 * {
   box-sizing: border-box;
@@ -94,6 +95,7 @@ body {
 
 
 .video {
+  z-index: 0;
   width: calc(100%/var(--per-row));
   padding: var(--video-padding);
   height: calc(100%/var(--rows));
@@ -117,10 +119,11 @@ body {
   object-fit: cover;
 }
 
-.room-expanded {
+.expanded {
   position: fixed;
   left: 0;
   top: 0;
+  z-index: 0;
   //height: 100%;
   //width: 75%;
   //padding: 5px;
@@ -139,6 +142,7 @@ body {
 
 .webrtc-media-cell {
   position: absolute;
+  z-index: 0;
   //padding: 5px;
   //height: 33%;
   //width: 25%;
@@ -150,4 +154,40 @@ body {
   //  width: 33%;
   //  height: 20%;
   //}
+}
+
+// fullscreen css
+
+.fullscreen {
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  z-index: 1;
+  .video-stream {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+  .exit-fullscreen {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 10px;
+    z-index: 1;
+    cursor: pointer;
+    display: flex;
+    background: $blur-bg;
+    line-height: 30px;
+    padding: 10px;
+    svg {
+      margin-right: 5px;
+    }
+    span {
+      font-size: 18px;
+      margin-left: 5px;
+    }
+  }
 }

@@ -5,13 +5,13 @@ import '../../assets/scss/custom/roomFullscreen.scss';
 // import {VideoElement} from "./videoDataType";
 import {RoomMainProps} from "./RoomMain";
 
-declare global {
-    interface Document {
-        webkitIsFullScreen: any;
-        mozFullScreen: any;
-        msFullscreenElement: any;
-    }
-}
+// declare global {
+//     interface Document {
+//         webkitIsFullScreen: any;
+//         mozFullScreen: any;
+//         msFullscreenElement: any;
+//     }
+// }
 
 export interface RoomMainFullscreenProps extends RoomMainProps{
     fullscreenVideoId: string;

@@ -8,6 +8,15 @@ import DropdownOption from "./expandedRoomDataType";
 import {FiMaximize, FiMaximize2, FiMinimize, FiMinimize2} from "react-icons/fi";
 import Dropdown from "./Dropdown";
 import {VideoElement} from './videoDataType';
+// import {RoomMainFullscreenProps} from "./RoomMainFullscreen";
+
+declare global {
+    interface Document {
+        webkitIsFullScreen: any;
+        mozFullScreen: any;
+        msFullscreenElement: any;
+    }
+}
 
 export interface WebRTCMediaCellProps {
     videoRef: any;
@@ -67,6 +76,60 @@ function getWindowSize() {
     return windowSize;
 }
 
+// export interface RoomMainFullscreenProps {
+//     fullscreenVideoId: string;
+//     videoRef: any;
+//     onFullscreenClick: (i: string) => void;
+// }
+//
+//
+// function RoomMainFullscreen(props: RoomMainFullscreenProps) {
+//     // let fullscreenElement;
+//     // let fullscreenWebRTCMedia: ReactElement | null = null;
+//     // let fullscreenUserId:string = "";
+//     const exitHandler = (e: any) => {
+//         e.preventDefault();
+//         e.stopPropagation();
+//         if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
+//             props.onFullscreenClick(props.fullscreenVideoId);
+//         }
+//     };
+//     useEffect(() => {
+//         // fullscreenElement = document.querySelector('.room-fullscreen');
+//         document.addEventListener('fullscreenchange', exitHandler);
+//         document.addEventListener('webkitfullscreenchange', exitHandler);
+//         document.addEventListener('mozfullscreenchange', exitHandler);
+//         document.addEventListener('MSFullscreenChange', exitHandler);
+//         // document.addEventListener('keydown', handleKeydown);
+//         return () => {
+//             document.removeEventListener('fullscreenchange', exitHandler);
+//             document.removeEventListener('webkitfullscreenchange', exitHandler);
+//             document.removeEventListener('mozfullscreenchange', exitHandler);
+//             document.removeEventListener('MSFullscreenChange', exitHandler);
+//             // document.removeEventListener('keydown', handleKeydown);
+//         }
+//         // eslint-disable-next-line
+//     }, []);
+//
+//     // if (props.videoElements.has(props.fullscreenVideoId)) {
+//     //     fullscreenWebRTCMedia = <video ref={props.videoElements.get(props.fullscreenVideoId).videoRef} autoPlay className="video-stream"/>;
+//     // }
+//
+//     return (
+//         <div className={"fullscreen"}>
+//             <div className="inner">
+//                 <div className="exit-fullscreen" onClick={() => props.onFullscreenClick(props.fullscreenVideoId)}>
+//                     <FiMinimize/>
+//                     <span>Exit full screen</span>
+//                 </div>
+//                 <video ref={props.videoRef} autoPlay className="video-stream"/>
+//                 {/*<video className="video-stream" poster={"/images/big_buck_bunny.jpg"}/>*/}
+//             </div>
+//         </div>
+//     );
+// }
+
+
 export interface RoomMainProps {
     videoElements: Map<string, VideoElement>;
     onMaximizeClick: (i: string) => void;
@@ -84,6 +147,31 @@ export default function RoomMain(props: RoomMainProps) {
         element.target.className.toggle('room-fullscreen');
     }
 
+    const exitHandler = (e: any) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
+            props.onFullscreenClick(props.fullscreenVideoId);
+        }
+    };
+
+    useEffect(() => {
+        // fullscreenElement = document.querySelector('.room-fullscreen');
+        document.addEventListener('fullscreenchange', exitHandler);
+        document.addEventListener('webkitfullscreenchange', exitHandler);
+        document.addEventListener('mozfullscreenchange', exitHandler);
+        document.addEventListener('MSFullscreenChange', exitHandler);
+        // document.addEventListener('keydown', handleKeydown);
+        return () => {
+            document.removeEventListener('fullscreenchange', exitHandler);
+            document.removeEventListener('webkitfullscreenchange', exitHandler);
+            document.removeEventListener('mozfullscreenchange', exitHandler);
+            document.removeEventListener('MSFullscreenChange', exitHandler);
+            // document.removeEventListener('keydown', handleKeydown);
+        }
+        // eslint-disable-next-line
+    }, []);
+
     let maxMediaStyle: React.CSSProperties;
     if (size.width > 700) {
         maxMediaStyle = {
@@ -91,15 +179,13 @@ export default function RoomMain(props: RoomMainProps) {
             height: '100%',
             padding: '5px',
         }
-    }
-    else if(size.width > 415) {
+    } else if (size.width > 415) {
         maxMediaStyle = {
             width: '100%',
             height: '75%',
             padding: '2px',
         }
-    }
-    else {
+    } else {
         maxMediaStyle = {
             width: '100%',
             height: '80%',
@@ -108,52 +194,60 @@ export default function RoomMain(props: RoomMainProps) {
     }
 
     props.videoElements.forEach((value: VideoElement, key: string) => {
-            const maxOptionsMenu = [
-                new DropdownOption(<FiMinimize2 />, 'Minimize', () => props.onMaximizeClick(key)),
-                new DropdownOption(<FiMaximize />, 'Fullscreen', () => props.onFullscreenClick(key)),
-            ];
-            const normalOptionsMenu: DropdownOption[] = [
-                new DropdownOption(<FiMaximize2/>, 'Maximize', () => props.onMaximizeClick(key)),
-                new DropdownOption(<FiMaximize/>, 'Fullscreen', () => props.onFullscreenClick(key)),
-            ];
-            let normalMediaStyle: React.CSSProperties;
-            if(size.width > 700) {
-                const top: number = countNormalWebRTCMedia * 33;
-                normalMediaStyle = {
-                    top: top.toString() + "%",
-                    right: 0,
-                    width: '25%',
-                    height: '33%',
-                    padding: '5px',
-                };
-            }
-            else {
-                const left: number = countNormalWebRTCMedia * 33;
-                normalMediaStyle = {
-                    left: left.toString() + "%",
-                    bottom: 0,
-                    width: '33%',
-                    padding: '2px',
-                };
-                if(size.width > 415)
-                    normalMediaStyle.height = '25%';
-                else
-                    normalMediaStyle.height = '20%';
-            }
-            webRTCMedia.push(
-                <div
-                    key={key}
-                    className={ props.maxVideoId === '' ? "video" : (props.maxVideoId === key ? "room-expanded" : "webrtc-media-cell")}
-                    style={(props.maxVideoId !== '' ? (props.maxVideoId !== key ? normalMediaStyle : maxMediaStyle) : {})}
-                >
-                    <div className="inner">
+        const maxOptionsMenu = [
+            new DropdownOption(<FiMinimize2/>, 'Minimize', () => props.onMaximizeClick(key)),
+            new DropdownOption(<FiMaximize/>, 'Fullscreen', () => props.onFullscreenClick(key)),
+        ];
+        const normalOptionsMenu: DropdownOption[] = [
+            new DropdownOption(<FiMaximize2/>, 'Maximize', () => props.onMaximizeClick(key)),
+            new DropdownOption(<FiMaximize/>, 'Fullscreen', () => props.onFullscreenClick(key)),
+        ];
+        let normalMediaStyle: React.CSSProperties;
+        if (size.width > 700) {
+            const top: number = countNormalWebRTCMedia * 33;
+            normalMediaStyle = {
+                top: top.toString() + "%",
+                right: 0,
+                width: '25%',
+                height: '33%',
+                padding: '5px',
+            };
+        } else {
+            const left: number = countNormalWebRTCMedia * 33;
+            normalMediaStyle = {
+                left: left.toString() + "%",
+                bottom: 0,
+                width: '33%',
+                padding: '2px',
+            };
+            if (size.width > 415)
+                normalMediaStyle.height = '25%';
+            else
+                normalMediaStyle.height = '20%';
+        }
+        webRTCMedia.push(
+            <div
+                key={key}
+                className={(props.fullscreenVideoId === key ? 'fullscreen' : (props.maxVideoId === '' ? "video" : (props.maxVideoId === key ? "expanded" : "webrtc-media-cell")))}
+                style={(props.maxVideoId !== '' ? (props.maxVideoId !== key ? normalMediaStyle : maxMediaStyle) : {})}
+            >
+                <div className="inner">
+                    {
+                        props.fullscreenVideoId === key ?
+                        <div className="exit-fullscreen"
+                             onClick={() => props.onFullscreenClick(props.fullscreenVideoId)}>
+                            <FiMinimize/>
+                            <span>Exit full screen</span>
+                        </div> :
                         <Dropdown options={key === props.maxVideoId ? maxOptionsMenu : normalOptionsMenu}/>
-                        {/*<video ref={value.videoRef} autoPlay className="video-stream"/>*/}
-                        <video onDoubleClick={maximiseDoubleClick} className="video-stream" poster={"/images/big_buck_bunny.jpg"}/>
-                    </div>
-            </div>);
-            if(props.maxVideoId !== '' && props.maxVideoId !== key)
-                countNormalWebRTCMedia += 1;
+                    }
+                    {/*<video ref={value.videoRef} autoPlay className="video-stream"/>*/}
+                    <video onDoubleClick={maximiseDoubleClick} className="video-stream" poster={"/images/big_buck_bunny.jpg"}/>
+                </div>
+            </div>
+        );
+        if (props.maxVideoId !== '' && props.maxVideoId !== key)
+            countNormalWebRTCMedia += 1;
     });
     return (
         <>
