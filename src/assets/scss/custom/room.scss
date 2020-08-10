@@ -170,7 +170,7 @@ body {
   transition: width 0.3s ease-out;
   width: 100%;
   overflow-y: auto;
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 700px) {
     overflow-y: hidden;
     overflow-x: auto;
   }

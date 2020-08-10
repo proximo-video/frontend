@@ -30,32 +30,40 @@ export function WebRTCMediaCell(props: WebRTCMediaCellProps) {
     );
 }
 
-export function useWindowSize() {
-    const [windowSize, setWindowSize] = useState({
-        width: undefined,
-        height: undefined,
-    });
+// export function useWindowSize() {
+//     const [windowSize, setWindowSize] = useState({
+//         width: undefined,
+//         height: undefined,
+//     });
+//
+//     useEffect(() => {
+//         // Handler to call on window resize
+//         function handleResize() {
+//             // Set window width/height to state
+//             setWindowSize({
+//                 width: window.innerWidth,
+//                 height: window.innerHeight,
+//             });
+//         }
+//
+//         // Add event listener
+//         window.addEventListener("resize", handleResize);
+//
+//         // Call handler right away so state gets updated with initial window size
+//         handleResize();
+//
+//         // Remove event listener on cleanup
+//         return () => window.removeEventListener("resize", handleResize);
+//     }, []); // Empty array ensures that effect is only run on mount
+//
+//     return windowSize;
+// }
 
-    useEffect(() => {
-        // Handler to call on window resize
-        function handleResize() {
-            // Set window width/height to state
-            setWindowSize({
-                width: window.innerWidth,
-                height: window.innerHeight,
-            });
-        }
-
-        // Add event listener
-        window.addEventListener("resize", handleResize);
-
-        // Call handler right away so state gets updated with initial window size
-        handleResize();
-
-        // Remove event listener on cleanup
-        return () => window.removeEventListener("resize", handleResize);
-    }, []); // Empty array ensures that effect is only run on mount
-
+function getWindowSize() {
+    let windowSize = {
+        height: window.innerHeight,
+        width: window.innerWidth,
+    }
     return windowSize;
 }
 
@@ -70,7 +78,34 @@ export interface RoomMainProps {
 export default function RoomMain(props: RoomMainProps) {
     const webRTCMedia: ReactElement[] = [];
     let countNormalWebRTCMedia: number = 0;
-    const size = useWindowSize();
+    // const size = useWindowSize();
+    const size = getWindowSize();
+    const maximiseDoubleClick = (element: any) => {
+        element.target.className.toggle('room-fullscreen');
+    }
+
+    let maxMediaStyle: React.CSSProperties;
+    if (size.width > 700) {
+        maxMediaStyle = {
+            width: '75%',
+            height: '100%',
+            padding: '5px',
+        }
+    }
+    else if(size.width > 415) {
+        maxMediaStyle = {
+            width: '100%',
+            height: '75%',
+            padding: '2px',
+        }
+    }
+    else {
+        maxMediaStyle = {
+            width: '100%',
+            height: '80%',
+            padding: '2px',
+        }
+    }
 
     props.videoElements.forEach((value: VideoElement, key: string) => {
             const maxOptionsMenu = [
@@ -81,31 +116,40 @@ export default function RoomMain(props: RoomMainProps) {
                 new DropdownOption(<FiMaximize2/>, 'Maximize', () => props.onMaximizeClick(key)),
                 new DropdownOption(<FiMaximize/>, 'Fullscreen', () => props.onFullscreenClick(key)),
             ];
-            let style: React.CSSProperties;
-            if(size.width > 600) {
+            let normalMediaStyle: React.CSSProperties;
+            if(size.width > 700) {
                 const top: number = countNormalWebRTCMedia * 33;
-                style = {
+                normalMediaStyle = {
                     top: top.toString() + "%",
-                    right: 0
+                    right: 0,
+                    width: '25%',
+                    height: '33%',
+                    padding: '5px',
                 };
             }
             else {
                 const left: number = countNormalWebRTCMedia * 33;
-                style = {
+                normalMediaStyle = {
                     left: left.toString() + "%",
-                    bottom: 0
+                    bottom: 0,
+                    width: '33%',
+                    padding: '2px',
                 };
+                if(size.width > 415)
+                    normalMediaStyle.height = '25%';
+                else
+                    normalMediaStyle.height = '20%';
             }
             webRTCMedia.push(
                 <div
                     key={key}
                     className={ props.maxVideoId === '' ? "video" : (props.maxVideoId === key ? "room-expanded" : "webrtc-media-cell")}
-                    style={(props.maxVideoId !== '' && props.maxVideoId !== key ? style : {})}
+                    style={(props.maxVideoId !== '' ? (props.maxVideoId !== key ? normalMediaStyle : maxMediaStyle) : {})}
                 >
                     <div className="inner">
                         <Dropdown options={key === props.maxVideoId ? maxOptionsMenu : normalOptionsMenu}/>
                         {/*<video ref={value.videoRef} autoPlay className="video-stream"/>*/}
-                        <video className="video-stream" poster={"/images/big_buck_bunny.jpg"}/>
+                        <video onDoubleClick={maximiseDoubleClick} className="video-stream" poster={"/images/big_buck_bunny.jpg"}/>
                     </div>
             </div>);
             if(props.maxVideoId !== '' && props.maxVideoId !== key)
