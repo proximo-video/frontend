@@ -21,7 +21,7 @@ export function WebRTCMediaCell(props: WebRTCMediaCellProps) {
         <div className="video">
             <div className="inner">
                 <Dropdown options={normalOptionsMenu}/>
-                <video muted ref={props.videoRef} autoPlay className="video-stream" poster={"/images/big_buck_bunny.jpg"}/>
+                <video ref={props.videoRef} autoPlay className="video-stream" />
             </div>
         </div>
     );
