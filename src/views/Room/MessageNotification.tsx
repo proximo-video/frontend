@@ -12,7 +12,7 @@ export default function MessageNotification(props: MessageSnackbarProps) {
 
     const createNotification = (message) => {
         const messageComponent = <MessageComponent userId={"3289832bkjdb"} message={"hello crap www.stackoverflow.com @SrBachchan " + message} displayName={"Oh crap"} messageBodyClassName={"side-message-body"}/>
-        Message(messageComponent, '', 10000);
+        Message(messageComponent, '', 0);
     };
 
     const openSnackBar = () => {
