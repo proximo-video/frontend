@@ -1,8 +1,9 @@
 import {FiMinimize} from "react-icons/fi";
 import React, {ReactElement, useEffect} from "react";
 import '../../assets/scss/custom/roomFullscreen.scss';
-import {RoomMainExpandProps} from "./RoomMainExpand";
-import {VideoElement} from "./videoDataType";
+// import {RoomMainExpandProps} from "./RoomMainExpand";
+// import {VideoElement} from "./videoDataType";
+import {RoomMainProps} from "./RoomMain";
 
 declare global {
     interface Document {
@@ -12,15 +13,19 @@ declare global {
     }
 }
 
-export default function RoomMainFullscreen(props: RoomMainExpandProps) {
+export interface RoomMainFullscreenProps extends RoomMainProps{
+    fullscreenVideoId: string;
+}
+
+export default function RoomMainFullscreen(props: RoomMainFullscreenProps) {
     // let fullscreenElement;
     let fullscreenWebRTCMedia: ReactElement | null = null;
-    let fullscreenUserId:string = "";
+    // let fullscreenUserId:string = "";
     const exitHandler = (e: any) => {
         e.preventDefault();
         e.stopPropagation();
         if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
-            props.onFullscreenClick(fullscreenUserId);
+            props.onFullscreenClick(props.fullscreenVideoId);
         }
     };
     useEffect(() => {
@@ -39,20 +44,18 @@ export default function RoomMainFullscreen(props: RoomMainExpandProps) {
         }
         // eslint-disable-next-line
     }, []);
-    props.videoElements.forEach((value: VideoElement, key: string) => {
-        if (value.isFullscreen) {
-            fullscreenUserId = key;
-            fullscreenWebRTCMedia =
-                <video muted ref={value.videoRef} autoPlay className="video-stream"/>;
-        }
-    });
+
+    if (props.videoElements.has(props.fullscreenVideoId)) {
+        fullscreenWebRTCMedia = <video muted ref={props.videoElements.get(props.fullscreenVideoId).videoRef} autoPlay className="video-stream"/>;
+    }
+
     return (
         <div className={"room-fullscreen"}>
-            <div className="exit-fullscreen" onClick={() => props.onFullscreenClick(fullscreenUserId)}>
+            <div className="exit-fullscreen" onClick={() => props.onFullscreenClick(props.fullscreenVideoId)}>
                 <FiMinimize/>
                 <span>Exit full screen</span>
             </div>
             {fullscreenWebRTCMedia}
         </div>
-    )
+    );
 }

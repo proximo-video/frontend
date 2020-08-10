@@ -1,15 +1,11 @@
 export class VideoElement {
     videoRef: any;
-    isMax: boolean;
-    isFullscreen: boolean;
     userId: string;
-    title: string;
-    constructor(videoRef: any, isMax: boolean, isFullscreen: boolean, userId: string, title: string) {
+    displayName: string;
+    constructor(videoRef: any, userId: string, displayName: string) {
         this.videoRef = videoRef;
-        this.isMax = isMax;
-        this.isFullscreen = isFullscreen;
         this.userId = userId;
-        this.title = title;
+        this.displayName = displayName;
     }
 }
 

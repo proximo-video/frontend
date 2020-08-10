@@ -3,7 +3,6 @@ import '../../assets/scss/custom/room.scss';
 import DropdownOption from "./expandedRoomDataType";
 import {FiMaximize, FiMaximize2} from "react-icons/fi";
 import Dropdown from "./Dropdown";
-import {RoomMainExpandProps} from "./RoomMainExpand";
 import {VideoElement} from './videoDataType';
 
 export interface WebRTCMediaCellProps {
@@ -21,13 +20,19 @@ export function WebRTCMediaCell(props: WebRTCMediaCellProps) {
         <div className="video">
             <div className="inner">
                 <Dropdown options={normalOptionsMenu}/>
-                <video ref={props.videoRef} autoPlay className="video-stream" />
+                <video ref={props.videoRef} autoPlay className="video-stream"/>
             </div>
         </div>
     );
 }
 
-export default function RoomMain(props: RoomMainExpandProps) {
+export interface RoomMainProps {
+    videoElements: Map<string, VideoElement>;
+    onMaximizeClick: (i: string) => void;
+    onFullscreenClick: (i: string) => void;
+}
+
+export default function RoomMain(props: RoomMainProps) {
     const normalWebRTCMedia: ReactElement[] = [];
     props.videoElements.forEach((value: VideoElement, key: string) => {
         normalWebRTCMedia.push(<WebRTCMediaCell videoRef={value.videoRef} key={key}
