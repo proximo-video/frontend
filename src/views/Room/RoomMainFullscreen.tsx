@@ -46,7 +46,7 @@ export default function RoomMainFullscreen(props: RoomMainFullscreenProps) {
     }, []);
 
     if (props.videoElements.has(props.fullscreenVideoId)) {
-        fullscreenWebRTCMedia = <video muted ref={props.videoElements.get(props.fullscreenVideoId).videoRef} autoPlay className="video-stream"/>;
+        fullscreenWebRTCMedia = <video ref={props.videoElements.get(props.fullscreenVideoId).videoRef} autoPlay className="video-stream"/>;
     }
 
     return (

@@ -141,6 +141,8 @@ function RoomView() {
 
     const handleMaximizeButtonClick = (userId: string) => {
         if (videoElements.has(userId) && videoElements.size > 1) {
+            console.log("maximize request: ", userId);
+            console.log("maxVideoId: ", maxVideoId);
             if (userId === maxVideoId)
                 setMaxVideoId('');
             else
@@ -204,19 +206,23 @@ function RoomView() {
     return (
         <div className="room-main">
             <div className={"video-container" + (isChatOpen ? " chat-open" : "")}>
-                {
-                    fullscreenVideoId !== '' ?
-                        <RoomMainFullscreen fullscreenVideoId={fullscreenVideoId} videoElements={videoElements}
-                            onMaximizeClick={(userId: string) => handleMaximizeButtonClick(userId)}
-                            onFullscreenClick={(userId: string) => handleFullscreenButtonClick(userId)} /> : (
-                            maxVideoId !== '' ?
-                                <RoomMainExpand maxVideoId={maxVideoId} videoElements={videoElements}
-                                    onMaximizeClick={(userId: string) => handleMaximizeButtonClick(userId)}
-                                    onFullscreenClick={(userId: string) => handleFullscreenButtonClick(userId)} /> :
-                                <RoomMain videoElements={videoElements}
-                                    onMaximizeClick={(userId: string) => handleMaximizeButtonClick(userId)}
-                                    onFullscreenClick={(userId: string) => handleFullscreenButtonClick(userId)} />)
-                }
+                {/*{*/}
+                {/*    fullscreenVideoId !== '' ?*/}
+                {/*        <RoomMainFullscreen fullscreenVideoId={fullscreenVideoId} videoElements={videoElements}*/}
+                {/*            onMaximizeClick={(userId: string) => handleMaximizeButtonClick(userId)}*/}
+                {/*            onFullscreenClick={(userId: string) => handleFullscreenButtonClick(userId)} /> : (*/}
+                {/*            maxVideoId !== '' ?*/}
+                {/*                <RoomMainExpand maxVideoId={maxVideoId} videoElements={videoElements}*/}
+                {/*                    onMaximizeClick={(userId: string) => handleMaximizeButtonClick(userId)}*/}
+                {/*                    onFullscreenClick={(userId: string) => handleFullscreenButtonClick(userId)} /> :*/}
+                {/*                <RoomMain videoElements={videoElements}*/}
+                {/*                    onMaximizeClick={(userId: string) => handleMaximizeButtonClick(userId)}*/}
+                {/*                    onFullscreenClick={(userId: string) => handleFullscreenButtonClick(userId)} />)*/}
+                {/*}*/}
+                <RoomMain maxVideoId={maxVideoId} fullscreenVideoId={fullscreenVideoId} videoElements={videoElements}
+                          onMaximizeClick={(userId: string) => handleMaximizeButtonClick(userId)}
+                          onFullscreenClick={(userId: string) => handleFullscreenButtonClick(userId)} />
+
             </div>
             <RoomChat isChatOpen={isChatOpen} onClose={backdropClick} />
             <button className="button is-primary addVideo" onClick={() => addUser()}>Primary</button>

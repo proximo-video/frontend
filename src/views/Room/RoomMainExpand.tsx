@@ -17,7 +17,7 @@ export default function RoomMainExpand(props: RoomMainExpandProps) {
     props.videoElements.forEach((value: VideoElement, key: string) => {
         if (props.maxVideoId === key) {
             maxWebRTCMedia =
-                <video muted ref={value.videoRef} key={key} autoPlay className="video-stream"/>;
+                <video ref={value.videoRef} key={key} autoPlay className="video-stream"/>;
             maxOptionsMenu = [
                 new DropdownOption(<FiMinimize2 />, 'Minimize', () => props.onMaximizeClick(key)),
                 new DropdownOption(<FiMaximize />, 'Fullscreen', () => props.onFullscreenClick(key)),
