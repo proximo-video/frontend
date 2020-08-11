@@ -103,21 +103,21 @@ const socketAndWebRTC = (params, store) => {
 
         // Add both video and audio tracks to the connection
         for (const track of localStream.getTracks()) {
-            console.log("Sending Stream.")
+            // console.log("Sending Stream.")
             connection.addTrack(track, localStream);
         }
 
         // This event handles displaying remote video and audio feed from the other peer
         connection.ontrack = event => {
-            console.log("Recieved Stream.");
+            // console.log("Recieved Stream.");
             remoteStreams = new Map(remoteStreams.set(toUser, event.streams));
             store.dispatch(addRemoteStream())
-            console.log(remoteStreams)
+            // console.log(remoteStreams)
         }
 
         // This event handles the received data channel from the other peer
         connection.ondatachannel = function (event) {
-            console.log("Recieved a DataChannel.")
+            // console.log("Recieved a DataChannel.")
             let channel = event.channel;
             setChannelEvents(channel, toUser);
         };
@@ -125,7 +125,7 @@ const socketAndWebRTC = (params, store) => {
         // This event sends the ice candidates generated from Stun or Turn server to the Receiver over web socket
         connection.onicecandidate = event => {
             if (event.candidate) {
-                console.log("Sending Ice Candidate - " + event.candidate.candidate);
+                // console.log("Sending Ice Candidate - " + event.candidate.candidate);
 
                 socket.send(JSON.stringify(
                     {
@@ -187,7 +187,7 @@ const socketAndWebRTC = (params, store) => {
         // Create Offer
         connections.get(toUser).createOffer().then(
             offer => {
-                console.log('Sent The Offer.');
+                // console.log('Sent The Offer.');
 
                 // Send Offer to other peer
                 socket.send(JSON.stringify(
@@ -233,7 +233,7 @@ const socketAndWebRTC = (params, store) => {
             createRTCPeerConnection(toUser);
         // Avoid accepting the ice candidate if this is a message created by the current peer
         if (params.id !== id) {
-            console.log("Adding Ice Candidate - " + candidate.candidate);
+            // console.log("Adding Ice Candidate - " + candidate.candidate);
             connections.get(toUser).addIceCandidate(new RTCIceCandidate(candidate));
         }
     }

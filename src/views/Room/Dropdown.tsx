@@ -13,26 +13,27 @@ export interface DropdownContentProps extends DropdownProps {
 }
 
 export function DropdownContent({backdropClick, options, dropdownClasses}: DropdownContentProps) {
-    let dropdown: Element;
+    // let dropdown: Element;
     const handleClick = (e: any) => {
         e.preventDefault();
         e.stopPropagation();
-        if (!dropdown.contains(e.target))
-            backdropClick();
+        // if (!dropdown.contains(e.target))
+        backdropClick();
     }
     useEffect(() => {
         // eslint-disable-next-line
-        dropdown = document.querySelector('.dropdown-content.show') as Element;
+        // dropdown = document.querySelector('.dropdown-content.show') as Element;
         document.addEventListener('click', handleClick);
         return () => {
             document.removeEventListener('click', handleClick);
         }
+        // eslint-disable-next-line
     }, []);
     dropdownClasses = Array.isArray(dropdownClasses) ? dropdownClasses.join(' ') : dropdownClasses;
     return (
         <div className={"dropdown-content show " + (dropdownClasses !== void 0 ? dropdownClasses : '')}>
             {options.map((option: DropdownOption, i: number) => (
-                <div key={i} className={"option"} onClick={option.onClick}>
+                <div key={i} className={"option " + option.className} onClick={option.onClick}>
                     {option.prefixIcon}
                     <span>{option.label}</span>
                 </div>

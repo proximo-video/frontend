@@ -19,6 +19,11 @@ $font-color: #bfbebe;
   box-sizing: border-box;
 }
 
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 :root {
   --per-row: 1;
   --rows: 1;
@@ -132,6 +137,10 @@ $font-color: #bfbebe;
   border-radius: 8px;
   transition: bottom 0.5s;
   transition-timing-function: linear;
+  @media only screen and (max-width: 600px) {
+      grid-gap: 8px;
+      padding: 2px;
+  }
 }
 
 .room-main {
@@ -149,6 +158,7 @@ $font-color: #bfbebe;
 }
 
 .video-container {
+  position: relative;
   display: flex;
   flex-grow: 1;
   flex-wrap: wrap;
@@ -159,38 +169,11 @@ $font-color: #bfbebe;
   overflow: hidden;
   transition: width 0.3s ease-out;
   width: 100%;
-}
-
-@media only screen and (max-width: 600px) {
-  .video {
-    flex-grow: 1;
+  overflow-y: auto;
+  @media only screen and (max-width: 700px) {
+    overflow-y: hidden;
+    overflow-x: auto;
   }
-  .buttonWrapper {
-    grid-gap: 8px;
-    padding: 2px;
-  }
-}
-
-.video {
-  width: calc(100%/var(--per-row));
-  padding: var(--video-padding);
-  height: calc(100%/var(--rows));
-  // flex-grow: 1;
-}
-
-.inner {
-  height: 100%;
-  position: relative;
-  &:hover .dropdown-button {
-    display: block;
-  }
-}
-
-.video-stream, iframe {
-  height: 100%;
-  width: 100%;
-  border-radius: 8px;
-  object-fit: cover;
 }
 
 .tooltip {
@@ -260,6 +243,15 @@ $font-color: #bfbebe;
   background: #272c47 !important;
   border-radius: 0 10px 10px 10px;
 }
+
+//.normal-video-container {
+//  height: 100%;
+//  width: 100%;
+//  display: flex;
+//  justify-content: center;
+//  align-items: center;
+//  flex-wrap: wrap;
+//}
 
 
 

@@ -3,9 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import "./RoomFooter";
 import RoomFooter from './RoomFooter';
 import { videoDataType, VideoElement } from './videoDataType';
-import RoomMainExpand from './RoomMainExpand';
 import RoomMain from "./RoomMain";
-import RoomMainFullscreen from "./RoomMainFullscreen";
 import RoomChat from "./RoomChat";
 import MessageNotification from "./MessageNotification";
 import { localStream } from '../../middleware/getUserMedia';
@@ -32,6 +30,8 @@ declare global {
 function RoomView() {
     // 5 buttons 0=>cam, 1=>mic, 2=>screen, 3=>chat, 4=>leave, buttons array denoting the
     const [buttonsState, setButtonsState] = useState<boolean[]>([false, false, true, false, false]);
+    const [maxVideoId, setMaxVideoId] = useState<string>('');
+    const [fullscreenVideoId, setFullscreenVideoId] = useState<string>('');
     // eslint-disable-next-line
     const browser = detect();
     const dispatch = useDispatch();
@@ -44,10 +44,8 @@ function RoomView() {
     const isVideo = useSelector((state: RootStateOrAny) => state.userMediaPreference.isVideo);
     const remoteStreamCount = useSelector((state: RootStateOrAny) => state.remoteStreamCount);
     const selfVideo = useRef();
-    videoDataType.set(id, new VideoElement(selfVideo, false, false, id, name));
+    videoDataType.set(id, new VideoElement(selfVideo, id, name));
     const [videoElements, setVideoElements] = useState<Map<string, VideoElement>>(videoDataType);
-    const [isAnyVideoMax, setIsAnyVideoMax] = useState<boolean>(false);
-    const [isAnyVideoFullscreen, setIsAnyVideoFullscreen] = useState<boolean>(false);
     const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
 
     useEffect(() => {
@@ -65,7 +63,7 @@ function RoomView() {
     }, [userMedia]);
 
     useEffect(() => {
-        console.log("first");
+        // console.log("first");
         videoElements.forEach((_, key) => {
             if (!remoteStreams.has(key) && key !== id)
                 console.log(videoElements.delete(key));
@@ -73,7 +71,7 @@ function RoomView() {
         remoteStreams.forEach((_, key) => {
             if (!videoElements.has(key)) {
                 const videoRef = React.createRef();
-                const newVideoElement = new VideoElement(videoRef, false, false, key, "abc");
+                const newVideoElement = new VideoElement(videoRef, key, "abc");
                 setVideosLayout(videoElements.size + 1);
                 setVideoElements(new Map(videoElements.set(key, newVideoElement)));
             }
@@ -83,16 +81,16 @@ function RoomView() {
     }, [remoteStreams]);
 
     useEffect(() => {
-        console.log("self video: ", selfVideo);
+        // console.log("self video: ", selfVideo);
         if (selfVideo.current){
             //@ts-ignore
             selfVideo.current.srcObject = localStream
             //@ts-ignore
             selfVideo.current.muted = true;
         }
-        console.log("second")
-        console.log(remoteStreams)
-        console.log(videoElements)
+        // console.log("second")
+        // console.log(remoteStreams)
+        // console.log(videoElements)
         remoteStreams.forEach((value, key) => {
             if (videoElements.has(key)) {
                 if (videoElements.get(key).videoRef.current)
@@ -100,7 +98,7 @@ function RoomView() {
             }
         })
         // eslint-disable-next-line
-    }, [remoteStreamCount,isAnyVideoMax,isAnyVideoFullscreen]);
+    }, [remoteStreamCount]);
 
     const handleButtonClick = (i: number) => {
         const newButtonsState = buttonsState.slice();
@@ -111,7 +109,7 @@ function RoomView() {
     };
 
     const isMobile = () => {
-        return window.innerWidth <= 700;
+        return window.innerWidth <= 545;
     };
 
     const setVideosLayout = (n: number) => {
@@ -131,7 +129,7 @@ function RoomView() {
     const addUser = () => {
         // generate some random key, para and title
         const videoRef = React.createRef();
-        const newVideoElement = new VideoElement(videoRef, false, false, id, name);
+        const newVideoElement = new VideoElement(videoRef, id, name);
         setVideosLayout(videoElements.size + 1);
         setVideoElements(new Map(videoElements.set(Math.random().toString(36).slice(2), newVideoElement)));
     };
@@ -139,27 +137,21 @@ function RoomView() {
 
     const handleMaximizeButtonClick = (userId: string) => {
         if (videoElements.has(userId) && videoElements.size > 1) {
-            const newVideoElements = new Map<string, VideoElement>(videoElements);
-            newVideoElements.get(userId).isMax = !videoElements.get(userId).isMax;
-            setIsAnyVideoMax(newVideoElements.get(userId).isMax);
-            newVideoElements.forEach((value: VideoElement, key: string) => {
-                if (key !== userId)
-                    newVideoElements.get(key).isMax = false;
-            });
-            setVideoElements(newVideoElements);
+            // console.log("maximize request: ", userId);
+            // console.log("maxVideoId: ", maxVideoId);
+            if (userId === maxVideoId)
+                setMaxVideoId('');
+            else
+                setMaxVideoId(userId);
         }
     };
 
-    const handleFullscreenButtonClick = async (userId) => {
+    const handleFullscreenButtonClick = async (userId: string) => {
+        // console.log("fullscreen on/off request from userId:", userId);
+        // console.log("Current fullscreenId:", fullscreenVideoId);
         if (videoElements.has(userId)) {
-            // console.log("fullscreen request from user:", userId);
-            const newVideoElements = new Map(videoElements);
-            newVideoElements.get(userId).isFullscreen = !videoElements.get(userId).isFullscreen;
-            newVideoElements.forEach((value: VideoElement, key: string) => {
-                if (key !== userId)
-                    newVideoElements.get(key).isFullscreen = false;
-            });
-            if (newVideoElements.get(userId).isFullscreen) {
+            if (fullscreenVideoId !== userId) {
+                // console.log("Received fullscreen request from user: ", userId);
                 const elem = document.documentElement;
                 if (elem.requestFullscreen) {
                     await elem.requestFullscreen();
@@ -170,8 +162,10 @@ function RoomView() {
                 } else if (elem.msRequestFullscreen) { /* IE/Edge */
                     await elem.msRequestFullscreen();
                 }
+                setFullscreenVideoId(userId);
                 // await document.documentElement.requestFullscreen();
             } else if (document.fullscreenElement || document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement) {
+                // console.log("Received close fullscreen request from user: ", userId);
                 if (document.exitFullscreen) {
                     await document.exitFullscreen();
                 } else if (document.mozCancelFullScreen) { /* Firefox */
@@ -181,10 +175,15 @@ function RoomView() {
                 } else if (document.msExitFullscreen) { /* IE/Edge */
                     await document.msExitFullscreen();
                 }
+                setFullscreenVideoId('');
             }
-            setIsAnyVideoFullscreen(newVideoElements.get(userId).isFullscreen);
-            setVideoElements(newVideoElements);
+            else {
+                // console.log("Fullscreen already removed:", userId);
+                setFullscreenVideoId('');
+            }
         }
+        else
+            setFullscreenVideoId('');
     }
 
     const backdropClick = () => {
@@ -210,19 +209,10 @@ function RoomView() {
     return (
         <div className="room-main">
             <div className={"video-container" + (isChatOpen ? " chat-open" : "")}>
-                {
-                    isAnyVideoFullscreen ?
-                        <RoomMainFullscreen videoElements={videoElements}
-                            onMaximizeClick={(userId: string) => handleMaximizeButtonClick(userId)}
-                            onFullscreenClick={(userId: string) => handleFullscreenButtonClick(userId)} /> : (
-                            isAnyVideoMax ?
-                                <RoomMainExpand videoElements={videoElements}
-                                    onMaximizeClick={(userId: string) => handleMaximizeButtonClick(userId)}
-                                    onFullscreenClick={(userId: string) => handleFullscreenButtonClick(userId)} /> :
-                                <RoomMain videoElements={videoElements}
-                                    onMaximizeClick={(userId: string) => handleMaximizeButtonClick(userId)}
-                                    onFullscreenClick={(userId: string) => handleFullscreenButtonClick(userId)} />)
-                }
+                <RoomMain maxVideoId={maxVideoId} fullscreenVideoId={fullscreenVideoId} videoElements={videoElements}
+                          onMaximizeClick={(userId: string) => handleMaximizeButtonClick(userId)}
+                          onFullscreenClick={(userId: string) => handleFullscreenButtonClick(userId)} />
+
             </div>
             <RoomChat isChatOpen={isChatOpen} onClose={backdropClick} />
             <button className="button is-primary addVideo" onClick={() => addUser()}>Primary</button>

@@ -6,11 +6,13 @@ $avatar-background: #107ad1;
 $message-body-color: #bfbebe;
 $message-body-background: #3f475f;
 $url-color: #ACADFF;
+$button-border-color: #4c5f77;
 
 :root {
   --message-avatar-size: 30px;
   --max-message-avatar-size: 30px;
-  --close-button-size: 36px;
+  --close-button-size: 30px;
+  //--close-button-size: 30px;
   //@media only screen and (max-width: 600px) {
   //
   //}
@@ -44,6 +46,18 @@ $url-color: #ACADFF;
     .close-btn {
       color: $font-color;
       font-size: var(--close-button-size);
+      background: none;
+      border: 1px solid transparent;
+      height: var(--close-button-size);
+      width: var(--close-button-size);
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      &:hover {
+        border: 1px solid $button-border-color;
+        box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, 0.6);
+      }
     }
   }
   .chat-main {
@@ -109,7 +123,7 @@ $url-color: #ACADFF;
       max-width: 30px;
       border: 1px solid transparent;
       &:hover {
-        border: 1px solid #4c5f77;
+        border: 1px solid $button-border-color;
         box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, 0.6);
       }
     }

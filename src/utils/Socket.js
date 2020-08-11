@@ -21,9 +21,9 @@ function Socket(action, userId, roomId, connections, updateConnection, addStream
         socket.onmessage = function (event) {
             let jsonData = JSON.parse(event.data);
             if (jsonData.action === "READY") {
-                console.log("Got Ready")
+                // console.log("Got Ready")
                 let toUser = jsonData.from;
-                console.log(toUser, userId)
+                // console.log(toUser, userId)
                 if (!connections.has(toUser))
                     createRTCPeerConnection(toUser, socket);
                 createAndSendOffer(toUser, socket);
@@ -31,7 +31,7 @@ function Socket(action, userId, roomId, connections, updateConnection, addStream
 
             switch (jsonData.type) {
                 case 'CANDIDATE':
-                    console.log('Received The Candidate');
+                    // console.log('Received The Candidate');
                     handleCandidate(jsonData.data, jsonData.id, jsonData.from, socket);
                     break;
                 case 'OFFER':
@@ -70,22 +70,22 @@ function Socket(action, userId, roomId, connections, updateConnection, addStream
 
         // Add both video and audio tracks to the connection
         for (const track of localStream.getTracks()) {
-            console.log("Sending Stream.")
+            // console.log("Sending Stream.")
             connection.addTrack(track, localStream);
         }
 
         // This event handles displaying remote video and audio feed from the other peer
         connection.ontrack = event => {
-            console.log("Recieved Stream.");
+            // console.log("Recieved Stream.");
             addStream(toUser, event.streams);
-            console.log(event.streams)
+            // console.log(event.streams)
             // document.getElementById("remoteVideo").srcObject = event.streams[0];
-            console.log(event.streams)
+            // console.log(event.streams)
         }
 
         // This event handles the received data channel from the other peer
         connection.ondatachannel = function (event) {
-            console.log("Recieved a DataChannel.")
+            // console.log("Recieved a DataChannel.")
             let channel = event.channel;
             setChannelEvents(channel);
         };
@@ -93,7 +93,7 @@ function Socket(action, userId, roomId, connections, updateConnection, addStream
         // This event sends the ice candidates generated from Stun or Turn server to the Receiver over web socket
         connection.onicecandidate = event => {
             if (event.candidate) {
-                console.log("Sending Ice Candidate - " + event.candidate.candidate);
+                // console.log("Sending Ice Candidate - " + event.candidate.candidate);
 
                 socket.send(JSON.stringify(
                     {
@@ -152,7 +152,7 @@ function Socket(action, userId, roomId, connections, updateConnection, addStream
         // Create Offer
         connections.get(toUser).createOffer().then(
             offer => {
-                console.log('Sent The Offer.');
+                // console.log('Sent The Offer.');
 
                 // Send Offer to other peer
                 socket.send(JSON.stringify(
@@ -178,7 +178,7 @@ function Socket(action, userId, roomId, connections, updateConnection, addStream
 
     const setChannelEvents = (channel) => {
         channel.onmessage = function (event) {
-            var data = JSON.parse(event.data);
+            let data = JSON.parse(event.data);
             document.getElementById("chatTextArea").value += data.message + '\n';
         };
 
@@ -197,7 +197,7 @@ function Socket(action, userId, roomId, connections, updateConnection, addStream
             createRTCPeerConnection(toUser, socket);
         // Avoid accepting the ice candidate if this is a message created by the current peer
         if (userId !== id) {
-            console.log("Adding Ice Candidate - " + candidate.candidate);
+            // console.log("Adding Ice Candidate - " + candidate.candidate);
             connections.get(toUser).addIceCandidate(new RTCIceCandidate(candidate));
         }
     }
@@ -210,7 +210,7 @@ function Socket(action, userId, roomId, connections, updateConnection, addStream
             createRTCPeerConnection(toUser, socket);
         // Avoid accepting the Offer if this is a message created by the current peer
         if (userId !== id) {
-            console.log("Recieved The Offer.");
+            // console.log("Recieved The Offer.");
             console.log(toUser, userId, connections)
             connections.get(toUser).setRemoteDescription(new RTCSessionDescription(offer));
             createAndSendAnswer(toUser, socket)
@@ -225,7 +225,7 @@ function Socket(action, userId, roomId, connections, updateConnection, addStream
     const handleAnswer = (answer, id, toUser) => {
         // Avoid accepting the Answer if this is a message created by the current peer
         if (userId !== id) {
-            console.log("Recieved The Answer");
+            // console.log("Recieved The Answer");
             connections.get(toUser).setRemoteDescription(new RTCSessionDescription(answer));
         }
     }
@@ -235,7 +235,7 @@ function Socket(action, userId, roomId, connections, updateConnection, addStream
         // Create Answer
         connections.get(toUser).createAnswer().then(
             answer => {
-                console.log('Sent The Answer.');
+                // console.log('Sent The Answer.');
 
                 // Set Answer for negotiation
                 connections.get(toUser).setLocalDescription(answer);
