@@ -1,5 +1,5 @@
 import { localStream } from './getUserMedia';
-import { addRemoteStream, deleteRemoteStream } from '../redux/actions'
+import { addRemoteStream, deleteRemoteStream, addRemoteUser } from '../redux/actions'
 let socket;
 let iceServers;
 let connections = new Map();
@@ -67,12 +67,14 @@ const socketAndWebRTC = (params, store) => {
                     console.log('Received The Candidate');
                     handleCandidate(jsonData.data, jsonData.id, jsonData.from);
                     break;
-                case 'OFFER':
-                    console.log('Received The Offer');
+                case 'OFFER': 
+                    console.log('Received The Offer',jsonData.displayName,params.displayName);
+                    store.dispatch(addRemoteUser({id:jsonData.from,displayName:jsonData.display_name}))
                     handleOffer(jsonData.data, jsonData.id, jsonData.from);
                     break;
-                case 'ANSWER':
-                    console.log('Received The Answer');
+                case 'ANSWER': 
+                    console.log('Received The Answer',jsonData.displayName,params.displayName);
+                    store.dispatch(addRemoteUser({id:jsonData.from,displayName:jsonData.display_name}))
                     handleAnswer(jsonData.data, jsonData.id, jsonData.from);
                     break;
                 default:
@@ -221,7 +223,8 @@ const socketAndWebRTC = (params, store) => {
                         data: offer,
                         id: params.id,
                         to: toUser,
-                        from: params.id
+                        from: params.id,
+                        display_name: params.displayName
                     }
                 ));
 
@@ -307,7 +310,8 @@ const socketAndWebRTC = (params, store) => {
                         data: answer,
                         id: params.id,
                         to: toUser,
-                        from: params.id
+                        from: params.id,
+                        display_name: params.displayName
                     }
                 ));
             },

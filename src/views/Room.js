@@ -99,7 +99,7 @@ function Room(props) {
 
     const createSocket = () => {
         //Socket(isLogged? "START" : "JOIN", id, roomId, connections, updateConnection, addStream, deleteStream, localStream, iceServers);
-        dispatch(connectSocket({action:"JOIN",id:id,roomId:roomId}))
+        dispatch(connectSocket({action:"JOIN",id:id,roomId:roomId,displayName:name}))
         setStartRoomView(true);
     }
     return (!startRoomView?<LayoutDefault>

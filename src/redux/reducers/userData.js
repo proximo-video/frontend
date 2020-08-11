@@ -24,6 +24,7 @@ export const roomOwnerReducer = (state = false, action) => {
 
 export const remoteUsersReducer = (state = {}, action) => {
     if (action.type === 'ADDREMOTEUSER')
-        return action.value;
+        if (!state.hasOwnProperty(action.value.id))
+            return { ...state, [action.value.id]: action.value.displayName }
     return state;
 }
