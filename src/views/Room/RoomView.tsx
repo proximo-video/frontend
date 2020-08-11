@@ -8,10 +8,8 @@ import RoomChat from "./RoomChat";
 import MessageNotification from "./MessageNotification";
 import {localStream} from '../../middleware/getUserMedia';
 import {remoteStreams} from '../../middleware/webRTC';
-// eslint-disable-next-line
-import {getUserMedia, toggleAudio, toggleVideo} from '../../redux/actions';
+import {getUserMedia} from '../../redux/actions';
 import {useDispatch, useSelector, RootStateOrAny} from 'react-redux';
-import {detect} from 'detect-browser';
 
 declare global {
     interface Document {
@@ -33,15 +31,11 @@ function RoomView() {
     // screen sharing is on , button State:= true ; screen sharing is off , button state:= false, default := false
     // chat is on , button state:= true ; chat is off , button state:= false, default := false
     // buttons states
-    const [camButtonState, setCamButtonState] = useState<boolean>(true);
-    const [micButtonState, setMicButtonState] = useState<boolean>(true);
-    const [screenButtonState, setScreenButtonState] = useState<boolean>(false);
     const [chatButtonState, setChatButtonState] = useState<boolean>(false);
     // max and fullscreen video state
     const [maxVideoId, setMaxVideoId] = useState<string>('');
     const [fullscreenVideoId, setFullscreenVideoId] = useState<string>('');
     // eslint-disable-next-line
-    const browser = detect();
     const dispatch = useDispatch();
     const userMedia = useSelector((state: RootStateOrAny) => state.userMedia);
     const id = useSelector((state: RootStateOrAny) => state.id);
@@ -116,25 +110,10 @@ function RoomView() {
     //         setIsChatOpen(newButtonsState[i]);
     // };
 
-    const handleCamButtonClick = () => {
-        setCamButtonState(!camButtonState);
-    }
-
-    const handleMicButtonClick = () => {
-        setMicButtonState(!micButtonState);
-    }
-
-    const handleScreenButtonClick = () => {
-        setScreenButtonState(!screenButtonState);
-    }
 
     const handleChatButtonClick = () => {
         setIsChatOpen(!chatButtonState);
         setChatButtonState(!chatButtonState);
-    }
-
-    const handleLeaveButtonClick = () => {
-        // do something on leave
     }
 
     const isMobile = () => {
@@ -241,15 +220,8 @@ function RoomView() {
                           onMaximizeClick={(userId: string) => handleMaximizeButtonClick(userId)}
                           onFullscreenClick={(userId: string) => handleFullscreenButtonClick(userId)}/>
                 <RoomFooter
-                    camButtonState={camButtonState}
-                    micButtonState={micButtonState}
-                    screenButtonState={screenButtonState}
                     chatButtonState={chatButtonState}
-                    onCamButtonClick={handleCamButtonClick}
-                    onMicButtonClick={handleMicButtonClick}
-                    onScreenButtonClick={handleScreenButtonClick}
                     onChatButtonClick={handleChatButtonClick}
-                    onLeaveButtonClick={handleLeaveButtonClick}
                 />
             </div>
             <RoomChat isChatOpen={isChatOpen} onClose={handleChatCloseButtonClick}/>
