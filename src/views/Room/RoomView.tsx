@@ -66,7 +66,7 @@ function RoomView() {
         // console.log("first");
         videoElements.forEach((_, key) => {
             if (!remoteStreams.has(key) && key !== id)
-                console.log(videoElements.delete(key));
+                handleDeleteUser(key);
         });
         remoteStreams.forEach((_, key) => {
             if (!videoElements.has(key)) {
@@ -82,12 +82,12 @@ function RoomView() {
 
     useEffect(() => {
         // console.log("self video: ", selfVideo);
-        if (selfVideo.current){
-            //@ts-ignore
-            selfVideo.current.srcObject = localStream
-            //@ts-ignore
-            selfVideo.current.muted = true;
-        }
+        // if (selfVideo.current){
+        //     //@ts-ignore
+        //     selfVideo.current.srcObject = localStream
+        //     //@ts-ignore
+        //     selfVideo.current.muted = true;
+        // }
         // console.log("second")
         // console.log(remoteStreams)
         // console.log(videoElements)
@@ -193,18 +193,21 @@ function RoomView() {
         setButtonsState(newButtonsState);
     };
 
-    // const handleDeleteUser = (userId) => {
-    //     if(videoElements.has(userId)) {
-    //         if(videoElements.get(userId).isMax)
-    //             setIsAnyVideoMax(false);
-    //         setVideoElements(new Map(getDeletedMap(videoElements, userId)));
-    //     }
-    // };
-    //
-    // const getDeletedMap = (videoElements, userId) => {
-    //     videoElements.delete(userId);
-    //     return videoElements;
-    // };
+    const handleDeleteUser = (userId) => {
+        if(videoElements.has(userId)) {
+            if(maxVideoId === userId)
+                setMaxVideoId('');
+            if(fullscreenVideoId === userId)
+                setFullscreenVideoId('');
+            setVideoElements(new Map(getDeletedMap(videoElements, userId)));
+            setVideosLayout(videoElements.size);
+        }
+    };
+
+    const getDeletedMap = (videoElements, userId) => {
+        videoElements.delete(userId);
+        return videoElements;
+    };
 
     return (
         <div className="room-main">
