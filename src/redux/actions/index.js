@@ -44,6 +44,13 @@ export const connectSocket = (value)=>{
     }
 }
 
+export const setRoomOwner = (value)=>{
+    return {
+        type:'SETROOMOWNER',
+        value
+    }
+}
+
 export const toggleAudio = ()=>{
     return {
         type:'TOGGLEAUDIO'

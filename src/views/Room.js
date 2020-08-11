@@ -3,7 +3,7 @@ import RoomEntry from './RoomEntry';
 import { v4 as uuidv4 } from 'uuid';
 import LayoutDefault from '../layouts/LayoutDefault'
 import {useDispatch,useSelector} from 'react-redux';
-import {setId,closeMedia,getUserMedia,setIceServers, connectSocket} from '../redux/actions';
+import {setId,closeMedia,getUserMedia,setIceServers, connectSocket,setRoomOwner} from '../redux/actions';
 import RoomView from './Room/RoomView';
 
 function Room(props) {
@@ -11,7 +11,6 @@ function Room(props) {
     const id = useSelector(state=>state.id);
     // eslint-disable-next-line
     const name = useSelector(state=>state.name);
-    // eslint-disable-next-line
     const rooms = useSelector(state=>state.rooms);
     const isLogged = useSelector(state=>state.isLogged);
     // auth=0 Checking, 1 - loggedin & owner, 2 -loggedin &guest, 3- Not Logged-in guest
@@ -70,6 +69,10 @@ function Room(props) {
         }
         if(!isLogged){
             dispatch(setId(uuidv4()))
+        }
+        for(const room of rooms){
+            if(room.room_id===roomId)
+                dispatch(setRoomOwner(true));
         }
         checkRoom();
         getIceServer();

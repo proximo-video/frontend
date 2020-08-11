@@ -15,3 +15,9 @@ export const roomsReducer = (state = [], action) => {
         return action.rooms;
     return state;
 }
+
+export const roomOwnerReducer = (state = false, action) => {
+    if (action.type === 'SETROOMOWNER')
+        return action.value;
+    return state;
+}
