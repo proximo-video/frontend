@@ -212,12 +212,11 @@ function RoomView() {
                 <RoomMain maxVideoId={maxVideoId} fullscreenVideoId={fullscreenVideoId} videoElements={videoElements}
                           onMaximizeClick={(userId: string) => handleMaximizeButtonClick(userId)}
                           onFullscreenClick={(userId: string) => handleFullscreenButtonClick(userId)} />
-
+                <RoomFooter buttonsState={buttonsState} onClick={(i: number) => handleButtonClick(i)} />
             </div>
             <RoomChat isChatOpen={isChatOpen} onClose={backdropClick} />
             <button className="button is-primary addVideo" onClick={() => addUser()}>Primary</button>
             <MessageNotification/>
-            <RoomFooter buttonsState={buttonsState} onClick={(i: number) => handleButtonClick(i)} />
         </div>
     );
 }
