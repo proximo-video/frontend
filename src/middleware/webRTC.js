@@ -1,5 +1,5 @@
 import { localStream } from './getUserMedia';
-import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage } from '../redux/actions'
+import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference } from '../redux/actions'
 let socket;
 let iceServers;
 let connections = new Map();
@@ -123,7 +123,7 @@ const socketAndWebRTC = (params, store) => {
         connection.ondatachannel = function (event) {
             // console.log("Recieved a DataChannel.")
             let channel = event.channel;
-            channels.set(toUser,channel)
+            channels.set(toUser, channel)
             setChannelEvents(channel, toUser);
         };
 
@@ -244,10 +244,27 @@ const socketAndWebRTC = (params, store) => {
     }
 
     const setChannelEvents = (channel, toUser) => {
+        channel.onopen = function (event) {
+            channel.send(JSON.stringify({
+                "from": params.id,
+                "action": "MEDIAPREFERENCE",
+                "message": { isAudio: store.getState().userMediaPreference.isAudio, isVideo: store.getState().userMediaPreference.isVideo }
+            }))
+        }
         channel.onmessage = function (event) {
             var data = JSON.parse(event.data);
-            if (data.action === 'MESSAGE')
-                store.dispatch(addMessage({ id: data.from, message: data.message }))
+            switch (data.action) {
+                case 'MESSAGE':
+                    store.dispatch(addMessage({ id: data.from, message: data.message }));
+                    break;
+                case 'MEDIAPREFERENCE':
+                    console.log(data.from,data.message.isVideo);
+                    store.dispatch(setRemoteMediaPreference({ id: data.from, isAudio: data.message.isAudio, isVideo: data.message.isVideo }))
+                    break;
+                default:
+                    break;
+            }
+
         };
 
         channel.onerror = function (event) {

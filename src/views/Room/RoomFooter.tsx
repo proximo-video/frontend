@@ -3,9 +3,9 @@ import { IconContext } from "react-icons";
 import { buttonsData } from './buttonsDataType';
 import ReactTooltip from "react-tooltip";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
-import { toggleAudio, toggleVideo,getUserMedia } from '../../redux/actions';
+import { toggleAudio, toggleVideo, getUserMedia, sendMessage } from '../../redux/actions';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
-import {detect} from 'detect-browser';
+import { detect } from 'detect-browser';
 
 export interface ControlButtonProps {
     legend: string;
@@ -49,6 +49,7 @@ function RoomFooter(props: RoomFooterProps) {
     const [isPinned, setIsPinned] = useState(true);
     const isAudio = useSelector((state: RootStateOrAny) => state.userMediaPreference.isAudio);
     const isVideo = useSelector((state: RootStateOrAny) => state.userMediaPreference.isVideo);
+    const id = useSelector((state: RootStateOrAny) => state.id);
 
     const handlePinButtonClick = () => {
         setIsPinned(!isPinned);
@@ -57,17 +58,19 @@ function RoomFooter(props: RoomFooterProps) {
     const dispatch = useDispatch();
 
     const onCamButtonClick = () => {
+        dispatch(sendMessage({ id: id, action: 'MEDIAPREFERENCE', message: { isAudio: isAudio, isVideo: !isVideo } }))
         dispatch(toggleVideo());
         if (!(browser && browser.name === 'firefox'))
             dispatch(getUserMedia(false));
     }
     const onMicButtonClick = () => {
+        dispatch(sendMessage({ id: id, action: 'MEDIAPREFERENCE', message: { isAudio: !isAudio, isVideo: isVideo } }))
         dispatch(toggleAudio());
     }
-    const onScreenButtonClick = ()=>{
+    const onScreenButtonClick = () => {
 
     }
-    const onLeaveButtonClick = ()=>{
+    const onLeaveButtonClick = () => {
 
     }
 

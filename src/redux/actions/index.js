@@ -78,6 +78,13 @@ export const sendMessage = (value) => {
         value
     }
 }
+export const setRemoteMediaPreference = (value) => {
+    return {
+        type: 'SETREMOTEMEDIAPREFERENCE',
+        value
+    }
+}
+
 
 export const toggleAudio = () => {
     return {
