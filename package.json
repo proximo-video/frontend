@@ -26,7 +26,8 @@
     "react-transition-group": "^4.4.1",
     "redux": "^4.0.5",
     "typescript": "^3.9.7",
-    "uuid": "^8.3.0"
+    "uuid": "^8.3.0",
+    "webrtc-adapter": "^7.7.0"
   },
   "repository": {
     "type": "git",

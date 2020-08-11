@@ -140,7 +140,22 @@ const socketAndWebRTC = (params, store) => {
             }
         }
 
-        // connection.onnegotiationneeded
+        // connection.oniceconnectionstatechange = () => {
+        //     switch (connection.iceConnectionState) {
+        //         case 'disconnected':
+        //             console.log('Disconnected');
+        //             break;
+        //         case 'failed':
+        //             connection.close();
+        //             break;
+        //         case 'closed':
+        //             connection.close();
+        //             console.log('Closed');
+        //             break;
+        //         default:
+        //             break;
+        //     }
+        // }
 
         // This event logs messages and handles button state according to WebRTC connection state changes
         connection.onconnectionstatechange = function (event) {
@@ -151,12 +166,12 @@ const socketAndWebRTC = (params, store) => {
                 case "disconnected":
                     console.log("Web RTC Peer Connection Disconnected. Please reload the page to reconnect.");
                     // deleteStream(toUser);
-                    try {
-                        connection.restartIce();
-                    }
-                    catch (e) {
-                        connection.close();
-                    }
+                    // try {
+                    //     connection.restartIce();
+                    // }
+                    // catch (e) {
+                    //     connection.close();
+                    // }
                     break;
                 case "failed":
                     console.log("Web RTC Peer Connection Failed. Please reload the page to reconnect.");

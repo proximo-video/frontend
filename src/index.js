@@ -7,6 +7,8 @@ import allReducers from './redux/reducers';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line
+import adapter from 'webrtc-adapter';
 
 //import './App.css';
 import './assets/scss/style.scss';
