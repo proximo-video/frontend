@@ -1,93 +1,98 @@
-export const login = () =>{
+export const login = () => {
     return {
-        type:'LOGIN'
+        type: 'LOGIN'
     }
 }
 
-export const logout = () =>{
+export const logout = () => {
     return {
-        type:'LOGOUT'
+        type: 'LOGOUT'
     }
 }
 
-export const addRemoteStream  = () =>{
+export const addRemoteStream = () => {
     return {
-        type:'ADDREMOTESTREAM',
+        type: 'ADDREMOTESTREAM',
     }
 }
 
-export const deleteRemoteStream  = () =>{
+export const deleteRemoteStream = () => {
     return {
-        type:'DELETEREMOTESTREAM',
+        type: 'DELETEREMOTESTREAM',
     }
 }
 
 
-export const getUserMedia = (value)=>{
+export const getUserMedia = (value) => {
     return {
-        type:'GETUSERMEDIA',
+        type: 'GETUSERMEDIA',
         value
     }
 }
 
-export const setIceServers = (value)=>{
+export const setIceServers = (value) => {
     return {
-        type:'SETICESERVERS',
+        type: 'SETICESERVERS',
         value
     }
 }
 
-export const connectSocket = (value)=>{
+export const connectSocket = (value) => {
     return {
-        type:'CONNECTSOCKET',
+        type: 'CONNECTSOCKET',
         value
     }
 }
 
-export const setRoomOwner = (value)=>{
+export const setRoomOwner = (value) => {
     return {
-        type:'SETROOMOWNER',
+        type: 'SETROOMOWNER',
         value
     }
 }
 
-export const toggleAudio = ()=>{
+export const addRemoteUser = (value) => {
     return {
-        type:'TOGGLEAUDIO'
+        type: 'ADDREMOTEUSER',
+        value
     }
 }
 
-export const toggleVideo = ()=>{
+export const toggleAudio = () => {
     return {
-        type:'TOGGLEVIDEO',
+        type: 'TOGGLEAUDIO'
     }
 }
 
-export const closeMedia = ()=>{
+export const toggleVideo = () => {
     return {
-        type:'CLOSEMEDIA',
+        type: 'TOGGLEVIDEO',
     }
 }
 
+export const closeMedia = () => {
+    return {
+        type: 'CLOSEMEDIA',
+    }
+}
 
-
-export const setName = (name) =>{
-    return{
-        type:'SET_NAME',
+export const setName = (name) => {
+    return {
+        type: 'SET_NAME',
         name
     }
 }
 
-export const setId = (id) =>{
-    return{
-        type:'SET_ID',
+export const setId = (id) => {
+    return {
+        type: 'SET_ID',
         id
     }
 }
 
-export const setRooms = (rooms) =>{
-    return{
-        type:'SET_ROOMS',
+export const setRooms = (rooms) => {
+    return {
+        type: 'SET_ROOMS',
         rooms
     }
 }

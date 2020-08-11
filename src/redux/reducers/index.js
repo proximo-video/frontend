@@ -1,5 +1,5 @@
 import isLoggedReducer from './isLogged';
-import { nameReducer, idReducer, roomsReducer,roomOwnerReducer } from './userData';
+import { nameReducer, idReducer, roomsReducer,roomOwnerReducer,remoteUsersReducer } from './userData';
 import { combineReducers } from 'redux';
 import { getUserMediaReducer, getUserMediaPreferenceReducer } from './video';
 import { remoteStreamCountReducer } from './webRTC';
@@ -12,7 +12,8 @@ const allReducers = combineReducers({
     isRoomOwner:roomOwnerReducer,
     userMedia: getUserMediaReducer,
     userMediaPreference: getUserMediaPreferenceReducer,
-    remoteStreamCount: remoteStreamCountReducer
+    remoteStreamCount: remoteStreamCountReducer,
+    remoteUsers: remoteUsersReducer
 })
 
 export default allReducers;
