@@ -56,7 +56,7 @@ const socketAndWebRTC = (params, store) => {
             let jsonData = JSON.parse(event.data);
             if (jsonData.action === "READY") {
                 console.log("Got Ready")
-                let toUser = jsonData.from; 
+                let toUser = jsonData.from;
                 if (!connections.has(toUser))
                     createRTCPeerConnection(toUser);
                 createAndSendOffer(toUser);
@@ -151,17 +151,26 @@ const socketAndWebRTC = (params, store) => {
                 case "disconnected":
                     console.log("Web RTC Peer Connection Disconnected. Please reload the page to reconnect.");
                     // deleteStream(toUser);
-                    connection.restartIce();
+                    try {
+                        connection.restartIce();
+                    }
+                    catch (e) {
+                        connection.close();
+                    }
                     break;
                 case "failed":
                     console.log("Web RTC Peer Connection Failed. Please reload the page to reconnect.");
-                    remoteStreams = new Map(remoteStreams.delete(toUser));
+                    if (remoteStreams.delete(toUser)) {
+                        remoteStreams = new Map(remoteStreams);
+                    }
                     store.dispatch(deleteRemoteStream());
                     console.log(event);
                     break;
                 case "closed":
                     console.log("Web RTC Peer Connection Closed. Please reload the page to reconnect.");
-                    remoteStreams = new Map(remoteStreams.delete(toUser));
+                    if (remoteStreams.delete(toUser)) {
+                        remoteStreams = new Map(remoteStreams);
+                    }
                     store.dispatch(deleteRemoteStream());
                     break;
                 default:
