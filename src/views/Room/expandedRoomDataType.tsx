@@ -8,10 +8,13 @@ export default class DropdownOption {
 
     prefixIcon: ReactElement;
 
-    constructor(prefixIcon: ReactElement, label: string, onClick: () => void) {
+    className: string;
+
+    constructor(prefixIcon: ReactElement, label: string, onClick: () => void, className: string = '') {
         this.prefixIcon = prefixIcon;
         this.label = label;
         this.onClick = onClick;
+        this.className = className;
     }
 }
 
