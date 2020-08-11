@@ -65,6 +65,20 @@ export const addRemoteUser = (value) => {
     }
 }
 
+export const addMessage = (value) => {
+    return {
+        type: 'ADDCHATMESSAGE',
+        value
+    }
+}
+
+export const sendMessage = (value) => {
+    return {
+        type: 'SENDMESSAGE',
+        value
+    }
+}
+
 export const toggleAudio = () => {
     return {
         type: 'TOGGLEAUDIO'

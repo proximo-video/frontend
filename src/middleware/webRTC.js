@@ -1,11 +1,10 @@
 import { localStream } from './getUserMedia';
-import { addRemoteStream, deleteRemoteStream, addRemoteUser,deleteRemoteUser } from '../redux/actions'
+import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage } from '../redux/actions'
 let socket;
 let iceServers;
 let connections = new Map();
 let channels = new Map();
 export let remoteStreams = new Map();
-export let messages = [];
 const webRTCMiddleware = store => next => action => {
     switch (action.type) {
         case 'CONNECTSOCKET':
@@ -14,6 +13,9 @@ const webRTCMiddleware = store => next => action => {
         case 'SETICESERVERS':
             iceServers = action.value;
             break;
+        case 'SENDMESSAGE':
+            sendMessage(action.value, store);
+            break;
         default:
             break;
     }
@@ -21,7 +23,7 @@ const webRTCMiddleware = store => next => action => {
 }
 export default webRTCMiddleware;
 // eslint-disable-next-line
-const sendMessage = (params) => {
+const sendMessage = (params, store) => {
     channels.forEach(channel => {
         channel.send(JSON.stringify({
             "from": params.id,
@@ -30,7 +32,7 @@ const sendMessage = (params) => {
         }))
     });
     if (params.action === 'MESSAGE')
-        messages = [...messages, { id: params.id, message: params.message }];
+        store.dispatch(addMessage({ id: params.id, message: params.message }))
 }
 
 
@@ -67,14 +69,14 @@ const socketAndWebRTC = (params, store) => {
                     console.log('Received The Candidate');
                     handleCandidate(jsonData.data, jsonData.id, jsonData.from);
                     break;
-                case 'OFFER': 
-                    console.log('Received The Offer',jsonData.displayName,params.displayName);
-                    store.dispatch(addRemoteUser({id:jsonData.from,displayName:jsonData.display_name}))
+                case 'OFFER':
+                    console.log('Received The Offer', jsonData.displayName, params.displayName);
+                    store.dispatch(addRemoteUser({ id: jsonData.from, displayName: jsonData.display_name }))
                     handleOffer(jsonData.data, jsonData.id, jsonData.from);
                     break;
-                case 'ANSWER': 
-                    console.log('Received The Answer',jsonData.displayName,params.displayName);
-                    store.dispatch(addRemoteUser({id:jsonData.from,displayName:jsonData.display_name}))
+                case 'ANSWER':
+                    console.log('Received The Answer', jsonData.displayName, params.displayName);
+                    store.dispatch(addRemoteUser({ id: jsonData.from, displayName: jsonData.display_name }))
                     handleAnswer(jsonData.data, jsonData.id, jsonData.from);
                     break;
                 default:
@@ -244,7 +246,7 @@ const socketAndWebRTC = (params, store) => {
         channel.onmessage = function (event) {
             var data = JSON.parse(event.data);
             if (data.action === 'MESSAGE')
-                messages = [...messages, { id: data.from, message: data.message }]
+                store.dispatch(addMessage({ id: data.from, message: data.message }))
         };
 
         channel.onerror = function (event) {

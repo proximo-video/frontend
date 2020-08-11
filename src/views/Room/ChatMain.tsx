@@ -5,14 +5,14 @@ import '../../assets/scss/custom/roomChat.scss';
 import MessageComponent from "./MessageComponent";
 import { Message } from "./genericTypes";
 import UserComponent from "./UserComponent";
-import { messages } from '../../middleware/webRTC';
 import { useSelector, RootStateOrAny } from 'react-redux';
 
-// remove after testing
-const loggedInUser = "389237982nikwebdj";
 
 
 export function MessageArea() {
+    const users = useSelector((state: RootStateOrAny) => state.remoteUsers)
+    const id = useSelector((state: RootStateOrAny) => state.id)
+    const messages = useSelector((state: RootStateOrAny) => state.messages)
     // eslint-disable-next-line
     let messagesEnd: Element;
 
@@ -28,15 +28,15 @@ export function MessageArea() {
         <div>
             {
                 messages.map((Mess: Message, key: number) =>
-                    <div key={key} className={"message-container" + (Mess.id === loggedInUser ? " right" : "")}>
+                    <div key={key} className={"message-container" + (Mess.id === id ? " right" : "")}>
                         {
-                            Mess.id === loggedInUser ?
+                            Mess.id === id ?
                                 <MessageComponent messageBodyClassName={'right'} avatarPosition={'right'}
                                     id={Mess.id} message={Mess.message}
-                                    displayName={"Mess.displayName"} /> :
+                                    displayName={users[Mess.id]} /> :
                                 <MessageComponent messageBodyClassName={'left'} avatarPosition={'left'}
                                     id={Mess.id} message={Mess.message}
-                                    displayName={'Mess.displayName'} />
+                                    displayName={users[Mess.id]} />
                         }
                     </div>
                 )
