@@ -155,13 +155,13 @@ const socketAndWebRTC = (params, store) => {
                     break;
                 case "failed":
                     console.log("Web RTC Peer Connection Failed. Please reload the page to reconnect.");
-                    remoteStreams.delete(toUser);
+                    remoteStreams = new Map(remoteStreams.delete(toUser));
                     store.dispatch(deleteRemoteStream());
                     console.log(event);
                     break;
                 case "closed":
                     console.log("Web RTC Peer Connection Closed. Please reload the page to reconnect.");
-                    remoteStreams.delete(toUser);
+                    remoteStreams = new Map(remoteStreams.delete(toUser));
                     store.dispatch(deleteRemoteStream());
                     break;
                 default:
