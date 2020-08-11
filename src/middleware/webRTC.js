@@ -123,6 +123,7 @@ const socketAndWebRTC = (params, store) => {
         connection.ondatachannel = function (event) {
             // console.log("Recieved a DataChannel.")
             let channel = event.channel;
+            channels.set(toUser,channel)
             setChannelEvents(channel, toUser);
         };
 

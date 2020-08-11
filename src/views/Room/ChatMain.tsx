@@ -12,6 +12,7 @@ import { useSelector, RootStateOrAny } from 'react-redux';
 export function MessageArea() {
     const users = useSelector((state: RootStateOrAny) => state.remoteUsers)
     const id = useSelector((state: RootStateOrAny) => state.id)
+    const name = useSelector((state: RootStateOrAny) => state.name)
     const messages = useSelector((state: RootStateOrAny) => state.messages)
     // eslint-disable-next-line
     let messagesEnd: Element;
@@ -33,10 +34,10 @@ export function MessageArea() {
                             Mess.id === id ?
                                 <MessageComponent messageBodyClassName={'right'} avatarPosition={'right'}
                                     id={Mess.id} message={Mess.message}
-                                    displayName={users[Mess.id]} /> :
+                                    displayName={name}/> :
                                 <MessageComponent messageBodyClassName={'left'} avatarPosition={'left'}
                                     id={Mess.id} message={Mess.message}
-                                    displayName={users[Mess.id]} />
+                                    displayName={users.hasOwnProperty(Mess.id)?users[Mess.id].displayName:'User Left'} />
                         }
                     </div>
                 )
@@ -57,7 +58,7 @@ export function UserArea() {
             <UserComponent id={id} displayName={name} />
             {
                 Object.entries(users).map((value: any,key:number) =>
-                    <UserComponent key={key} id={value[0]} displayName={value[1]} />
+                    <UserComponent key={key} id={value[0]} displayName={value[1].displayName} />
                 )
             }
         </>
