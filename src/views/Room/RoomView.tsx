@@ -1,17 +1,17 @@
 import '../../assets/scss/custom/room.scss';
-import React, { useState, useRef, useEffect } from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import "./RoomFooter";
 import RoomFooter from './RoomFooter';
-import { videoDataType, VideoElement } from './videoDataType';
+import {videoDataType, VideoElement} from './videoDataType';
 import RoomMain from "./RoomMain";
 import RoomChat from "./RoomChat";
 import MessageNotification from "./MessageNotification";
-import { localStream } from '../../middleware/getUserMedia';
-import { remoteStreams } from '../../middleware/webRTC';
+import {localStream} from '../../middleware/getUserMedia';
+import {remoteStreams} from '../../middleware/webRTC';
 // eslint-disable-next-line
-import { getUserMedia, toggleAudio, toggleVideo } from '../../redux/actions';
-import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
-import { detect } from 'detect-browser';
+import {getUserMedia, toggleAudio, toggleVideo} from '../../redux/actions';
+import {useDispatch, useSelector, RootStateOrAny} from 'react-redux';
+import {detect} from 'detect-browser';
 
 declare global {
     interface Document {
@@ -28,8 +28,16 @@ declare global {
 }
 
 function RoomView() {
-    // 5 buttons 0=>cam, 1=>mic, 2=>screen, 3=>chat, 4=>leave, buttons array denoting the
-    const [buttonsState, setButtonsState] = useState<boolean[]>([false, false, true, false, false]);
+    // cam is on , button State:= true ; cam is off , button state:= false, default := true
+    // mic is on , button State:= true ; mic is off , button state:= false, default := true
+    // screen sharing is on , button State:= true ; screen sharing is off , button state:= false, default := false
+    // chat is on , button state:= true ; chat is off , button state:= false, default := false
+    // buttons states
+    const [camButtonState, setCamButtonState] = useState<boolean>(true);
+    const [micButtonState, setMicButtonState] = useState<boolean>(true);
+    const [screenButtonState, setScreenButtonState] = useState<boolean>(false);
+    const [chatButtonState, setChatButtonState] = useState<boolean>(false);
+    // max and fullscreen video state
     const [maxVideoId, setMaxVideoId] = useState<string>('');
     const [fullscreenVideoId, setFullscreenVideoId] = useState<string>('');
     // eslint-disable-next-line
@@ -50,7 +58,7 @@ function RoomView() {
 
     useEffect(() => {
         if (userMedia) {
-            if (selfVideo.current){
+            if (selfVideo.current) {
                 //@ts-ignore
                 selfVideo.current.srcObject = localStream
                 //@ts-ignore
@@ -100,13 +108,34 @@ function RoomView() {
         // eslint-disable-next-line
     }, [remoteStreamCount]);
 
-    const handleButtonClick = (i: number) => {
-        const newButtonsState = buttonsState.slice();
-        newButtonsState[i] = !buttonsState[i];
-        setButtonsState(newButtonsState);
-        if (i === 3)
-            setIsChatOpen(newButtonsState[i]);
-    };
+    // const handleButtonClick = (i: number) => {
+    //     const newButtonsState = buttonsState.slice();
+    //     newButtonsState[i] = !buttonsState[i];
+    //     setButtonsState(newButtonsState);
+    //     if (i === 3)
+    //         setIsChatOpen(newButtonsState[i]);
+    // };
+
+    const handleCamButtonClick = () => {
+        setCamButtonState(!camButtonState);
+    }
+
+    const handleMicButtonClick = () => {
+        setMicButtonState(!micButtonState);
+    }
+
+    const handleScreenButtonClick = () => {
+        setScreenButtonState(!screenButtonState);
+    }
+
+    const handleChatButtonClick = () => {
+        setIsChatOpen(!chatButtonState);
+        setChatButtonState(!chatButtonState);
+    }
+
+    const handleLeaveButtonClick = () => {
+        // do something on leave
+    }
 
     const isMobile = () => {
         return window.innerWidth <= 545;
@@ -176,28 +205,24 @@ function RoomView() {
                     await document.msExitFullscreen();
                 }
                 setFullscreenVideoId('');
-            }
-            else {
+            } else {
                 // console.log("Fullscreen already removed:", userId);
                 setFullscreenVideoId('');
             }
-        }
-        else
+        } else
             setFullscreenVideoId('');
     }
 
-    const backdropClick = () => {
-        const newButtonsState = buttonsState.slice();
+    const handleChatCloseButtonClick = () => {
         setIsChatOpen(false);
-        newButtonsState[3] = false;
-        setButtonsState(newButtonsState);
+        setChatButtonState(false);
     };
 
     const handleDeleteUser = (userId) => {
-        if(videoElements.has(userId)) {
-            if(maxVideoId === userId)
+        if (videoElements.has(userId)) {
+            if (maxVideoId === userId)
                 setMaxVideoId('');
-            if(fullscreenVideoId === userId)
+            if (fullscreenVideoId === userId)
                 setFullscreenVideoId('');
             setVideoElements(new Map(getDeletedMap(videoElements, userId)));
             setVideosLayout(videoElements.size);
@@ -214,10 +239,20 @@ function RoomView() {
             <div className={"video-container" + (isChatOpen ? " chat-open" : "")}>
                 <RoomMain maxVideoId={maxVideoId} fullscreenVideoId={fullscreenVideoId} videoElements={videoElements}
                           onMaximizeClick={(userId: string) => handleMaximizeButtonClick(userId)}
-                          onFullscreenClick={(userId: string) => handleFullscreenButtonClick(userId)} />
-                <RoomFooter buttonsState={buttonsState} onClick={(i: number) => handleButtonClick(i)} />
+                          onFullscreenClick={(userId: string) => handleFullscreenButtonClick(userId)}/>
+                <RoomFooter
+                    camButtonState={camButtonState}
+                    micButtonState={micButtonState}
+                    screenButtonState={screenButtonState}
+                    chatButtonState={chatButtonState}
+                    onCamButtonClick={handleCamButtonClick}
+                    onMicButtonClick={handleMicButtonClick}
+                    onScreenButtonClick={handleScreenButtonClick}
+                    onChatButtonClick={handleChatButtonClick}
+                    onLeaveButtonClick={handleLeaveButtonClick}
+                />
             </div>
-            <RoomChat isChatOpen={isChatOpen} onClose={backdropClick} />
+            <RoomChat isChatOpen={isChatOpen} onClose={handleChatCloseButtonClick}/>
             <button className="button is-primary addVideo" onClick={() => addUser()}>Primary</button>
             <MessageNotification/>
         </div>

@@ -54,6 +54,7 @@ $button-border-color: #4c5f77;
       justify-content: center;
       align-items: center;
       cursor: pointer;
+      border-radius: 5px;
       &:hover {
         border: 1px solid $button-border-color;
         box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, 0.6);
