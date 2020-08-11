@@ -9,6 +9,7 @@ export interface MessageComponentProps extends Message {
     className?: string;
     avatarClassName?: string;
     messageBodyClassName?: string;
+    displayName?: string;
 }
 
 export default function MessageComponent({message, displayName, avatarPosition, className, avatarClassName, messageBodyClassName}: MessageComponentProps) {

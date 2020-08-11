@@ -1,3 +1,4 @@
+
 export const nameReducer = (state = '', action) => {
     if (action.type === 'SET_NAME')
         return action.name;
@@ -26,5 +27,10 @@ export const remoteUsersReducer = (state = {}, action) => {
     if (action.type === 'ADDREMOTEUSER')
         if (!state.hasOwnProperty(action.value.id))
             return { ...state, [action.value.id]: action.value.displayName }
+    if (action.type === 'DELETEREMOTEUSER') {
+        const newState = { ...state }
+        delete newState[action.value]
+        return newState
+    }
     return state;
 }

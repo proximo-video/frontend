@@ -51,6 +51,13 @@ export const setRoomOwner = (value) => {
     }
 }
 
+export const deleteRemoteUser = (value) => {
+    return {
+        type: 'DELETEREMOTEUSER',
+        value
+    }
+}
+
 export const addRemoteUser = (value) => {
     return {
         type: 'ADDREMOTEUSER',

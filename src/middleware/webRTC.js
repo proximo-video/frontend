@@ -1,5 +1,5 @@
 import { localStream } from './getUserMedia';
-import { addRemoteStream, deleteRemoteStream, addRemoteUser } from '../redux/actions'
+import { addRemoteStream, deleteRemoteStream, addRemoteUser,deleteRemoteUser } from '../redux/actions'
 let socket;
 let iceServers;
 let connections = new Map();
@@ -181,6 +181,7 @@ const socketAndWebRTC = (params, store) => {
                         remoteStreams = new Map(remoteStreams);
                     }
                     store.dispatch(deleteRemoteStream());
+                    store.dispatch(deleteRemoteUser(toUser))
                     console.log(event);
                     break;
                 case "closed":
@@ -189,6 +190,7 @@ const socketAndWebRTC = (params, store) => {
                         remoteStreams = new Map(remoteStreams);
                     }
                     store.dispatch(deleteRemoteStream());
+                    store.dispatch(deleteRemoteUser(toUser))
                     break;
                 default:
                     break;
