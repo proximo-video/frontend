@@ -60,6 +60,8 @@ const socketAndWebRTC = (params, store) => {
             if (jsonData.action === "READY") {
                 console.log("Got Ready")
                 let toUser = jsonData.from;
+                if (connections.has(toUser))
+                    connections.get(toUser).close();
                 createRTCPeerConnection(toUser);
                 createAndSendOffer(toUser);
             }
