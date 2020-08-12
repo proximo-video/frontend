@@ -1,8 +1,15 @@
 import GetLocalWebCamFeed from '../utils/GetLocalWebCamFeed';
 import { existingTracks } from './webRTC'
 import { detect } from 'detect-browser';
+import { sendMessage, getUserMedia } from '../redux/actions';
 const browser = detect();
 export let localStream;
+let displayMediaOptions = {
+    video: {
+        cursor: "always"
+    },
+    audio: false
+};
 const getUserMediaMiddleware = store => next => async (action) => {
     const userMediaPreference = store.getState().userMediaPreference
     switch (action.type) {
@@ -49,6 +56,28 @@ const getUserMediaMiddleware = store => next => async (action) => {
             localStream.getAudioTracks().forEach(track => {
                 track.stop();
             });
+            break;
+        case 'GETUSERSCREEN':
+            const id = store.getState().id;
+            if (action.value) {
+                const screenStream = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
+                if (!screenStream)
+                    return;
+                localStream.getTracks().forEach(track => {
+                    track.stop();
+                });
+                localStream = screenStream;
+                for (const track of screenStream.getVideoTracks()) {
+                    for (const trackSender of existingTracks)
+                        if (trackSender.track.kind === 'video')
+                            trackSender.replaceTrack(track)
+                }
+                store.dispatch(sendMessage({ id: id, action: 'MEDIAPREFERENCE', message: { isAudio: userMediaPreference.isAudio, isVideo: true } }));
+            }
+            else {
+                store.dispatch(getUserMedia(false));
+                store.dispatch(sendMessage({ id: id, action: 'MEDIAPREFERENCE', message: { isAudio: userMediaPreference.isAudio, isVideo: userMediaPreference.isVideo } }));
+            }
             break;
         default:
             break;

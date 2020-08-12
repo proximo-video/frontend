@@ -38,6 +38,7 @@ function RoomView() {
     // eslint-disable-next-line
     const dispatch = useDispatch();
     const userMedia = useSelector((state: RootStateOrAny) => state.userMedia);
+    const userScreen = useSelector((state: RootStateOrAny) => state.userScreen);
     const id = useSelector((state: RootStateOrAny) => state.id);
     const name = useSelector((state: RootStateOrAny) => state.name);
     // eslint-disable-next-line
@@ -51,7 +52,7 @@ function RoomView() {
     const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
 
     useEffect(() => {
-        if (userMedia) {
+        if (userMedia || userScreen) {
             if (selfVideo.current) {
                 //@ts-ignore
                 selfVideo.current.srcObject = localStream
@@ -62,7 +63,7 @@ function RoomView() {
             dispatch(getUserMedia(true));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userMedia]);
+    }, [userMedia,localStream,userScreen]);
 
     useEffect(() => {
         // console.log("first");

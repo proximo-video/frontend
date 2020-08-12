@@ -30,6 +30,13 @@ export const getUserMedia = (value) => {
     }
 }
 
+export const getUserScreen = (value) => {
+    return {
+        type: 'GETUSERSCREEN',
+        value
+    }
+}
+
 export const setIceServers = (value) => {
     return {
         type: 'SETICESERVERS',

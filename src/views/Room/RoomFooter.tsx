@@ -3,7 +3,7 @@ import { IconContext } from "react-icons";
 import { buttonsData } from './buttonsDataType';
 import ReactTooltip from "react-tooltip";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
-import { toggleAudio, toggleVideo, getUserMedia, sendMessage } from '../../redux/actions';
+import { toggleAudio, toggleVideo, getUserMedia, sendMessage, getUserScreen } from '../../redux/actions';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { detect } from 'detect-browser';
 import { useHistory } from "react-router-dom";
@@ -12,6 +12,7 @@ export interface ControlButtonProps {
     legend: string;
     onClick: () => void;
     iconColor: string;
+    disabled?: boolean;
     className?: string;
     icon: ReactElement;
 }
@@ -24,7 +25,7 @@ function ControlButton(props: ControlButtonProps) {
                     {props.legend}
                 </span>
             </ReactTooltip>
-            <button className={"cntrlButton"} onClick={props.onClick} data-for={props.legend} data-tip>
+            <button className={"cntrlButton"} disabled={props.disabled}  onClick={props.onClick} data-for={props.legend} data-tip>
                 <figure className="cntrlButtonFigure">
                     <IconContext.Provider value={{ color: props.iconColor }}>
                         <div className={"cntrlButtonWrap " + props.className} >
@@ -51,6 +52,7 @@ function RoomFooter(props: RoomFooterProps) {
     const isAudio = useSelector((state: RootStateOrAny) => state.userMediaPreference.isAudio);
     const isVideo = useSelector((state: RootStateOrAny) => state.userMediaPreference.isVideo);
     const id = useSelector((state: RootStateOrAny) => state.id);
+    const userScreen = useSelector((state: RootStateOrAny) => state.userScreen);
     const history = useHistory()
     const handlePinButtonClick = () => {
         setIsPinned(!isPinned);
@@ -69,7 +71,7 @@ function RoomFooter(props: RoomFooterProps) {
         dispatch(toggleAudio());
     }
     const onScreenButtonClick = () => {
-
+        dispatch(getUserScreen(!userScreen));
     }
     const onLeaveButtonClick = () => {
         dispatch(sendMessage({id:id,action:'LEAVEROOM',message:''}));
@@ -98,6 +100,7 @@ function RoomFooter(props: RoomFooterProps) {
                     className={(isVideo ? buttonsData[0].onClass : buttonsData[0].offClass)}
                     legend={(isVideo ? buttonsData[0].onLegend : buttonsData[0].offLegend)}
                     icon={(isVideo ? buttonsData[0].onIcon : buttonsData[0].offIcon)}
+                    disabled={userScreen}
                     iconColor={(isVideo ? buttonsData[0].onIconColor : buttonsData[0].offIconColor)}
                     onClick={onCamButtonClick}
                 />
