@@ -4,6 +4,7 @@ let socket;
 let iceServers;
 let connections = new Map();
 let channels = new Map();
+export let existingTracks = [];
 export let remoteStreams = new Map();
 const webRTCMiddleware = store => next => action => {
     switch (action.type) {
@@ -108,7 +109,7 @@ const socketAndWebRTC = (params, store) => {
         // Add both video and audio tracks to the connection
         for (const track of localStream.getTracks()) {
             // console.log("Sending Stream.")
-            connection.addTrack(track, localStream);
+            existingTracks.push(connection.addTrack(track, localStream));
         }
 
         // This event handles displaying remote video and audio feed from the other peer
