@@ -25,6 +25,7 @@ export default webRTCMiddleware;
 // eslint-disable-next-line
 const sendMessage = (params, store) => {
     channels.forEach(channel => {
+        console.log('channel',channel);
         channel.send(JSON.stringify({
             "from": params.id,
             "action": params.action,
@@ -70,12 +71,10 @@ const socketAndWebRTC = (params, store) => {
                     handleCandidate(jsonData.data, jsonData.id, jsonData.from);
                     break;
                 case 'OFFER':
-                    console.log('Received The Offer', jsonData.displayName, params.displayName);
                     store.dispatch(addRemoteUser({ id: jsonData.from, displayName: jsonData.display_name }))
                     handleOffer(jsonData.data, jsonData.id, jsonData.from);
                     break;
                 case 'ANSWER':
-                    console.log('Received The Answer', jsonData.displayName, params.displayName);
                     store.dispatch(addRemoteUser({ id: jsonData.from, displayName: jsonData.display_name }))
                     handleAnswer(jsonData.data, jsonData.id, jsonData.from);
                     break;
@@ -253,13 +252,21 @@ const socketAndWebRTC = (params, store) => {
         }
         channel.onmessage = function (event) {
             var data = JSON.parse(event.data);
+            console.log('from',data.from)
             switch (data.action) {
                 case 'MESSAGE':
                     store.dispatch(addMessage({ id: data.from, message: data.message }));
                     break;
                 case 'MEDIAPREFERENCE':
-                    console.log(data.from,data.message.isVideo);
+                    console.log(data.from, data.message.isVideo);
                     store.dispatch(setRemoteMediaPreference({ id: data.from, isAudio: data.message.isAudio, isVideo: data.message.isVideo }))
+                    break;
+                case 'LEAVEROOM':
+                    if (connections.has(data.from)){
+                        console.log("yes",data.from)
+                        connections.get(data.from).close();
+                        connections.set(data.from,null);
+                    }
                     break;
                 default:
                     break;
