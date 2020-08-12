@@ -25,7 +25,7 @@ export default webRTCMiddleware;
 // eslint-disable-next-line
 const sendMessage = (params, store) => {
     channels.forEach(channel => {
-        console.log('channel',channel);
+        console.log('channel', channel);
         channel.send(JSON.stringify({
             "from": params.id,
             "action": params.action,
@@ -60,8 +60,7 @@ const socketAndWebRTC = (params, store) => {
             if (jsonData.action === "READY") {
                 console.log("Got Ready")
                 let toUser = jsonData.from;
-                if (!connections.has(toUser))
-                    createRTCPeerConnection(toUser);
+                createRTCPeerConnection(toUser);
                 createAndSendOffer(toUser);
             }
 
@@ -150,10 +149,21 @@ const socketAndWebRTC = (params, store) => {
         //             console.log('Disconnected');
         //             break;
         //         case 'failed':
+        //             if (remoteStreams.delete(toUser)) {
+        //                 remoteStreams = new Map(remoteStreams);
+        //             }
+        //             connections.delete(toUser);
         //             connection.close();
+        //             channels.delete(toUser);
+        //             store.dispatch(deleteRemoteStream());
+        //             store.dispatch(deleteRemoteUser(toUser))
         //             break;
         //         case 'closed':
-        //             connection.close();
+        //             if (remoteStreams.delete(toUser)) {
+        //                 remoteStreams = new Map(remoteStreams);
+        //             }
+        //             store.dispatch(deleteRemoteStream());
+        //             store.dispatch(deleteRemoteUser(toUser))
         //             console.log('Closed');
         //             break;
         //         default:
@@ -182,6 +192,9 @@ const socketAndWebRTC = (params, store) => {
                     if (remoteStreams.delete(toUser)) {
                         remoteStreams = new Map(remoteStreams);
                     }
+                    connections.delete(toUser);
+                    connection.close();
+                    channels.delete(toUser);
                     store.dispatch(deleteRemoteStream());
                     store.dispatch(deleteRemoteUser(toUser))
                     console.log(event);
@@ -191,6 +204,9 @@ const socketAndWebRTC = (params, store) => {
                     if (remoteStreams.delete(toUser)) {
                         remoteStreams = new Map(remoteStreams);
                     }
+                    connections.delete(toUser);
+                    connection.close();
+                    channels.delete(toUser);
                     store.dispatch(deleteRemoteStream());
                     store.dispatch(deleteRemoteUser(toUser))
                     break;
@@ -252,7 +268,7 @@ const socketAndWebRTC = (params, store) => {
         }
         channel.onmessage = function (event) {
             var data = JSON.parse(event.data);
-            console.log('from',data.from)
+            console.log('from', data.from)
             switch (data.action) {
                 case 'MESSAGE':
                     store.dispatch(addMessage({ id: data.from, message: data.message }));
@@ -262,10 +278,10 @@ const socketAndWebRTC = (params, store) => {
                     store.dispatch(setRemoteMediaPreference({ id: data.from, isAudio: data.message.isAudio, isVideo: data.message.isVideo }))
                     break;
                 case 'LEAVEROOM':
-                    if (connections.has(data.from)){
-                        console.log("yes",data.from)
+                    if (connections.has(data.from)) {
+                        console.log("yes", data.from)
                         connections.get(data.from).close();
-                        connections.set(data.from,null);
+                        connections.set(data.from, null);
                     }
                     break;
                 default:
