@@ -1,9 +1,11 @@
 import React, {ReactElement, useEffect} from 'react';
 import '../../assets/scss/custom/roomMain.scss';
 import DropdownOption from "./expandedRoomDataType";
-import {FiMaximize, FiMaximize2, FiMinimize, FiMinimize2} from "react-icons/fi";
+import {FiMaximize, FiMaximize2, FiMicOff, FiMinimize, FiMinimize2} from "react-icons/fi";
 import Dropdown from "./Dropdown";
 import {VideoElement} from './videoDataType';
+import {RootStateOrAny, useSelector} from "react-redux";
+import Avatar from "./Avatar";
 
 
 declare global {
@@ -14,12 +16,12 @@ declare global {
     }
 }
 
+
 function getWindowSize() {
-    let windowSize = {
+    return {
         height: window.innerHeight,
         width: window.innerWidth,
-    }
-    return windowSize;
+    };
 }
 
 export interface RoomMainProps {
@@ -38,7 +40,11 @@ export default function RoomMain(props: RoomMainProps) {
     // let fullscreenUserId: string = "";
     // const size = useWindowSize();
     const size = getWindowSize();
-
+    const users = useSelector((state: RootStateOrAny) => state.remoteUsers);
+    const isAudio = useSelector((state: RootStateOrAny) => state.userMediaPreference.isAudio);
+    const isVideo = useSelector((state: RootStateOrAny) => state.userMediaPreference.isVideo);
+    const id = useSelector((state: RootStateOrAny) => state.id);
+    const name = useSelector((state: RootStateOrAny) => state.name)
 
     const exitHandler = (e: any) => {
         e.preventDefault();
@@ -122,14 +128,31 @@ export default function RoomMain(props: RoomMainProps) {
                 normalMediaStyle.height = '20%';
         }
 
-        if(props.fullscreenVideoId !== '' && props.fullscreenVideoId !== key) {
+        if (props.fullscreenVideoId !== '' && props.fullscreenVideoId !== key) {
             normalMediaStyle.display = 'none';
-            if(props.maxVideoId === key)
+            if (props.maxVideoId === key)
                 maxMediaStyle.display = 'none';
         }
 
         if (props.maxVideoId !== '' && props.maxVideoId !== key)
             countNormalWebRTCMedia += 1;
+
+        let displayMicOff: boolean = false;
+        let displayAvatar: boolean = false;
+        let displayName: string = '';
+        if (users.hasOwnProperty(key)) {
+            if (users[key].hasOwnProperty('isAudio'))
+                displayMicOff = !users[key]['isAudio'];
+            if (users[key].hasOwnProperty('isVideo'))
+                displayAvatar = !users[key]['isVideo'];
+            if (users[key].hasOwnProperty('displayName'))
+                displayName = users[key]['displayName'];
+        }
+        else if (key === id) {
+            displayMicOff = !isAudio;
+            displayAvatar = !isVideo;
+            displayName = name;
+        }
 
         webRTCMedia.push(
             <div
@@ -141,14 +164,21 @@ export default function RoomMain(props: RoomMainProps) {
                 <div className="inner">
                     {
                         props.fullscreenVideoId === key ?
-                        <div className="exit-fullscreen"
-                             onClick={() => props.onFullscreenClick(props.fullscreenVideoId)}>
-                            <FiMinimize/>
-                            <span>Exit full screen</span>
-                        </div> :
-                        <Dropdown options={key === props.maxVideoId ? maxOptionsMenu : normalOptionsMenu}/>
+                            <div className="exit-fullscreen"
+                                 onClick={() => props.onFullscreenClick(props.fullscreenVideoId)}>
+                                <FiMinimize/>
+                                <span>Exit full screen</span>
+                            </div> :
+                            <Dropdown options={key === props.maxVideoId ? maxOptionsMenu : normalOptionsMenu}/>
                     }
-                    <video ref={value.videoRef} autoPlay className="video-stream"/>
+                    {
+                        displayMicOff ?
+                        <div className={"no-audio"}>
+                            <FiMicOff/>
+                        </div> : null
+                    }
+                    {displayAvatar && <Avatar name={displayName} className={'no-video-avatar'}/>}
+                    <video ref={value.videoRef} autoPlay className="video-stream" style={displayAvatar ? {display: 'none'} : {}}/>
                     {/*<video className="video-stream" poster={"/images/big_buck_bunny.jpg"}/>*/}
                 </div>
             </div>

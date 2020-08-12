@@ -109,8 +109,6 @@ function RoomView() {
     //     if (i === 3)
     //         setIsChatOpen(newButtonsState[i]);
     // };
-
-
     const handleChatButtonClick = () => {
         setIsChatOpen(!chatButtonState);
         setChatButtonState(!chatButtonState);
