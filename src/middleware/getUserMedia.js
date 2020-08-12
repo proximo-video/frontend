@@ -1,7 +1,8 @@
 import GetLocalWebCamFeed from '../utils/GetLocalWebCamFeed';
-import { existingTracks, connections } from './webRTC'
+import { existingTracks } from './webRTC'
 import { detect } from 'detect-browser';
 import { sendMessage, getUserMedia } from '../redux/actions';
+export let videoTrack;
 const browser = detect();
 export let localStream;
 let displayMediaOptions = {
@@ -16,6 +17,10 @@ const getUserMediaMiddleware = store => next => async (action) => {
         case 'GETUSERMEDIA':
             if (action.value) {
                 localStream = await GetLocalWebCamFeed(userMediaPreference.isAudio, userMediaPreference.isVideo);
+                if (!videoTrack) {
+                    videoTrack = localStream.getVideoTracks()[0].clone();
+                    videoTrack.stop();
+                }
                 // if (existingTracks.length) {
                 //     for (const audioTrack of localStream.getAudioTracks()) {
                 //         for (const trackSender of existingTracks)
@@ -29,10 +34,8 @@ const getUserMediaMiddleware = store => next => async (action) => {
                 //     }
                 // }
                 existingTracks.forEach((value, key) => {
-                    let hasVideo = false;
                     for (const rtpSender of value) {
                         if (rtpSender.track.kind === 'video') {
-                            hasVideo = true;
                             if (localStream.getVideoTracks().length) {
                                 rtpSender.replaceTrack(localStream.getVideoTracks()[0])
                             }
@@ -41,11 +44,6 @@ const getUserMediaMiddleware = store => next => async (action) => {
                             if (localStream.getAudioTracks().length) {
                                 rtpSender.replaceTrack(localStream.getAudioTracks()[0])
                             }
-                        }
-                    }
-                    if (!hasVideo) {
-                        if (connections.has(key) && localStream.getVideoTracks().length) {
-                            connections.get(key).addTrack(localStream.getVideoTracks()[0]);
                         }
                     }
                 })
@@ -89,18 +87,11 @@ const getUserMediaMiddleware = store => next => async (action) => {
                 });
                 localStream = screenStream;
                 existingTracks.forEach((value, key) => {
-                    let hasVideo = false;
                     for (const rtpSender of value) {
                         if (rtpSender.track.kind === 'video') {
-                            hasVideo = true;
                             if (localStream.getVideoTracks().length) {
                                 rtpSender.replaceTrack(localStream.getVideoTracks()[0])
                             }
-                        }
-                    }
-                    if (!hasVideo) {
-                        if (connections.has(key) && localStream.getVideoTracks().length) {
-                            connections.get(key).addTrack(localStream.getVideoTracks()[0]);
                         }
                     }
                 })
