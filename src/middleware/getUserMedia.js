@@ -9,7 +9,7 @@ const getUserMediaMiddleware = store => next => async (action) => {
         case 'GETUSERMEDIA':
             if (action.value) {
                 localStream = await GetLocalWebCamFeed(userMediaPreference.isAudio, userMediaPreference.isVideo);
-                if (!existingTracks.length) {
+                if (existingTracks.length) {
                     for (const audioTrack of localStream.getAudioTracks()) {
                         for (const trackSender of existingTracks)
                             if (trackSender.track.kind === 'audio')
