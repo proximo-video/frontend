@@ -10,3 +10,13 @@ export const remoteStreamCountReducer = (state=0,action)=>{
     }
     return state;
 }
+
+export const messagesReducer = (state=[],action)=>{
+    switch (action.type){
+        case 'ADDCHATMESSAGE':
+            return [...state,action.value]
+        default:
+            break;
+    }
+    return state;
+}

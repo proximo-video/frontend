@@ -1,11 +1,10 @@
 import { localStream } from './getUserMedia';
-import { addRemoteStream, deleteRemoteStream } from '../redux/actions'
+import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference } from '../redux/actions'
 let socket;
 let iceServers;
 let connections = new Map();
 let channels = new Map();
 export let remoteStreams = new Map();
-export let messages = [];
 const webRTCMiddleware = store => next => action => {
     switch (action.type) {
         case 'CONNECTSOCKET':
@@ -14,6 +13,9 @@ const webRTCMiddleware = store => next => action => {
         case 'SETICESERVERS':
             iceServers = action.value;
             break;
+        case 'SENDMESSAGE':
+            sendMessage(action.value, store);
+            break;
         default:
             break;
     }
@@ -21,7 +23,7 @@ const webRTCMiddleware = store => next => action => {
 }
 export default webRTCMiddleware;
 // eslint-disable-next-line
-const sendMessage = (params) => {
+const sendMessage = (params, store) => {
     channels.forEach(channel => {
         channel.send(JSON.stringify({
             "from": params.id,
@@ -30,7 +32,7 @@ const sendMessage = (params) => {
         }))
     });
     if (params.action === 'MESSAGE')
-        messages = [...messages, { id: params.id, message: params.message }];
+        store.dispatch(addMessage({ id: params.id, message: params.message }))
 }
 
 
@@ -68,11 +70,13 @@ const socketAndWebRTC = (params, store) => {
                     handleCandidate(jsonData.data, jsonData.id, jsonData.from);
                     break;
                 case 'OFFER':
-                    console.log('Received The Offer');
+                    console.log('Received The Offer', jsonData.displayName, params.displayName);
+                    store.dispatch(addRemoteUser({ id: jsonData.from, displayName: jsonData.display_name }))
                     handleOffer(jsonData.data, jsonData.id, jsonData.from);
                     break;
                 case 'ANSWER':
-                    console.log('Received The Answer');
+                    console.log('Received The Answer', jsonData.displayName, params.displayName);
+                    store.dispatch(addRemoteUser({ id: jsonData.from, displayName: jsonData.display_name }))
                     handleAnswer(jsonData.data, jsonData.id, jsonData.from);
                     break;
                 default:
@@ -119,6 +123,7 @@ const socketAndWebRTC = (params, store) => {
         connection.ondatachannel = function (event) {
             // console.log("Recieved a DataChannel.")
             let channel = event.channel;
+            channels.set(toUser, channel)
             setChannelEvents(channel, toUser);
         };
 
@@ -179,6 +184,7 @@ const socketAndWebRTC = (params, store) => {
                         remoteStreams = new Map(remoteStreams);
                     }
                     store.dispatch(deleteRemoteStream());
+                    store.dispatch(deleteRemoteUser(toUser))
                     console.log(event);
                     break;
                 case "closed":
@@ -187,6 +193,7 @@ const socketAndWebRTC = (params, store) => {
                         remoteStreams = new Map(remoteStreams);
                     }
                     store.dispatch(deleteRemoteStream());
+                    store.dispatch(deleteRemoteUser(toUser))
                     break;
                 default:
                     break;
@@ -221,7 +228,8 @@ const socketAndWebRTC = (params, store) => {
                         data: offer,
                         id: params.id,
                         to: toUser,
-                        from: params.id
+                        from: params.id,
+                        display_name: params.displayName
                     }
                 ));
 
@@ -236,10 +244,27 @@ const socketAndWebRTC = (params, store) => {
     }
 
     const setChannelEvents = (channel, toUser) => {
+        channel.onopen = function (event) {
+            channel.send(JSON.stringify({
+                "from": params.id,
+                "action": "MEDIAPREFERENCE",
+                "message": { isAudio: store.getState().userMediaPreference.isAudio, isVideo: store.getState().userMediaPreference.isVideo }
+            }))
+        }
         channel.onmessage = function (event) {
             var data = JSON.parse(event.data);
-            if (data.action === 'MESSAGE')
-                messages = [...messages, { id: data.from, message: data.message }]
+            switch (data.action) {
+                case 'MESSAGE':
+                    store.dispatch(addMessage({ id: data.from, message: data.message }));
+                    break;
+                case 'MEDIAPREFERENCE':
+                    console.log(data.from,data.message.isVideo);
+                    store.dispatch(setRemoteMediaPreference({ id: data.from, isAudio: data.message.isAudio, isVideo: data.message.isVideo }))
+                    break;
+                default:
+                    break;
+            }
+
         };
 
         channel.onerror = function (event) {
@@ -307,7 +332,8 @@ const socketAndWebRTC = (params, store) => {
                         data: answer,
                         id: params.id,
                         to: toUser,
-                        from: params.id
+                        from: params.id,
+                        display_name: params.displayName
                     }
                 ));
             },

@@ -1,8 +1,11 @@
-import React, {ReactElement, useState} from 'react';
+import React, { ReactElement, useState } from 'react';
 import { IconContext } from "react-icons";
 import { buttonsData } from './buttonsDataType';
 import ReactTooltip from "react-tooltip";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
+import { toggleAudio, toggleVideo, getUserMedia, sendMessage } from '../../redux/actions';
+import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
+import { detect } from 'detect-browser';
 
 export interface ControlButtonProps {
     legend: string;
@@ -37,22 +40,38 @@ function ControlButton(props: ControlButtonProps) {
 export interface RoomFooterProps {
     // buttonsState: boolean[];
     // onClick: (i: number) => void;
-    camButtonState: boolean;
-    micButtonState: boolean;
-    screenButtonState: boolean;
     chatButtonState: boolean;
-    onCamButtonClick: () => void;
-    onMicButtonClick: () => void;
-    onScreenButtonClick: () => void;
     onChatButtonClick: () => void;
-    onLeaveButtonClick: () => void;
+
 }
 
 function RoomFooter(props: RoomFooterProps) {
     const [isPinned, setIsPinned] = useState(true);
+    const isAudio = useSelector((state: RootStateOrAny) => state.userMediaPreference.isAudio);
+    const isVideo = useSelector((state: RootStateOrAny) => state.userMediaPreference.isVideo);
+    const id = useSelector((state: RootStateOrAny) => state.id);
 
     const handlePinButtonClick = () => {
         setIsPinned(!isPinned);
+    }
+    const browser = detect();
+    const dispatch = useDispatch();
+
+    const onCamButtonClick = () => {
+        dispatch(sendMessage({ id: id, action: 'MEDIAPREFERENCE', message: { isAudio: isAudio, isVideo: !isVideo } }))
+        dispatch(toggleVideo());
+        if (!(browser && browser.name === 'firefox'))
+            dispatch(getUserMedia(false));
+    }
+    const onMicButtonClick = () => {
+        dispatch(sendMessage({ id: id, action: 'MEDIAPREFERENCE', message: { isAudio: !isAudio, isVideo: isVideo } }))
+        dispatch(toggleAudio());
+    }
+    const onScreenButtonClick = () => {
+
+    }
+    const onLeaveButtonClick = () => {
+
     }
 
     // const buttons = props.buttonsState.map((isOff: boolean, i: number) =>
@@ -74,25 +93,25 @@ function RoomFooter(props: RoomFooterProps) {
             </button>
             <div className="buttonWrapper">
                 <ControlButton
-                    className={(props.camButtonState ? buttonsData[0].onClass : buttonsData[0].offClass)}
-                    legend={(props.camButtonState ? buttonsData[0].onLegend : buttonsData[0].offLegend)}
-                    icon={(props.camButtonState ? buttonsData[0].onIcon : buttonsData[0].offIcon)}
-                    iconColor={(props.camButtonState ? buttonsData[0].onIconColor : buttonsData[0].offIconColor)}
-                    onClick={props.onCamButtonClick}
+                    className={(isVideo ? buttonsData[0].onClass : buttonsData[0].offClass)}
+                    legend={(isVideo ? buttonsData[0].onLegend : buttonsData[0].offLegend)}
+                    icon={(isVideo ? buttonsData[0].onIcon : buttonsData[0].offIcon)}
+                    iconColor={(isVideo ? buttonsData[0].onIconColor : buttonsData[0].offIconColor)}
+                    onClick={onCamButtonClick}
                 />
                 <ControlButton
-                    className={(props.micButtonState ? buttonsData[1].onClass : buttonsData[1].offClass)}
-                    legend={(props.micButtonState ? buttonsData[1].onLegend : buttonsData[1].offLegend)}
-                    icon={(props.micButtonState ? buttonsData[1].onIcon : buttonsData[1].offIcon)}
-                    iconColor={(props.micButtonState ? buttonsData[1].onIconColor  : buttonsData[1].offIconColor)}
-                    onClick={props.onMicButtonClick}
+                    className={(isAudio ? buttonsData[1].onClass : buttonsData[1].offClass)}
+                    legend={(isAudio ? buttonsData[1].onLegend : buttonsData[1].offLegend)}
+                    icon={(isAudio ? buttonsData[1].onIcon : buttonsData[1].offIcon)}
+                    iconColor={(isAudio ? buttonsData[1].onIconColor : buttonsData[1].offIconColor)}
+                    onClick={onMicButtonClick}
                 />
                 <ControlButton
-                    className={(props.screenButtonState ? buttonsData[2].onClass : buttonsData[2].offClass)}
-                    legend={(props.screenButtonState ? buttonsData[2].onLegend : buttonsData[2].offLegend)}
-                    icon={(props.screenButtonState ? buttonsData[2].onIcon : buttonsData[2].offIcon)}
-                    iconColor={(props.screenButtonState ? buttonsData[2].onIconColor : buttonsData[2].offIconColor)}
-                    onClick={props.onScreenButtonClick}
+                    className={(false ? buttonsData[2].onClass : buttonsData[2].offClass)}
+                    legend={(false ? buttonsData[2].onLegend : buttonsData[2].offLegend)}
+                    icon={(false ? buttonsData[2].onIcon : buttonsData[2].offIcon)}
+                    iconColor={(false ? buttonsData[2].onIconColor : buttonsData[2].offIconColor)}
+                    onClick={onScreenButtonClick}
                 />
                 <ControlButton
                     className={(props.chatButtonState ? buttonsData[3].onClass : buttonsData[3].offClass)}
@@ -105,7 +124,7 @@ function RoomFooter(props: RoomFooterProps) {
                     legend={buttonsData[4].onLegend}
                     icon={buttonsData[4].onIcon}
                     iconColor={buttonsData[4].onIconColor}
-                    onClick={props.onLeaveButtonClick}
+                    onClick={onLeaveButtonClick}
                 />
                 {/*{buttons}*/}
             </div>

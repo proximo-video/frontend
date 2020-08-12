@@ -3,6 +3,8 @@ import 'emoji-mart/css/emoji-mart.css'
 import {Picker} from 'emoji-mart'
 import {FiSmile} from 'react-icons/fi';
 import ChatMain from "./ChatMain";
+import {useSelector,useDispatch, RootStateOrAny} from 'react-redux';
+import {sendMessage} from '../../redux/actions';
 
 // function ChatBackdrop({backdropClick}) {
 //     let sideChat: Element;
@@ -49,6 +51,8 @@ export function EmojiContainer({handleEmojiOpenButton, addEmoji}) {
 
 export default function RoomChat({isChatOpen, onClose}) {
     // let textarea: Element;
+    const dispatch = useDispatch();
+    const id = useSelector((state: RootStateOrAny) => state.id);
     const formRef = useRef();
     const [inputValue, setInputValue] = useState<string>('');
     const [isEmojiContainerOpen, setIsEmojiContainerOpen] = useState<boolean>(false);
@@ -60,6 +64,7 @@ export default function RoomChat({isChatOpen, onClose}) {
     const handleSubmit = (event: any) => {
         event.preventDefault();
         event.stopPropagation();
+        dispatch(sendMessage({id:id,action:'MESSAGE',message:inputValue}))
         setInputValue('');
         // alert("your message:" + inputValue);
         console.log("your message: " + inputValue);

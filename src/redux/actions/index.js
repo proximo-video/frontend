@@ -1,86 +1,126 @@
-export const login = () =>{
+export const login = () => {
     return {
-        type:'LOGIN'
+        type: 'LOGIN'
     }
 }
 
-export const logout = () =>{
+export const logout = () => {
     return {
-        type:'LOGOUT'
+        type: 'LOGOUT'
     }
 }
 
-export const addRemoteStream  = () =>{
+export const addRemoteStream = () => {
     return {
-        type:'ADDREMOTESTREAM',
+        type: 'ADDREMOTESTREAM',
     }
 }
 
-export const deleteRemoteStream  = () =>{
+export const deleteRemoteStream = () => {
     return {
-        type:'DELETEREMOTESTREAM',
+        type: 'DELETEREMOTESTREAM',
     }
 }
 
 
-export const getUserMedia = (value)=>{
+export const getUserMedia = (value) => {
     return {
-        type:'GETUSERMEDIA',
+        type: 'GETUSERMEDIA',
         value
     }
 }
 
-export const setIceServers = (value)=>{
+export const setIceServers = (value) => {
     return {
-        type:'SETICESERVERS',
+        type: 'SETICESERVERS',
         value
     }
 }
 
-export const connectSocket = (value)=>{
+export const connectSocket = (value) => {
     return {
-        type:'CONNECTSOCKET',
+        type: 'CONNECTSOCKET',
         value
     }
 }
 
-export const toggleAudio = ()=>{
+export const setRoomOwner = (value) => {
     return {
-        type:'TOGGLEAUDIO'
+        type: 'SETROOMOWNER',
+        value
     }
 }
 
-export const toggleVideo = ()=>{
+export const deleteRemoteUser = (value) => {
     return {
-        type:'TOGGLEVIDEO',
+        type: 'DELETEREMOTEUSER',
+        value
     }
 }
 
-export const closeMedia = ()=>{
+export const addRemoteUser = (value) => {
     return {
-        type:'CLOSEMEDIA',
+        type: 'ADDREMOTEUSER',
+        value
+    }
+}
+
+export const addMessage = (value) => {
+    return {
+        type: 'ADDCHATMESSAGE',
+        value
+    }
+}
+
+export const sendMessage = (value) => {
+    return {
+        type: 'SENDMESSAGE',
+        value
+    }
+}
+export const setRemoteMediaPreference = (value) => {
+    return {
+        type: 'SETREMOTEMEDIAPREFERENCE',
+        value
     }
 }
 
 
+export const toggleAudio = () => {
+    return {
+        type: 'TOGGLEAUDIO'
+    }
+}
 
-export const setName = (name) =>{
-    return{
-        type:'SET_NAME',
+export const toggleVideo = () => {
+    return {
+        type: 'TOGGLEVIDEO',
+    }
+}
+
+export const closeMedia = () => {
+    return {
+        type: 'CLOSEMEDIA',
+    }
+}
+
+export const setName = (name) => {
+    return {
+        type: 'SET_NAME',
         name
     }
 }
 
-export const setId = (id) =>{
-    return{
-        type:'SET_ID',
+export const setId = (id) => {
+    return {
+        type: 'SET_ID',
         id
     }
 }
 
-export const setRooms = (rooms) =>{
-    return{
-        type:'SET_ROOMS',
+export const setRooms = (rooms) => {
+    return {
+        type: 'SET_ROOMS',
         rooms
     }
 }
