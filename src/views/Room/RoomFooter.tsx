@@ -6,6 +6,7 @@ import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 import { toggleAudio, toggleVideo, getUserMedia, sendMessage } from '../../redux/actions';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { detect } from 'detect-browser';
+import { useHistory } from "react-router-dom";
 
 export interface ControlButtonProps {
     legend: string;
@@ -50,7 +51,7 @@ function RoomFooter(props: RoomFooterProps) {
     const isAudio = useSelector((state: RootStateOrAny) => state.userMediaPreference.isAudio);
     const isVideo = useSelector((state: RootStateOrAny) => state.userMediaPreference.isVideo);
     const id = useSelector((state: RootStateOrAny) => state.id);
-
+    const history = useHistory()
     const handlePinButtonClick = () => {
         setIsPinned(!isPinned);
     }
@@ -71,7 +72,8 @@ function RoomFooter(props: RoomFooterProps) {
 
     }
     const onLeaveButtonClick = () => {
-
+        dispatch(sendMessage({id:id,action:'LEAVEROOM',message:''}));
+        history.push('/')
     }
 
     // const buttons = props.buttonsState.map((isOff: boolean, i: number) =>

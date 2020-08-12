@@ -85,7 +85,6 @@ export const setRemoteMediaPreference = (value) => {
     }
 }
 
-
 export const toggleAudio = () => {
     return {
         type: 'TOGGLEAUDIO'
