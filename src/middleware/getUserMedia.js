@@ -1,5 +1,5 @@
 import GetLocalWebCamFeed from '../utils/GetLocalWebCamFeed';
-import { existingTracks } from './webRTC'
+import { existingTracks, connections } from './webRTC'
 import { detect } from 'detect-browser';
 import { sendMessage, getUserMedia } from '../redux/actions';
 const browser = detect();
@@ -16,18 +16,39 @@ const getUserMediaMiddleware = store => next => async (action) => {
         case 'GETUSERMEDIA':
             if (action.value) {
                 localStream = await GetLocalWebCamFeed(userMediaPreference.isAudio, userMediaPreference.isVideo);
-                if (existingTracks.length) {
-                    for (const audioTrack of localStream.getAudioTracks()) {
-                        for (const trackSender of existingTracks)
-                            if (trackSender.track.kind === 'audio')
-                                trackSender.replaceTrack(audioTrack)
+                // if (existingTracks.length) {
+                //     for (const audioTrack of localStream.getAudioTracks()) {
+                //         for (const trackSender of existingTracks)
+                //             if (trackSender.track.kind === 'audio')
+                //                 trackSender.replaceTrack(audioTrack)
+                //     }
+                //     for (const videoTrack of localStream.getVideoTracks()) {
+                //         for (const trackSender of existingTracks)
+                //             if (trackSender.track.kind === 'video')
+                //                 trackSender.replaceTrack(videoTrack)
+                //     }
+                // }
+                existingTracks.forEach((value, key) => {
+                    let hasVideo = false;
+                    for (const rtpSender of value) {
+                        if (rtpSender.track.kind === 'video') {
+                            hasVideo = true;
+                            if (localStream.getVideoTracks().length) {
+                                rtpSender.replaceTrack(localStream.getVideoTracks()[0])
+                            }
+                        }
+                        if (rtpSender.track.kind === 'audio') {
+                            if (localStream.getAudioTracks().length) {
+                                rtpSender.replaceTrack(localStream.getAudioTracks()[0])
+                            }
+                        }
                     }
-                    for (const videoTrack of localStream.getVideoTracks()) {
-                        for (const trackSender of existingTracks)
-                            if (trackSender.track.kind === 'video')
-                                trackSender.replaceTrack(videoTrack)
+                    if (!hasVideo) {
+                        if (connections.has(key) && localStream.getVideoTracks().length) {
+                            connections.get(key).addTrack(localStream.getVideoTracks()[0]);
+                        }
                     }
-                }
+                })
             }
             break;
         case 'TOGGLEVIDEO':
@@ -67,11 +88,22 @@ const getUserMediaMiddleware = store => next => async (action) => {
                     track.stop();
                 });
                 localStream = screenStream;
-                for (const track of screenStream.getVideoTracks()) {
-                    for (const trackSender of existingTracks)
-                        if (trackSender.track.kind === 'video')
-                            trackSender.replaceTrack(track)
-                }
+                existingTracks.forEach((value, key) => {
+                    let hasVideo = false;
+                    for (const rtpSender of value) {
+                        if (rtpSender.track.kind === 'video') {
+                            hasVideo = true;
+                            if (localStream.getVideoTracks().length) {
+                                rtpSender.replaceTrack(localStream.getVideoTracks()[0])
+                            }
+                        }
+                    }
+                    if (!hasVideo) {
+                        if (connections.has(key) && localStream.getVideoTracks().length) {
+                            connections.get(key).addTrack(localStream.getVideoTracks()[0]);
+                        }
+                    }
+                })
                 store.dispatch(sendMessage({ id: id, action: 'MEDIAPREFERENCE', message: { isAudio: userMediaPreference.isAudio, isVideo: true } }));
             }
             else {

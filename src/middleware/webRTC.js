@@ -2,9 +2,9 @@ import { localStream } from './getUserMedia';
 import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference } from '../redux/actions'
 let socket;
 let iceServers;
-let connections = new Map();
+export let connections = new Map();
 let channels = new Map();
-export let existingTracks = [];
+export let existingTracks = new Map();
 export let remoteStreams = new Map();
 const webRTCMiddleware = store => next => action => {
     switch (action.type) {
@@ -109,7 +109,9 @@ const socketAndWebRTC = (params, store) => {
         // Add both video and audio tracks to the connection
         for (const track of localStream.getTracks()) {
             // console.log("Sending Stream.")
-            existingTracks.push(connection.addTrack(track, localStream));
+            const rtcRtpSenderList=[];
+            rtcRtpSenderList.push(connection.addTrack(track, localStream));
+            existingTracks.set(toUser,rtcRtpSenderList)
         }
 
         // This event handles displaying remote video and audio feed from the other peer
@@ -173,6 +175,10 @@ const socketAndWebRTC = (params, store) => {
         //             break;
         //     }
         // }
+
+        connection.onnegotiationneeded = function () {
+            console.log('Negotiation');
+        }
 
         // This event logs messages and handles button state according to WebRTC connection state changes
         connection.onconnectionstatechange = function (event) {
