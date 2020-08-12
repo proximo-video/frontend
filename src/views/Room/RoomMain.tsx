@@ -177,12 +177,8 @@ export default function RoomMain(props: RoomMainProps) {
                             <FiMicOff/>
                         </div> : null
                     }
-                    {/*{*/}
-                    {/*    displayAvatar ?*/}
-                    {/*    <Avatar name={displayName} className={'no-video-avatar'}/> :*/}
-                    {/*        <video ref={value.videoRef} autoPlay className="video-stream"/>*/}
-                    {/*}*/}
-                    <video ref={value.videoRef} autoPlay className="video-stream"/>
+                    {displayAvatar && <Avatar name={displayName} className={'no-video-avatar'}/>}
+                    <video ref={value.videoRef} autoPlay className="video-stream" style={displayAvatar ? {display: 'none'} : {}}/>
                     {/*<video className="video-stream" poster={"/images/big_buck_bunny.jpg"}/>*/}
                 </div>
             </div>
