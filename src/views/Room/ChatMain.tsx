@@ -3,17 +3,17 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 // import 'react-tabs/style/react-tabs.css';
 import '../../assets/scss/custom/roomChat.scss';
 import MessageComponent from "./MessageComponent";
-import { Message } from "./genericTypes";
+import { MessageType } from "./genericTypes";
 import UserComponent from "./UserComponent";
 import { useSelector, RootStateOrAny } from 'react-redux';
 
 
 
 export function MessageArea() {
-    const users = useSelector((state: RootStateOrAny) => state.remoteUsers)
-    const id = useSelector((state: RootStateOrAny) => state.id)
-    const name = useSelector((state: RootStateOrAny) => state.name)
-    const messages = useSelector((state: RootStateOrAny) => state.messages)
+    const users = useSelector((state: RootStateOrAny) => state.remoteUsers);
+    const id = useSelector((state: RootStateOrAny) => state.id);
+    const name = useSelector((state: RootStateOrAny) => state.name);
+    const messages = useSelector((state: RootStateOrAny) => state.messages);
     // eslint-disable-next-line
     let messagesEnd: Element;
 
@@ -28,7 +28,7 @@ export function MessageArea() {
     return (
         <div>
             {
-                messages.map((Mess: Message, key: number) =>
+                messages.map((Mess: MessageType, key: number) =>
                     <div key={key} className={"message-container" + (Mess.id === id ? " right" : "")}>
                         {
                             Mess.id === id ?

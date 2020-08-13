@@ -171,12 +171,7 @@ export default function RoomMain(props: RoomMainProps) {
                             </div> :
                             <Dropdown options={key === props.maxVideoId ? maxOptionsMenu : normalOptionsMenu}/>
                     }
-                    {
-                        displayMicOff ?
-                        <div className={"no-audio"}>
-                            <FiMicOff/>
-                        </div> : null
-                    }
+                    {displayMicOff && <div className={"no-audio"}><FiMicOff/></div>}
                     {displayAvatar && <Avatar name={displayName} className={'no-video-avatar'}/>}
                     <video ref={value.videoRef} autoPlay className="video-stream" style={displayAvatar ? {display: 'none'} : {}}/>
                     {/*<video className="video-stream" poster={"/images/big_buck_bunny.jpg"}/>*/}
