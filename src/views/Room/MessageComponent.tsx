@@ -1,10 +1,10 @@
 import Avatar from "./Avatar";
 import React from "react";
 import Linkify from 'react-linkify';
-import {Message} from "./genericTypes";
+import {MessageType} from "./genericTypes";
 
 
-export interface MessageComponentProps extends Message {
+export interface MessageComponentProps extends MessageType {
     avatarPosition?: string;
     className?: string;
     avatarClassName?: string;
