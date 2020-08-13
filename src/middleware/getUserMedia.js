@@ -2,7 +2,6 @@ import GetLocalWebCamFeed from '../utils/GetLocalWebCamFeed';
 import { existingTracks } from './webRTC'
 import { detect } from 'detect-browser';
 import { sendMessage, getUserMedia } from '../redux/actions';
-export let videoTrack;
 const browser = detect();
 export let localStream;
 let displayMediaOptions = {
@@ -16,11 +15,17 @@ const getUserMediaMiddleware = store => next => async (action) => {
     switch (action.type) {
         case 'GETUSERMEDIA':
             if (action.value) {
-                localStream = await GetLocalWebCamFeed(userMediaPreference.isAudio, userMediaPreference.isVideo);
-                if (!videoTrack) {
-                    videoTrack = localStream.getVideoTracks()[0].clone();
-                    videoTrack.stop();
+                localStream = await GetLocalWebCamFeed(userMediaPreference.isAudio, true);
+                if (browser && browser.name === 'firefox') {
+                    localStream.getVideoTracks().forEach(track => {
+                        track.enabled = userMediaPreference.isVideo;
+                    });
+                } else if (!userMediaPreference.isVideo) {
+                    localStream.getAudioTracks().forEach(track => {
+                        track.stop();
+                    });
                 }
+
                 // if (existingTracks.length) {
                 //     for (const audioTrack of localStream.getAudioTracks()) {
                 //         for (const trackSender of existingTracks)
@@ -98,6 +103,9 @@ const getUserMediaMiddleware = store => next => async (action) => {
                 store.dispatch(sendMessage({ id: id, action: 'MEDIAPREFERENCE', message: { isAudio: userMediaPreference.isAudio, isVideo: true } }));
             }
             else {
+                localStream.getTracks().forEach(track => {
+                    track.stop();
+                });
                 store.dispatch(getUserMedia(false));
                 store.dispatch(sendMessage({ id: id, action: 'MEDIAPREFERENCE', message: { isAudio: userMediaPreference.isAudio, isVideo: userMediaPreference.isVideo } }));
             }

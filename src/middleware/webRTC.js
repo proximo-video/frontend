@@ -1,4 +1,4 @@
-import { localStream, videoTrack } from './getUserMedia';
+import { localStream } from './getUserMedia';
 import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference } from '../redux/actions'
 let socket;
 let iceServers;
@@ -111,8 +111,6 @@ const socketAndWebRTC = (params, store) => {
             // console.log("Sending Stream.")
             rtcRtpSenderList.push(connection.addTrack(track, localStream));
         }
-        if (!localStream.getVideoTracks().length)
-            rtcRtpSenderList.push(connection.addTrack(videoTrack, localStream));
         existingTracks.set(toUser, rtcRtpSenderList)
 
         // This event handles displaying remote video and audio feed from the other peer
