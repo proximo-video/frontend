@@ -5,7 +5,7 @@ $notifications-container-max-height: calc(100% - 30px);
 $notifications-container-right-padding: 15px;
 $notifications-color: #fff;
 $notifications-background-color: #ccc;
-$notifications-box-shadow: 0 0 12px #999;
+$notifications-box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, 0.6);
 $notifications-font-size: 1em;
 $notifications-line-height: 1.2em;
 $notifications-opacity: 0.9;
@@ -23,15 +23,29 @@ $notifications-error-background-color: #bd362f;
 
 .notification-container {
   box-sizing: border-box;
-  position: fixed;
-  bottom: 0;
-  left: 0;
+  position: absolute;
   z-index: 3;
   width: $notifications-container-width;
-  padding: $notifications-container-top-padding $notifications-container-right-padding;
+  padding: $notifications-container-top-padding $notifications-container-right-padding !important;
   max-height: $notifications-container-max-height;
   overflow-x: hidden;
   overflow-y: auto;
+  &.bottom-left {
+    bottom: 0;
+    left: 0;
+  }
+  &.bottom-right {
+    bottom: 0;
+    right: 0;
+  }
+  &.top-right {
+    top: 0;
+    right: 0;
+  }
+  &.top-left {
+    top: 0;
+    left: 0;
+  }
 }
 
 .notification {
@@ -48,7 +62,6 @@ $notifications-error-background-color: #bd362f;
   line-height: $notifications-line-height;
   position: relative;
   opacity: $notifications-opacity;
-  margin-bottom: $notifications-margin-bottom;
 
   .title {
     font-size: $notifications-title-font-size;
@@ -60,25 +73,111 @@ $notifications-error-background-color: #bd362f;
   &:hover, &:focus {
     opacity: $notifications-hover-opacity;
   }
+  &.bottom-left {
+    margin-bottom: $notifications-margin-bottom;
+  }
+  &.bottom-right {
+    margin-bottom: $notifications-margin-bottom;
+  }
+  &.top-right {
+    margin-top: $notifications-margin-bottom;
+  }
+  &.top-left {
+    margin-top: $notifications-margin-bottom;
+  }
 }
 
-.notification-enter {
+// <-----------------------bottom-left--------------------->
+
+.notification-bottom-left-enter {
   visibility: hidden;
   transform: translate3d(-100%, 0, 0);
 }
 
-.notification-enter.notification-enter-active {
+.notification-bottom-left-enter.notification-bottom-left-enter-active {
   visibility: visible;
   transform: translate3d(0, 0, 0);
   transition: all $notifications-transition-time;
 }
 
-.notification-exit {
+.notification-bottom-left-exit {
   visibility: visible;
   transform: translate3d(0, 0, 0);
 }
 
-.notification-exit.notification-exit-active {
+.notification-bottom-left-exit.notification-bottom-left-exit-active {
+  visibility: hidden;
+  transform: translate3d(-100%, 0, 0);
+  transition: all $notifications-transition-time;
+}
+
+// <-----------------------bottom-right--------------------->
+
+.notification-bottom-right-enter {
+  visibility: hidden;
+  transform: translate3d(100%, 0, 0);
+}
+
+.notification-bottom-right-enter.notification-bottom-right-enter-active {
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+  transition: all $notifications-transition-time;
+}
+
+.notification-bottom-right-exit {
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+}
+
+.notification-bottom-right-exit.notification-bottom-right-exit-active {
+  visibility: hidden;
+  transform: translate3d(100%, 0, 0);
+  transition: all $notifications-transition-time;
+}
+
+// <-----------------------top-right--------------------->
+
+.notification-top-right-enter {
+  visibility: hidden;
+  transform: translate3d(100%, 0, 0);
+}
+
+.notification-top-right-enter.notification-top-right-enter-active {
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+  transition: all $notifications-transition-time;
+}
+
+.notification-top-right-exit {
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+}
+
+.notification-top-right-exit.notification-top-right-exit-active {
+  visibility: hidden;
+  transform: translate3d(100%, 0, 0);
+  transition: all $notifications-transition-time;
+}
+
+// <-----------------------top-left--------------------->
+
+.notification-top-left-enter {
+  visibility: hidden;
+  transform: translate3d(-100%, 0, 0);
+}
+
+.notification-top-left-enter.notification-top-left-enter-active {
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+  transition: all $notifications-transition-time;
+}
+
+.notification-top-left-exit {
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+}
+
+.notification-top-left-exit.notification-top-left-exit-active {
   visibility: hidden;
   transform: translate3d(-100%, 0, 0);
   transition: all $notifications-transition-time;

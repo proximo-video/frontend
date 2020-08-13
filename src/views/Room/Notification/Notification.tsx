@@ -2,12 +2,13 @@ import React, {useEffect} from 'react';
 import classnames from 'classnames';
 
 export interface NotificationProps {
-    type: "message" | "success" | "warning" | "error",
-    title: any,
-    message: any,
-    timeOut: number,
-    onClick: () => void,
-    onRequestHide: () => void,
+    type: "message" | "success" | "warning" | "error";
+    title: any;
+    message: any;
+    timeOut: number;
+    onClick: () => void;
+    onRequestHide: () => void;
+    position: 'bottom-left' | 'bottom-right' | 'top-right' | 'top-left';
 }
 
 // {type, title, message, timeOut, onClick, onRequestHide}
@@ -44,7 +45,7 @@ export default function Notification(props: NotificationProps) {
 
     const {type, message} = props;
     let {title} = props;
-    const className = classnames(['notification', `notification-${type}`]);
+    const className = classnames(['notification', `notification-${type}`, props.position]);
     title = title ? (<h4 className="title">{title}</h4>) : null;
     return (
         <div className={className} onClick={handleClick}>
@@ -65,4 +66,5 @@ Notification.defaultProps = {
     },
     onClick: () => {
     },
+    position: 'bottom-left'
 }

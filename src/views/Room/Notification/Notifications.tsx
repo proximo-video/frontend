@@ -8,6 +8,7 @@ export interface NotificationsProps {
     onRequestHide?: (i: any) => void;
     enterTimeout: number;
     exitTimeout: number;
+    position: 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right';
 }
 
 export default function Notifications(props: NotificationsProps) {
@@ -22,7 +23,7 @@ export default function Notifications(props: NotificationsProps) {
     const { notifications, enterTimeout, exitTimeout } = props;
     const className = classnames('notification-container', {
         'notification-container-empty': notifications.length === 0
-    });
+    }, props.position);
 
     return (
         <div className={className}>
@@ -32,7 +33,7 @@ export default function Notifications(props: NotificationsProps) {
                     return (
                         <CSSTransition
                             key={key}
-                            classNames="notification"
+                            classNames={"notification" + '-' + props.position}
                             timeout={{ enter: enterTimeout, exit: exitTimeout}}
                         >
                             <Notification
@@ -42,6 +43,7 @@ export default function Notifications(props: NotificationsProps) {
                                 timeOut={notification.timeOut}
                                 onClick={notification.onClick}
                                 onRequestHide={() => handleRequestHide(notification)}
+                                position={props.position}
                             />
                         </CSSTransition>
                     );
@@ -56,5 +58,6 @@ Notifications.defaultProps = {
     onRequestHide: () => {
     },
     enterTimeout: 400,
-    exitTimeout: 400
+    exitTimeout: 400,
+    position: 'bottom-left'
 }

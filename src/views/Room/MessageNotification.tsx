@@ -24,9 +24,9 @@ export default function MessageNotification(props: MessageSnackbarProps) {
 
     return (
         <div>
-            <button className={"temp-button"} onClick={openSnackBar} style={{position: "absolute", top: 0}}>Mess
+            <button className={"temp-button"} onClick={openSnackBar} style={{position: "absolute", top: 0, left: 0}}>Mess
             </button>
-            <NotificationContainer/>
+            <NotificationContainer position={'bottom-left'}/>
         </div>
     );
 }

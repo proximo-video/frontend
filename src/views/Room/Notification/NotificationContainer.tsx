@@ -5,6 +5,7 @@ import Notifications from './Notifications';
 export interface NotificationContainerProps {
     enterTimeout: number;
     exitTimeout: number;
+    position: 'bottom-left' | 'bottom-right' | 'top-right' | 'top-left';
 }
 
 export default function NotificationContainer(props: NotificationContainerProps) {
@@ -33,6 +34,7 @@ export default function NotificationContainer(props: NotificationContainerProps)
             exitTimeout={exitTimeout}
             notifications={notifications}
             onRequestHide={handleRequestHide}
+            position={props.position}
         />
     );
 }
@@ -40,4 +42,5 @@ export default function NotificationContainer(props: NotificationContainerProps)
 NotificationContainer.defaultProps = {
     enterTimeout: 400,
     exitTimeout: 400,
+    position: 'bottom-left',
 }

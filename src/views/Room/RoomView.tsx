@@ -222,10 +222,10 @@ function RoomView() {
                     chatButtonState={chatButtonState}
                     onChatButtonClick={handleChatButtonClick}
                 />
+                <MessageNotification/>
             </div>
             <RoomChat isChatOpen={isChatOpen} onClose={handleChatCloseButtonClick}/>
             <button className="button is-primary addVideo" onClick={() => addUser()}>Primary</button>
-            <MessageNotification/>
         </div>
     );
 }
