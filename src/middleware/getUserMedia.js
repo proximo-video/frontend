@@ -46,11 +46,12 @@ const getUserMediaMiddleware = store => next => async (action) => {
                 localStream.getVideoTracks().forEach(track => {
                     track.enabled = !userMediaPreference.isVideo;
                 });
-            } else {
+            } else if (userMediaPreference.isVideo) {
                 localStream.getVideoTracks().forEach(track => {
                     track.stop();
                 });
-                localStream.getAudioTracks().forEach(track => {
+            } else {
+                localStream.getTracks().forEach(track => {
                     track.stop();
                 });
             }

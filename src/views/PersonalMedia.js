@@ -48,7 +48,7 @@ const PersonalMedia = (props) => {
         //     //setVideo(true);
         // }
         dispatch(toggleVideo());
-        if (!(browser &&  browser.name=== 'firefox'))
+        if (!(browser &&  browser.name=== 'firefox') && !isVideo)
             dispatch(getUserMedia(false));
     }
 

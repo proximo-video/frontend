@@ -63,7 +63,7 @@ function RoomFooter(props: RoomFooterProps) {
     const onCamButtonClick = () => {
         dispatch(sendMessage({ id: id, action: 'MEDIAPREFERENCE', message: { isAudio: isAudio, isVideo: !isVideo } }))
         dispatch(toggleVideo());
-        if (!(browser && browser.name === 'firefox'))
+        if (!(browser && browser.name === 'firefox') && !isVideo)
             dispatch(getUserMedia(false));
     }
     const onMicButtonClick = () => {
