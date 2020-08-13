@@ -203,6 +203,7 @@ const socketAndWebRTC = (params, store) => {
                     connections.delete(toUser);
                     connection.close();
                     channels.delete(toUser);
+                    existingTracks.delete(toUser);
                     store.dispatch(deleteRemoteStream());
                     store.dispatch(deleteRemoteUser(toUser))
                     console.log(event);
@@ -215,6 +216,7 @@ const socketAndWebRTC = (params, store) => {
                     connections.delete(toUser);
                     connection.close();
                     channels.delete(toUser);
+                    existingTracks.delete(toUser);
                     store.dispatch(deleteRemoteStream());
                     store.dispatch(deleteRemoteUser(toUser))
                     break;

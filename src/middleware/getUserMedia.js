@@ -21,23 +21,10 @@ const getUserMediaMiddleware = store => next => async (action) => {
                         track.enabled = userMediaPreference.isVideo;
                     });
                 } else if (!userMediaPreference.isVideo) {
-                    localStream.getAudioTracks().forEach(track => {
+                    localStream.getVideoTracks().forEach(track => {
                         track.stop();
                     });
                 }
-
-                // if (existingTracks.length) {
-                //     for (const audioTrack of localStream.getAudioTracks()) {
-                //         for (const trackSender of existingTracks)
-                //             if (trackSender.track.kind === 'audio')
-                //                 trackSender.replaceTrack(audioTrack)
-                //     }
-                //     for (const videoTrack of localStream.getVideoTracks()) {
-                //         for (const trackSender of existingTracks)
-                //             if (trackSender.track.kind === 'video')
-                //                 trackSender.replaceTrack(videoTrack)
-                //     }
-                // }
                 existingTracks.forEach((value, key) => {
                     for (const rtpSender of value) {
                         if (rtpSender.track.kind === 'video') {
