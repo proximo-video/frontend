@@ -235,6 +235,9 @@ $button-border-color: #4c5f77;
   display: inline-flex;
   padding: 7px 10px 7px 10px;
   max-width: 100%;
+  &.side-message-component {
+    padding: 0;
+  }
 }
 
 .avatar {

@@ -2,9 +2,10 @@ import React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import classnames from 'classnames';
 import Notification from './Notification';
+import {Notify} from "./NotificationManager";
 
 export interface NotificationsProps {
-    notifications: any[];
+    notifications: Notify[];
     onRequestHide?: (i: any) => void;
     enterTimeout: number;
     exitTimeout: number;
@@ -13,7 +14,7 @@ export interface NotificationsProps {
 
 export default function Notifications(props: NotificationsProps) {
 
-    const handleRequestHide = (notification) => {
+    const handleRequestHide = (notification: Notify) => {
         const { onRequestHide } = props;
         if (onRequestHide) {
             onRequestHide(notification);
@@ -28,12 +29,12 @@ export default function Notifications(props: NotificationsProps) {
     return (
         <div className={className}>
             <TransitionGroup exit={true}>
-                {notifications.map((notification: any) => {
+                {notifications.map((notification: Notify) => {
                     const key = notification.id || new Date().getTime();
                     return (
                         <CSSTransition
                             key={key}
-                            classNames={"notification" + '-' + props.position}
+                            classNames={"notification-" + props.position}
                             timeout={{ enter: enterTimeout, exit: exitTimeout}}
                         >
                             <Notification

@@ -21,6 +21,10 @@ $notifications-success-background-color: #51a351;
 $notifications-warning-background-color: #f89406;
 $notifications-error-background-color: #bd362f;
 
+* {
+  box-sizing: border-box !important;
+}
+
 .notification-container {
   box-sizing: border-box;
   position: absolute;
@@ -209,4 +213,10 @@ $notifications-error-background-color: #bd362f;
   //&:before {
   //  content: $notifications-error-content;
   //}
+}
+
+.notification-message-container {
+  width: 100%;
+  height: 100%;
+  padding: 7px !important;
 }

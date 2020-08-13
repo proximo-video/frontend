@@ -19,6 +19,7 @@ const Constants = {
 
 export interface Notify {
     id?: string;
+    targetId: string;
     type: 'message' | 'success' | 'warning' | 'error';
     title?: any;
     message: any;
@@ -46,10 +47,11 @@ export const create = (notify: Notify) => {
     emitChange();
 }
 
-export const Message = (message?: any, title?: any, timeOut?: number, onClick?: () => void, priority?: boolean) => {
+export const Message = (targetId: string, message?: any, title?: any, timeOut?: number, onClick?: () => void, priority?: boolean) => {
     create({
         // @ts-ignore
         type: Constants.MESSAGE,
+        targetId,
         message,
         title,
         timeOut,
@@ -58,10 +60,11 @@ export const Message = (message?: any, title?: any, timeOut?: number, onClick?: 
     });
 }
 
-export const Success = (message?: any, title?: any, timeOut?: number, onClick?: () => void, priority?: boolean) => {
+export const Success = (targetId: string, message?: any, title?: any, timeOut?: number, onClick?: () => void, priority?: boolean) => {
     create({
         // @ts-ignore
         type: Constants.SUCCESS,
+        targetId,
         message,
         title,
         timeOut,
@@ -70,10 +73,11 @@ export const Success = (message?: any, title?: any, timeOut?: number, onClick?: 
     });
 }
 
-export const Warning = (message?: any, title?: any, timeOut?: number, onClick?: () => void, priority?: boolean) => {
+export const Warning = (targetId: string, message?: any, title?: any, timeOut?: number, onClick?: () => void, priority?: boolean) => {
     create({
         // @ts-ignore
         type: Constants.WARNING,
+        targetId,
         message,
         title,
         timeOut,
@@ -82,10 +86,11 @@ export const Warning = (message?: any, title?: any, timeOut?: number, onClick?: 
     });
 }
 
-export const Error = (message?: any, title?: any, timeOut?: number, onClick?: () => void, priority?: boolean) => {
+export const Error = (targetId: string, message?: any, title?: any, timeOut?: number, onClick?: () => void, priority?: boolean) => {
     create({
         // @ts-ignore
         type: Constants.ERROR,
+        targetId,
         message,
         title,
         timeOut,

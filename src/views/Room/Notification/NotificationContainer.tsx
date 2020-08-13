@@ -1,28 +1,35 @@
 import React, {useEffect, useState} from 'react';
-import {addChangeListener, remove, removeChangeListener} from './NotificationManager';
+import {addChangeListener, Notify, remove, removeChangeListener} from './NotificationManager';
 import Notifications from './Notifications';
 
 export interface NotificationContainerProps {
     enterTimeout: number;
     exitTimeout: number;
     position: 'bottom-left' | 'bottom-right' | 'top-right' | 'top-left';
+    id: string;
 }
 
 export default function NotificationContainer(props: NotificationContainerProps) {
-    const [notifications, setNotifications] = useState<any[]>([]);
+    const [notifications, setNotifications] = useState<Notify[]>([]);
 
     useEffect(() => {
         addChangeListener(handleStoreChange);
         return () => {
             removeChangeListener(handleStoreChange);
         }
+        // eslint-disable-next-line
     }, []);
 
-    const handleStoreChange = (notifications) => {
-        setNotifications(notifications);
+    const handleStoreChange = (notifications: Notify[]) => {
+        const newNotifications: Notify[] = [];
+        notifications.forEach((notification: Notify) => {
+            if(notification.targetId === props.id)
+                newNotifications.push(notification);
+        });
+        setNotifications(newNotifications);
     };
 
-    const handleRequestHide = (notification) => {
+    const handleRequestHide = (notification: Notify) => {
         remove(notification);
     };
 

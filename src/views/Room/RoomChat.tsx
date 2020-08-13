@@ -5,6 +5,8 @@ import {FiSmile} from 'react-icons/fi';
 import ChatMain from "./ChatMain";
 import {useSelector,useDispatch, RootStateOrAny} from 'react-redux';
 import {sendMessage} from '../../redux/actions';
+import NotificationContainer from "./Notification/NotificationContainer";
+import {Warning} from "./Notification/NotificationManager";
 
 // function ChatBackdrop({backdropClick}) {
 //     let sideChat: Element;
@@ -64,10 +66,16 @@ export default function RoomChat({isChatOpen, onClose}) {
     const handleSubmit = (event: any) => {
         event.preventDefault();
         event.stopPropagation();
-        dispatch(sendMessage({id:id,action:'MESSAGE',message:inputValue}))
+        let messageValue = inputValue.trim();
+        if(messageValue !== '') {
+            const len = messageValue.length;
+            if (len>8000) {
+                messageValue = messageValue.substr(0, 8000);
+                Warning("chat-warning", "Your message is too long.", 'Warning', 3000);
+            }
+            dispatch(sendMessage({id: id, action: 'MESSAGE', message: messageValue}));
+        }
         setInputValue('');
-        // alert("your message:" + inputValue);
-        console.log("your message: " + inputValue);
     };
 
     const onEnterPress = (event: any) => {
@@ -95,6 +103,7 @@ export default function RoomChat({isChatOpen, onClose}) {
                     <button className="close-btn" onClick={onClose}>&times;</button>
                 </div>
                 <div className="chat-main">
+                    <NotificationContainer id={"chat-warning"} position={"top-right"}/>
                     <ChatMain/>
                     {isEmojiContainerOpen && <EmojiContainer addEmoji={addEmoji} handleEmojiOpenButton={handleEmojiOpenButton}/>}
                 </div>
