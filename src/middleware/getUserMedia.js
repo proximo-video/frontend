@@ -74,15 +74,14 @@ const getUserMediaMiddleware = store => next => async (action) => {
                 const screenStream = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
                 if (!screenStream)
                     return;
-                localStream.getTracks().forEach(track => {
+                localStream.getVideoTracks().forEach(track => {
                     track.stop();
                 });
-                localStream = screenStream;
                 existingTracks.forEach((value, key) => {
                     for (const rtpSender of value) {
                         if (rtpSender.track.kind === 'video') {
-                            if (localStream.getVideoTracks().length) {
-                                rtpSender.replaceTrack(localStream.getVideoTracks()[0])
+                            if (screenStream.getVideoTracks().length) {
+                                rtpSender.replaceTrack(screenStream.getVideoTracks()[0])
                             }
                         }
                     }
