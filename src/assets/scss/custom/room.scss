@@ -45,16 +45,35 @@ body {
   }
 }
 
-.cntrlButton {
+.cntrl-button {
   border-radius: 0;
   border: none;
   background: transparent;
   padding: 0;
   margin: 0;
   cursor: pointer;
+  &.isOff {
+    .cntrl-button-wrap {
+      background: $color-meeting-red;
+      &:focus, &:hover {
+        background: $color-red;
+      }
+    }
+  }
+  &.show-leave-dropdown {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:focus, &:hover {
+      .leave-dropdown {
+        display: block;
+      }
+    }
+  }
 }
 
-.cntrlButtonFigure {
+.cntrl-button-figure {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -62,11 +81,7 @@ body {
   position: relative;
 }
 
-.cntrlButtonWrap:hover {
-  background: $color-grey-dark;
-}
-
-.cntrlButtonWrap {
+.cntrl-button-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -78,18 +93,27 @@ body {
   svg {
     font-size: 25px;
   }
+  &:hover {
+    background: $color-grey-dark;
+  }
+  //&.isOff {
+  //  background: $color-meeting-red;
+  //  &:focus, &:hover {
+  //    background: $color-red;
+  //  }
+  //}
 }
 
-.cntrlButtonWrap.isOff {
-  background: $color-meeting-red;
-}
+//.cntrlButtonWrap.isOff {
+//
+//}
+//
+//.cntrlButtonWrap.isOff:focus,
+//.cntrlButtonWrap.isOff:hover {
+//
+//}
 
-.cntrlButtonWrap.isOff:focus,
-.cntrlButtonWrap.isOff:hover {
-  background: $color-red;
-}
-
-.cntrlButtonLegend {
+.cntrl-button-legend {
   font-size: 12px;
   line-height: 14px;
   font-weight: $font-weight-medium;

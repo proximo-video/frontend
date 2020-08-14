@@ -1,11 +1,12 @@
 import React, {ReactElement, useEffect} from 'react';
-import '../../assets/scss/custom/roomMain.scss';
 import DropdownOption from "./expandedRoomDataType";
 import {FiMaximize, FiMaximize2, FiMicOff, FiMinimize, FiMinimize2} from "react-icons/fi";
 import Dropdown from "./Dropdown";
 import {VideoElement} from './videoDataType';
 import {RootStateOrAny, useSelector} from "react-redux";
 import Avatar from "./Avatar";
+import '../../assets/scss/custom/roomMain.scss';
+import '../../assets/scss/custom/dropdown.scss';
 
 
 declare global {
@@ -169,7 +170,7 @@ export default function RoomMain(props: RoomMainProps) {
                                 <FiMinimize/>
                                 <span>Exit full screen</span>
                             </div> :
-                            <Dropdown options={key === props.maxVideoId ? maxOptionsMenu : normalOptionsMenu}/>
+                            <Dropdown dropdownClasses={"video-dropdown"} options={key === props.maxVideoId ? maxOptionsMenu : normalOptionsMenu}/>
                     }
                     {displayMicOff && <div className={"no-audio"}><FiMicOff/></div>}
                     {displayAvatar && <Avatar name={displayName} className={'no-video-avatar'}/>}

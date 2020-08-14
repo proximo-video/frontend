@@ -64,7 +64,7 @@ export default function Notification(props: NotificationProps) {
     else
         title = title ? (<h4 className="title">{title}</h4>) : null;
     return (
-        <div className={className} onClick={type !== Constants.REQUEST ? handleClick : () => {}}>
+        <div className={className} onClick={type !== Constants.REQUEST ? handleClick : null}>
             <div className={"notification-message-container " + type} role="alert">
                 {title}
                 <div className="message">
