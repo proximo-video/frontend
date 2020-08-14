@@ -1,7 +1,6 @@
 import React, {useEffect} from "react";
 import NotificationContainer from "./Notification/NotificationContainer";
 import {Message} from "./Notification/NotificationManager";
-import '../../assets/scss/custom/notifications.scss';
 import MessageComponent from "./MessageComponent";
 import {RootStateOrAny, useSelector} from "react-redux";
 import {MessageType} from "./genericTypes";

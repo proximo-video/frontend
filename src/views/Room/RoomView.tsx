@@ -10,6 +10,8 @@ import {localStream} from '../../middleware/getUserMedia';
 import {remoteStreams} from '../../middleware/webRTC';
 import {getUserMedia} from '../../redux/actions';
 import {useDispatch, useSelector, RootStateOrAny} from 'react-redux';
+import '../../assets/scss/custom/notifications.scss';
+import EntryRequestNotification from "./EntryRequestNotification";
 
 declare global {
     interface Document {
@@ -84,16 +86,6 @@ function RoomView() {
     }, [remoteStreams]);
 
     useEffect(() => {
-        // console.log("self video: ", selfVideo);
-        // if (selfVideo.current){
-        //     //@ts-ignore
-        //     selfVideo.current.srcObject = localStream
-        //     //@ts-ignore
-        //     selfVideo.current.muted = true;
-        // }
-        // console.log("second")
-        // console.log(remoteStreams)
-        // console.log(videoElements)
         remoteStreams.forEach((value, key) => {
             if (videoElements.has(key)) {
                 if (videoElements.get(key).videoRef.current)
@@ -103,13 +95,6 @@ function RoomView() {
         // eslint-disable-next-line
     }, [remoteStreamCount]);
 
-    // const handleButtonClick = (i: number) => {
-    //     const newButtonsState = buttonsState.slice();
-    //     newButtonsState[i] = !buttonsState[i];
-    //     setButtonsState(newButtonsState);
-    //     if (i === 3)
-    //         setIsChatOpen(newButtonsState[i]);
-    // };
     const handleChatButtonClick = () => {
         setIsChatOpen(!chatButtonState);
         setChatButtonState(!chatButtonState);
@@ -228,6 +213,7 @@ function RoomView() {
                     onChatButtonClick={handleChatButtonClick}
                 />
                 <MessageNotification handleMessageNotificationClick={handleMessageNotificationClick}/>
+                <EntryRequestNotification/>
             </div>
             <RoomChat isChatOpen={isChatOpen} onClose={handleChatCloseButtonClick}/>
             <button className="button is-primary addVideo" onClick={() => addUser()}>Primary</button>
