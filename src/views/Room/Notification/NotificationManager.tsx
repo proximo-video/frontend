@@ -1,4 +1,5 @@
 import {EventEmitter} from 'events';
+import {EntryRequest} from "../genericTypes";
 
 const createUUID = () => {
     const pattern = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
@@ -9,23 +10,25 @@ const createUUID = () => {
     });
 };
 
-const Constants = {
+export const Constants = {
     CHANGE: 'change',
     MESSAGE: 'message',
     SUCCESS: 'success',
     WARNING: 'warning',
-    ERROR: 'error'
+    ERROR: 'error',
+    REQUEST: 'request'
 };
 
 export interface Notify {
     id?: string;
     targetId: string;
-    type: 'message' | 'success' | 'warning' | 'error';
+    type: 'message' | 'success' | 'warning' | 'error' | 'request';
     title?: any;
     message: any;
     timeOut: number;
     priority?: boolean;
     onClick?: any;
+    requestMessage?: EntryRequest;
 }
 
 
@@ -58,6 +61,16 @@ export const Message = (targetId: string, message?: any, title?: any, timeOut?: 
         onClick,
         priority
     });
+}
+
+export const RequestMessage = (targetId: string, requestMessage: EntryRequest, timeOut: number = 0) => {
+    create({
+        // @ts-ignore
+        type: Constants.REQUEST,
+        targetId,
+        requestMessage,
+        timeOut,
+    })
 }
 
 export const Success = (targetId: string, message?: any, title?: any, timeOut?: number, onClick?: () => void, priority?: boolean) => {
@@ -99,7 +112,7 @@ export const Error = (targetId: string, message?: any, title?: any, timeOut?: nu
     });
 }
 
-export const remove = (notification) => {
+export const remove = (notification: Notify) => {
     listNotify = listNotify.filter(n => notification.id !== n.id);
     emitChange();
 }

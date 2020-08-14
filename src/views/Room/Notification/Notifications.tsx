@@ -45,6 +45,7 @@ export default function Notifications(props: NotificationsProps) {
                                 onClick={notification.onClick}
                                 onRequestHide={() => handleRequestHide(notification)}
                                 position={props.position}
+                                requestMessage={notification.requestMessage}
                             />
                         </CSSTransition>
                     );
