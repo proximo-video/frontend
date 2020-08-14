@@ -225,14 +225,24 @@ $notifications-request-background-color: #222a50;
     padding: 4px 10px;
     color: whitesmoke;
     cursor: pointer;
+    font-size: medium;
+    opacity: $notifications-opacity;
+    &:hover, &:focus {
+      opacity: $notifications-hover-opacity;
+      box-shadow: $notifications-box-shadow;
+    }
   }
   .entry-request-deny {
-    background: #84446f;
+    background: transparent;
     margin: 0 10px 0 0;
+    color: #fb4e4e;
+    border: 1px solid;
   }
   .entry-request-accept {
-    background: #115067;
+    background: transparent;
     margin: 0 5px;
+    color: $notifications-success-background-color;
+    border: 1px solid;
   }
   .entry-request-message {
     margin-bottom: 14px !important;
