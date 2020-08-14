@@ -39,6 +39,11 @@ body {
   z-index: 1;
   height: 100%;
   width: 100%;
+  .remove-user-option {
+    svg {
+      color: $no-audio-red;
+    }
+  }
 }
 
 .dropdown-button {

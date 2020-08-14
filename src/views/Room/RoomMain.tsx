@@ -1,6 +1,6 @@
 import React, {ReactElement, useEffect} from 'react';
 import DropdownOption from "./expandedRoomDataType";
-import {FiMaximize, FiMaximize2, FiMicOff, FiMinimize, FiMinimize2} from "react-icons/fi";
+import {FiMaximize, FiMaximize2, FiMicOff, FiMinimize, FiMinimize2, FiMinusCircle} from "react-icons/fi";
 import Dropdown from "./Dropdown";
 import {VideoElement} from './videoDataType';
 import {RootStateOrAny, useSelector} from "react-redux";
@@ -38,6 +38,7 @@ export default function RoomMain(props: RoomMainProps) {
     let countNormalWebRTCMedia: number = 0;
     let maxMediaStyle: React.CSSProperties;
     let dropdownOptionClassName = '';
+    const isRoomOwner = useSelector((state: RootStateOrAny) => state.isRoomOwner);
     // let fullscreenUserId: string = "";
     // const size = useWindowSize();
     const size = getWindowSize();
@@ -93,10 +94,17 @@ export default function RoomMain(props: RoomMainProps) {
         }
     }
 
+    const handleRemoveUser = (userId: string) => {
+        console.log("User removed:", userId);
+    }
+
+
+
     if (props.videoElements.size <= 1)
         dropdownOptionClassName = 'disabled';
 
     props.videoElements.forEach((value: VideoElement, key: string) => {
+        const removeUserDropdownOption = new DropdownOption(<FiMinusCircle/>, 'Remove user', () => handleRemoveUser(key), 'remove-user-option');
         const maxOptionsMenu = [
             new DropdownOption(<FiMinimize2/>, 'Minimize', () => props.onMaximizeClick(key), dropdownOptionClassName),
             new DropdownOption(<FiMaximize/>, 'Fullscreen', () => props.onFullscreenClick(key)),
@@ -105,6 +113,10 @@ export default function RoomMain(props: RoomMainProps) {
             new DropdownOption(<FiMaximize2/>, 'Maximize', () => props.onMaximizeClick(key), dropdownOptionClassName),
             new DropdownOption(<FiMaximize/>, 'Fullscreen', () => props.onFullscreenClick(key)),
         ];
+        if (isRoomOwner && key !== id) {
+            maxOptionsMenu.push(removeUserDropdownOption);
+            normalOptionsMenu.push(removeUserDropdownOption);
+        }
         let normalMediaStyle: React.CSSProperties;
         if (size.width > 700) {
             const top: number = countNormalWebRTCMedia * 33;
