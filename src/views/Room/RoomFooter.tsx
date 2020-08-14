@@ -9,7 +9,6 @@ import { detect } from 'detect-browser';
 import { useHistory } from "react-router-dom";
 import {DropdownContent} from "./Dropdown";
 import DropdownOption from "./expandedRoomDataType";
-import {FiMaximize, FiMinimize2} from "react-icons/fi";
 import '../../assets/scss/custom/dropdown.scss';
 
 
