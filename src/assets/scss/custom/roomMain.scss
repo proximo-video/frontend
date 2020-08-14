@@ -79,6 +79,36 @@ body {
   @media only screen and (max-width: 700px) {
     flex-grow: 1;
   }
+  .presentation-message {
+    svg {
+      font-size: 60px;
+    }
+    p {
+      margin-top: 10px;
+      margin-bottom: 0 !important;
+    }
+    @media only screen and (max-width: 600px) {
+      svg {
+        font-size: 25px;
+      }
+      p {
+        margin-top: 5px;
+        margin-bottom: 0 !important;
+        font-size: 8px;
+      }
+    }
+
+    @media only screen and (max-width: 768px) {
+      svg {
+        font-size: 30px;
+      }
+      p {
+        margin-top: 8px;
+        margin-bottom: 0 !important;
+        font-size: 12px;
+      }
+    }
+  }
 }
 
 .inner {
@@ -105,20 +135,17 @@ body {
   top: 0;
   border: $video-border-size solid $video-border-color;
   border-radius: $video-border-radius;
-  //z-index: 0;
-  //height: 100%;
-  //width: 75%;
-  //padding: 5px;
-  //@media only screen and (max-width: 700px) {
-  //  width: 100%;
-  //  height: 75%;
-  //}
-  //@media only screen and (max-width: 415px) {
-  //  width: 100%;
-  //  height: 80%;
-  //}
   &:hover .dropdown-button {
     display: block;
+  }
+  .presentation-message {
+    svg {
+      font-size: 60px;
+    }
+    p {
+      margin-top: 10px;
+      margin-bottom: 0 !important;
+    }
   }
 }
 
@@ -133,18 +160,37 @@ body {
       font-size: 30px;
     }
   }
-  //z-index: 0;
-  //padding: 5px;
-  //height: 33%;
-  //width: 25%;
-  //@media only screen and (max-width: 700px) {
-  //  width: 33%;
-  //  height: 25%;
-  //}
-  //@media only screen and (max-width: 415px) {
-  //  width: 33%;
-  //  height: 20%;
-  //}
+  .presentation-message {
+    svg {
+      font-size: 40px;
+    }
+    p {
+      margin-top: 5px;
+      margin-bottom: 0 !important;
+      font-size: medium;
+    }
+    @media only screen and (max-width: 600px) {
+      svg {
+        font-size: 25px;
+      }
+      p {
+        margin-top: 5px;
+        margin-bottom: 0 !important;
+        font-size: 8px;
+      }
+    }
+
+    @media only screen and (max-width: 768px) {
+      svg {
+        font-size: 30px;
+      }
+      p {
+        margin-top: 8px;
+        margin-bottom: 0 !important;
+        font-size: 12px;
+      }
+    }
+  }
 }
 
 // fullscreen css
@@ -181,6 +227,15 @@ body {
       margin-left: 5px;
     }
   }
+  .presentation-message {
+    svg {
+      font-size: 60px;
+    }
+    p {
+      margin-top: 10px;
+      margin-bottom: 0 !important;
+    }
+  }
 }
 
 .no-video-avatar {
@@ -199,4 +254,15 @@ body {
   position: absolute;
   bottom: 7px;
   left: 7px;
+}
+
+.presentation-message {
+  position: absolute;
+  background-color: rgba(0,0,0,0.7);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }

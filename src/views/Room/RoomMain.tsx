@@ -7,6 +7,7 @@ import {RootStateOrAny, useSelector} from "react-redux";
 import Avatar from "./Avatar";
 import '../../assets/scss/custom/roomMain.scss';
 import '../../assets/scss/custom/dropdown.scss';
+import {MdPresentToAll} from "react-icons/all";
 
 
 declare global {
@@ -46,7 +47,8 @@ export default function RoomMain(props: RoomMainProps) {
     const isAudio = useSelector((state: RootStateOrAny) => state.userMediaPreference.isAudio);
     const isVideo = useSelector((state: RootStateOrAny) => state.userMediaPreference.isVideo);
     const id = useSelector((state: RootStateOrAny) => state.id);
-    const name = useSelector((state: RootStateOrAny) => state.name)
+    const name = useSelector((state: RootStateOrAny) => state.name);
+    const userScreen = useSelector((state: RootStateOrAny) => state.userScreen);
 
     const exitHandler = (e: any) => {
         e.preventDefault();
@@ -191,6 +193,13 @@ export default function RoomMain(props: RoomMainProps) {
                     {/*        <video ref={value.videoRef} autoPlay className="video-stream" style={displayAvatar ? {display: 'none'} : {}}/> :*/}
                     {/*        <audio ref={value.videoRef} autoPlay/>*/}
                     {/*}*/}
+                    {
+                        key === id && userScreen &&
+                        <div className={"presentation-message"}>
+                            <MdPresentToAll/>
+                            <p>You're presenting to everyone</p>
+                        </div>
+                    }
                     <video ref={value.videoRef} autoPlay className="video-stream" style={displayAvatar ? {display: 'none'} : {}}/>
                     {/*<video className="video-stream" poster={"/images/big_buck_bunny.jpg"}/>*/}
                 </div>
