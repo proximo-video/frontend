@@ -39,6 +39,11 @@ body {
   z-index: 1;
   height: 100%;
   width: 100%;
+  .remove-user-option {
+    svg {
+      color: $no-audio-red;
+    }
+  }
 }
 
 .dropdown-button {
@@ -52,51 +57,6 @@ body {
   animation: colorChange 1s infinite;
   animation-direction: alternate;
   animation-timing-function: ease-in-out;
-}
-
-.dropdown-content {
-  display: none;
-  //visibility: hidden;
-  position: absolute;
-  //background-color: #f9f9f9;
-  top: 5px;
-  right: 8px;
-  //min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.6);
-  z-index: 1;
-  background: $dark;
-  border-radius: 15px;
-  overflow: hidden;
-
-  .option {
-    display: flex;
-    font-size: 0.8rem;
-    color: $light;
-    padding: 5px 8px 5px 8px;
-    cursor: pointer;
-    line-height: 40px;
-    //justify-content: space-between;
-    &:hover {
-      background-color: $dark-hover;
-    }
-
-    svg {
-      display: inline;
-      margin: 10px;
-    }
-    span {
-      margin-left: 5px;
-      margin-right: 10px;
-    }
-
-    &.disabled {
-      cursor: not-allowed;
-      color: $disabled-color;
-      &:hover {
-        background-color: $dark;
-      }
-    }
-  }
 }
 
 .show {

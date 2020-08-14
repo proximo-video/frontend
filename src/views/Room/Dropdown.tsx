@@ -1,6 +1,7 @@
 import {FiMoreVertical} from 'react-icons/fi';
 import React, {useEffect, useState} from 'react';
 import DropdownOption from './expandedRoomDataType';
+import classnames from 'classnames';
 
 // export interface DropdownOption {
 //     prefixIcon: React.FC;
@@ -10,36 +11,45 @@ import DropdownOption from './expandedRoomDataType';
 
 export interface DropdownContentProps extends DropdownProps {
     backdropClick: () => void;
+    backdropRequired: boolean;
 }
 
-export function DropdownContent({backdropClick, options, dropdownClasses}: DropdownContentProps) {
+export function DropdownContent({backdropClick, options, dropdownClasses, backdropRequired}: DropdownContentProps) {
     // let dropdown: Element;
     const handleClick = (e: any) => {
         e.preventDefault();
         e.stopPropagation();
         // if (!dropdown.contains(e.target))
-        backdropClick();
+        if (backdropRequired)
+            backdropClick();
     }
     useEffect(() => {
         // eslint-disable-next-line
         // dropdown = document.querySelector('.dropdown-content.show') as Element;
-        document.addEventListener('click', handleClick);
+        if (backdropRequired)
+            document.addEventListener('click', handleClick);
         return () => {
-            document.removeEventListener('click', handleClick);
+            if (backdropRequired)
+                document.removeEventListener('click', handleClick);
         }
         // eslint-disable-next-line
     }, []);
-    dropdownClasses = Array.isArray(dropdownClasses) ? dropdownClasses.join(' ') : dropdownClasses;
     return (
-        <div className={"dropdown-content show " + (dropdownClasses !== void 0 ? dropdownClasses : '')}>
+        <div className={classnames("dropdown-content", dropdownClasses)}>
             {options.map((option: DropdownOption, i: number) => (
-                <div key={i} className={"option " + option.className} onClick={option.onClick}>
+                <div key={i} className={classnames("option", option.className)} onClick={option.onClick}>
                     {option.prefixIcon}
                     <span>{option.label}</span>
                 </div>
             ))}
         </div>
     );
+}
+
+DropdownContent.defaultProps = {
+    backdropRequired: false,
+    backdropClick: () => {},
+    dropdownClasses: ''
 }
 
 export interface DropdownProps {
@@ -62,7 +72,7 @@ export default function Dropdown({options, dropdownClasses}: DropdownProps) {
                 <FiMoreVertical/>
             </button>
             {isClicked &&
-            <DropdownContent backdropClick={backdropClick} options={options} dropdownClasses={dropdownClasses}/>}
+            <DropdownContent backdropClick={backdropClick} backdropRequired={true} options={options} dropdownClasses={classnames("show", dropdownClasses)}/>}
         </div>
     );
 }
