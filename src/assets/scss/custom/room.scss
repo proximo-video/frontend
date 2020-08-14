@@ -59,6 +59,17 @@ body {
         background: $color-red;
       }
     }
+    &.disabled {
+      cursor: not-allowed;
+      .cntrl-button-wrap {
+        &:hover {
+          background: $color-meeting-red;
+        }
+        svg {
+          color: #555453 !important;
+        }
+      }
+    }
   }
   &.show-leave-dropdown {
     position: relative;
@@ -68,6 +79,17 @@ body {
     &:focus, &:hover {
       .leave-dropdown {
         display: block;
+      }
+    }
+  }
+  &.disabled {
+    cursor: not-allowed;
+    .cntrl-button-wrap {
+      &:hover {
+        background: transparent;
+      }
+      svg {
+        color: grey !important;
       }
     }
   }

@@ -33,7 +33,7 @@ function ControlButton(props: ControlButtonProps) {
                     {props.legend}
                 </span>
             </ReactTooltip>
-            <button onMouseLeave={props.onMouseOut ?? null} className={"cntrl-button " + props.className} style={props.hide ? {display: 'none'} : {}} disabled={props.disabled}  onClick={props.onClick} data-for={props.legend} data-tip>
+            <button onMouseLeave={props.onMouseOut ?? null} className={"cntrl-button " + props.className + (props.disabled ? ' disabled' : '')} style={props.hide ? {display: 'none'} : {}} disabled={props.disabled}  onClick={props.onClick} data-for={props.legend} data-tip>
                 <figure className="cntrl-button-figure">
                     <IconContext.Provider value={{ color: props.iconColor }}>
                         <div className={"cntrl-button-wrap"} >
@@ -143,10 +143,10 @@ function RoomFooter(props: RoomFooterProps) {
                 />
                 {/*screen share button*/}
                 <ControlButton
-                    className={(false ? buttonsData[2].onClass : buttonsData[2].offClass)}
-                    legend={(false ? buttonsData[2].onLegend : buttonsData[2].offLegend)}
-                    icon={(false ? buttonsData[2].onIcon : buttonsData[2].offIcon)}
-                    iconColor={(false ? buttonsData[2].onIconColor : buttonsData[2].offIconColor)}
+                    className={(userScreen ? buttonsData[2].onClass : buttonsData[2].offClass)}
+                    legend={(userScreen ? buttonsData[2].onLegend : buttonsData[2].offLegend)}
+                    icon={(userScreen ? buttonsData[2].onIcon : buttonsData[2].offIcon)}
+                    iconColor={(userScreen ? buttonsData[2].onIconColor : buttonsData[2].offIconColor)}
                     onClick={onScreenButtonClick}
                     hide={isMobile()}
                 />
@@ -169,6 +169,7 @@ function RoomFooter(props: RoomFooterProps) {
                 />
                 {/*leave button*/}
                 <ControlButton
+                    legend={isRoomOwner ? '' : buttonsData[4].onLegend}
                     icon={buttonsData[4].onIcon}
                     iconColor={buttonsData[4].onIconColor}
                     onClick={onLeaveButtonClick}

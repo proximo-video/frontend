@@ -1,6 +1,6 @@
 import React, {ReactElement} from 'react';
 import {FiVideoOff, FiVideo, FiMic, FiMicOff, FiMonitor, FiMessageSquare, FiCopy} from "react-icons/fi";
-import {FaRegHandSpock} from "react-icons/fa";
+import {MdCallEnd} from "react-icons/all";
 
 export interface ButtonsDataType {
     onIcon?: ReactElement;
@@ -61,8 +61,8 @@ export const buttonsData: ButtonsDataType[] = [
         isOff: false
     },
     {
-        onIcon: <FaRegHandSpock/>,
-        offIcon: <FaRegHandSpock/>,
+        onIcon: <MdCallEnd/>,
+        offIcon: <MdCallEnd/>,
         onLegend: "Leave",
         offLegend: "Leave",
         onIconColor: "#f26b4d",
