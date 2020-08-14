@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, {ReactElement, useEffect, useState} from 'react';
 import { IconContext } from "react-icons";
 import { buttonsData } from './buttonsDataType';
 import ReactTooltip from "react-tooltip";
@@ -8,6 +8,8 @@ import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { detect } from 'detect-browser';
 import { useHistory } from "react-router-dom";
 
+
+
 export interface ControlButtonProps {
     legend: string;
     onClick: () => void;
@@ -15,6 +17,7 @@ export interface ControlButtonProps {
     disabled?: boolean;
     className?: string;
     icon: ReactElement;
+    isMobile: boolean;
 }
 
 function ControlButton(props: ControlButtonProps) {
@@ -25,7 +28,7 @@ function ControlButton(props: ControlButtonProps) {
                     {props.legend}
                 </span>
             </ReactTooltip>
-            <button className={"cntrlButton"} disabled={props.disabled}  onClick={props.onClick} data-for={props.legend} data-tip>
+            <button className={"cntrlButton"} style={props.isMobile ? {display: 'none'} : {}} disabled={props.disabled}  onClick={props.onClick} data-for={props.legend} data-tip>
                 <figure className="cntrlButtonFigure">
                     <IconContext.Provider value={{ color: props.iconColor }}>
                         <div className={"cntrlButtonWrap " + props.className} >
@@ -37,6 +40,10 @@ function ControlButton(props: ControlButtonProps) {
             </button>
         </>
     );
+}
+
+ControlButton.defaultProps = {
+    isMobile: false
 }
 
 export interface RoomFooterProps {
@@ -53,11 +60,11 @@ function RoomFooter(props: RoomFooterProps) {
     const isVideo = useSelector((state: RootStateOrAny) => state.userMediaPreference.isVideo);
     const id = useSelector((state: RootStateOrAny) => state.id);
     const userScreen = useSelector((state: RootStateOrAny) => state.userScreen);
-    const history = useHistory()
+    const history = useHistory();
+    const browser = detect();
     const handlePinButtonClick = () => {
         setIsPinned(!isPinned);
     }
-    const browser = detect();
     const dispatch = useDispatch();
 
     const onCamButtonClick = () => {
@@ -78,6 +85,9 @@ function RoomFooter(props: RoomFooterProps) {
         history.push('/')
     }
 
+    const isMobile = () => {
+        return browser.os === 'Android OS' || browser.os === 'iOS' || browser.os === 'BlackBerry OS' || browser.os === 'Windows Mobile';
+    }
     // const buttons = props.buttonsState.map((isOff: boolean, i: number) =>
     //     <ControlButton
     //         key={i}
@@ -117,6 +127,7 @@ function RoomFooter(props: RoomFooterProps) {
                     icon={(false ? buttonsData[2].onIcon : buttonsData[2].offIcon)}
                     iconColor={(false ? buttonsData[2].onIconColor : buttonsData[2].offIconColor)}
                     onClick={onScreenButtonClick}
+                    isMobile={isMobile()}
                 />
                 <ControlButton
                     className={(props.chatButtonState ? buttonsData[3].onClass : buttonsData[3].offClass)}

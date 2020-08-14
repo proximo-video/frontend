@@ -71,7 +71,7 @@ export default function Notification(props: NotificationProps) {
                     {
                         type === Constants.REQUEST ?
                             <div className={"entry-request-notification"}>
-                                <p className={"entry-request-message"}>Wants to join meeting</p>
+                                <p className={"entry-request-message"}>Wants to join meeting.</p>
                                 <button onClick={handleDenyClick} className={"entry-request-deny"}>Deny</button>
                                 <button onClick={handleAcceptClick} className={"entry-request-accept"}>Accept</button>
                             </div>
