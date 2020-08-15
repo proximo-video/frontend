@@ -49,7 +49,7 @@ function RoomView() {
     const isVideo = useSelector((state: RootStateOrAny) => state.userMediaPreference.isVideo);
     const remoteStreamCount = useSelector((state: RootStateOrAny) => state.remoteStreamCount);
     const selfVideo = useRef();
-    videoDataType.set(id, new VideoElement(selfVideo, id, name));
+    videoDataType.set(id, new VideoElement(selfVideo, null, id, name));
     const [videoElements, setVideoElements] = useState<Map<string, VideoElement>>(videoDataType);
     const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
 
@@ -65,7 +65,7 @@ function RoomView() {
             dispatch(getUserMedia(true));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userMedia, localStream, userScreen]);
+    }, [userMedia, userScreen]);
 
     useEffect(() => {
         // console.log("first");
@@ -76,20 +76,23 @@ function RoomView() {
         remoteStreams.forEach((_, key) => {
             if (!videoElements.has(key)) {
                 const videoRef = React.createRef();
-                const newVideoElement = new VideoElement(videoRef, key, "abc");
+                const audioRef = React.createRef();
+                const newVideoElement = new VideoElement(videoRef, audioRef, key, "abc");
                 setVideosLayout(videoElements.size + 1);
                 setVideoElements(new Map(videoElements.set(key, newVideoElement)));
             }
 
         })
         // eslint-disable-next-line
-    }, [remoteStreams]);
+    }, [remoteStreamCount]);
 
     useEffect(() => {
         remoteStreams.forEach((value, key) => {
             if (videoElements.has(key)) {
-                if (videoElements.get(key).videoRef.current)
+                if (videoElements.get(key).videoRef.current) {
                     videoElements.get(key).videoRef.current.srcObject = value[0];
+                    videoElements.get(key).audioRef.current.srcObject = value[0];
+                }
             }
         })
         // eslint-disable-next-line
@@ -129,15 +132,6 @@ function RoomView() {
         const noOfRows = Math.ceil(n / perRow);
         cont.style.setProperty('--rows', noOfRows.toString());
     };
-
-    const addUser = () => {
-        // generate some random key, para and title
-        const videoRef = React.createRef();
-        const newVideoElement = new VideoElement(videoRef, id, name);
-        setVideosLayout(videoElements.size + 1);
-        setVideoElements(new Map(videoElements.set(Math.random().toString(36).slice(2), newVideoElement)));
-    };
-
 
     const handleMaximizeButtonClick = (userId: string) => {
         if (videoElements.has(userId) && videoElements.size > 1) {
@@ -223,7 +217,6 @@ function RoomView() {
                 <EntryRequestNotification />
             </div>
             <RoomChat isChatOpen={isChatOpen} onClose={handleChatCloseButtonClick} />
-            <button className="button is-primary addVideo" onClick={() => addUser()}>Primary</button>
         </div>
     );
 }
