@@ -77,7 +77,9 @@ const getUserMediaMiddleware = store => next => async (action) => {
                     return;
                 localStream.getVideoTracks().forEach(track => {
                     track.stop();
+                    localStream.removeTrack(track);
                 });
+                localStream.addTrack(screenStream.getVideoTracks()[0])
                 existingTracks.forEach((value, key) => {
                     for (const rtpSender of value) {
                         if (rtpSender.track.kind === 'video') {

@@ -18,7 +18,7 @@ async function GetLocalWebCamFeed(audio, video) {
         catch (e) { console.log(e.name + ": " + e.message); };
     } else {
         try {
-            let stream = await navigator.getWebcam({ audio: audio, video: video });
+            let stream = await navigator.getWebcam({ audio: true, video: video });
             stream.getAudioTracks()[0].enabled = audio;
         } catch (e) { console.log(e.name + ": " + e.message); };
 

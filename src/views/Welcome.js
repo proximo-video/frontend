@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { login } from '../redux/actions';
 function Welcome() {
-    const [success,setSuccess] = useState(false);
+    const [success, setSuccess] = useState(false);
     const dispatch = useDispatch();
     useEffect(() => {
         const queryString = window.location.search;
@@ -22,6 +22,10 @@ function Welcome() {
                 body: JSON.stringify({ service: service, code: code })
             });
             if (response.ok) {
+                dispatch(setId(data.id));
+                dispatch(setName(data.name));
+                if (data.rooms)
+                    dispatch(setRooms(data.rooms));
                 dispatch(login());
                 setSuccess(true);
             }
@@ -30,7 +34,7 @@ function Welcome() {
         // eslint-disable-next-line
     }, []);
 
-    return (success?<Redirect to={{pathname:"/user"}}></Redirect>:<></>)
+    return (success ? <Redirect to={{ pathname: "/user" }}></Redirect> : <></>)
 
 }
 
