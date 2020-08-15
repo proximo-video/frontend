@@ -87,7 +87,6 @@ function RoomFooter(props: RoomFooterProps) {
         dispatch(toggleAudio());
     }
     const onScreenButtonClick = () => {
-        dispatch(sendMessage({ id: id, action: 'MEDIAPREFERENCE', message: { isAudio: isAudio, isVideo: isVideo, isScreen: !userScreen } }))
         dispatch(getUserScreen(!userScreen));
     }
     const onLeaveButtonClick = () => {

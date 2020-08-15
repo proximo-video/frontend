@@ -1,7 +1,7 @@
 import GetLocalWebCamFeed from '../utils/GetLocalWebCamFeed';
 import { existingTracks } from './webRTC'
 import { detect } from 'detect-browser';
-import { getUserMedia, getUserScreen } from '../redux/actions';
+import { getUserMedia, getUserScreen, sendMessage } from '../redux/actions';
 const browser = detect();
 export let localStream;
 let displayMediaOptions = {
@@ -70,6 +70,8 @@ const getUserMediaMiddleware = store => next => async (action) => {
             });
             break;
         case 'GETUSERSCREEN':
+            const id = store.getState().id;
+            const userScreen = store.getState().userScreen
             if (action.value) {
                 const screenStream = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
                 if (!screenStream)
@@ -96,6 +98,7 @@ const getUserMediaMiddleware = store => next => async (action) => {
                 });
                 store.dispatch(getUserMedia(false));
             }
+            store.dispatch(sendMessage({ id: id, action: 'MEDIAPREFERENCE', message: { isAudio: userMediaPreference.isAudio, isVideo: userMediaPreference.isVideo, isScreen: !userScreen } }))
             break;
         default:
             break;
