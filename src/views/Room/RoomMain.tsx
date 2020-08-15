@@ -155,7 +155,7 @@ export default function RoomMain(props: RoomMainProps) {
         let displayMicOff: boolean = false;
         let displayAvatar: boolean = false;
         let displayName: string = '';
-        // let isScreen: boolean = false;
+        let isScreen: boolean = false;
         if (users.hasOwnProperty(key)) {
             if (users[key].hasOwnProperty('isAudio'))
                 displayMicOff = !users[key]['isAudio'];
@@ -163,8 +163,8 @@ export default function RoomMain(props: RoomMainProps) {
                 displayAvatar = !users[key]['isVideo'] && !users[key]['isScreen'];
             if (users[key].hasOwnProperty('displayName'))
                 displayName = users[key]['displayName'];
-            // if (users[key].hasOwnProperty('isScreen'))
-            //     isScreen = users[key]['isScreen']
+            if (users[key].hasOwnProperty('isScreen'))
+                isScreen = users[key]['isScreen']
         } else if (key === id) {
             displayMicOff = !isAudio;
             displayAvatar = !isVideo && !userScreen;
@@ -191,11 +191,6 @@ export default function RoomMain(props: RoomMainProps) {
                     }
                     {displayMicOff && <div className={"no-audio"}><FiMicOff/></div>}
                     {displayAvatar && <Avatar name={displayName} className={'no-video-avatar'}/>}
-                    {/*{*/}
-                    {/*    !displayAvatar ?*/}
-                    {/*        <video ref={value.videoRef} autoPlay className="video-stream" style={displayAvatar ? {display: 'none'} : {}}/> :*/}
-                    {/*        <audio ref={value.videoRef} autoPlay/>*/}
-                    {/*}*/}
                     {
                         key === id && userScreen &&
                         <div className={"presentation-message"}>
@@ -203,10 +198,8 @@ export default function RoomMain(props: RoomMainProps) {
                             <p>You're presenting to everyone</p>
                         </div>
                     }
-                    {/*{*/}
-                    {/*    displayAvatar ? <audio ref={value.videoRef} autoPlay/> : <video ref={value.videoRef} autoPlay className="video-stream" style={key === id && userScreen ? {display: 'none'} : {}}/>*/}
-                    {/*}*/}
-                    <video ref={value.videoRef} autoPlay className="video-stream" style={displayAvatar || (key === id && userScreen) ? {display: 'none'} : {}}/>
+                    <video ref={value.videoRef} autoPlay muted playsInline className="video-stream" style={displayAvatar || (key === id && userScreen) ? {display: 'none'} : (isScreen ? {objectFit: 'contain'} : {})}/>
+                    <audio ref={value.audioRef} autoPlay/>
                     {/*<video className="video-stream" poster={"/images/big_buck_bunny.jpg"}/>*/}
                 </div>
             </div>
