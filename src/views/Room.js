@@ -2,24 +2,24 @@ import React, { useState, useEffect } from 'react';
 import RoomEntry from './RoomEntry';
 import { v4 as uuidv4 } from 'uuid';
 import LayoutDefault from '../layouts/LayoutDefault'
-import {useDispatch,useSelector} from 'react-redux';
-import {setId,closeMedia,getUserMedia,setIceServers, connectSocket,setRoomOwner} from '../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { setId, closeMedia, getUserMedia, setIceServers, connectSocket, setRoomOwner, reset } from '../redux/actions';
 import RoomView from './Room/RoomView';
 
 function Room(props) {
     const dispatch = useDispatch();
-    const id = useSelector(state=>state.id);
+    const id = useSelector(state => state.id);
     // eslint-disable-next-line
-    const name = useSelector(state=>state.name);
-    const rooms = useSelector(state=>state.rooms);
-    const isLogged = useSelector(state=>state.isLogged);
+    const name = useSelector(state => state.name);
+    const rooms = useSelector(state => state.rooms);
+    const isLogged = useSelector(state => state.isLogged);
     // auth=0 Checking, 1 - loggedin & owner, 2 -loggedin &guest, 3- Not Logged-in guest
     const [fetched, setFetched] = useState(false);
     // const [name, setName] = useState("");
     // const [id, setID] = useState(0);
     const [mediaSuccess, setMediaSuccess] = useState(false);
     const [iceSuccess, setIceSuccess] = useState(false)
-    const [startRoomView,setStartRoomView] = useState(false);
+    const [startRoomView, setStartRoomView] = useState(false);
     // const deleteStream = (k) => {
     //     setRemoteStreams(new Map(getDeletedMap(remoteStreams, k)))
     // }
@@ -67,11 +67,11 @@ function Room(props) {
                 console.log(e);
             }
         }
-        if(!isLogged){
+        if (!isLogged) {
             dispatch(setId(uuidv4()))
         }
-        for(const room of rooms){
-            if(room.room_id===roomId)
+        for (const room of rooms) {
+            if (room.room_id === roomId)
                 dispatch(setRoomOwner(true));
         }
         checkRoom();
@@ -85,7 +85,8 @@ function Room(props) {
             //     })
             // }
             dispatch(closeMedia());
-            dispatch(getUserMedia(false));            
+            dispatch(reset());
+            dispatch(getUserMedia(false));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -99,15 +100,15 @@ function Room(props) {
 
     const createSocket = () => {
         //Socket(isLogged? "START" : "JOIN", id, roomId, connections, updateConnection, addStream, deleteStream, localStream, iceServers);
-        dispatch(connectSocket({action:"JOIN",id:id,roomId:roomId,displayName:name}))
+        dispatch(connectSocket({ action: "JOIN", id: id, roomId: roomId, displayName: name }))
         setStartRoomView(true);
     }
-    return (!startRoomView?<LayoutDefault>
-        {!fetched?<></>:isLogged?
-        <>
-                
+    return (!startRoomView ? <LayoutDefault>
+        {!fetched ? <></> : isLogged ?
+            <>
+
                 <RoomEntry logged={true} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess}></RoomEntry>
-            {/* {
+                {/* {
                 Array.from(remoteStreams).map((v) => {
                     const videoRef = React.createRef();
                     const videoNode = <video key={v[0]} ref={videoRef} autoPlay />
@@ -115,9 +116,9 @@ function Room(props) {
                     return videoNode
                 })} */}
 
-            </>: <RoomEntry logged={false} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess}></RoomEntry>}
-            </LayoutDefault>
-            : <RoomView></RoomView>
+            </> : <RoomEntry logged={false} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess}></RoomEntry>}
+    </LayoutDefault>
+        : <RoomView></RoomView>
     )
 }
 

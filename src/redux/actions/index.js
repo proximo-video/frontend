@@ -30,6 +30,12 @@ export const getUserMedia = (value) => {
     }
 }
 
+export const reset = () => {
+    return {
+        type: 'RESET'
+    }
+}
+
 export const getUserScreen = (value) => {
     return {
         type: 'GETUSERSCREEN',

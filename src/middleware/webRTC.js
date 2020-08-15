@@ -17,6 +17,14 @@ const webRTCMiddleware = store => next => action => {
         case 'SENDMESSAGE':
             sendMessage(action.value, store);
             break;
+        case 'RESET':
+            socket = null;
+            iceServers = null;
+            connections = new Map();
+            channels = new Map();
+            existingTracks = new Map();
+            remoteStreams = new Map();
+            break;
         default:
             break;
     }
