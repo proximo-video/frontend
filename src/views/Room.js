@@ -3,7 +3,7 @@ import RoomEntry from './RoomEntry';
 import { v4 as uuidv4 } from 'uuid';
 import LayoutDefault from '../layouts/LayoutDefault'
 import { useDispatch, useSelector } from 'react-redux';
-import { setId, closeMedia, getUserMedia, setIceServers, connectSocket, setRoomOwner, reset } from '../redux/actions';
+import { setId, closeMedia, getUserMedia, setIceServers, connectSocket, setRoomOwner } from '../redux/actions';
 import RoomView from './Room/RoomView';
 
 function Room(props) {
@@ -85,7 +85,6 @@ function Room(props) {
             //     })
             // }
             dispatch(closeMedia());
-            dispatch(reset());
             dispatch(getUserMedia(false));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

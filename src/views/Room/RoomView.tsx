@@ -1,15 +1,15 @@
 import '../../assets/scss/custom/room.scss';
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import "./RoomFooter";
 import RoomFooter from './RoomFooter';
-import {videoDataType, VideoElement} from './videoDataType';
+import { videoDataType, VideoElement } from './videoDataType';
 import RoomMain from "./RoomMain";
 import RoomChat from "./RoomChat";
 import MessageNotification from "./MessageNotification";
-import {localStream} from '../../middleware/getUserMedia';
-import {remoteStreams} from '../../middleware/webRTC';
-import {getUserMedia} from '../../redux/actions';
-import {useDispatch, useSelector, RootStateOrAny} from 'react-redux';
+import { localStream } from '../../middleware/getUserMedia';
+import { remoteStreams } from '../../middleware/webRTC';
+import { getUserMedia, reset } from '../../redux/actions';
+import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import '../../assets/scss/custom/notifications.scss';
 import EntryRequestNotification from "./EntryRequestNotification";
 
@@ -65,7 +65,7 @@ function RoomView() {
             dispatch(getUserMedia(true));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userMedia,localStream,userScreen]);
+    }, [userMedia, localStream, userScreen]);
 
     useEffect(() => {
         // console.log("first");
@@ -94,6 +94,13 @@ function RoomView() {
         })
         // eslint-disable-next-line
     }, [remoteStreamCount]);
+
+    useEffect(() => {
+        return () => {
+            dispatch(reset());
+        }
+        // eslint-disable-next-line
+    }, [])
 
     const handleChatButtonClick = () => {
         setIsChatOpen(!chatButtonState);
@@ -206,16 +213,16 @@ function RoomView() {
         <div className="room-main">
             <div className={"video-container" + (isChatOpen ? " chat-open" : "")}>
                 <RoomMain maxVideoId={maxVideoId} fullscreenVideoId={fullscreenVideoId} videoElements={videoElements}
-                          onMaximizeClick={(userId: string) => handleMaximizeButtonClick(userId)}
-                          onFullscreenClick={(userId: string) => handleFullscreenButtonClick(userId)}/>
+                    onMaximizeClick={(userId: string) => handleMaximizeButtonClick(userId)}
+                    onFullscreenClick={(userId: string) => handleFullscreenButtonClick(userId)} />
                 <RoomFooter
                     chatButtonState={chatButtonState}
                     onChatButtonClick={handleChatButtonClick}
                 />
-                <MessageNotification handleMessageNotificationClick={handleMessageNotificationClick}/>
-                <EntryRequestNotification/>
+                <MessageNotification handleMessageNotificationClick={handleMessageNotificationClick} />
+                <EntryRequestNotification />
             </div>
-            <RoomChat isChatOpen={isChatOpen} onClose={handleChatCloseButtonClick}/>
+            <RoomChat isChatOpen={isChatOpen} onClose={handleChatCloseButtonClick} />
             <button className="button is-primary addVideo" onClick={() => addUser()}>Primary</button>
         </div>
     );
