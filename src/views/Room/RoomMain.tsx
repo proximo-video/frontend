@@ -101,12 +101,12 @@ export default function RoomMain(props: RoomMainProps) {
     }
 
 
-
     if (props.videoElements.size <= 1)
         dropdownOptionClassName = 'disabled';
 
     props.videoElements.forEach((value: VideoElement, key: string) => {
-        const removeUserDropdownOption = new DropdownOption(<FiMinusCircle/>, 'Remove user', () => handleRemoveUser(key), 'remove-user-option');
+        const removeUserDropdownOption = new DropdownOption(
+            <FiMinusCircle/>, 'Remove user', () => handleRemoveUser(key), 'remove-user-option');
         const maxOptionsMenu = [
             new DropdownOption(<FiMinimize2/>, 'Minimize', () => props.onMaximizeClick(key), dropdownOptionClassName),
             new DropdownOption(<FiMaximize/>, 'Fullscreen', () => props.onFullscreenClick(key)),
@@ -155,17 +155,19 @@ export default function RoomMain(props: RoomMainProps) {
         let displayMicOff: boolean = false;
         let displayAvatar: boolean = false;
         let displayName: string = '';
+        // let isScreen: boolean = false;
         if (users.hasOwnProperty(key)) {
             if (users[key].hasOwnProperty('isAudio'))
                 displayMicOff = !users[key]['isAudio'];
-            if (users[key].hasOwnProperty('isVideo'))
-                displayAvatar = !users[key]['isVideo'];
+            if (users[key].hasOwnProperty('isVideo') && users[key].hasOwnProperty('isScreen'))
+                displayAvatar = !users[key]['isVideo'] && !users[key]['isScreen'];
             if (users[key].hasOwnProperty('displayName'))
                 displayName = users[key]['displayName'];
-        }
-        else if (key === id) {
+            // if (users[key].hasOwnProperty('isScreen'))
+            //     isScreen = users[key]['isScreen']
+        } else if (key === id) {
             displayMicOff = !isAudio;
-            displayAvatar = !isVideo;
+            displayAvatar = !isVideo && !userScreen;
             displayName = name;
         }
 
@@ -184,7 +186,8 @@ export default function RoomMain(props: RoomMainProps) {
                                 <FiMinimize/>
                                 <span>Exit full screen</span>
                             </div> :
-                            <Dropdown dropdownClasses={"video-dropdown"} options={key === props.maxVideoId ? maxOptionsMenu : normalOptionsMenu}/>
+                            <Dropdown dropdownClasses={"video-dropdown"}
+                                      options={key === props.maxVideoId ? maxOptionsMenu : normalOptionsMenu}/>
                     }
                     {displayMicOff && <div className={"no-audio"}><FiMicOff/></div>}
                     {displayAvatar && <Avatar name={displayName} className={'no-video-avatar'}/>}
@@ -200,7 +203,9 @@ export default function RoomMain(props: RoomMainProps) {
                             <p>You're presenting to everyone</p>
                         </div>
                     }
-                    <video ref={value.videoRef} autoPlay className="video-stream" style={displayAvatar ? {display: 'none'} : {}}/>
+                    {
+                        displayAvatar ? <audio ref={value.videoRef} autoPlay/> : <video ref={value.videoRef} autoPlay className="video-stream" style={key === id && userScreen ? {display: 'none'} : {}}/>
+                    }
                     {/*<video className="video-stream" poster={"/images/big_buck_bunny.jpg"}/>*/}
                 </div>
             </div>
