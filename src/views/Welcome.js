@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { login } from '../redux/actions';
+import { login,setId,setName,setRooms } from '../redux/actions';
 function Welcome() {
     const [success, setSuccess] = useState(false);
     const dispatch = useDispatch();
@@ -22,6 +22,7 @@ function Welcome() {
                 body: JSON.stringify({ service: service, code: code })
             });
             if (response.ok) {
+                let data = await response.json()
                 dispatch(setId(data.id));
                 dispatch(setName(data.name));
                 if (data.rooms)
