@@ -1,7 +1,7 @@
 import GetLocalWebCamFeed from '../utils/GetLocalWebCamFeed';
 import { existingTracks } from './webRTC'
 import { detect } from 'detect-browser';
-import { sendMessage, getUserMedia } from '../redux/actions';
+import { sendMessage, getUserMedia, getUserScreen } from '../redux/actions';
 const browser = detect();
 export let localStream;
 let displayMediaOptions = {
@@ -79,6 +79,7 @@ const getUserMediaMiddleware = store => next => async (action) => {
                     track.stop();
                     localStream.removeTrack(track);
                 });
+                screenStream.getVideoTracks()[0].addEventListener('ended', () => store.dispatch(getUserScreen(false)));
                 localStream.addTrack(screenStream.getVideoTracks()[0])
                 existingTracks.forEach((value, key) => {
                     for (const rtpSender of value) {
@@ -89,14 +90,12 @@ const getUserMediaMiddleware = store => next => async (action) => {
                         }
                     }
                 })
-                store.dispatch(sendMessage({ id: id, action: 'MEDIAPREFERENCE', message: { isAudio: userMediaPreference.isAudio, isVideo: true } }));
             }
             else {
                 localStream.getTracks().forEach(track => {
                     track.stop();
                 });
                 store.dispatch(getUserMedia(false));
-                store.dispatch(sendMessage({ id: id, action: 'MEDIAPREFERENCE', message: { isAudio: userMediaPreference.isAudio, isVideo: userMediaPreference.isVideo } }));
             }
             break;
         default:
