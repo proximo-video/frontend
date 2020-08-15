@@ -37,6 +37,7 @@ export const remoteUsersReducer = (state = {}, action) => {
         if (newState.hasOwnProperty(action.value.id)) {
             newState[action.value.id]['isAudio'] = action.value.isAudio;
             newState[action.value.id]['isVideo'] = action.value.isVideo;
+            newState[action.value.id]['isScreen'] = action.value.isScreen;
         }
         return newState
     }

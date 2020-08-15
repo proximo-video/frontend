@@ -1,4 +1,4 @@
-import React, {ReactElement, useState} from 'react';
+import React, { ReactElement, useState } from 'react';
 import { IconContext } from "react-icons";
 import { buttonsData } from './buttonsDataType';
 import ReactTooltip from "react-tooltip";
@@ -7,7 +7,7 @@ import { toggleAudio, toggleVideo, getUserMedia, sendMessage, getUserScreen } fr
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { detect } from 'detect-browser';
 import { useHistory } from "react-router-dom";
-import {DropdownContent} from "./Dropdown";
+import { DropdownContent } from "./Dropdown";
 import DropdownOption from "./expandedRoomDataType";
 import '../../assets/scss/custom/dropdown.scss';
 
@@ -33,7 +33,7 @@ function ControlButton(props: ControlButtonProps) {
                     {props.legend}
                 </span>
             </ReactTooltip>
-            <button onMouseLeave={props.onMouseOut ?? null} className={"cntrl-button " + props.className + (props.disabled ? ' disabled' : '')} style={props.hide ? {display: 'none'} : {}} disabled={props.disabled}  onClick={props.onClick} data-for={props.legend} data-tip>
+            <button onMouseLeave={props.onMouseOut ?? null} className={"cntrl-button " + props.className + (props.disabled ? ' disabled' : '')} style={props.hide ? { display: 'none' } : {}} disabled={props.disabled} onClick={props.onClick} data-for={props.legend} data-tip>
                 <figure className="cntrl-button-figure">
                     <IconContext.Provider value={{ color: props.iconColor }}>
                         <div className={"cntrl-button-wrap"} >
@@ -77,20 +77,21 @@ function RoomFooter(props: RoomFooterProps) {
     const [copyLinkLegend, setCopyLinkLegend] = useState<string>('Copy Link');
 
     const onCamButtonClick = () => {
-        dispatch(sendMessage({ id: id, action: 'MEDIAPREFERENCE', message: { isAudio: isAudio, isVideo: !isVideo } }))
+        dispatch(sendMessage({ id: id, action: 'MEDIAPREFERENCE', message: { isAudio: isAudio, isVideo: !isVideo, isScreen: userScreen } }))
         dispatch(toggleVideo());
         if (!(browser && browser.name === 'firefox') && !isVideo)
             dispatch(getUserMedia(false));
     }
     const onMicButtonClick = () => {
-        dispatch(sendMessage({ id: id, action: 'MEDIAPREFERENCE', message: { isAudio: !isAudio, isVideo: isVideo } }))
+        dispatch(sendMessage({ id: id, action: 'MEDIAPREFERENCE', message: { isAudio: !isAudio, isVideo: isVideo, isScreen: userScreen } }))
         dispatch(toggleAudio());
     }
     const onScreenButtonClick = () => {
+        dispatch(sendMessage({ id: id, action: 'MEDIAPREFERENCE', message: { isAudio: isAudio, isVideo: isVideo, isScreen: !userScreen } }))
         dispatch(getUserScreen(!userScreen));
     }
     const onLeaveButtonClick = () => {
-        dispatch(sendMessage({id:id,action:'LEAVEROOM',message:''}));
+        dispatch(sendMessage({ id: id, action: 'LEAVEROOM', message: '' }));
         history.push('/')
     }
 
@@ -175,7 +176,7 @@ function RoomFooter(props: RoomFooterProps) {
                     onClick={onLeaveButtonClick}
                     className={"show-leave-dropdown"}
                 >
-                    {isRoomOwner && <DropdownContent dropdownClasses={"leave-dropdown"} options={maxOptionsMenu}/>}
+                    {isRoomOwner && <DropdownContent dropdownClasses={"leave-dropdown"} options={maxOptionsMenu} />}
                 </ControlButton>
             </div>
         </div>

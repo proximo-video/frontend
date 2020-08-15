@@ -281,7 +281,7 @@ const socketAndWebRTC = (params, store) => {
             channel.send(JSON.stringify({
                 "from": params.id,
                 "action": "MEDIAPREFERENCE",
-                "message": { isAudio: store.getState().userMediaPreference.isAudio, isVideo: store.getState().userMediaPreference.isVideo }
+                "message": { isAudio: store.getState().userMediaPreference.isAudio, isVideo: store.getState().userMediaPreference.isVideo, isScreen: store.getState().userScreen }
             }))
         }
         channel.onmessage = function (event) {
@@ -292,8 +292,7 @@ const socketAndWebRTC = (params, store) => {
                     store.dispatch(addMessage({ id: data.from, message: data.message }));
                     break;
                 case 'MEDIAPREFERENCE':
-                    console.log(data.from, data.message.isVideo);
-                    store.dispatch(setRemoteMediaPreference({ id: data.from, isAudio: data.message.isAudio, isVideo: data.message.isVideo }))
+                    store.dispatch(setRemoteMediaPreference({ id: data.from, isAudio: data.message.isAudio, isVideo: data.message.isVideo,isScreen:data.message.isScreen }))
                     break;
                 case 'LEAVEROOM':
                     if (connections.has(data.from)) {
