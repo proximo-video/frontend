@@ -203,9 +203,10 @@ export default function RoomMain(props: RoomMainProps) {
                             <p>You're presenting to everyone</p>
                         </div>
                     }
-                    {
-                        displayAvatar ? <audio ref={value.videoRef} autoPlay/> : <video ref={value.videoRef} autoPlay className="video-stream" style={key === id && userScreen ? {display: 'none'} : {}}/>
-                    }
+                    {/*{*/}
+                    {/*    displayAvatar ? <audio ref={value.videoRef} autoPlay/> : <video ref={value.videoRef} autoPlay className="video-stream" style={key === id && userScreen ? {display: 'none'} : {}}/>*/}
+                    {/*}*/}
+                    <video ref={value.videoRef} autoPlay className="video-stream" style={displayAvatar || (key === id && userScreen) ? {display: 'none'} : {}}/>
                     {/*<video className="video-stream" poster={"/images/big_buck_bunny.jpg"}/>*/}
                 </div>
             </div>
