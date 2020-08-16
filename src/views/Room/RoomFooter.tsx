@@ -131,8 +131,8 @@ function RoomFooter(props: RoomFooterProps) {
     }
 
     const maxOptionsMenu = [
-        new DropdownOption(null, 'End Meeting for all', onLeaveButtonClick),
-        new DropdownOption(null, 'Leave meeting', onEndMeetingButtonClick),
+        new DropdownOption(null, 'End Meeting for all', onEndMeetingButtonClick),
+        new DropdownOption(null, 'Leave meeting',onLeaveButtonClick),
     ];
 
     const isMobile = checkIsMobile();

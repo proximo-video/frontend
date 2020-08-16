@@ -3,7 +3,8 @@ import DropdownOption from "./expandedRoomDataType";
 import {FiMaximize, FiMaximize2, FiMicOff, FiMinimize, FiMinimize2, FiMinusCircle} from "react-icons/fi";
 import Dropdown from "./Dropdown";
 import {VideoElement} from './videoDataType';
-import {RootStateOrAny, useSelector} from "react-redux";
+import {RootStateOrAny, useSelector,useDispatch} from "react-redux";
+import {sendMessage,removeUser} from '../../redux/actions';
 import Avatar from "./Avatar";
 import '../../assets/scss/custom/roomMain.scss';
 import '../../assets/scss/custom/dropdown.scss';
@@ -35,6 +36,7 @@ export interface RoomMainProps {
 }
 
 export default function RoomMain(props: RoomMainProps) {
+    const dispatch = useDispatch();
     const webRTCMedia: ReactElement[] = [];
     let countNormalWebRTCMedia: number = 0;
     let maxMediaStyle: React.CSSProperties;
@@ -97,6 +99,8 @@ export default function RoomMain(props: RoomMainProps) {
     }
 
     const handleRemoveUser = (userId: string) => {
+        dispatch(sendMessage({id:id,action:'REMOVEUSER',message:{id:userId}}))
+        dispatch(removeUser(userId));
         console.log("User removed:", userId);
     }
 

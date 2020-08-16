@@ -1,5 +1,5 @@
 import { localStream } from './getUserMedia';
-import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference } from '../redux/actions'
+import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference, meetingEnded } from '../redux/actions'
 let socket;
 let iceServers;
 let connections = new Map();
@@ -16,6 +16,17 @@ const webRTCMiddleware = store => next => action => {
             break;
         case 'SENDMESSAGE':
             sendMessage(action.value, store);
+            break;
+        case 'REMOVEUSER':
+            if (connections.has(action.value)) {
+                connections.get(action.value).close();
+                connections.delete(action.value);
+                remoteStreams.delete(action.value);
+                channels.delete(action.value);
+                existingTracks.delete(action.value);
+                store.dispatch(deleteRemoteStream());
+                store.dispatch(deleteRemoteUser(action.value));
+            }
             break;
         case 'RESET':
             socket = null;
@@ -292,7 +303,7 @@ const socketAndWebRTC = (params, store) => {
                     store.dispatch(addMessage({ id: data.from, message: data.message }));
                     break;
                 case 'MEDIAPREFERENCE':
-                    store.dispatch(setRemoteMediaPreference({ id: data.from, isAudio: data.message.isAudio, isVideo: data.message.isVideo,isScreen:data.message.isScreen }))
+                    store.dispatch(setRemoteMediaPreference({ id: data.from, isAudio: data.message.isAudio, isVideo: data.message.isVideo, isScreen: data.message.isScreen }))
                     break;
                 case 'LEAVEROOM':
                     if (connections.has(data.from)) {
@@ -302,7 +313,22 @@ const socketAndWebRTC = (params, store) => {
                         remoteStreams.delete(data.from);
                         channels.delete(data.from);
                         existingTracks.delete(data.from);
-                        store.dispatch(addRemoteStream());
+                        store.dispatch(deleteRemoteStream());
+                        store.dispatch(deleteRemoteUser(data.from));
+                    }
+                    break;
+                case 'REMOVEUSER':
+                    if (data.message.id === store.getState().id) {
+                        store.dispatch(meetingEnded());
+                    }
+                    else if (connections.has(data.message.id)) {
+                        connections.get(data.message.id).close();
+                        connections.delete(data.message.id);
+                        remoteStreams.delete(data.message.id);
+                        channels.delete(data.message.id);
+                        existingTracks.delete(data.message.id);
+                        store.dispatch(deleteRemoteStream());
+                        store.dispatch(deleteRemoteUser(data.message.id));
                     }
                     break;
                 default:

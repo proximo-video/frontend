@@ -5,10 +5,11 @@ import RoomFooter from './RoomFooter';
 import { videoDataType, VideoElement } from './videoDataType';
 import RoomMain from "./RoomMain";
 import RoomChat from "./RoomChat";
+import { Redirect } from "react-router-dom";
 import MessageNotification from "./MessageNotification";
 import { localStream } from '../../middleware/getUserMedia';
 import { remoteStreams } from '../../middleware/webRTC';
-import { getUserMedia, reset } from '../../redux/actions';
+import { getUserMedia, reset, meetingStarted } from '../../redux/actions';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import '../../assets/scss/custom/notifications.scss';
 import EntryRequestNotification from "./EntryRequestNotification";
@@ -39,6 +40,7 @@ function RoomView() {
     const [fullscreenVideoId, setFullscreenVideoId] = useState<string>('');
     // eslint-disable-next-line
     const dispatch = useDispatch();
+    const meetingEnded = useSelector((state: RootStateOrAny) => state.meetingEnded);
     const userMedia = useSelector((state: RootStateOrAny) => state.userMedia);
     const userScreen = useSelector((state: RootStateOrAny) => state.userScreen);
     const id = useSelector((state: RootStateOrAny) => state.id);
@@ -99,6 +101,7 @@ function RoomView() {
     }, [remoteStreamCount]);
 
     useEffect(() => {
+        dispatch(meetingStarted())
         return () => {
             dispatch(reset());
         }
@@ -203,7 +206,7 @@ function RoomView() {
         return videoElements;
     };
 
-    return (
+    return (!meetingEnded?
         <div className="room-main">
             <div className={"video-container" + (isChatOpen ? " chat-open" : "")}>
                 <RoomMain maxVideoId={maxVideoId} fullscreenVideoId={fullscreenVideoId} videoElements={videoElements}
@@ -217,7 +220,7 @@ function RoomView() {
                 <EntryRequestNotification />
             </div>
             <RoomChat isChatOpen={isChatOpen} onClose={handleChatCloseButtonClick} />
-        </div>
+        </div>:<Redirect to='/'/>
     );
 }
 

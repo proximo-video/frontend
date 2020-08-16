@@ -36,6 +36,25 @@ export const reset = () => {
     }
 }
 
+export const removeUser = (value) => {
+    return {
+        type: 'REMOVEUSER',
+        value
+    }
+}
+
+export const meetingEnded = () => {
+    return {
+        type: 'MEETINGENDED'
+    }
+}
+
+export const meetingStarted = () => {
+    return {
+        type: 'MEETINGSTARTED'
+    }
+}
+
 export const getUserScreen = (value) => {
     return {
         type: 'GETUSERSCREEN',
