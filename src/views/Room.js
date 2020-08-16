@@ -9,6 +9,7 @@ import RoomView from './Room/RoomView';
 function Room(props) {
     const dispatch = useDispatch();
     const id = useSelector(state => state.id);
+    const isRoomOwner  = useSelector(state => state.isRoomOwner);
     // eslint-disable-next-line
     const name = useSelector(state => state.name);
     const rooms = useSelector(state => state.rooms);
@@ -99,7 +100,7 @@ function Room(props) {
 
     const createSocket = () => {
         //Socket(isLogged? "START" : "JOIN", id, roomId, connections, updateConnection, addStream, deleteStream, localStream, iceServers);
-        dispatch(connectSocket({ action: "JOIN", id: id, roomId: roomId, displayName: name }))
+        dispatch(connectSocket({ action: isRoomOwner?'START':'JOIN', id: id, roomId: roomId, displayName: name }))
         setStartRoomView(true);
     }
     return (!startRoomView ? <LayoutDefault>

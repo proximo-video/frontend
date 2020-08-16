@@ -11,6 +11,8 @@ export const getUserScreenReducer = (state = false, action) => {
     if (action.type === 'GETUSERSCREEN') {
         return !state;
     }
+    if(action.type ==='RESET')
+        return false;
     return state;
 }
 

@@ -36,6 +36,13 @@ export const reset = () => {
     }
 }
 
+export const addEntryRequest = (value) => {
+    return {
+        type: 'ADDENTRYREQUEST',
+        value
+    }
+}
+
 export const removeUser = (value) => {
     return {
         type: 'REMOVEUSER',

@@ -1,5 +1,5 @@
 import { localStream } from './getUserMedia';
-import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference, meetingEnded} from '../redux/actions'
+import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference, meetingEnded, addEntryRequest } from '../redux/actions'
 let socket;
 let iceServers;
 let connections = new Map();
@@ -69,7 +69,8 @@ const socketAndWebRTC = (params, store) => {
                 {
                     action: params.action,
                     id: params.id,
-                    data: params.roomId
+                    data: params.roomId,
+                    display_name : params.displayName
                 }
             ))
         };    // Create WebRTC connection only if the socket connection is successful.
@@ -77,13 +78,26 @@ const socketAndWebRTC = (params, store) => {
         // Handle messages recieved in socket
         socket.onmessage = function (event) {
             let jsonData = JSON.parse(event.data);
-            if (jsonData.action === "READY") {
-                console.log("Got Ready")
-                let toUser = jsonData.from;
-                if (connections.has(toUser))
-                    connections.get(toUser).close();
-                createRTCPeerConnection(toUser);
-                createAndSendOffer(toUser);
+            switch (jsonData.action) {
+                case "READY":
+                    console.log("Got Ready")
+                    let toUser = jsonData.from;
+                    if (connections.has(toUser))
+                        connections.get(toUser).close();
+                    createRTCPeerConnection(toUser);
+                    createAndSendOffer(toUser);
+                    break;
+                case "APPROVE":
+                    break;
+                case "PERMIT":
+                    store.dispatch(addEntryRequest({id:jsonData.from,displayName:jsonData.display_name}))
+                    break;
+                case "REJECT":
+                    break;
+                case "WAIT":
+                    break;
+                default:
+                    break;
             }
 
             switch (jsonData.type) {
