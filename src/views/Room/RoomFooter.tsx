@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, {ReactElement, useState} from 'react';
 import { IconContext } from "react-icons";
 import { buttonsData } from './buttonsDataType';
 import ReactTooltip from "react-tooltip";
@@ -53,6 +53,12 @@ ControlButton.defaultProps = {
     legend: ''
 }
 
+const browser = detect();
+
+export const checkIsMobile = () => {
+    return browser.os === 'Android OS' || browser.os === 'iOS' || browser.os === 'BlackBerry OS' || browser.os === 'Windows Mobile';
+}
+
 export interface RoomFooterProps {
     // buttonsState: boolean[];
     // onClick: (i: number) => void;
@@ -69,8 +75,16 @@ function RoomFooter(props: RoomFooterProps) {
     const id = useSelector((state: RootStateOrAny) => state.id);
     const userScreen = useSelector((state: RootStateOrAny) => state.userScreen);
     const history = useHistory();
-    const browser = detect();
+    const isMobile = checkIsMobile();
+    // let timer: NodeJS.Timeout;
+    // let timeVisible = 5000;
+    // let buttonsElement: HTMLElement;
+    // let pinButton: HTMLElement;
     const handlePinButtonClick = () => {
+        // if (isPinned && pinButton) {
+        //     if (buttonsElement)
+        //         buttonsElement.style.bottom = '-65px';
+        // }
         setIsPinned(!isPinned);
     }
     const dispatch = useDispatch();
@@ -104,10 +118,6 @@ function RoomFooter(props: RoomFooterProps) {
         alert('Camera toggled');
     }
 
-    const checkIsMobile = () => {
-        return browser.os === 'Android OS' || browser.os === 'iOS' || browser.os === 'BlackBerry OS' || browser.os === 'Windows Mobile';
-    }
-
     const copyLinkToClipBoard = async () => {
         const linkToCopy = window.location.href;
         await navigator.clipboard.writeText(linkToCopy);
@@ -137,19 +147,53 @@ function RoomFooter(props: RoomFooterProps) {
         new DropdownOption(null, 'Leave meeting',onLeaveButtonClick),
     ];
 
-    const isMobile = checkIsMobile();
+    // const timeFadeout = () => {
+    //     timer = setTimeout(function() {
+    //         if(buttonsElement && !isPinned) {
+    //             buttonsElement.style.bottom = '-65px';
+    //         }
+    //     }, timeVisible );
+    // }
+    //
+    // const handleDocumentClickEvent = (e) => {
+    //     e.preventDefault();
+    //     e.stopPropagation();
+    //     if(!isPinned && buttonsElement) {
+    //         clearTimeout(timer);
+    //         console.log('clicked');
+    //         if (buttonsElement.style.bottom === '25px')
+    //             buttonsElement.style.bottom = '-65px';
+    //         else {
+    //             buttonsElement.style.bottom = '25px';
+    //             timeFadeout();
+    //         }
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     buttonsElement = document.getElementById('buttons');
+    //     pinButton = document.getElementById('pin-toolbar-button');
+    //     if (isMobile) {
+    //         timeFadeout();
+    //         document.addEventListener('click', handleDocumentClickEvent);
+    //     }
+    //     return () => {
+    //         if (isMobile)
+    //             document.removeEventListener('click', handleDocumentClickEvent);
+    //     }
+    // }, []);
 
     return (
-        <div className="room-footer">
+        <div className="room-footer" id={"buttons-footer"}>
             <ReactTooltip id="pin-toolbar" place="right" type="dark" effect="float" className="tooltip" />
-            <button className={"cntrl-button" + (isPinned ? " pinned" : " unpinned")} onClick={() => handlePinButtonClick()} data-for="pin-toolbar" data-tip={isPinned ? "unpin toolbar" : "pin toolbar"} id="pin-toolbar-button">
+            <button className={"cntrl-button" + (isPinned ? " pinned" : " unpinned")} onClick={() => handlePinButtonClick() } data-for="pin-toolbar" data-tip={isPinned ? "unpin toolbar" : "pin toolbar"} id="pin-toolbar-button">
                 {isPinned ? <FaChevronDown className="button-hover-down" /> : <FaChevronUp className="button-hover-up" />}
             </button>
-            <div className="buttonWrapper">
+            <div className="buttonWrapper" id={"buttons"}>
                 {/*cam button*/}
                 <ControlButton
                     className={(isVideo ? buttonsData[0].onClass : buttonsData[0].offClass)}
-                    legend={isMobile ? '' : (isVideo ? buttonsData[0].onLegend : buttonsData[0].offLegend)}
+                    legend={isMobile ? '' : (userScreen ? "Can't access camera during screen sharing" : (isVideo ? buttonsData[0].onLegend : buttonsData[0].offLegend))}
                     icon={(isVideo ? buttonsData[0].onIcon : buttonsData[0].offIcon)}
                     disabled={userScreen}
                     iconColor={(isVideo ? buttonsData[0].onIconColor : buttonsData[0].offIconColor)}

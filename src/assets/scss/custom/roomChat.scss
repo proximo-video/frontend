@@ -236,6 +236,7 @@ $message-display-name-color: #ac91e6;
 .message-component {
   display: inline-flex;
   padding: 7px 10px 7px 10px;
+  position: relative;
   max-width: 100%;
   &.side-message-component {
     padding: 0;
@@ -261,6 +262,8 @@ $message-display-name-color: #ac91e6;
   display: flex;
   flex-direction: column;
   margin: 0 5px;
+  position: relative;
+  top: 5px;
   //color: $message-body-color;
   background: $message-body-background;
   padding: 0 10px !important;

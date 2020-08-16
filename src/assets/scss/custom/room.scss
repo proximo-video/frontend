@@ -123,22 +123,7 @@ body {
   &:hover {
     background: $color-grey-dark;
   }
-  //&.isOff {
-  //  background: $color-meeting-red;
-  //  &:focus, &:hover {
-  //    background: $color-red;
-  //  }
-  //}
 }
-
-//.cntrlButtonWrap.isOff {
-//
-//}
-//
-//.cntrlButtonWrap.isOff:focus,
-//.cntrlButtonWrap.isOff:hover {
-//
-//}
 
 .cntrl-button-legend {
   font-size: 12px;
@@ -169,8 +154,7 @@ body {
   //   height: 100%;
   justify-content: center;
   align-items: center;
-  &:hover .buttonWrapper {
-    display: grid;
+  &:hover .buttonWrapper, &:active .buttonWrapper {
     bottom: 25px;
   }
 }
@@ -216,16 +200,9 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  // height: 100vh;
-  // width: 100vw;
   overflow: hidden;
   transition: width 0.3s ease-out;
   width: 100%;
-  //overflow-y: auto;
-  //@media only screen and (max-width: 700px) {
-  //  overflow-y: hidden;
-  //  overflow-x: auto;
-  //}
 }
 
 .tooltip {
@@ -243,20 +220,19 @@ body {
   }
 }
 
-@keyframes rotateButtons {
+@keyframes scaleButtons {
   0% {
-    transform: rotate(0deg);
+    transform: scale(1);
   } 
   50% {
-    transform: rotate(180deg) scale(2);
+    transform: scale(1.5);
   }
   100% {
-    transform: rotate(360deg);
+    transform: scale(1);
   }
 }
 
 #pin-toolbar-button {
-  // width: 20px;
   position: absolute;
   bottom: 5px;
   border-radius: 7px;
@@ -265,10 +241,6 @@ body {
   animation: colorChange 1s infinite;
   animation-direction: alternate;
   animation-timing-function: ease-in-out;
-  // color: linear-gradient(red, yellow);
-  // background: -webkit-linear-gradient(red, yellow); 
-  // -webkit-background-clip: text; 
-  // -webkit-text-fill-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -283,7 +255,7 @@ body {
 .pinned {
   + .buttonWrapper {
     bottom: 25px;
-    animation: rotateButtons 1s;
+    animation: scaleButtons 1s;
   }
 }
 
@@ -295,16 +267,6 @@ body {
   background: #272c47 !important;
   border-radius: 0 10px 10px 10px;
 }
-
-//.normal-video-container {
-//  height: 100%;
-//  width: 100%;
-//  display: flex;
-//  justify-content: center;
-//  align-items: center;
-//  flex-wrap: wrap;
-//}
-
 
 
 
