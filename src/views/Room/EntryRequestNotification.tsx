@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useRef} from "react";
 import NotificationContainer from "./Notification/NotificationContainer";
 import {RequestMessage} from "./Notification/NotificationManager";
 import {EntryRequest} from "./genericTypes";
@@ -9,9 +9,8 @@ export interface EntryRequestNotificationProps {
 }
 
 export default function EntryRequestNotification(props: EntryRequestNotificationProps) {
-    let entryAudio: HTMLAudioElement;
     const entryRequestList = useSelector((state:RootStateOrAny)=>state.entryRequestList);
-  
+    const notifyAudio = useRef(null);
     useEffect(()=>{
         const length = entryRequestList.length
         if(length)
@@ -20,18 +19,14 @@ export default function EntryRequestNotification(props: EntryRequestNotification
     },[entryRequestList]);
   
     const createNotification = (message:EntryRequest) => {
-        if (entryAudio)
-            entryAudio.play().then();
+        if (notifyAudio)
+            notifyAudio.current.play();
         RequestMessage("entry-notifications", message);
     };
   
-    useEffect(() => {
-        // eslint-disable-next-line
-        entryAudio = new Audio('/Sounds/intuition.mp3');
-    }, []);
-  
     return (
         <div>
+            <audio ref={notifyAudio} src='/sounds/intuition.mp3'/>
             <NotificationContainer id={"entry-notifications"} position={"bottom-right"}/>
         </div>
     );
