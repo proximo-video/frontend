@@ -98,6 +98,10 @@ function RoomFooter(props: RoomFooterProps) {
         console.log("End meeting:");
     }
 
+    const onToggleCamButtonClick = () => {
+        alert('Camera toggled');
+    }
+
     const checkIsMobile = () => {
         return browser.os === 'Android OS' || browser.os === 'iOS' || browser.os === 'BlackBerry OS' || browser.os === 'Windows Mobile';
     }
@@ -120,8 +124,8 @@ function RoomFooter(props: RoomFooterProps) {
                 text: 'Join meeting',
                 url: linkToShare,
             })
-                .then(() => alert('Successful share'))
-                .catch((error) => alert('Error sharing' + error.toString()));
+                .then(() => console.log('Successful share'))
+                .catch((error) => console.log('Error sharing', error));
         } else
             await copyLinkToClipBoard();
     }
@@ -157,6 +161,10 @@ function RoomFooter(props: RoomFooterProps) {
                     iconColor={(isAudio ? buttonsData[1].onIconColor : buttonsData[1].offIconColor)}
                     onClick={onMicButtonClick}
                 />
+                {
+                    isMobile &&
+                    <ControlButton iconColor={buttonsData[7].onIconColor} onClick={onToggleCamButtonClick} icon={buttonsData[7].onIcon}/>
+                }
                 {/*screen share button*/}
                 <ControlButton
                     className={(userScreen ? buttonsData[2].onClass : buttonsData[2].offClass)}

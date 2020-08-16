@@ -1,6 +1,6 @@
 import React, {ReactElement} from 'react';
 import {FiVideoOff, FiVideo, FiMic, FiMicOff, FiMonitor, FiMessageSquare, FiCopy, FiShare2} from "react-icons/fi";
-import {MdCallEnd} from "react-icons/all";
+import {FcSwitchCamera, MdCallEnd} from "react-icons/all";
 
 export interface ButtonsDataType {
     onIcon?: ReactElement;
@@ -71,14 +71,21 @@ export const buttonsData: ButtonsDataType[] = [
         offClass: "",
         isOff: false
     },
+    // Copy icon
     {
         onIcon: <FiCopy/>,
         onLegend: "Copy",
         onIconColor: "white",
     },
+    // Share icon
     {
         onIcon: <FiShare2/>,
         onLegend: "Share",
+        onIconColor: "white",
+    },
+    {
+        onIcon: <FcSwitchCamera/>,
+        onLegend: "Toggle Cam",
         onIconColor: "white",
     },
 ]
