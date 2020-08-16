@@ -1,6 +1,6 @@
 import React, {ReactElement} from 'react';
 import {FiVideoOff, FiVideo, FiMic, FiMicOff, FiMonitor, FiMessageSquare, FiCopy, FiShare2} from "react-icons/fi";
-import {IoIosReverseCamera, MdCallEnd, RiCameraSwitchLine} from "react-icons/all";
+import {MdCallEnd, RiCameraSwitchLine} from "react-icons/all";
 
 export interface ButtonsDataType {
     onIcon?: ReactElement;
