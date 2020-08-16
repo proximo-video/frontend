@@ -163,7 +163,7 @@ function RoomFooter(props: RoomFooterProps) {
                 />
                 {
                     isMobile &&
-                    <ControlButton iconColor={buttonsData[7].onIconColor} onClick={onToggleCamButtonClick} icon={buttonsData[7].onIcon}/>
+                    <ControlButton className={'toggle-camera'} iconColor={buttonsData[7].onIconColor} onClick={onToggleCamButtonClick} icon={buttonsData[7].onIcon}/>
                 }
                 {/*screen share button*/}
                 <ControlButton

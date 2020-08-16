@@ -93,6 +93,11 @@ body {
       }
     }
   }
+  &.toggle-camera {
+    svg {
+      font-size: 29px;
+    }
+  }
 }
 
 .cntrl-button-figure {

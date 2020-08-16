@@ -1,6 +1,6 @@
 import React, {ReactElement} from 'react';
 import {FiVideoOff, FiVideo, FiMic, FiMicOff, FiMonitor, FiMessageSquare, FiCopy, FiShare2} from "react-icons/fi";
-import {FcSwitchCamera, MdCallEnd} from "react-icons/all";
+import {IoIosReverseCamera, MdCallEnd, RiCameraSwitchLine} from "react-icons/all";
 
 export interface ButtonsDataType {
     onIcon?: ReactElement;
@@ -84,7 +84,7 @@ export const buttonsData: ButtonsDataType[] = [
         onIconColor: "white",
     },
     {
-        onIcon: <FcSwitchCamera/>,
+        onIcon: <RiCameraSwitchLine/>,
         onLegend: "Toggle Cam",
         onIconColor: "white",
     },
