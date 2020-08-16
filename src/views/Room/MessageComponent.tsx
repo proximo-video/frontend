@@ -24,11 +24,21 @@ export default function MessageComponent({message, displayName, avatarPosition, 
                 avatarPosition === 'left' ?
                     <>
                         <Avatar round={true} name={displayName} className={avatarClassName + ' avatar'}/>
-                        <Linkify componentDecorator={componentDecorator}><p className={messageBodyClassName + ' message-body-container'}>{message}</p></Linkify>
+                        <Linkify componentDecorator={componentDecorator}>
+                            <p className={messageBodyClassName + ' message-body-container'}>
+                                <small className={'message-display-name'} style={{marginRight: 'auto'}}>{displayName}</small>
+                                {message}
+                            </p>
+                        </Linkify>
                     </>
                     :
                     <>
-                        <Linkify componentDecorator={componentDecorator}><p className={messageBodyClassName + ' message-body-container'}>{message}</p></Linkify>
+                        <Linkify componentDecorator={componentDecorator}>
+                            <p className={messageBodyClassName + ' message-body-container'}>
+                                <small className={'message-display-name'} style={{marginLeft: 'auto'}}>{displayName}</small>
+                                {message}
+                            </p>
+                        </Linkify>
                         <Avatar round={true} name={displayName} className={avatarClassName + ' avatar'}/>
                     </>
             }
