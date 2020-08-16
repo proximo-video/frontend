@@ -129,6 +129,14 @@ export const sendMessage = (value) => {
         value
     }
 }
+
+export const sendMessageSocket = (value) => {
+    return {
+        type: 'SENDMESSAGESOCKET',
+        value
+    }
+}
+
 export const setRemoteMediaPreference = (value) => {
     return {
         type: 'SETREMOTEMEDIAPREFERENCE',

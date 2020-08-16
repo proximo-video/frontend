@@ -2,6 +2,8 @@ import React, {useEffect} from 'react';
 import classnames from 'classnames';
 import {EntryRequest} from "../genericTypes";
 import {Constants} from "./NotificationManager";
+import {useDispatch,useSelector, RootStateOrAny} from 'react-redux';
+import {sendMessageSocket} from '../../../redux/actions';
 
 export interface NotificationProps {
     type: "message" | "success" | "warning" | "error" | "request";
@@ -17,6 +19,8 @@ export interface NotificationProps {
 // {type, title, message, timeOut, onClick, onRequestHide}
 
 export default function Notification(props: NotificationProps) {
+    const dispatch = useDispatch();
+    const id = useSelector((state:RootStateOrAny) => state.id);
     let timer: NodeJS.Timeout;
     const {type, message, requestMessage} = props;
     useEffect(() => {
@@ -41,11 +45,13 @@ export default function Notification(props: NotificationProps) {
     };
 
     const handleDenyClick = () => {
+        dispatch(sendMessageSocket({action:'REJECT',id:id,toId:requestMessage.id}))
         console.log("User entry denied:", requestMessage.displayName, requestMessage.id);
         requestHide();
     }
 
     const handleAcceptClick = () => {
+        dispatch(sendMessageSocket({action:'APPROVE',id:id,toId:requestMessage.id}))
         console.log("User entry accepted:", requestMessage.displayName, requestMessage.id);
         requestHide();
     }

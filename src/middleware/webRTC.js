@@ -17,6 +17,9 @@ const webRTCMiddleware = store => next => action => {
         case 'SENDMESSAGE':
             sendMessage(action.value, store);
             break;
+        case 'SENDMESSAGESOCKET':
+            sendMessageSocket(action.value)
+            break;
         case 'REMOVEUSER':
             if (connections.has(action.value)) {
                 connections.get(action.value).close();
@@ -56,8 +59,15 @@ const sendMessage = (params, store) => {
         store.dispatch(addMessage({ id: params.id, message: params.message }))
 }
 
-const sendMessageSocket = ()=>{
-    
+const sendMessageSocket = (params) => {
+    socket.send(JSON.stringify(
+        {
+            action: params.action,
+            id: params.id,
+            from:params.id,
+            to:params.toId
+        }
+    ))
 }
 
 
@@ -74,7 +84,7 @@ const socketAndWebRTC = (params, store) => {
                     action: params.action,
                     id: params.id,
                     data: params.roomId,
-                    display_name : params.displayName
+                    display_name: params.displayName
                 }
             ))
         };    // Create WebRTC connection only if the socket connection is successful.
@@ -95,7 +105,7 @@ const socketAndWebRTC = (params, store) => {
                     store.dispatch(acceptEntry());
                     break;
                 case "PERMIT":
-                    store.dispatch(addEntryRequest({id:jsonData.from,displayName:jsonData.display_name}))
+                    store.dispatch(addEntryRequest({ id: jsonData.from, displayName: jsonData.display_name }))
                     break;
                 case "REJECT":
                     store.dispatch(rejectEntry());
