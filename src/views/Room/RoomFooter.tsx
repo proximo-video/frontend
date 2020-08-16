@@ -98,7 +98,7 @@ function RoomFooter(props: RoomFooterProps) {
         console.log("End meeting:");
     }
 
-    const isMobile = () => {
+    const checkIsMobile = () => {
         return browser.os === 'Android OS' || browser.os === 'iOS' || browser.os === 'BlackBerry OS' || browser.os === 'Windows Mobile';
     }
 
@@ -112,10 +112,26 @@ function RoomFooter(props: RoomFooterProps) {
         setCopyLinkLegend('Copy Link');
     }
 
+    const handleShareButtonClick = async () => {
+        const linkToShare = window.location.href;
+        if (navigator.share) {
+            navigator.share({
+                title: 'Proximo',
+                text: 'Join meeting',
+                url: linkToShare,
+            })
+                .then(() => alert('Successful share'))
+                .catch((error) => alert('Error sharing' + error.toString()));
+        } else
+            await copyLinkToClipBoard();
+    }
+
     const maxOptionsMenu = [
         new DropdownOption(null, 'End Meeting for all', onLeaveButtonClick),
         new DropdownOption(null, 'Leave meeting', onEndMeetingButtonClick),
     ];
+
+    const isMobile = checkIsMobile();
 
     return (
         <div className="room-footer">
@@ -127,7 +143,7 @@ function RoomFooter(props: RoomFooterProps) {
                 {/*cam button*/}
                 <ControlButton
                     className={(isVideo ? buttonsData[0].onClass : buttonsData[0].offClass)}
-                    legend={(isVideo ? buttonsData[0].onLegend : buttonsData[0].offLegend)}
+                    legend={isMobile ? '' : (isVideo ? buttonsData[0].onLegend : buttonsData[0].offLegend)}
                     icon={(isVideo ? buttonsData[0].onIcon : buttonsData[0].offIcon)}
                     disabled={userScreen}
                     iconColor={(isVideo ? buttonsData[0].onIconColor : buttonsData[0].offIconColor)}
@@ -136,7 +152,7 @@ function RoomFooter(props: RoomFooterProps) {
                 {/*mic button*/}
                 <ControlButton
                     className={(isAudio ? buttonsData[1].onClass : buttonsData[1].offClass)}
-                    legend={(isAudio ? buttonsData[1].onLegend : buttonsData[1].offLegend)}
+                    legend={isMobile ? '' : (isAudio ? buttonsData[1].onLegend : buttonsData[1].offLegend)}
                     icon={(isAudio ? buttonsData[1].onIcon : buttonsData[1].offIcon)}
                     iconColor={(isAudio ? buttonsData[1].onIconColor : buttonsData[1].offIconColor)}
                     onClick={onMicButtonClick}
@@ -144,32 +160,40 @@ function RoomFooter(props: RoomFooterProps) {
                 {/*screen share button*/}
                 <ControlButton
                     className={(userScreen ? buttonsData[2].onClass : buttonsData[2].offClass)}
-                    legend={(userScreen ? buttonsData[2].onLegend : buttonsData[2].offLegend)}
+                    legend={isMobile ? '' : (userScreen ? buttonsData[2].onLegend : buttonsData[2].offLegend)}
                     icon={(userScreen ? buttonsData[2].onIcon : buttonsData[2].offIcon)}
                     iconColor={(userScreen ? buttonsData[2].onIconColor : buttonsData[2].offIconColor)}
                     onClick={onScreenButtonClick}
-                    hide={isMobile()}
+                    hide={isMobile}
                 />
                 {/*chat button*/}
                 <ControlButton
                     className={(props.chatButtonState ? buttonsData[3].onClass : buttonsData[3].offClass)}
-                    legend={(props.chatButtonState ? buttonsData[3].onLegend : buttonsData[3].offLegend)}
+                    legend={isMobile ? '' : (props.chatButtonState ? buttonsData[3].onLegend : buttonsData[3].offLegend)}
                     icon={(props.chatButtonState ? buttonsData[3].onIcon : buttonsData[3].offIcon)}
                     iconColor={(props.chatButtonState ? buttonsData[3].onIconColor : buttonsData[3].offIconColor)}
                     onClick={props.onChatButtonClick}
                 />
                 {/*copy link button*/}
-                <ControlButton
-                    legend={copyLinkLegend}
-                    icon={buttonsData[5].onIcon}
-                    iconColor={buttonsData[5].onIconColor}
-                    onClick={copyLinkToClipBoard}
-                    hide={!document.queryCommandSupported('copy')}
-                    onMouseOut={onMouseOutCopyButton}
-                />
+                {
+                    isMobile ?
+                    <ControlButton
+                        onClick={handleShareButtonClick}
+                        icon={buttonsData[6].onIcon}
+                        iconColor={buttonsData[6].onIconColor}
+                    /> :
+                    <ControlButton
+                        legend={isMobile ? '' : copyLinkLegend}
+                        icon={buttonsData[5].onIcon}
+                        iconColor={buttonsData[5].onIconColor}
+                        onClick={copyLinkToClipBoard}
+                        hide={!document.queryCommandSupported('copy')}
+                        onMouseOut={onMouseOutCopyButton}
+                    />
+                }
                 {/*leave button*/}
                 <ControlButton
-                    legend={isRoomOwner ? '' : buttonsData[4].onLegend}
+                    legend={isMobile ? '' : isRoomOwner ? '' : buttonsData[4].onLegend}
                     icon={buttonsData[4].onIcon}
                     iconColor={buttonsData[4].onIconColor}
                     onClick={onLeaveButtonClick}
