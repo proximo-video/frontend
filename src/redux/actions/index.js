@@ -36,6 +36,44 @@ export const reset = () => {
     }
 }
 
+export const acceptEntry = () => {
+    return {
+        type: 'ACCEPTENTRY'
+    }
+}
+
+export const rejectEntry = () => {
+    return {
+        type: 'REJECTENTRY'
+    }
+}
+
+export const addEntryRequest = (value) => {
+    return {
+        type: 'ADDENTRYREQUEST',
+        value
+    }
+}
+
+export const removeUser = (value) => {
+    return {
+        type: 'REMOVEUSER',
+        value
+    }
+}
+
+export const meetingEnded = () => {
+    return {
+        type: 'MEETINGENDED'
+    }
+}
+
+export const meetingStarted = () => {
+    return {
+        type: 'MEETINGSTARTED'
+    }
+}
+
 export const getUserScreen = (value) => {
     return {
         type: 'GETUSERSCREEN',
@@ -91,6 +129,14 @@ export const sendMessage = (value) => {
         value
     }
 }
+
+export const sendMessageSocket = (value) => {
+    return {
+        type: 'SENDMESSAGESOCKET',
+        value
+    }
+}
+
 export const setRemoteMediaPreference = (value) => {
     return {
         type: 'SETREMOTEMEDIAPREFERENCE',

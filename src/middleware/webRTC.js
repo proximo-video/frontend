@@ -1,5 +1,5 @@
 import { localStream } from './getUserMedia';
-import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference } from '../redux/actions'
+import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference, meetingEnded, addEntryRequest, acceptEntry, rejectEntry} from '../redux/actions'
 let socket;
 let iceServers;
 let connections = new Map();
@@ -16,6 +16,20 @@ const webRTCMiddleware = store => next => action => {
             break;
         case 'SENDMESSAGE':
             sendMessage(action.value, store);
+            break;
+        case 'SENDMESSAGESOCKET':
+            sendMessageSocket(action.value)
+            break;
+        case 'REMOVEUSER':
+            if (connections.has(action.value)) {
+                connections.get(action.value).close();
+                connections.delete(action.value);
+                remoteStreams.delete(action.value);
+                channels.delete(action.value);
+                existingTracks.delete(action.value);
+                store.dispatch(deleteRemoteStream());
+                store.dispatch(deleteRemoteUser(action.value));
+            }
             break;
         case 'RESET':
             socket = null;
@@ -45,6 +59,17 @@ const sendMessage = (params, store) => {
         store.dispatch(addMessage({ id: params.id, message: params.message }))
 }
 
+const sendMessageSocket = (params) => {
+    socket.send(JSON.stringify(
+        {
+            action: params.action,
+            id: params.id,
+            from: params.id,
+            to: params.toId
+        }
+    ))
+}
+
 
 const socketAndWebRTC = (params, store) => {
     const connectToWebSocket = () => {
@@ -58,7 +83,8 @@ const socketAndWebRTC = (params, store) => {
                 {
                     action: params.action,
                     id: params.id,
-                    data: params.roomId
+                    data: params.roomId,
+                    display_name: params.displayName
                 }
             ))
         };    // Create WebRTC connection only if the socket connection is successful.
@@ -66,13 +92,28 @@ const socketAndWebRTC = (params, store) => {
         // Handle messages recieved in socket
         socket.onmessage = function (event) {
             let jsonData = JSON.parse(event.data);
-            if (jsonData.action === "READY") {
-                console.log("Got Ready")
-                let toUser = jsonData.from;
-                if (connections.has(toUser))
-                    connections.get(toUser).close();
-                createRTCPeerConnection(toUser);
-                createAndSendOffer(toUser);
+            switch (jsonData.action) {
+                case "READY":
+                    console.log("Got Ready")
+                    let toUser = jsonData.from;
+                    if (connections.has(toUser))
+                        connections.get(toUser).close();
+                    createRTCPeerConnection(toUser);
+                    createAndSendOffer(toUser);
+                    break;
+                case "APPROVE":
+                    store.dispatch(acceptEntry());
+                    break;
+                case "PERMIT":
+                    store.dispatch(addEntryRequest({ id: jsonData.from, displayName: jsonData.display_name }))
+                    break;
+                case "REJECT":
+                    store.dispatch(rejectEntry());
+                    break;
+                case "WAIT":
+                    break;
+                default:
+                    break;
             }
 
             switch (jsonData.type) {
@@ -99,6 +140,7 @@ const socketAndWebRTC = (params, store) => {
         };
 
         socket.onclose = function (event) {
+            window.location.reload();
             console.log('WebSocket Connection Closed. Please Reload the page.');
             // document.getElementById("sendOfferButton").disabled = true;
             // document.getElementById("answerButton").disabled = true;
@@ -292,14 +334,36 @@ const socketAndWebRTC = (params, store) => {
                     store.dispatch(addMessage({ id: data.from, message: data.message }));
                     break;
                 case 'MEDIAPREFERENCE':
-                    store.dispatch(setRemoteMediaPreference({ id: data.from, isAudio: data.message.isAudio, isVideo: data.message.isVideo,isScreen:data.message.isScreen }))
+                    store.dispatch(setRemoteMediaPreference({ id: data.from, isAudio: data.message.isAudio, isVideo: data.message.isVideo, isScreen: data.message.isScreen }))
                     break;
                 case 'LEAVEROOM':
                     if (connections.has(data.from)) {
                         console.log("yes", data.from)
                         connections.get(data.from).close();
-                        connections.set(data.from, null);
+                        connections.delete(data.from);
+                        remoteStreams.delete(data.from);
+                        channels.delete(data.from);
+                        existingTracks.delete(data.from);
+                        store.dispatch(deleteRemoteStream());
+                        store.dispatch(deleteRemoteUser(data.from));
                     }
+                    break;
+                case 'REMOVEUSER':
+                    if (data.message.id === store.getState().id) {
+                        store.dispatch(meetingEnded());
+                    }
+                    else if (connections.has(data.message.id)) {
+                        connections.get(data.message.id).close();
+                        connections.delete(data.message.id);
+                        remoteStreams.delete(data.message.id);
+                        channels.delete(data.message.id);
+                        existingTracks.delete(data.message.id);
+                        store.dispatch(deleteRemoteStream());
+                        store.dispatch(deleteRemoteUser(data.message.id));
+                    }
+                    break;
+                case 'ENDMEETING':
+                    store.dispatch(meetingEnded());
                     break;
                 default:
                     break;

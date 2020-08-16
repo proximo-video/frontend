@@ -9,6 +9,10 @@ import RoomView from './Room/RoomView';
 function Room(props) {
     const dispatch = useDispatch();
     const id = useSelector(state => state.id);
+    const isRoomOwner = useSelector(state => state.isRoomOwner);
+    const acceptEntry = useSelector(state => state.acceptEntry);
+    const [isRoomLocked, setRoomLocked] = useState(false);
+    const [showWaiting, setShowWaiting] = useState(false);
     // eslint-disable-next-line
     const name = useSelector(state => state.name);
     const rooms = useSelector(state => state.rooms);
@@ -35,6 +39,10 @@ function Room(props) {
     const { match } = props;
     const roomId = match.params.roomId;
     useEffect(() => {
+        if (acceptEntry === 'A')
+            setStartRoomView(true)
+    }, [acceptEntry])
+    useEffect(() => {
         const checkRoom = async () => {
             try {
                 let response = await fetch('https://proximo-video.herokuapp.com/checkRoom', {
@@ -46,7 +54,8 @@ function Room(props) {
                     body: JSON.stringify({ room_id: roomId })
                 });
                 if (response.ok) {
-                    console.log("Ok");
+                    let data = await response.json();
+                    setRoomLocked(data.is_locked)
                 }
                 else {
                     console.log("Not Found");
@@ -99,14 +108,17 @@ function Room(props) {
 
     const createSocket = () => {
         //Socket(isLogged? "START" : "JOIN", id, roomId, connections, updateConnection, addStream, deleteStream, localStream, iceServers);
-        dispatch(connectSocket({ action: "JOIN", id: id, roomId: roomId, displayName: name }))
-        setStartRoomView(true);
+        dispatch(connectSocket({ action: isRoomOwner ? 'START' : 'JOIN', id: id, roomId: roomId, displayName: name }))
+        if (isRoomOwner || !isRoomLocked)
+            setStartRoomView(true);
+        else
+            setShowWaiting(true);
     }
     return (!startRoomView ? <LayoutDefault>
         {!fetched ? <></> : isLogged ?
             <>
 
-                <RoomEntry logged={true} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess}></RoomEntry>
+                <><RoomEntry showWaiting={showWaiting} logged={true} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess}></RoomEntry>{acceptEntry === 'R' && 'REJECTED'}</>
                 {/* {
                 Array.from(remoteStreams).map((v) => {
                     const videoRef = React.createRef();
@@ -115,7 +127,7 @@ function Room(props) {
                     return videoNode
                 })} */}
 
-            </> : <RoomEntry logged={false} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess}></RoomEntry>}
+            </> : <><RoomEntry showWaiting={showWaiting} logged={false} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess}></RoomEntry>{acceptEntry === 'R' && 'REJECTED'}</>}
     </LayoutDefault>
         : <RoomView></RoomView>
     )
