@@ -8,6 +8,8 @@ $message-body-color: #bfbebe;
 $message-body-background: #3f475f;
 $url-color: #ACADFF;
 $button-border-color: #4c5f77;
+$avatar-background-red: #9c4531;
+$message-display-name-color: #ac91e6;
 
 :root {
   --message-avatar-size: 30px;
@@ -250,9 +252,14 @@ $button-border-color: #4c5f77;
   span {
     font-size: calc(var(--message-avatar-size)/2);
   }
+  &.user-left-avatar {
+    background: $avatar-background-red;
+  }
 }
 
 .message-body-container {
+  display: flex;
+  flex-direction: column;
   margin: 0 5px;
   //color: $message-body-color;
   background: $message-body-background;
@@ -271,5 +278,11 @@ $button-border-color: #4c5f77;
   }
   &.left {
     border-radius: 0 15px 15px 15px;
+  }
+  .message-display-name {
+    font-size: 65%;
+    margin: 0 0 -4px 0;
+    color: $message-display-name-color;
+    line-height: 15px !important;
   }
 }

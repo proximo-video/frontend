@@ -37,7 +37,8 @@ export function MessageArea() {
                                     displayName={name}/> :
                                 <MessageComponent messageBodyClassName={'left'} avatarPosition={'left'}
                                     id={Mess.id} message={Mess.message}
-                                    displayName={users.hasOwnProperty(Mess.id)?users[Mess.id].displayName:'User Left'} />
+                                    avatarClassName={users.hasOwnProperty(Mess.id) ? '' : 'user-left-avatar'}
+                                    displayName={users.hasOwnProperty(Mess.id) ? users[Mess.id].displayName : 'User Left'} />
                         }
                     </div>
                 )
