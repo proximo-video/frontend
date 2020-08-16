@@ -16,6 +16,7 @@ export default function EntryRequestNotification(props: EntryRequestNotification
         const length = entryRequestList.length
         if(length)
             createNotification(entryRequestList[length-1]);
+        // eslint-disable-next-line
     },[entryRequestList]);
   
     const createNotification = (message:EntryRequest) => {
@@ -31,8 +32,6 @@ export default function EntryRequestNotification(props: EntryRequestNotification
   
     return (
         <div>
-            {/* <button className={"temp-button"} onClick={openRequestNotification} style={{position: "absolute", top: 0, left: 0}}>Mess
-            </button> */}
             <NotificationContainer id={"entry-notifications"} position={"bottom-right"}/>
         </div>
     );
