@@ -298,7 +298,11 @@ const socketAndWebRTC = (params, store) => {
                     if (connections.has(data.from)) {
                         console.log("yes", data.from)
                         connections.get(data.from).close();
-                        connections.set(data.from, null);
+                        connections.delete(data.from);
+                        remoteStreams.delete(data.from);
+                        channels.delete(data.from);
+                        existingTracks.delete(data.from);
+                        store.dispatch(addRemoteStream());
                     }
                     break;
                 default:
