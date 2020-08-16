@@ -1,7 +1,7 @@
 import '../../assets/scss/custom/room.scss';
 import React, { useState, useRef, useEffect } from 'react';
 import "./RoomFooter";
-import RoomFooter from './RoomFooter';
+import RoomFooter, {checkIsMobile} from './RoomFooter';
 import { videoDataType, VideoElement } from './videoDataType';
 import RoomMain from "./RoomMain";
 import RoomChat from "./RoomChat";
@@ -43,15 +43,12 @@ function RoomView() {
     const userScreen = useSelector((state: RootStateOrAny) => state.userScreen);
     const id = useSelector((state: RootStateOrAny) => state.id);
     const name = useSelector((state: RootStateOrAny) => state.name);
-    // eslint-disable-next-line
-    const isAudio = useSelector((state: RootStateOrAny) => state.userMediaPreference.isAudio);
-    // eslint-disable-next-line
-    const isVideo = useSelector((state: RootStateOrAny) => state.userMediaPreference.isVideo);
     const remoteStreamCount = useSelector((state: RootStateOrAny) => state.remoteStreamCount);
     const selfVideo = useRef();
     videoDataType.set(id, new VideoElement(selfVideo, null, id, name));
     const [videoElements, setVideoElements] = useState<Map<string, VideoElement>>(videoDataType);
     const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
+    const isMobile = checkIsMobile();
 
     useEffect(() => {
         if (userMedia || userScreen) {
@@ -103,7 +100,7 @@ function RoomView() {
             dispatch(reset());
         }
         // eslint-disable-next-line
-    }, [])
+    }, []);
 
     const handleChatButtonClick = () => {
         setIsChatOpen(!chatButtonState);
@@ -115,14 +112,10 @@ function RoomView() {
         setChatButtonState(true);
     }
 
-    const isMobile = () => {
-        return window.innerWidth <= 545;
-    };
-
     const setVideosLayout = (n: number) => {
         const cont = document.querySelector<HTMLElement>(':root') as HTMLElement;
         let perRow = Math.ceil(Math.sqrt(n));
-        if (isMobile()) {
+        if (isMobile) {
             if (n === 2)
                 perRow = 1;
             else
