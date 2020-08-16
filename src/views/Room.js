@@ -3,7 +3,7 @@ import RoomEntry from './RoomEntry';
 import { v4 as uuidv4 } from 'uuid';
 import LayoutDefault from '../layouts/LayoutDefault'
 import { useDispatch, useSelector } from 'react-redux';
-import { setId, closeMedia, getUserMedia, setIceServers, connectSocket, setRoomOwner } from '../redux/actions';
+import { setId, closeMedia, getUserMedia, setIceServers, connectSocket, setRoomOwner,meetingStarted } from '../redux/actions';
 import RoomView from './Room/RoomView';
 
 function Room(props) {
@@ -108,6 +108,7 @@ function Room(props) {
 
     const createSocket = () => {
         //Socket(isLogged? "START" : "JOIN", id, roomId, connections, updateConnection, addStream, deleteStream, localStream, iceServers);
+        dispatch(meetingStarted())
         dispatch(connectSocket({ action: isRoomOwner ? 'START' : 'JOIN', id: id, roomId: roomId, displayName: name }))
         if (isRoomOwner || !isRoomLocked)
             setStartRoomView(true);
