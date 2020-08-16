@@ -134,6 +134,11 @@
 	}
 }
 
+.icon {
+	display: inline;
+	color: get-color(alert, error);
+}
+
 .footer-nav {
 	margin-right: -$footer-nav--padding-h;
 	margin-left: -$footer-nav--padding-h;

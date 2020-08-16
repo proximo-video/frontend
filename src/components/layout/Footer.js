@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Logo from './partials/Logo';
 import FooterNav from './partials/FooterNav';
-import FooterSocial from './partials/FooterSocial';
+import {FaHeart} from 'react-icons/fa'
 
 const propTypes = {
   topOuterDivider: PropTypes.bool,
@@ -41,11 +41,11 @@ const Footer = ({
           )}>
           <div className="footer-top space-between text-xxs">
             <Logo />
-            <FooterSocial />
+            <div>Made with <FaHeart class="icon"/> in India</div>
           </div>
           <div className="footer-bottom space-between text-xxs invert-order-desktop">
             <FooterNav />
-            <div className="footer-copyright">Made by <a href="https://cruip.com">Cruip</a>. All right reserved</div>
+            <div className="footer-copyright">Created by <a href="https://tripathi.dev">Rishabh Tripathi</a> and <a href="https://github.com/aniketsingh0104">Aniket Singh</a>. All right reserved</div>
           </div>
         </div>
       </div>
