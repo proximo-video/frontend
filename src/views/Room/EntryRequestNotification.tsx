@@ -20,6 +20,7 @@ export default function EntryRequestNotification(props: EntryRequestNotification
     };
 
     useEffect(() => {
+        // eslint-disable-next-line
         entryAudio = new Audio('/Sounds/intuition.mp3');
     }, []);
 
