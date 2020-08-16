@@ -16,6 +16,7 @@ import Home from './views/Home';
 import Welcome from './views/Welcome';
 import User from './views/User';
 import Room from './views/Room';
+import Preloader from './utils/Preloader';
 
 // Initialize Google Analytics
 ReactGA.initialize(process.env.REACT_APP_GA_CODE);
@@ -65,7 +66,7 @@ const App = (props) => {
       <AppRoute exact path="/user" component={User} layout={LayoutDefault} />
       <AppRoute path="/:roomId" component={Room} layout={WhiteLayout} />
     </Switch>
-    : <></>
+    : <Preloader></Preloader>
   );
 }
 

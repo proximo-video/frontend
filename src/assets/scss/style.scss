@@ -287,6 +287,26 @@
 		}
 	}	
   }
+
+  .preloader-container{
+	  height: 100vh;
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+	  flex-direction: column;
+	  img{
+		  max-width: 600px;
+		  margin:20px;
+	  }
+	  div{
+		  margin-bottom: 20px;
+		  .icon{
+			  color: get-color(alert, error);
+			  display: inline-block;
+		  }
+	  }
+  }
+
   @media only screen and (max-width: 380px){
 	  .self-video{
 		  width:200px;
