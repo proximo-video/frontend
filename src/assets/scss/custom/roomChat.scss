@@ -8,6 +8,7 @@ $message-body-color: #bfbebe;
 $message-body-background: #3f475f;
 $url-color: #ACADFF;
 $button-border-color: #4c5f77;
+$avatar-background-red: #9c4531;
 
 :root {
   --message-avatar-size: 30px;
@@ -249,6 +250,9 @@ $button-border-color: #4c5f77;
   width:var(--message-avatar-size);
   span {
     font-size: calc(var(--message-avatar-size)/2);
+  }
+  &.user-left-avatar {
+    background: $avatar-background-red;
   }
 }
 
