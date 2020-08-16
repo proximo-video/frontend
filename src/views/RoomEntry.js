@@ -19,6 +19,7 @@ const RoomEntry = (props) => {
                         <PersonalMedia mediaSuccess={props.mediaSuccess} setMediaSuccess={props.setMediaSuccess}></PersonalMedia>
                         {props.logged?<></>:<label className="has-text-white"><Input onChange={nameInputHandler} placeholder="Name" className="input mt-32"></Input></label>}
                         <Button color="primary" wide className={"mt-32"} disabled={!(props.mediaSuccess && props.iceSuccess)} onClick={props.createSocket}>{isRoomOwner?'Start':'Join'}</Button>
+                        {props.showWaiting&&"Waiting"}
                     </div>
                 </div>
             </div>

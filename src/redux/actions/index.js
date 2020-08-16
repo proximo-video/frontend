@@ -36,6 +36,18 @@ export const reset = () => {
     }
 }
 
+export const acceptEntry = () => {
+    return {
+        type: 'ACCEPTENTRY'
+    }
+}
+
+export const rejectEntry = () => {
+    return {
+        type: 'REJECTENTRY'
+    }
+}
+
 export const addEntryRequest = (value) => {
     return {
         type: 'ADDENTRYREQUEST',

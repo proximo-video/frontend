@@ -1,5 +1,5 @@
 import { localStream } from './getUserMedia';
-import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference, meetingEnded, addEntryRequest } from '../redux/actions'
+import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference, meetingEnded, addEntryRequest, acceptEntry, rejectEntry } from '../redux/actions'
 let socket;
 let iceServers;
 let connections = new Map();
@@ -56,6 +56,10 @@ const sendMessage = (params, store) => {
         store.dispatch(addMessage({ id: params.id, message: params.message }))
 }
 
+const sendMessageSocket = ()=>{
+    
+}
+
 
 const socketAndWebRTC = (params, store) => {
     const connectToWebSocket = () => {
@@ -88,11 +92,13 @@ const socketAndWebRTC = (params, store) => {
                     createAndSendOffer(toUser);
                     break;
                 case "APPROVE":
+                    store.dispatch(acceptEntry());
                     break;
                 case "PERMIT":
                     store.dispatch(addEntryRequest({id:jsonData.from,displayName:jsonData.display_name}))
                     break;
                 case "REJECT":
+                    store.dispatch(rejectEntry());
                     break;
                 case "WAIT":
                     break;

@@ -9,3 +9,18 @@ export const entryRequestListReducer = (state = [], action) => {
     }
     return state;
 }
+
+export const acceptEntryReducer = (state = 'W', action) => {
+    switch (action.type) {
+        case 'ACCEPTENTRY':
+            return 'A';
+        case 'RESET':
+            return 'W';
+        case 'REJECTENTRY':
+            return 'R';
+        default:
+            break;
+    }
+    return state;
+}
+
