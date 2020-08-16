@@ -1,5 +1,5 @@
 import React, {ReactElement} from 'react';
-import {FiVideoOff, FiVideo, FiMic, FiMicOff, FiMonitor, FiMessageSquare, FiCopy} from "react-icons/fi";
+import {FiVideoOff, FiVideo, FiMic, FiMicOff, FiMonitor, FiMessageSquare, FiCopy, FiShare2} from "react-icons/fi";
 import {MdCallEnd} from "react-icons/all";
 
 export interface ButtonsDataType {
@@ -74,6 +74,11 @@ export const buttonsData: ButtonsDataType[] = [
     {
         onIcon: <FiCopy/>,
         onLegend: "Copy",
+        onIconColor: "white",
+    },
+    {
+        onIcon: <FiShare2/>,
+        onLegend: "Share",
         onIconColor: "white",
     },
 ]
