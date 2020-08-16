@@ -9,7 +9,7 @@ import { Redirect } from "react-router-dom";
 import MessageNotification from "./MessageNotification";
 import { localStream } from '../../middleware/getUserMedia';
 import { remoteStreams } from '../../middleware/webRTC';
-import { getUserMedia, reset } from '../../redux/actions';
+import { getUserMedia, reset,meetingStarted } from '../../redux/actions';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import '../../assets/scss/custom/notifications.scss';
 import EntryRequestNotification from "./EntryRequestNotification";
@@ -101,6 +101,7 @@ function RoomView() {
     }, [remoteStreamCount]);
 
     useEffect(() => {
+        dispatch(meetingStarted())
         return () => {
             dispatch(reset());
         }

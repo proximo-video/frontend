@@ -1,5 +1,5 @@
 import { localStream } from './getUserMedia';
-import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference, meetingEnded, addEntryRequest, acceptEntry, rejectEntry } from '../redux/actions'
+import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference, meetingEnded, addEntryRequest, acceptEntry, rejectEntry} from '../redux/actions'
 let socket;
 let iceServers;
 let connections = new Map();
@@ -64,8 +64,8 @@ const sendMessageSocket = (params) => {
         {
             action: params.action,
             id: params.id,
-            from:params.id,
-            to:params.toId
+            from: params.id,
+            to: params.toId
         }
     ))
 }
@@ -140,7 +140,7 @@ const socketAndWebRTC = (params, store) => {
         };
 
         socket.onclose = function (event) {
-            store.dispatch(meetingEnded());
+            window.location.reload();
             console.log('WebSocket Connection Closed. Please Reload the page.');
             // document.getElementById("sendOfferButton").disabled = true;
             // document.getElementById("answerButton").disabled = true;
