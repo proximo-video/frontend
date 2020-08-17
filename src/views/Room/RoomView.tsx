@@ -130,7 +130,7 @@ function RoomView() {
     };
 
     const handleMaximizeButtonClick = (userId: string) => {
-        if (videoElements.has(userId) && videoElements.size > 1) {
+        if (videoElements.has(userId) && (videoElements.size > 1 || maxVideoId === userId)) {
             // console.log("maximize request: ", userId);
             // console.log("maxVideoId: ", maxVideoId);
             if (userId === maxVideoId)

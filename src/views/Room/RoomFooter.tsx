@@ -1,4 +1,4 @@
-import React, {ReactElement, useState} from 'react';
+import React, {ReactElement, useEffect, useRef, useState} from 'react';
 import { IconContext } from "react-icons";
 import { buttonsData } from './buttonsDataType';
 import ReactTooltip from "react-tooltip";
@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 import { DropdownContent } from "./Dropdown";
 import DropdownOption from "./expandedRoomDataType";
 import '../../assets/scss/custom/dropdown.scss';
+
 
 
 
@@ -68,27 +69,50 @@ export interface RoomFooterProps {
 }
 
 function RoomFooter(props: RoomFooterProps) {
-    const [isPinned, setIsPinned] = useState(true);
+    const isMobile = checkIsMobile();
+    const [isPinned, setIsPinned] = useState(!isMobile);
+    const isPinnedRef = useRef(isPinned);
     const isAudio = useSelector((state: RootStateOrAny) => state.userMediaPreference.isAudio);
     const isVideo = useSelector((state: RootStateOrAny) => state.userMediaPreference.isVideo);
     const isRoomOwner = useSelector((state: RootStateOrAny) => state.isRoomOwner);
     const id = useSelector((state: RootStateOrAny) => state.id);
     const userScreen = useSelector((state: RootStateOrAny) => state.userScreen);
     const history = useHistory();
-    const isMobile = checkIsMobile();
-    // let timer: NodeJS.Timeout;
-    // let timeVisible = 5000;
-    // let buttonsElement: HTMLElement;
-    // let pinButton: HTMLElement;
-    const handlePinButtonClick = () => {
-        // if (isPinned && pinButton) {
-        //     if (buttonsElement)
-        //         buttonsElement.style.bottom = '-65px';
-        // }
-        setIsPinned(!isPinned);
-    }
+    let timer: NodeJS.Timeout = null;
+    const timeVisible = 5000;
+    const buttonsElement = useRef(null);
+    const pinButton = useRef(null);
     const dispatch = useDispatch();
     const [copyLinkLegend, setCopyLinkLegend] = useState<string>('Copy Link');
+
+    const handlePinButtonClick = (e) => {
+        // console.log('i was clicked');
+        e.stopPropagation();
+        if (isMobile) {
+            // console.log('pin button state:', isPinnedRef.current);
+            if (timer) {
+                clearTimeout(timer);
+                timer = null;
+            }
+            if (pinButton.current.contains(e.target)) {
+                if (isPinnedRef.current && buttonsElement)
+                    buttonsElement.current.style.bottom = '-65px';
+                else if (!isPinnedRef.current && buttonsElement)
+                    buttonsElement.current.style.bottom = '25px';
+                setIsPinned(!isPinnedRef.current);
+                isPinnedRef.current = !isPinnedRef.current;
+            }
+            else if(!isPinnedRef.current) {
+                if (buttonsElement.current.style.bottom === '-65px')
+                    buttonsElement.current.style.bottom = '25px';
+                timeFadeout();
+            }
+        }
+        else {
+            setIsPinned(!isPinnedRef.current);
+            isPinnedRef.current = !isPinnedRef.current;
+        }
+    }
 
     const onCamButtonClick = () => {
         dispatch(sendMessage({ id: id, action: 'MEDIAPREFERENCE', message: { isAudio: isAudio, isVideo: !isVideo, isScreen: userScreen } }))
@@ -147,49 +171,37 @@ function RoomFooter(props: RoomFooterProps) {
         new DropdownOption(null, 'Leave meeting',onLeaveButtonClick),
     ];
 
-    // const timeFadeout = () => {
-    //     timer = setTimeout(function() {
-    //         if(buttonsElement && !isPinned) {
-    //             buttonsElement.style.bottom = '-65px';
-    //         }
-    //     }, timeVisible );
-    // }
-    //
-    // const handleDocumentClickEvent = (e) => {
-    //     e.preventDefault();
-    //     e.stopPropagation();
-    //     if(!isPinned && buttonsElement) {
-    //         clearTimeout(timer);
-    //         console.log('clicked');
-    //         if (buttonsElement.style.bottom === '25px')
-    //             buttonsElement.style.bottom = '-65px';
-    //         else {
-    //             buttonsElement.style.bottom = '25px';
-    //             timeFadeout();
-    //         }
-    //     }
-    // }
+    const timeFadeout = () => {
+        timer = setTimeout(function() {
+            if(buttonsElement) {
+                buttonsElement.current.style.bottom = '-65px';
+            }
+        }, timeVisible );
+    }
 
-    // useEffect(() => {
-    //     buttonsElement = document.getElementById('buttons');
-    //     pinButton = document.getElementById('pin-toolbar-button');
-    //     if (isMobile) {
-    //         timeFadeout();
-    //         document.addEventListener('click', handleDocumentClickEvent);
-    //     }
-    //     return () => {
-    //         if (isMobile)
-    //             document.removeEventListener('click', handleDocumentClickEvent);
-    //     }
-    // }, []);
+    useEffect(() => {
+        if (isMobile) {
+            if (buttonsElement) {
+                buttonsElement.current.style.bottom = '25px';
+                timeFadeout();
+            }
+            document.body.addEventListener('touchstart', handlePinButtonClick);
+        }
+        return () => {
+            if (isMobile)
+                document.body.removeEventListener('touchstart', handlePinButtonClick);
+        }
+        // eslint-disable-next-line
+    }, []);
 
     return (
         <div className="room-footer" id={"buttons-footer"}>
             <ReactTooltip id="pin-toolbar" place="right" type="dark" effect="float" className="tooltip" />
-            <button className={"cntrl-button" + (isPinned ? " pinned" : " unpinned")} onClick={() => handlePinButtonClick() } data-for="pin-toolbar" data-tip={isPinned ? "unpin toolbar" : "pin toolbar"} id="pin-toolbar-button">
-                {isPinned ? <FaChevronDown className="button-hover-down" /> : <FaChevronUp className="button-hover-up" />}
+            <button ref={pinButton} onClick={isMobile ? null : handlePinButtonClick} className={"cntrl-button" + (isPinned ? " pinned" : " unpinned")} data-for="pin-toolbar" data-tip={isMobile ? '' : (isPinned ? "hide toolbar" : "pin toolbar")} id="pin-toolbar-button">
+                <FaChevronDown className={"button-hover" + (isPinned ? '' : ' hide')} />
+                <FaChevronUp className={"button-hover" + (isPinned ? ' hide' : '')}/>
             </button>
-            <div className="buttonWrapper" id={"buttons"}>
+            <div className="buttonWrapper" ref={buttonsElement} id={"buttons"}>
                 {/*cam button*/}
                 <ControlButton
                     className={(isVideo ? buttonsData[0].onClass : buttonsData[0].offClass)}

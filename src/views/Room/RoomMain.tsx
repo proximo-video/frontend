@@ -105,7 +105,7 @@ export default function RoomMain(props: RoomMainProps) {
     }
 
 
-    if (props.videoElements.size <= 1)
+    if (props.videoElements.size <= 1 && props.maxVideoId === '')
         dropdownOptionClassName = 'disabled';
 
     props.videoElements.forEach((value: VideoElement, key: string) => {
@@ -188,7 +188,7 @@ export default function RoomMain(props: RoomMainProps) {
                             <div className="exit-fullscreen"
                                  onClick={() => props.onFullscreenClick(props.fullscreenVideoId)}>
                                 <FiMinimize/>
-                                <span>Exit full screen</span>
+                                <span>Exit</span>
                             </div> :
                             <Dropdown dropdownClasses={"video-dropdown"}
                                       options={key === props.maxVideoId ? maxOptionsMenu : normalOptionsMenu}/>
