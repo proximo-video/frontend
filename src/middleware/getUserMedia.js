@@ -69,6 +69,11 @@ const getUserMediaMiddleware = store => next => async (action) => {
                 track.stop();
             });
             break;
+        case 'TOGGLECAMERAVIEW':
+            localStream.getTracks().forEach((track)=>{
+                track.stop();
+            })
+            break;
         case 'GETUSERSCREEN':
             const id = store.getState().id;
             const userScreen = store.getState().userScreen
