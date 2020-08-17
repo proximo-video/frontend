@@ -98,7 +98,9 @@ function RoomView() {
     }, [remoteStreamCount]);
 
     useEffect(() => {
-        dispatch(meetingStarted())
+        if (isMobile)
+            window.scrollTo(0, 1);
+        dispatch(meetingStarted());
         return () => {
             dispatch(reset());
         }
