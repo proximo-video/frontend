@@ -1,5 +1,4 @@
 export const getUserMediaReducer = (state = false, action) => {
-    console.log('action', action)
     if (action.type === 'GETUSERMEDIA') {
         return action.value
     }
@@ -7,16 +6,15 @@ export const getUserMediaReducer = (state = false, action) => {
 }
 
 export const getUserScreenReducer = (state = false, action) => {
-    console.log('action', action)
     if (action.type === 'GETUSERSCREEN') {
         return !state;
     }
-    if(action.type ==='RESET')
+    if (action.type === 'RESET')
         return false;
     return state;
 }
 
-export const getUserMediaPreferenceReducer = (state = { isVideo: true, isAudio: true }, action) => {
+export const getUserMediaPreferenceReducer = (state = { isVideo: true, isAudio: true, cameraView: "user" }, action) => {
     switch (action.type) {
         case 'TOGGLEVIDEO':
             const isVideo = state.isVideo;
@@ -24,6 +22,8 @@ export const getUserMediaPreferenceReducer = (state = { isVideo: true, isAudio: 
         case 'TOGGLEAUDIO':
             const isAudio = state.isAudio;
             return { ...state, isAudio: !isAudio }
+        case 'TOGGLECAMERAVIEW':
+            return state.cameraView === "user" ? { ...state, cameraView: "environment" } : { ...state, cameraView: "user" };
         default:
             break;
     }

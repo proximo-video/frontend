@@ -156,6 +156,12 @@ export const toggleVideo = () => {
     }
 }
 
+export const toggleCameraView = () => {
+    return {
+        type: 'TOGGLECAMERAVIEW',
+    }
+}
+
 export const closeMedia = () => {
     return {
         type: 'CLOSEMEDIA',

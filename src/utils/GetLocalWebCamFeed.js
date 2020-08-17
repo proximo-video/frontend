@@ -1,11 +1,11 @@
-async function GetLocalWebCamFeed(audio, video) {
+async function GetLocalWebCamFeed(audio, video, facingMode) {
 
     let constraints = {
         width: { ideal: 640 },
         height: { ideal: 480 },
         audio: true,
         video: video ? {
-            facingMode: "user",
+            facingMode: facingMode,
         } : video
     }
     navigator.getWebcam = (navigator.getUserMedia || navigator.webKitGetUserMedia || navigator.moxGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);

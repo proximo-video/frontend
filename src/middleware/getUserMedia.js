@@ -15,7 +15,7 @@ const getUserMediaMiddleware = store => next => async (action) => {
     switch (action.type) {
         case 'GETUSERMEDIA':
             if (action.value) {
-                localStream = await GetLocalWebCamFeed(userMediaPreference.isAudio, true);
+                localStream = await GetLocalWebCamFeed(userMediaPreference.isAudio, true, userMediaPreference.cameraView);
                 if (browser && browser.name === 'firefox') {
                     localStream.getVideoTracks().forEach(track => {
                         track.enabled = userMediaPreference.isVideo;

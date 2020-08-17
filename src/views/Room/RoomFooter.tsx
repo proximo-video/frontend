@@ -3,7 +3,7 @@ import { IconContext } from "react-icons";
 import { buttonsData } from './buttonsDataType';
 import ReactTooltip from "react-tooltip";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
-import { toggleAudio, toggleVideo, getUserMedia, sendMessage, getUserScreen, meetingEnded } from '../../redux/actions';
+import { toggleAudio, toggleVideo, getUserMedia, sendMessage, getUserScreen, meetingEnded, toggleCameraView } from '../../redux/actions';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { detect } from 'detect-browser';
 import { useHistory } from "react-router-dom";
@@ -115,7 +115,8 @@ function RoomFooter(props: RoomFooterProps) {
     }
 
     const onToggleCamButtonClick = () => {
-        alert('Camera toggled');
+        dispatch(toggleCameraView());
+        dispatch(getUserMedia(false));
     }
 
     const copyLinkToClipBoard = async () => {
