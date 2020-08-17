@@ -253,7 +253,8 @@ body {
   color: $no-audio-red;
   position: absolute;
   bottom: 7px;
-  left: 7px;
+  right: 7px;
+  z-index: 1;
 }
 
 .presentation-message {

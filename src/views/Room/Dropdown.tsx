@@ -17,7 +17,7 @@ export interface DropdownContentProps extends DropdownProps {
 export function DropdownContent({backdropClick, options, dropdownClasses, backdropRequired}: DropdownContentProps) {
     // let dropdown: Element;
     const handleClick = (e: any) => {
-        e.preventDefault();
+        // e.preventDefault();
         e.stopPropagation();
         // if (!dropdown.contains(e.target))
         if (backdropRequired)
