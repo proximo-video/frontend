@@ -1,10 +1,10 @@
 import React, { useEffect,useRef } from 'react';
-import { IoMdMic, IoMdMicOff } from 'react-icons/io';
-import { RiCameraLine, RiCameraOffLine } from 'react-icons/ri';
 import { localStream } from '../middleware/getUserMedia';
 import { getUserMedia, toggleAudio, toggleVideo } from '../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { detect } from 'detect-browser';
+import {ControlButton} from './Room/RoomFooter';
+import {buttonsData} from './Room/buttonsDataType';
 
 const PersonalMedia = (props) => {
     const browser = detect();
@@ -63,11 +63,27 @@ const PersonalMedia = (props) => {
     return (
         <>
             <div className="is-relative">
-                {<video className="self-video" ref={videoRef} autoPlay muted></video>}
+                <video className="self-video" ref={videoRef} autoPlay muted playsInline/>
+                <div className={"overlay-message"} style={isVideo ? {display: 'none'} : {}}>
+                    <p>You're camera is off</p>
+                    {!isAudio && <p>You're mic is off</p>}
+                </div>
                 <div className="is-center-flex video-controls">
-                    <div className="button-wrapper">
-                        <button className="icon-button" disabled={!props.mediaSuccess} onClick={toggleAudioStream}>{isAudio ? <IoMdMic className="cntrl-button medium-icon" /> : <IoMdMicOff className="cntrl-button" />}</button>
-                        <button className="icon-button" disabled={!props.mediaSuccess} onClick={toggleVideoStream}>{isVideo ? <RiCameraLine className="cntrl-button medium-icon" /> : <RiCameraOffLine className="cntrl-button" />}</button>
+                    <div className={"button-wrapper" + (isVideo ? '' : ' video-off')}>
+                        <ControlButton
+                            className={(isVideo ? buttonsData[0].onClass : buttonsData[0].offClass)}
+                            icon={(isVideo ? buttonsData[0].onIcon : buttonsData[0].offIcon)}
+                            iconColor={(isVideo ? buttonsData[0].onIconColor : buttonsData[0].offIconColor)}
+                            onClick={toggleVideoStream}
+                        />
+                        <ControlButton
+                            className={(isAudio ? buttonsData[1].onClass : buttonsData[1].offClass)}
+                            icon={(isAudio ? buttonsData[1].onIcon : buttonsData[1].offIcon)}
+                            iconColor={(isAudio ? buttonsData[1].onIconColor : buttonsData[1].offIconColor)}
+                            onClick={toggleAudioStream}
+                        />
+                        {/*<button className="icon-button" disabled={!props.mediaSuccess} onClick={toggleAudioStream}>{isAudio ? <IoMdMic className="cntrl-button medium-icon" /> : <IoMdMicOff className="cntrl-button" />}</button>*/}
+                        {/*<button className="icon-button" disabled={!props.mediaSuccess} onClick={toggleVideoStream}>{isVideo ? <RiCameraLine className="cntrl-button medium-icon" /> : <RiCameraOffLine className="cntrl-button" />}</button>*/}
                     </div>
                 </div>
             </div>

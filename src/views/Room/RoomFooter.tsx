@@ -26,7 +26,7 @@ export interface ControlButtonProps {
     children?: React.ReactNode;
 }
 
-function ControlButton(props: ControlButtonProps) {
+export function ControlButton(props: ControlButtonProps) {
     return (
         <>
             <ReactTooltip id={props.legend} place="top" type="dark" effect="solid" className="tooltip">
