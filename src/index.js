@@ -14,6 +14,7 @@ import adapter from 'webrtc-adapter';
 import './assets/scss/style.scss';
 import getUserMediaMiddleware from './middleware/getUserMedia';
 import webRTCMiddleware from './middleware/webRTC';
+import ScrollToTop from './utils/ScrollToTop';
 let store;
 if (process.env.NODE_ENV === 'development'){
   store = createStore(allReducers, compose(applyMiddleware(getUserMediaMiddleware, webRTCMiddleware), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
@@ -27,6 +28,7 @@ const history = createBrowserHistory();
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
+      <ScrollToTop/>
       <App />
     </Router>
   </Provider>,

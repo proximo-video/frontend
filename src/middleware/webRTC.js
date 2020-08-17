@@ -1,5 +1,5 @@
 import { localStream } from './getUserMedia';
-import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference, meetingEnded, addEntryRequest, acceptEntry, rejectEntry} from '../redux/actions'
+import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference, meetingEnded, addEntryRequest, acceptEntry, rejectEntry } from '../redux/actions'
 let socket;
 let iceServers;
 let connections = new Map();
@@ -48,12 +48,13 @@ export default webRTCMiddleware;
 // eslint-disable-next-line
 const sendMessage = (params, store) => {
     channels.forEach(channel => {
-        console.log('channel', channel);
-        channel.send(JSON.stringify({
-            "from": params.id,
-            "action": params.action,
-            "message": params.message
-        }))
+        if (channel) {
+            channel.send(JSON.stringify({
+                "from": params.id,
+                "action": params.action,
+                "message": params.message
+            }))
+        }
     });
     if (params.action === 'MESSAGE')
         store.dispatch(addMessage({ id: params.id, message: params.message }))
