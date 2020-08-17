@@ -5,17 +5,17 @@ import Button from '../components/elements/Button';
 import Modal from '../components/elements/Modal';
 import Input from '../components/elements/Input';
 import { FaTrash } from 'react-icons/fa';
-import {useDispatch,useSelector} from 'react-redux';
-import {setName,setRooms,setId} from '../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { setName, setRooms, setId } from '../redux/actions';
 
 
 function User(props) {
     const dispatch = useDispatch();
-    const id = useSelector(state=>state.id);
-    const name = useSelector(state=>state.name);
-    const rooms = useSelector(state=>state.rooms);
-    const isLogged = useSelector(state=>state.isLogged);
-    const [showModal,setShowModal] =useState(false);
+    const id = useSelector(state => state.id);
+    const name = useSelector(state => state.name);
+    const rooms = useSelector(state => state.rooms);
+    const isLogged = useSelector(state => state.isLogged);
+    const [showModal, setShowModal] = useState(false);
     const [deleteRoomId, setDeleteRoomId] = useState("");
     const [roomIdInput, setRoomIdInput] = useState("");
 
@@ -32,7 +32,7 @@ function User(props) {
             dispatch(setId(data.id));
             dispatch(setName(data.name));
             if (data.rooms)
-            dispatch(setRooms(data.rooms));
+                dispatch(setRooms(data.rooms));
         }
         else {
             props.history.push("/");
@@ -40,22 +40,26 @@ function User(props) {
     }
     const addRoom = async (e) => {
         const element = e.target;
-        element.setAttribute("disabled", "true")
-        console.log(element)
-        console.log("Clicked")
-        let response = await fetch('https://proximo-video.herokuapp.com/newRoom', {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({ room_id: roomIdInput, is_locked: false })
-        });
-        if (response.ok) {
-            setRoomIdInput("");
-            fetchData();
+        if (roomIdInput.match(/^[0-9a-zA-Z]+$/)) {
+            element.setAttribute("disabled", "true")
+            console.log(element)
+            console.log("Clicked")
+            let response = await fetch('https://proximo-video.herokuapp.com/newRoom', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify({ room_id: roomIdInput, is_locked: false })
+            });
+            if (response.ok) {
+                setRoomIdInput("");
+                fetchData();
+            }
+            element.removeAttribute("disabled");
+        } else{
+            alert("Enter numbers and alphabets only.")
         }
-        element.removeAttribute("disabled");
     }
 
     const toggleRoom = async (e) => {
@@ -88,7 +92,7 @@ function User(props) {
         setShowModal(false);
     }
 
-    const deleteRoom = async(e)=>{
+    const deleteRoom = async (e) => {
         const element = e.target;
         element.setAttribute("disabled", "true")
         let response = await fetch('https://proximo-video.herokuapp.com/deleteRoom', {
@@ -110,17 +114,17 @@ function User(props) {
 
     const showDeleteModal = () => {
         return (
-                <Modal show={showModal} handleClose={closeDeleteModal}>
-                    <div>                
-                            <h3>Warning</h3>
-                       
-                            <p>{deleteRoomId} will be deleted</p>
-                        
-                            <Button color="danger" onClick={deleteRoom} className="m-8">Delete</Button>
-                            <Button onClick={closeDeleteModal}  className="m-8">Cancel</Button>
-                      
-                    </div>
-                </Modal>
+            <Modal show={showModal} handleClose={closeDeleteModal}>
+                <div>
+                    <h3>Warning</h3>
+
+                    <p>{deleteRoomId} will be deleted</p>
+
+                    <Button color="danger" onClick={deleteRoom} className="m-8">Delete</Button>
+                    <Button onClick={closeDeleteModal} className="m-8">Cancel</Button>
+
+                </div>
+            </Modal>
         )
     }
 
@@ -131,12 +135,12 @@ function User(props) {
                     <div className="level">
                         <div className="level-left">
                             <span className="has-text-white-ter	">{value.room_id}</span>
-                            
+
                         </div>
                         <div className="level-right">
                             <div className="margin-bottom-mobile m-16"><Switch roomid={value.room_id} className="has-text-white-ter mr-6" checked={value.is_locked || false} onChange={toggleRoom}>{value.is_locked ? "Locked" : "Open"}</Switch></div>
                             <div className=" m-8"><Button color="primary"><Link to={{ pathname: "/" + value.room_id }}>Go To Room</Link></Button></div>
-                            <Button color="danger" className="ml-8" roomid={value.room_id} onClick={openDeleteModal}><FaTrash className="has-text-white"/></Button>
+                            <Button color="danger" className="ml-8" roomid={value.room_id} onClick={openDeleteModal}><FaTrash className="has-text-white" /></Button>
                         </div>
                     </div>
                 </div>
