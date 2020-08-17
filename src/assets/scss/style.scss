@@ -113,11 +113,6 @@
 @import "core/sections/testimonial";
 
 /*--------------------------------------------------------------
-# Call to action
---------------------------------------------------------------*/
-@import "core/sections/cta";
-
-/*--------------------------------------------------------------
 # Theme
 --------------------------------------------------------------*/
 @import "theme/theme";
@@ -305,6 +300,57 @@
 			  display: inline-block;
 		  }
 	  }
+  }
+
+  .privacy-policy{
+	  ul{
+		  list-style-type: square;
+	  }
+	  ul>li>ul{
+		  list-style-type: circle;
+	  }
+	  ul > li > ul > li > ul{
+		  list-style-type: square;
+	  }
+	  	[data-custom-class='body'], [data-custom-class='body'] * {
+		background: transparent !important;
+		}
+		[data-custom-class='title'], [data-custom-class='title'] * {
+		font-family: Arial !important;
+		font-size: 26px !important;
+		color: #fff !important;
+		}
+		[data-custom-class='subtitle'], [data-custom-class='subtitle'] * {
+		font-family: Arial !important;
+		color: #fff !important;
+		font-size: 14px !important;
+		}
+		[data-custom-class='heading_1'], [data-custom-class='heading_1'] * {
+		font-family: Arial !important;
+		font-size: 19px !important;
+		color: #fff !important;
+		}
+		[data-custom-class='heading_2'], [data-custom-class='heading_2'] * {
+		font-family: Arial !important;
+		font-size: 17px !important;
+		color: #fff !important;
+		}
+		[data-custom-class='body_text'], [data-custom-class='body_text'] * {
+		color: #fff !important;
+		font-size: 14px !important;
+		font-family: Arial !important;
+		}
+		[data-custom-class='link'], [data-custom-class='link'] * {
+		color: #5658dd !important;
+		font-size: 14px !important;
+		font-family: Arial !important;
+		word-break: break-word !important;
+		}
+
+		bdt::before{
+			content: " ";
+			white-space: pre;
+		}
   }
 
   @media only screen and (max-width: 380px){
