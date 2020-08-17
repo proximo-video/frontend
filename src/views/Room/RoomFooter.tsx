@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useReducer, useRef, useState} from 'react';
+import React, {ReactElement, useEffect, useRef, useState} from 'react';
 import { IconContext } from "react-icons";
 import { buttonsData } from './buttonsDataType';
 import ReactTooltip from "react-tooltip";
@@ -86,10 +86,10 @@ function RoomFooter(props: RoomFooterProps) {
     const [copyLinkLegend, setCopyLinkLegend] = useState<string>('Copy Link');
 
     const handlePinButtonClick = (e) => {
-        console.log('i was clicked');
+        // console.log('i was clicked');
         e.stopPropagation();
         if (isMobile) {
-            console.log('pin button state:', isPinnedRef.current);
+            // console.log('pin button state:', isPinnedRef.current);
             if (timer) {
                 clearTimeout(timer);
                 timer = null;
@@ -112,8 +112,6 @@ function RoomFooter(props: RoomFooterProps) {
             setIsPinned(!isPinnedRef.current);
             isPinnedRef.current = !isPinnedRef.current;
         }
-        // console.log('pin button state:', isPinned.current);
-        // setIsPinned(!isPinned);
     }
 
     const onCamButtonClick = () => {
@@ -193,6 +191,7 @@ function RoomFooter(props: RoomFooterProps) {
             if (isMobile)
                 document.body.removeEventListener('touchstart', handlePinButtonClick);
         }
+        // eslint-disable-next-line
     }, []);
 
     return (
