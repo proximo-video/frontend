@@ -3,7 +3,7 @@ import { useLocation, Switch } from 'react-router-dom';
 import AppRoute from './utils/AppRoute';
 import ReactGA from 'react-ga';
 import { useDispatch } from 'react-redux';
-import { login,setId,setName,setRooms,logout} from './redux/actions';
+import { login,setId,setName,setRooms,logout, setSessionToken} from './redux/actions';
 import './App.css';
 
 
@@ -33,6 +33,7 @@ const App = (props) => {
   const dispatch = useDispatch();
   let location = useLocation();
   useEffect(() => {
+    dispatch(setSessionToken(Math.random().toString(36).substr(2)))
     const fetchData = async () => {
       let response = await fetch('https://proximo-video.herokuapp.com/getUser', { credentials: 'include' });
       if (response.ok) {

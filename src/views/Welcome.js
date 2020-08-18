@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login,setId,setName,setRooms } from '../redux/actions';
 function Welcome() {
+    console.log(window.location.href);
     const [success, setSuccess] = useState(false);
     const dispatch = useDispatch();
     useEffect(() => {
