@@ -2,6 +2,7 @@
   box-sizing: border-box;
 }
 
+
 .is-relative {
   background: black;
   border-radius: 20px;
@@ -14,21 +15,21 @@
   .self-video {
     height: 100% !important;
     width: 100% !important;
-    min-height: 100%;
-    min-width: 100%;
     border-radius: 20px;
     object-fit: cover;
   }
   .button-wrapper {
     background: transparent;
     padding: 7px;
+
     &.video-off {
       background: #181a26;
     }
   }
+
   .overlay-message {
     position: absolute;
-    background-color: rgba(0,0,0,0.9);
+    background-color: rgba(0, 0, 0, 0.9);
     width: 100.1%;
     height: 100%;
     display: flex;
@@ -46,16 +47,21 @@
   &.room-entry {
     display: flex;
     justify-content: center;
-    padding-top: 100px;
-    padding-bottom: 100px;
+    //padding-top: 100px;
+    //padding-bottom: 100px;
     .room-entry-container {
       //display: inline-flex;
       width: 90vw;
+      margin-top: 50px;
       border-radius: 10px;
       box-shadow: 0px 8px 16px 7px rgba(0, 0, 0, 0.6);
       background-color: #1d2134 !important;
       .card-content {
         display: flex;
+        justify-content: center;
+        align-items: center;
+        //height: calc(100vh-10px);
+        //height: 80vh;
         .room-entry-form {
           display: flex;
           flex-direction: column;
@@ -63,11 +69,29 @@
           flex-grow: 1;
           justify-content: center;
           align-items: center;
-          .input {
+
+          .room-entry-input {
             border-radius: 8px;
+            min-height: 40px;
+            border: none;
+            padding: 10px;
+            width: 80%;
+            font-size: medium;
           }
-          .join-button {
-            border-radius: 10px;
+
+          .room-entry-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            button {
+              border-radius: 10px;
+              margin: 40px 10px;
+            }
+
+            .cancel-button {
+              background: #583796;
+            }
           }
         }
       }
