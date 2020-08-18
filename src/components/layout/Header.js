@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import Logo from './partials/Logo';
+import { useSelector } from 'react-redux';
 
 const propTypes = {
   navPosition: PropTypes.string,
@@ -29,7 +30,7 @@ const Header = ({
   bottomDivider,
   ...props
 }) => {
-
+  const isLogged = useSelector(state => state.isLogged);
   const [isActive, setIsactive] = useState(false);
 
   const nav = useRef(null);
@@ -44,7 +45,7 @@ const Header = ({
       document.addEventListener('click', clickOutside);
       closeMenu();
     };
-  });  
+  });
 
   const openMenu = () => {
     document.body.classList.add('off-nav-is-active');
@@ -66,13 +67,14 @@ const Header = ({
     if (!nav.current) return
     if (!isActive || nav.current.contains(e.target) || e.target === hamburger.current) return;
     closeMenu();
-  }  
+  }
 
   const classes = classNames(
     'site-header',
     bottomOuterDivider && 'has-bottom-divider',
     className
   );
+
 
   return (
     <header
@@ -111,7 +113,10 @@ const Header = ({
                       className="list-reset header-nav-right"
                     >
                       <li>
-                        <Link to="#0" className="button button-primary button-wide-mobile button-sm" onClick={closeMenu}>Sign up</Link>
+                        {window.location.pathname !== '/login' && (isLogged ?
+                          <Link to="#0" className="button button-primary button-wide-mobile button-sm" onClick={closeMenu}>Logout</Link>
+                          : <Link to="/login" className="button button-primary button-wide-mobile button-sm" onClick={closeMenu}>Login</Link>
+                        )}
                       </li>
                     </ul>}
                 </div>
