@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  font-family: 'Roboto',arial,sans-serif !important;
 }
 
 /* Safari */
@@ -13,7 +14,10 @@
   100% { transform: rotate(360deg); }
 }
 
-
+.site-content {
+  display: flex;
+  justify-content: center;
+}
 .is-relative {
   background: black;
   border-radius: 20px;
@@ -23,6 +27,14 @@
   height: 32.37vw;
   /* height:width ratio = 9/16 = .5625  */
   max-height: 70vh;
+  @media only screen and (max-width: 925px) {
+    width: 100%;
+    height: 95vw;
+  }
+  @media only screen and (max-height: 650px) {
+    width: 100%;
+    height: 80vw;
+  }
   .self-video {
     height: 100% !important;
     width: 100% !important;
@@ -42,7 +54,7 @@
     height: 100%;
     display: flex;
     top: 0;
-    font-size: medium;
+    font-size: large;
     color: whitesmoke;
     justify-content: center;
     align-items: center;
@@ -68,10 +80,20 @@
   &.room-entry {
     display: flex;
     justify-content: center;
+    align-items: center;
     .room-entry-container {
       //display: inline-flex;
       width: 90vw;
-      margin-top: 50px;
+      margin-top: 65px;
+      @media only screen and (max-width: 925px) {
+        margin-top: 30px;
+      }
+      @media only screen and (max-width: 768px) {
+        margin-top: 15px;
+      }
+      @media only screen and (max-width: 500px) {
+        margin-top: 0;
+      }
       border-radius: 10px;
       box-shadow: 0px 8px 16px 7px rgba(0, 0, 0, 0.6);
       background-color: #1d2134 !important;
@@ -79,10 +101,20 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        padding: 0.5rem 1rem 0.5rem 0.5rem;
+        @media only screen and (max-width: 925px) {
+          padding: 0.6rem 0.3rem 1.5rem 0.3rem;
+          flex-direction: column;
+        }
         .room-entry-form {
           display: flex;
           flex-direction: column;
           margin-left: 70px;
+          @media only screen and (max-width: 925px) {
+            margin-left: 0;
+            margin-top: 70px;
+            width: 80%;
+          }
           flex-grow: 1;
           justify-content: center;
           align-items: center;
@@ -125,9 +157,8 @@
                 box-shadow: 4px 4px 16px 4px rgba(0, 0, 0, 0.7);
               }
             }
-
             .cancel-button {
-              background: #583796;
+              background: #af414a;
               margin-left: auto;
             }
           }
