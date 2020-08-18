@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ButtonGroup from '../components/elements/ButtonGroup';
 import Button from '../components/elements/Button';
 import GoogleLogo from '../assets/images/google.png';
@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 
 const SignIn = (props) => {
     const sessionToken = useSelector((state) => state.sessionToken);
-    const state = 'security_token=' + sessionToken + '&path=' + redirect;
+    const state = 'security_token=' + sessionToken + '&path=' + props.location.state.prevPath;
     console.log(props.location.state.prevPath)
     return (
         <div className="container section">
