@@ -58,8 +58,6 @@ const PersonalMedia = (props) => {
         dispatch(toggleAudio());
     }
 
-
-
     return (
         <>
             <div className="is-relative">
