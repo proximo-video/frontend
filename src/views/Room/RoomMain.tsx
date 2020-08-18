@@ -188,7 +188,7 @@ export default function RoomMain(props: RoomMainProps) {
                             <div className="exit-fullscreen"
                                  onClick={() => props.onFullscreenClick(props.fullscreenVideoId)}>
                                 <FiMinimize/>
-                                <span>Exit</span>
+                                <span>EXIT</span>
                             </div> :
                             <Dropdown dropdownClasses={"video-dropdown"}
                                       options={key === props.maxVideoId ? maxOptionsMenu : normalOptionsMenu}/>
