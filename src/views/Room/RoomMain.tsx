@@ -202,6 +202,12 @@ export default function RoomMain(props: RoomMainProps) {
                             <p>You're presenting to everyone</p>
                         </div>
                     }
+                    {
+                        key !== id &&
+                        <div className={"presentation-message reconnect-message"}>
+                            <p>Connection interrupted. Trying to reconnect...</p>
+                        </div>
+                    }
                     <video ref={value.videoRef} autoPlay muted playsInline className="video-stream" style={displayAvatar || (key === id && userScreen) ? {display: 'none'} : (isScreen ? {objectFit: 'contain'} : {})}/>
                     <audio ref={value.audioRef} autoPlay/>
                     {/*<video className="video-stream" poster={"/images/big_buck_bunny.jpg"}/>*/}

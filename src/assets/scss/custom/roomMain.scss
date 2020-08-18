@@ -109,6 +109,14 @@ body {
       }
     }
   }
+  //.reconnect-message {
+  //  @media only screen and (max-width: 600px) {
+  //    font-size: 8px;
+  //  }
+  //  @media only screen and (max-width: 768px) {
+  //    font-size: 12px;
+  //  }
+  //}
 }
 
 .inner {
@@ -191,6 +199,16 @@ body {
       }
     }
   }
+
+  //.reconnect-message {
+  //  font-size: medium;
+  //  @media only screen and (max-width: 600px) {
+  //    font-size: 8px;
+  //  }
+  //  @media only screen and (max-width: 768px) {
+  //    font-size: 12px;
+  //  }
+  //}
 }
 
 // fullscreen css
@@ -266,4 +284,13 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  p {
+    text-align: center;
+  }
+}
+
+.reconnect-message {
+  p {
+    margin: 0 !important;
+  }
 }
