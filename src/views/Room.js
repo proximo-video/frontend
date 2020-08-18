@@ -39,9 +39,11 @@ function Room(props) {
     const { match } = props;
     const roomId = match.params.roomId;
     useEffect(() => {
+        if (acceptEntry !== 'W')
+            setShowWaiting(false);
         if (acceptEntry === 'A')
-            setStartRoomView(true)
-    }, [acceptEntry])
+            setStartRoomView(true);
+    }, [acceptEntry]);
     useEffect(() => {
         const checkRoom = async () => {
             try {
@@ -93,6 +95,7 @@ function Room(props) {
             //         value.close();
             //     })
             // }
+            // console.log('Room unmounted:');
             dispatch(closeMedia());
             dispatch(getUserMedia(false));
         }
@@ -114,23 +117,13 @@ function Room(props) {
         else
             setShowWaiting(true);
     }
-    return (!startRoomView ? <LayoutDefault>
-        {!fetched ? <></> : isLogged ?
-            <>
-
-                <><RoomEntry showWaiting={showWaiting} logged={true} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess}></RoomEntry>{acceptEntry === 'R' && 'REJECTED'}</>
-                {/* {
-                Array.from(remoteStreams).map((v) => {
-                    const videoRef = React.createRef();
-                    const videoNode = <video key={v[0]} ref={videoRef} autoPlay />
-                    videoRefArray.push(videoRef)
-                    return videoNode
-                })} */}
-
-            </> : <><RoomEntry showWaiting={showWaiting} logged={false} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess}></RoomEntry>{acceptEntry === 'R' && 'REJECTED'}</>}
-    </LayoutDefault>
-        : <RoomView></RoomView>
-    )
+    return (
+        !startRoomView ?
+        <LayoutDefault>
+            {!fetched ? <></> : <RoomEntry acceptEntry={acceptEntry} showWaiting={showWaiting} logged={isLogged} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess}/>}
+        </LayoutDefault>
+        : <RoomView/>
+    );
 }
 
 export default Room;

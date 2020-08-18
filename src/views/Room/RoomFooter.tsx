@@ -158,7 +158,7 @@ function RoomFooter(props: RoomFooterProps) {
         if (navigator.share) {
             navigator.share({
                 title: 'Proximo',
-                text: 'Join meeting',
+                text: 'Join meeting:',
                 url: linkToShare,
             })
                 .then(() => console.log('Successful share'))
