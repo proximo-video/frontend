@@ -11,6 +11,7 @@ const RoomEntry = (props) => {
     const name = useSelector((state) => state.name).trim();
     const dispatch = useDispatch();
     const [showNameWarning, setShowNameWarning] = useState(false);
+    // const acceptEntry = useSelector(state => state.acceptEntry);
     // console.log('name:', name);
     // const history = useHistory();
     const nameInputHandler = (e) => {
@@ -45,6 +46,10 @@ const RoomEntry = (props) => {
                     <div className="card-content">
                         <PersonalMedia mediaSuccess={props.mediaSuccess} setMediaSuccess={props.setMediaSuccess}/>
                         {
+                            props.acceptEntry === 'R' ?
+                            <div className={"waiting-message-area"}>
+                                <h6>Owner doesn't want you in the meeting. Sorry..!</h6>
+                            </div> :
                             !props.showWaiting ?
                             <div className="room-entry-form">
                                 {
@@ -73,9 +78,7 @@ const RoomEntry = (props) => {
                                             onClick={onJoinButtonClick}>{isRoomOwner ? 'Start' : 'Join'}</Button>
                                     <Button color="primary" onClick={onCancelButtonClick} wide className={"cancel-button"}>Cancel</Button>
                                 </div>
-                                {props.showWaiting && "Waiting"}
-                            </div>
-                            :
+                            </div> :
                             <div className={"waiting-message-area"}>
                                 <div className="loader"/>
                                 <h6>Waiting for room owner to let you in.</h6>

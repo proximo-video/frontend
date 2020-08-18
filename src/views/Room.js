@@ -39,9 +39,11 @@ function Room(props) {
     const { match } = props;
     const roomId = match.params.roomId;
     useEffect(() => {
+        if (acceptEntry !== 'W')
+            setShowWaiting(false);
         if (acceptEntry === 'A')
-            setStartRoomView(true)
-    }, [acceptEntry])
+            setStartRoomView(true);
+    }, [acceptEntry]);
     useEffect(() => {
         const checkRoom = async () => {
             try {
@@ -118,7 +120,7 @@ function Room(props) {
     return (
         !startRoomView ?
         <LayoutDefault>
-            {!fetched ? <></> : <RoomEntry showWaiting={showWaiting} logged={isLogged} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess}/>}
+            {!fetched ? <></> : <RoomEntry acceptEntry={acceptEntry} showWaiting={showWaiting} logged={isLogged} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess}/>}
         </LayoutDefault>
         : <RoomView/>
     );
