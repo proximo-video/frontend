@@ -45,7 +45,7 @@ const RoomEntry = (props) => {
                     <div className="card-content">
                         <PersonalMedia mediaSuccess={props.mediaSuccess} setMediaSuccess={props.setMediaSuccess}/>
                         {
-                            props.showWaiting ?
+                            !props.showWaiting ?
                             <div className="room-entry-form">
                                 {
                                     props.logged && name !== '' ?
@@ -53,7 +53,7 @@ const RoomEntry = (props) => {
                                             {`Join as ${name}`}
                                         </h4> :
                                         <div className={"input-area"}>
-                                            <label className={"input-label"} style={showNameWarning && {display: 'block'}}>
+                                            <label className={"input-label"} style={showNameWarning ? {display: 'block'} : {}}>
                                                 Name is required:
                                             </label>
                                             <input
@@ -63,7 +63,7 @@ const RoomEntry = (props) => {
                                                 id="input-name"
                                                 placeholder="Name"
                                                 className={"room-entry-input"}
-                                                style={showNameWarning && {border: '2px solid #f26b4c'}}
+                                                style={showNameWarning ? {border: '2px solid #f26b4c'} : {}}
                                             />
                                         </div>
                                 }
@@ -74,7 +74,8 @@ const RoomEntry = (props) => {
                                     <Button color="primary" onClick={onCancelButtonClick} wide className={"cancel-button"}>Cancel</Button>
                                 </div>
                                 {props.showWaiting && "Waiting"}
-                            </div> :
+                            </div>
+                            :
                             <div className={"waiting-message-area"}>
                                 <div className="loader"/>
                                 <h6>Waiting for room owner to let you in.</h6>

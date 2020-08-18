@@ -93,6 +93,7 @@ function Room(props) {
             //         value.close();
             //     })
             // }
+            // console.log('Room unmounted:');
             dispatch(closeMedia());
             dispatch(getUserMedia(false));
         }
