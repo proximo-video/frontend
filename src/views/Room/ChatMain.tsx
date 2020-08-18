@@ -35,10 +35,11 @@ export function MessageArea() {
                                 <MessageComponent messageBodyClassName={'right'} avatarPosition={'right'}
                                     id={Mess.id} message={Mess.message}
                                     displayName={name}/> :
-                                <MessageComponent messageBodyClassName={'left'} avatarPosition={'left'}
+                                <MessageComponent messageBodyClassName={'left' + (!users.hasOwnProperty(Mess.id) ? ' user-left-name' : '')} avatarPosition={'left'}
                                     id={Mess.id} message={Mess.message}
                                     avatarClassName={users.hasOwnProperty(Mess.id) ? '' : 'user-left-avatar'}
-                                    displayName={users.hasOwnProperty(Mess.id) ? users[Mess.id].displayName : 'User Left'} />
+                                    displayName={users.hasOwnProperty(Mess.id) ? users[Mess.id].displayName : 'User Left'}
+                                />
                         }
                     </div>
                 )

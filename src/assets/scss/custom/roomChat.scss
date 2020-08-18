@@ -10,6 +10,7 @@ $url-color: #ACADFF;
 $button-border-color: #4c5f77;
 $avatar-background-red: #9c4531;
 $message-display-name-color: #ac91e6;
+$user-left-name: #e6765c;
 
 :root {
   --message-avatar-size: 30px;
@@ -287,5 +288,10 @@ $message-display-name-color: #ac91e6;
     margin: 0 0 -4px 0;
     color: $message-display-name-color;
     line-height: 15px !important;
+  }
+  &.user-left-name {
+    .message-display-name {
+      color: $user-left-name;
+    }
   }
 }
