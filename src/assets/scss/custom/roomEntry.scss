@@ -77,20 +77,30 @@
             padding: 10px;
             width: 80%;
             font-size: medium;
+            box-shadow: 3px 3px 16px 3px rgba(0, 0, 0, 0.5);
+            &:focus {
+              box-shadow: 5px 5px 16px 5px rgba(0, 0, 0, 0.8);
+            }
           }
 
           .room-entry-buttons {
             display: flex;
             justify-content: center;
             align-items: center;
-
+            width: 80%;
+            margin-top: 12%;
             button {
               border-radius: 10px;
-              margin: 40px 10px;
+              max-width: 45%;
+              box-shadow: 3px 3px 16px 3px rgba(0, 0, 0, 0.5);
+              &:hover {
+                box-shadow: 4px 4px 16px 4px rgba(0, 0, 0, 0.7);
+              }
             }
 
             .cancel-button {
               background: #583796;
+              margin-left: auto;
             }
           }
         }

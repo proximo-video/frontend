@@ -5,12 +5,17 @@ import PersonalMedia from './PersonalMedia';
 import {useDispatch, useSelector} from 'react-redux';
 import {setName} from '../redux/actions';
 import '../assets/scss/custom/roomEntry.scss';
+import { useHistory } from "react-router-dom";
 
 const RoomEntry = (props) => {
     const isRoomOwner = useSelector((state) => state.isRoomOwner);
     const dispatch = useDispatch();
+    const history = useHistory();
     const nameInputHandler = (e) => {
         dispatch(setName(e.target.value));
+    }
+    const onCancelButtonClick = () => {
+
     }
     return (
         <>
@@ -21,10 +26,10 @@ const RoomEntry = (props) => {
                         <div className="room-entry-form">
                             {props.logged ? <></> : <input type="text" onChange={nameInputHandler} placeholder="Name" className={"room-entry-input"}/>}
                             <div className={"room-entry-buttons"}>
-                                <Button color="primary" wide className={"mt-32 join-button"}
+                                <Button color="primary" wide className={"join-button"}
                                         disabled={!(props.mediaSuccess && props.iceSuccess)}
                                         onClick={props.createSocket}>{isRoomOwner ? 'Start' : 'Join'}</Button>
-                                <Button color="primary" wide className={"mt-32 cancel-button"}
+                                <Button color="primary" wide className={"cancel-button"}
                                         onClick={null}>Cancel</Button>
                             </div>
                             {props.showWaiting && "Waiting"}
