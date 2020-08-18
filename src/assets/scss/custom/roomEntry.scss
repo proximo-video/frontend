@@ -156,10 +156,17 @@
               &:hover {
                 box-shadow: 4px 4px 16px 4px rgba(0, 0, 0, 0.7);
               }
+              opacity: 0.9;
+              &:hover {
+                opacity: 1;
+              }
             }
             .cancel-button {
               background: #af414a;
               margin-left: auto;
+            }
+            .join-button {
+              background: #6b6dff;
             }
           }
         }
