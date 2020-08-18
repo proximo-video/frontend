@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Button from '../components/elements/Button';
 import PersonalMedia from './PersonalMedia';
 import {useDispatch, useSelector} from 'react-redux';
@@ -10,12 +10,18 @@ const RoomEntry = (props) => {
     const isRoomOwner = useSelector((state) => state.isRoomOwner);
     const name = useSelector((state) => state.name).trim();
     const dispatch = useDispatch();
+    const [showNameWarning, setShowNameWarning] = useState(false);
     // console.log('name:', name);
     // const history = useHistory();
     const nameInputHandler = (e) => {
         const name = e.target.value.trim();
-        if (name !== '')
+        if (name !== '') {
+            e.target.style.border = '2px solid green';
             dispatch(setName(e.target.value));
+            setShowNameWarning(false);
+        }
+        else
+            setShowNameWarning(true);
     }
     const onCancelButtonClick = () => {
 
@@ -25,7 +31,7 @@ const RoomEntry = (props) => {
         if (name !== '')
             props.createSocket();
         else
-            console.log('empty name not allowed');
+            setShowNameWarning(true);
     }
     return (
         <>
@@ -34,13 +40,28 @@ const RoomEntry = (props) => {
                     <div className="card-content">
                         <PersonalMedia mediaSuccess={props.mediaSuccess} setMediaSuccess={props.setMediaSuccess}/>
                         <div className="room-entry-form">
-                            {props.logged && name !== '' ? <></> : <input required type="text" onChange={nameInputHandler} id="input-name" placeholder="Name" className={"room-entry-input"}/>}
+                            {
+                                props.logged && name !== '' ? <></> :
+                                <div className={"input-area"}>
+                                    <label className={"input-label"} style={showNameWarning ? {display: 'block'} : {}}>
+                                        Name is required:
+                                    </label>
+                                    <input
+                                        required
+                                        type="text"
+                                        onChange={nameInputHandler}
+                                        id="input-name"
+                                        placeholder="Name"
+                                        className={"room-entry-input"}
+                                        style={showNameWarning ? {border: '2px solid #f26b4c'} : {}}
+                                    />
+                                </div>
+                            }
                             <div className={"room-entry-buttons"}>
                                 <Button color="primary" wide className={"join-button"}
                                         disabled={!(props.mediaSuccess && props.iceSuccess)}
-                                        onClick={props.createSocket}>{isRoomOwner ? 'Start' : 'Join'}</Button>
-                                <Button color="primary" onClick={onCancelButtonClick} wide className={"cancel-button"}
-                                        onClick={null}>Cancel</Button>
+                                        onClick={onJoinButtonClick}>{isRoomOwner ? 'Start' : 'Join'}</Button>
+                                <Button color="primary" onClick={onCancelButtonClick} wide className={"cancel-button"}>Cancel</Button>
                             </div>
                             {props.showWaiting && "Waiting"}
                         </div>

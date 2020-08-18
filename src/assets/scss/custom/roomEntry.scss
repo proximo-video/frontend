@@ -70,16 +70,28 @@
           justify-content: center;
           align-items: center;
 
-          .room-entry-input {
-            border-radius: 8px;
-            min-height: 40px;
-            border: none;
-            padding: 10px;
+          .input-area {
+            position: relative;
             width: 80%;
-            font-size: medium;
-            box-shadow: 3px 3px 16px 3px rgba(0, 0, 0, 0.5);
-            &:focus {
-              box-shadow: 5px 5px 16px 5px rgba(0, 0, 0, 0.8);
+            .input-label {
+              position: absolute;
+              top: -70%;
+              font-size: medium;
+              color: #f26b4c;
+              display: none;
+            }
+            .room-entry-input {
+              border-radius: 8px;
+              min-height: 40px;
+              border: none;
+              padding: 10px;
+              width: 100%;
+              font-size: medium;
+              box-shadow: 3px 3px 16px 3px rgba(0, 0, 0, 0.5);
+
+              &:focus {
+                box-shadow: 5px 5px 16px 5px rgba(0, 0, 0, 0.8);
+              }
             }
           }
 
