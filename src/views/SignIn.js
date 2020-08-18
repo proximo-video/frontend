@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ButtonGroup from '../components/elements/ButtonGroup';
 import Button from '../components/elements/Button';
 import GoogleLogo from '../assets/images/google.png';
 import GithubLogo from '../assets/images/github.png';
 
-const SignIn = () => {
+const SignIn = (props) => {
+    const noRedirect = ['/', '/privacy-policy', 'about-us'];
+    let redirect = '';
+    useEffect(() => {
+        if (noRedirect.indexOf(props.location.state.prevPath) === -1)
+            //eslint-disable-next-line
+            redirect = props.location.state.prevPath;
+    }, [])
+    console.log(props.location.state.prevPath)
     return (
         <div className="container section">
             <ButtonGroup>

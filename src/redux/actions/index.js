@@ -130,6 +130,13 @@ export const sendMessage = (value) => {
     }
 }
 
+export const setSessionToken = (value) => {
+    return {
+        type: 'SETSESSIONTOKEN',
+        value
+    }
+}
+
 export const sendMessageSocket = (value) => {
     return {
         type: 'SENDMESSAGESOCKET',

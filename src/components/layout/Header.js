@@ -115,7 +115,7 @@ const Header = ({
                       <li>
                         {window.location.pathname !== '/login' && (isLogged ?
                           <Link to="#0" className="button button-primary button-wide-mobile button-sm" onClick={closeMenu}>Logout</Link>
-                          : <Link to="/login" className="button button-primary button-wide-mobile button-sm" onClick={closeMenu}>Login</Link>
+                          : <Link to={{pathname:"/login", state:{ prevPath: window.location.pathname }}} className="button button-primary button-wide-mobile button-sm" onClick={closeMenu}>Login</Link>
                         )}
                       </li>
                     </ul>}

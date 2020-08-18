@@ -64,7 +64,7 @@ const App = (props) => {
   return (fetched ?
     <Switch>
       <AppRoute exact path="/" component={Home} layout={LayoutDefault} />
-      <AppRoute exact path="/welcome" component={Welcome} layout={LayoutDefault} />
+      <AppRoute exact path="/welcome" component={Welcome} layout={WhiteLayout} />
       <AppRoute exact path="/user" component={User} layout={LayoutDefault} />
       <AppRoute exact path="/privacy-policy" component={PrivacyPolicy} layout={LayoutDefault}/>
       <AppRoute exact path="/login" component={SignIn} layout={LayoutDefault}/>

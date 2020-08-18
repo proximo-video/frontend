@@ -23,6 +23,12 @@ export const roomOwnerReducer = (state = false, action) => {
     return state;
 }
 
+export const sessionTokenReducer = (state='',action) =>{
+    if(action.type === 'SETSESSIONTOKEN')
+        return action.value;
+    return state;
+}
+
 export const remoteUsersReducer = (state = {}, action) => {
     if (action.type === 'ADDREMOTEUSER')
         if (!state.hasOwnProperty(action.value.id))
