@@ -3,11 +3,9 @@ import ButtonGroup from '../components/elements/ButtonGroup';
 import Button from '../components/elements/Button';
 import GoogleLogo from '../assets/images/google.png';
 import GithubLogo from '../assets/images/github.png';
-import { useSelector } from 'react-redux';
 
 const SignIn = (props) => {
-    const sessionToken = useSelector((state) => state.sessionToken);
-    const state = 'security_token=' + sessionToken + '&path=' + props.location.state.prevPath;
+    const state ='path='+props.location.state.prevPath;
     console.log(props.location.state.prevPath)
     return (
         <div className="container section">
