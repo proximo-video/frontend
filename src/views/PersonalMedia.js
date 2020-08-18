@@ -68,15 +68,15 @@ const PersonalMedia = (props) => {
                         {!isAudio && <p>You're mic is off</p>}
                     </div>
                     <div className="is-center-flex video-controls">
-                        <div className={"button-wrapper" + (isVideo ? '' : ' video-off')}>
+                        <div className={"button-wrapper"}>
                             <ControlButton
-                                className={(isVideo ? buttonsData[0].onClass : buttonsData[0].offClass)}
+                                className={(isVideo ? buttonsData[0].onClass : buttonsData[0].offClass) + ' room-entry-button'}
                                 icon={(isVideo ? buttonsData[0].onIcon : buttonsData[0].offIcon)}
                                 iconColor={(isVideo ? buttonsData[0].onIconColor : buttonsData[0].offIconColor)}
                                 onClick={toggleVideoStream}
                             />
                             <ControlButton
-                                className={(isAudio ? buttonsData[1].onClass : buttonsData[1].offClass)}
+                                className={(isAudio ? buttonsData[1].onClass : buttonsData[1].offClass) + ' room-entry-button'}
                                 icon={(isAudio ? buttonsData[1].onIcon : buttonsData[1].offIcon)}
                                 iconColor={(isAudio ? buttonsData[1].onIconColor : buttonsData[1].offIconColor)}
                                 onClick={toggleAudioStream}

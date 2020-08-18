@@ -114,23 +114,13 @@ function Room(props) {
         else
             setShowWaiting(true);
     }
-    return (!startRoomView ? <LayoutDefault>
-        {!fetched ? <></> : isLogged ?
-            <>
-
-                <><RoomEntry showWaiting={showWaiting} logged={true} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess}></RoomEntry>{acceptEntry === 'R' && 'REJECTED'}</>
-                {/* {
-                Array.from(remoteStreams).map((v) => {
-                    const videoRef = React.createRef();
-                    const videoNode = <video key={v[0]} ref={videoRef} autoPlay />
-                    videoRefArray.push(videoRef)
-                    return videoNode
-                })} */}
-
-            </> : <><RoomEntry showWaiting={showWaiting} logged={false} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess}></RoomEntry>{acceptEntry === 'R' && 'REJECTED'}</>}
-    </LayoutDefault>
-        : <RoomView></RoomView>
-    )
+    return (
+        !startRoomView ?
+        <LayoutDefault>
+            {!fetched ? <></> : <RoomEntry showWaiting={showWaiting} logged={isLogged} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess}/>}
+        </LayoutDefault>
+        : <RoomView/>
+    );
 }
 
 export default Room;
