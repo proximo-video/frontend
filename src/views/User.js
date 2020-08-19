@@ -26,7 +26,7 @@ function GenRooms(props) {
         <div className="card has-background-dark mb-32">
             <div className="card-content">
                 <div className="level">
-                    <div className="level-left">
+                    <div className="level-left room-name-div">
                         <span className="has-text-white-ter	">{props.room_id}</span>
                     </div>
                     <div className="level-right">
@@ -41,8 +41,10 @@ function GenRooms(props) {
                                     </Switch>
                             }
                         </div>
-                        <div className=" m-8"><Button color="primary goto-room-button"><Link to={{ pathname: "/" + props.room_id }}>Go To Room</Link></Button></div>
-                        <Button color="danger delete-room-button" className="ml-8" roomid={props.room_id} onClick={props.openDeleteModal}><FaTrash className="has-text-white" /></Button>
+                        <div className={"card-buttons"}>
+                            <div className=" m-8"><Button color="primary goto-room-button"><Link to={{ pathname: "/" + props.room_id }}>Go To Room</Link></Button></div>
+                            <Button color="danger delete-room-button" className="ml-8" roomid={props.room_id} onClick={props.openDeleteModal}><FaTrash className="has-text-white" /></Button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -120,7 +122,7 @@ function User(props) {
                     await fetchData();
                 }
                 else if(response.status === 409) {
-                    Error("user-rooms-error", "Room already present.", "Error", 5000);
+                    Error("user-rooms-error", "Room already exists.", "Error", 5000);
                 }
                 else if (response.status === 406) {
                     Error("user-rooms-error", "Can't proceed request. At max 3 private rooms are allowed.", "Error", 5000);

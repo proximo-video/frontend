@@ -225,11 +225,23 @@
 .card-content {
     background-color: transparent;
     padding: 1.5rem;
+	@media only screen and (max-width: 850px) {
+		padding: 0.5rem;
+	}
 }
 .level {
     display: flex;
 	align-items: center;
 	justify-content: space-between;
+	@media only screen and (max-width: 768px) {
+		display: flex !important;
+		flex-direction: column !important;
+		align-items: center;
+		justify-content: center;
+	}
+	@media only screen and (min-width: 769px) {
+		flex-direction: row !important;
+	}
 }
 
 .level-left {
@@ -241,6 +253,21 @@
 	display: flex;
     align-items: center;
     justify-content: flex-end;
+	@media only screen and (max-width: 768px) {
+		display: flex !important;
+		margin-top: 10px;
+	}
+	@media only screen and (max-width: 514px) {
+		flex-direction: column;
+	}
+	.card-buttons {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		@media only screen and (max-width: 850px) {
+
+		}
+	}
 }
 
 .level-left, .level-right {
@@ -387,6 +414,9 @@
 		align-items: center;
 		flex-direction: column;
 		margin-top: 40px;
+		@media only screen and (max-width: 850px) {
+			width: 90%;
+		}
 		.add-room-loader {
 			border: 4px solid #f3f3f3;
 			border-radius: 50%;
@@ -426,6 +456,10 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
+				@media only screen and (max-width: 514px) {
+					min-height: 50px;
+					margin-bottom: 15px;
+				}
 				.toggle-lock-loader {
 					border: 2px solid #f3f3f3;
 					border-radius: 50%;
@@ -434,6 +468,17 @@
 					height: 20px;
 					-webkit-animation: spin 1.5s linear infinite; /* Safari */
 					animation: spin 1.5s linear infinite;
+				}
+			}
+			.room-name-div {
+				max-width: 30%;
+				span {
+					max-width: 100%;
+					word-wrap: break-word;
+					text-align: center;
+				}
+				@media only screen and (max-width: 770px) {
+					max-width: 100%;
 				}
 			}
 		}
@@ -451,6 +496,10 @@
 		justify-content: center;
 		align-items: center;
 		position: relative;
+		@media only screen and (max-width: 850px) {
+			flex-direction: column;
+			margin-top: 20px;
+		}
 		.input-label {
 			position: absolute;
 			top: -5%;
@@ -458,6 +507,10 @@
 			font-size: medium;
 			color: #f26b4c;
 			display: none;
+			@media only screen and (max-width: 850px) {
+				top: -20%;
+				font-size: small;
+			}
 		}
 		.form-input {
 			border-radius: 7px;
@@ -465,6 +518,9 @@
 			width: 80%;
 			&::placeholder {
 				color: #3f475f;
+			}
+			@media only screen and (max-width: 850px) {
+				width: 100%;
 			}
 		}
 		.add-room-button {
