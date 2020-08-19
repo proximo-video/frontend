@@ -53,7 +53,7 @@ function GenRooms(props) {
 
 function User(props) {
     const dispatch = useDispatch();
-    const id = useSelector(state => state.id);
+    // const id = useSelector(state => state.id);
     const name = useSelector(state => state.name);
     const rooms = useSelector(state => state.rooms);
     const isLogged = useSelector(state => state.isLogged);
@@ -82,12 +82,14 @@ function User(props) {
         let response = await fetch('https://proximo-video.herokuapp.com/getUser', { credentials: 'include' });
         if (response.ok) {
             let data = await response.json()
-            console.log(data);
-            console.log("id", id);
+            // console.log(data);
+            // console.log("id", id);
             dispatch(setId(data.id));
             dispatch(setName(data.name));
             if (data.rooms)
                 dispatch(setRooms(data.rooms));
+            else
+                dispatch(setRooms([]));
         }
         else {
             props.history.push("/");
@@ -115,9 +117,10 @@ function User(props) {
                     body: JSON.stringify({room_id: roomIdInput, is_locked: false})
                 });
                 if (response.ok) {
-                    setRoomIdInput("");
                     await fetchData();
                 }
+                setRoomIdInput("");
+                document.getElementById('room-name-input').style.border = 'none';
                 element.removeAttribute("disabled");
                 setShowAddRoomLoader(false);
             }
@@ -187,9 +190,9 @@ function User(props) {
     return isLogged ? (
         <div className="section">
             <div className="container user-rooms">
-                <h2>Welcome {name}</h2>
-                <h6>Create your private rooms here.</h6>
-                <p>*At max 3 private rooms are allowed per user.</p>
+                <h2 className={"h2-message"}>Welcome {name}</h2>
+                <h6 className={"h6-message"}>Create your private rooms here.</h6>
+                <p className={"x-small-message"}>*At max 3 private rooms are allowed per user.</p>
                 <div className="input-area">
                     <label className={"input-label"} style={showRoomNameWarning ? {display: 'block'} : {}}>
                         Room name can only be alphanumeric:
@@ -207,7 +210,9 @@ function User(props) {
                 </div>
                 <div className={"rooms"}>
                     {showAddRoomLoader && <><div className="add-room-loader"/><h6>Creating room. Please wait.</h6></>}
-                    <p>{rooms.length === 0 ? 'Your rooms will be displayed here.' : 'These are your rooms.'}</p>
+                    <p className={"small-message" + (rooms.length !== 0 ? ' empty-rooms-message' : '')}>{rooms.length === 0 ? 'Your rooms will be displayed here.' : 'These are your rooms.'}</p>
+                    {rooms.length === 0 && <p className={"small-message"}>Go on! Create one.</p>}
+                    {rooms.length !== 0 && <p className={"x-small-message"}>*At max 4 people are allowed at a time per room.</p>}
                     {rooms ? rooms.map((value, key) => <GenRooms key={key} room_id={value.room_id} is_locked={value.is_locked} toggleRoom={toggleRoom} openDeleteModal={() => openDeleteModal(value.room_id)}/>) : <></>}
                 </div>
                 <NotificationContainer id={"user-rooms-error"} containerClassName={"rooms-error"}/>

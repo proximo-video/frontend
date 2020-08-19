@@ -369,14 +369,14 @@
 	.rooms-error {
 		position: fixed;
 	}
-	h2 {
+	.h2-message {
 		text-align: center;
 	}
-	h6 {
+	.h6-message {
 		text-align: center;
 		margin-bottom: 0;
 	}
-	p {
+	.x-small-message  {
 		text-align: center;
 		font-size: x-small;
 	}
@@ -437,8 +437,12 @@
 				}
 			}
 		}
-		p {
+		.small-message {
+			text-align: center;
 			font-size: small;
+			&.empty-rooms-message {
+				margin-bottom: 0;
+			}
 		}
 	}
 	.input-area {
