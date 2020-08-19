@@ -116,7 +116,7 @@ function User(props) {
                     headers: {
                         'Content-Type': 'application/json;charset=utf-8'
                     },
-                    body: JSON.stringify({room_id: roomIdInput, is_locked: true})
+                    body: JSON.stringify({room_id: roomName, is_locked: true})
                 });
                 if (response.ok) {
                     await fetchData();

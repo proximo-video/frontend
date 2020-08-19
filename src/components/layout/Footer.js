@@ -45,7 +45,7 @@ const Footer = ({
           </div>
           <div className="footer-bottom space-between text-xxs invert-order-desktop">
             <FooterNav />
-            <div className="footer-copyright">Created by <a href="https://tripathi.dev">Rishabh Tripathi</a> and <a href="https://github.com/aniketsingh0104">Aniket Singh</a>. All right reserved</div>
+            <div className="footer-copyright">Created by <a href="https://tripathi.dev">Rishabh Tripathi</a> and <a href="https://github.com/aniketsingh0104">Aniket Singh</a>. &copy; {new Date().getFullYear()} All rights reserved</div>
           </div>
         </div>
       </div>
