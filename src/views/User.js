@@ -82,7 +82,7 @@ function User(props) {
     }
 
     const fetchData = async () => {
-        let response = await fetch('http://api.proximo.pw/getUser', { credentials: 'include' });
+        let response = await fetch('https://api.proximo.pw/getUser', { credentials: 'include' });
         if (response.ok) {
             let data = await response.json()
             // console.log(data);
@@ -111,7 +111,7 @@ function User(props) {
                 setShowRoomNameWarning(false);
                 setShowAddRoomLoader(true);
                 element.setAttribute("disabled", "true");
-                let response = await fetch('http://api.proximo.pw/newRoom', {
+                let response = await fetch('https://api.proximo.pw/newRoom', {
                     method: 'POST',
                     credentials: 'include',
                     headers: {
@@ -146,7 +146,7 @@ function User(props) {
     }
 
     const toggleRoom = async (id) => {
-        let response = await fetch('http://api.proximo.pw/toggle', {
+        let response = await fetch('https://api.proximo.pw/toggle', {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -181,7 +181,7 @@ function User(props) {
     const deleteRoom = async (e) => {
         const element = e.target;
         element.setAttribute("disabled", "true")
-        let response = await fetch('http://api.proximo.pw/deleteRoom', {
+        let response = await fetch('https://api.proximo.pw/deleteRoom', {
             method: 'POST',
             credentials: 'include',
             headers: {

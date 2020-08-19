@@ -74,7 +74,7 @@ const sendMessageSocket = (params) => {
 
 const socketAndWebRTC = (params, store) => {
     const connectToWebSocket = () => {
-        const webSocketConnection = "ws://api.proximo.pw/ws";
+        const webSocketConnection = "wss://api.proximo.pw/ws";
         // const webSocketConnection = "ws://localhost:8080/ws";
         if (!socket)
             socket = new WebSocket(webSocketConnection);

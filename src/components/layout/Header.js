@@ -65,7 +65,7 @@ const Header = ({
   }
 
   const logoutFunc = async () => {
-    let response = await fetch('http://api.proximo.pw/logout', { credentials: 'include' });
+    let response = await fetch('https://api.proximo.pw/logout', { credentials: 'include' });
     if (response.ok) {
       dispatch(logout());
     }
