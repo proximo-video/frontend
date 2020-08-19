@@ -10,6 +10,7 @@ export interface NotificationsProps {
     enterTimeout: number;
     exitTimeout: number;
     position: 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right';
+    containerClassName: string;
 }
 
 export default function Notifications(props: NotificationsProps) {
@@ -24,7 +25,7 @@ export default function Notifications(props: NotificationsProps) {
     const { notifications, enterTimeout, exitTimeout } = props;
     const className = classnames('notification-container', {
         'notification-container-empty': notifications.length === 0
-    }, props.position);
+    }, props.position, props.containerClassName);
 
     return (
         <div className={className}>
@@ -61,5 +62,6 @@ Notifications.defaultProps = {
     },
     enterTimeout: 400,
     exitTimeout: 400,
-    position: 'bottom-left'
+    position: 'bottom-left',
+    containerClassName: '',
 }

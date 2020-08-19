@@ -366,6 +366,9 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	.rooms-error {
+		position: fixed;
+	}
 	h2 {
 		text-align: center;
 	}

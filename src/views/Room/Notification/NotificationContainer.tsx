@@ -7,6 +7,7 @@ export interface NotificationContainerProps {
     exitTimeout: number;
     position: 'bottom-left' | 'bottom-right' | 'top-right' | 'top-left';
     id: string;
+    containerClassName: string;
 }
 
 export default function NotificationContainer(props: NotificationContainerProps) {
@@ -42,6 +43,7 @@ export default function NotificationContainer(props: NotificationContainerProps)
             notifications={notifications}
             onRequestHide={handleRequestHide}
             position={props.position}
+            containerClassName={props.containerClassName}
         />
     );
 }
@@ -50,4 +52,5 @@ NotificationContainer.defaultProps = {
     enterTimeout: 400,
     exitTimeout: 400,
     position: 'bottom-left',
+    containerClassName: '',
 }

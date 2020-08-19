@@ -6,6 +6,8 @@ import Modal from '../components/elements/Modal';
 import { FaTrash } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { setName, setRooms, setId } from '../redux/actions';
+import NotificationContainer from "./Room/Notification/NotificationContainer";
+import {Error} from "./Room/Notification/NotificationManager";
 
 
 function GenRooms(props) {
@@ -95,23 +97,30 @@ function User(props) {
         const element = e.target;
         const roomName = roomIdInput.trim();
         if (roomName !== '' && roomName.match(/^[0-9a-zA-Z]+$/)) {
-            setShowRoomNameWarning(false);
-            setShowAddRoomLoader(true);
-            element.setAttribute("disabled", "true");
-            let response = await fetch('https://proximo-video.herokuapp.com/newRoom', {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
-                body: JSON.stringify({ room_id: roomIdInput, is_locked: false })
-            });
-            if (response.ok) {
+            if (rooms.length >= 3) {
+                Error("user-rooms-error", "Can't proceed request. At max 3 private rooms are allowed.", "Error", 5000);
                 setRoomIdInput("");
-                await fetchData();
+                document.getElementById('room-name-input').style.border = 'none';
             }
-            element.removeAttribute("disabled");
-            setShowAddRoomLoader(false);
+            else {
+                setShowRoomNameWarning(false);
+                setShowAddRoomLoader(true);
+                element.setAttribute("disabled", "true");
+                let response = await fetch('https://proximo-video.herokuapp.com/newRoom', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify({room_id: roomIdInput, is_locked: false})
+                });
+                if (response.ok) {
+                    setRoomIdInput("");
+                    await fetchData();
+                }
+                element.removeAttribute("disabled");
+                setShowAddRoomLoader(false);
+            }
         } else {
             // alert("Enter numbers and alphabets only.");
             setShowRoomNameWarning(true);
@@ -186,6 +195,7 @@ function User(props) {
                         Room name can only be alphanumeric:
                     </label>
                     <input
+                        id={"room-name-input"}
                         className={"form-input"}
                         value={roomIdInput}
                         onChange={roomInputHandle}
@@ -200,6 +210,7 @@ function User(props) {
                     <p>{rooms.length === 0 ? 'Your rooms will be displayed here.' : 'These are your rooms.'}</p>
                     {rooms ? rooms.map((value, key) => <GenRooms key={key} room_id={value.room_id} is_locked={value.is_locked} toggleRoom={toggleRoom} openDeleteModal={() => openDeleteModal(value.room_id)}/>) : <></>}
                 </div>
+                <NotificationContainer id={"user-rooms-error"} containerClassName={"rooms-error"}/>
             </div>
         </div>
     ) : <></>;
