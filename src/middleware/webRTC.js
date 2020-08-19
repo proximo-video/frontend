@@ -1,5 +1,5 @@
 import { localStream } from './getUserMedia';
-import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference, meetingEnded, addEntryRequest, acceptEntry, rejectEntry } from '../redux/actions'
+import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference, meetingEnded, addEntryRequest, acceptEntry, rejectEntry, remoteConnected, remoteDisconnected } from '../redux/actions'
 let socket;
 let iceServers;
 let connections = new Map();
@@ -234,9 +234,11 @@ const socketAndWebRTC = (params, store) => {
         connection.onconnectionstatechange = function (event) {
             switch (connection.connectionState) {
                 case "connected":
+                    store.dispatch(remoteConnected(toUser));
                     console.log("Web RTC Peer Connection Connected.");
                     break;
                 case "disconnected":
+                    store.dispatch(remoteDisconnected(toUser));
                     console.log("Web RTC Peer Connection Disconnected. Please reload the page to reconnect.");
                     // deleteStream(toUser);
                     // try {
