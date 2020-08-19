@@ -64,8 +64,8 @@ const PersonalMedia = (props) => {
                 {/*<div className={"inner-video"}>*/}
                     <video className="self-video" ref={videoRef} autoPlay muted playsInline/>
                     <div className={"overlay-message"} style={isVideo ? {display: 'none'} : {}}>
-                        <p>You're camera is off</p>
-                        {!isAudio && <p>You're mic is off</p>}
+                        <p>Your camera is off</p>
+                        {!isAudio && <p>Your mic is off</p>}
                     </div>
                     <div className="is-center-flex video-controls">
                         <div className={"button-wrapper"}>

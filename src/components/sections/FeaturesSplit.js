@@ -51,7 +51,7 @@ const FeaturesSplit = ({
 
   const sectionHeader = {
     title: 'Workflow that just works',
-    paragraph: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum — semper quis lectus nulla at volutpat diam ut venenatis.'
+    paragraph: "Simple design. Join with just one click. No emails, no promotional content we believe in privacy and quality."
   };
 
   return (
@@ -67,13 +67,13 @@ const FeaturesSplit = ({
             <div className="split-item">
               <div className="split-item-content center-content-mobile reveal-from-left" data-reveal-container=".split-item">
                 <div className="text-xxs text-color-primary fw-600 tt-u mb-8">
-                  Lightning fast workflow
+                  Custom rooms
                   </div>
                 <h3 className="mt-0 mb-12">
-                  Data-driven insights
+                  Simple room links
                   </h3>
                 <p className="m-0">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua — Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                  Share the same custom link for every meeting – Easy to remember and easy to join.
                   </p>
               </div>
               <div className={
@@ -83,8 +83,8 @@ const FeaturesSplit = ({
                 )}
                 data-reveal-container=".split-item">
                 <Image
-                  src={require('./../../assets/images/features-split-image-01.png')}
-                  alt="Features split 01"
+                  src={'/images/simpleUrl.jpg'}
+                  alt="Simple room url"
                   width={528}
                   height={396} />
               </div>
@@ -93,13 +93,13 @@ const FeaturesSplit = ({
             <div className="split-item">
               <div className="split-item-content center-content-mobile reveal-from-right" data-reveal-container=".split-item">
                 <div className="text-xxs text-color-primary fw-600 tt-u mb-8">
-                  Lightning fast workflow
+                  Beautiful UI
                   </div>
                 <h3 className="mt-0 mb-12">
-                  Data-driven insights
+                  Dark theme UI.
                   </h3>
                 <p className="m-0">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua — Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                  Collaborate with your team or friends. Experience amazing dark mode UI. With HD video calls.
                   </p>
               </div>
               <div className={
@@ -109,7 +109,7 @@ const FeaturesSplit = ({
                 )}
                 data-reveal-container=".split-item">
                 <Image
-                  src={require('./../../assets/images/features-split-image-02.png')}
+                  src={'/images/room_entry.jpg'}
                   alt="Features split 02"
                   width={528}
                   height={396} />
@@ -117,28 +117,29 @@ const FeaturesSplit = ({
             </div>
 
             <div className="split-item">
-              <div className="split-item-content center-content-mobile reveal-from-left" data-reveal-container=".split-item">
+              <div className="split-item-content center-content-mobile reveal-from-left room-entry-content" data-reveal-container=".split-item">
                 <div className="text-xxs text-color-primary fw-600 tt-u mb-8">
-                  Lightning fast workflow
+                  No login required to join.
                   </div>
                 <h3 className="mt-0 mb-12">
-                  Data-driven insights
+                  Join with one click.
                   </h3>
                 <p className="m-0">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua — Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                  Join any room meeting with just one click with any chosen name.
                   </p>
               </div>
               <div className={
                 classNames(
                   'split-item-image center-content-mobile reveal-from-bottom',
-                  imageFill && 'split-item-image-fill'
+                  imageFill && 'split-item-image-fill', 'room-entry-image'
                 )}
                 data-reveal-container=".split-item">
                 <Image
-                  src={require('./../../assets/images/features-split-image-03.png')}
+                  src={'/images/room_entry.jpg'}
                   alt="Features split 03"
-                  width={528}
-                  height={396} />
+                  width={700}
+                  height={450}
+                />
               </div>
             </div>
 

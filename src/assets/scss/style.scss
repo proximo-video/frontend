@@ -615,3 +615,29 @@
 		}
 	}
 }
+
+
+
+.split-item-content {
+	margin: 0 !important;
+	max-width: 50%;
+	@media only screen and (max-width: 645px){
+		max-width: 100%;
+	}
+	&.room-entry-content {
+		max-width: 30%;
+	}
+}
+
+.split-item-image {
+	min-width: 50% !important;
+	&.room-entry-image {
+		min-width: 70%;
+	}
+}
+
+.illustration-section-02 {
+	.container {
+		padding: 0 !important;
+	}
+}
