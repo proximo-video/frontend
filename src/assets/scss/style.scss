@@ -443,6 +443,15 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		position: relative;
+		.input-label {
+			position: absolute;
+			top: -5%;
+			left: 0;
+			font-size: medium;
+			color: #f26b4c;
+			display: none;
+		}
 		.form-input {
 			border-radius: 7px;
 			//flex-grow: 1;

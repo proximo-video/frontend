@@ -59,9 +59,21 @@ function User(props) {
     const [deleteRoomId, setDeleteRoomId] = useState("");
     const [roomIdInput, setRoomIdInput] = useState("");
     const [showAddRoomLoader, setShowAddRoomLoader] = useState(false);
+    const [showRoomNameWarning, setShowRoomNameWarning] = useState(false);
 
     const roomInputHandle = (event) => {
-        setRoomIdInput(event.target.value)
+        const roomId = event.target.value.trim();
+        setRoomIdInput(event.target.value);
+        if(roomId !== '' && roomId.match(/^[0-9a-zA-Z]+$/)) {
+            event.target.style.border = '3px solid green';
+            setShowRoomNameWarning(false);
+        }
+        else if (roomId !== '')
+            setShowRoomNameWarning(true);
+        else if (roomId === '') {
+            event.target.style.border = 'none';
+            setShowRoomNameWarning(false);
+        }
     }
 
     const fetchData = async () => {
@@ -81,7 +93,9 @@ function User(props) {
     }
     const addRoom = async (e) => {
         const element = e.target;
-        if (roomIdInput.match(/^[0-9a-zA-Z]+$/)) {
+        const roomName = roomIdInput.trim();
+        if (roomName !== '' && roomName.match(/^[0-9a-zA-Z]+$/)) {
+            setShowRoomNameWarning(false);
             setShowAddRoomLoader(true);
             element.setAttribute("disabled", "true");
             let response = await fetch('https://proximo-video.herokuapp.com/newRoom', {
@@ -94,12 +108,13 @@ function User(props) {
             });
             if (response.ok) {
                 setRoomIdInput("");
-                fetchData();
+                await fetchData();
             }
             element.removeAttribute("disabled");
             setShowAddRoomLoader(false);
-        } else{
-            alert("Enter numbers and alphabets only.");
+        } else {
+            // alert("Enter numbers and alphabets only.");
+            setShowRoomNameWarning(true);
         }
     }
 
@@ -167,7 +182,16 @@ function User(props) {
                 <h6>Create your private rooms here.</h6>
                 <p>*At max 3 private rooms are allowed per user.</p>
                 <div className="input-area">
-                    <input className={"form-input"} value={roomIdInput} onChange={roomInputHandle} placeholder={"Room Name"}/>
+                    <label className={"input-label"} style={showRoomNameWarning ? {display: 'block'} : {}}>
+                        Room name can only be alphanumeric:
+                    </label>
+                    <input
+                        className={"form-input"}
+                        value={roomIdInput}
+                        onChange={roomInputHandle}
+                        placeholder={"Room Name"}
+                        style={showRoomNameWarning ? {border: '3px solid #f26b4c'} : {}}
+                    />
                     <Button color="primary add-room-button" onClick={addRoom}>Create Room</Button>
                     {showDeleteModal()}
                 </div>
