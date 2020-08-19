@@ -112,17 +112,14 @@ function Room(props) {
     const createSocket = () => {
         //Socket(isLogged? "START" : "JOIN", id, roomId, connections, updateConnection, addStream, deleteStream, localStream, iceServers);
         dispatch(connectSocket({ action: isRoomOwner ? 'START' : 'JOIN', id: id, roomId: roomId, displayName: name }))
-        if (isRoomOwner || !isRoomLocked)
-            setStartRoomView(true);
-        else
-            setShowWaiting(true);
+        setShowWaiting(true);
     }
     return (
         !startRoomView ?
-        <LayoutDefault>
-            {!fetched ? <></> : <RoomEntry acceptEntry={acceptEntry} showWaiting={showWaiting} logged={isLogged} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess}/>}
-        </LayoutDefault>
-        : <RoomView/>
+            <LayoutDefault>
+                {!fetched ? <></> : <RoomEntry isRoomLocked={isRoomLocked} isRoomOwner={isRoomOwner} acceptEntry={acceptEntry} showWaiting={showWaiting} logged={isLogged} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess} />}
+            </LayoutDefault>
+            : <RoomView />
     );
 }
 

@@ -81,7 +81,7 @@ const RoomEntry = (props) => {
                             </div> :
                             <div className={"waiting-message-area"}>
                                 <div className="loader"/>
-                                <h6>Waiting for room owner to let you in.</h6>
+                                {!props.isRoomOwner && props.isRoomLocked && <h6>Waiting for room owner to let you in.</h6>}
                             </div>
                         }
                     </div>
