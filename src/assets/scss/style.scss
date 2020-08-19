@@ -382,20 +382,28 @@
 			font-size: 80px;
 			font-weight: bold;
 			letter-spacing: -2.18px;
-			line-height: 80px;
+			line-height: 90px;
 			text-align: center;
 			padding: 0px;
 			margin: 12px auto 0px;
 			@media only screen and (max-width: 900px) {
 				width: 582px;
+				line-height: 80px;
 			}
 			@media only screen and (max-width: 768px) {
 				width: 400px;
 				font-size: 60px;
+				line-height: 70px;
 			}
 			@media only screen and (max-width: 500px) {
 				width: 300px;
 				font-size: 50px;
+				line-height: 70px;
+			}
+			@media only screen and (max-width: 300px) {
+				width: 250px;
+				font-size: 40px;
+				line-height: 60px;
 			}
 		}
 		&.para-description {
@@ -411,11 +419,11 @@
 			}
 			@media only screen and (max-width: 768px) {
 				width: 300px;
-				font-size: 15px;
+				font-size: 20px;
 			}
 			@media only screen and (max-width: 500px) {
 				width: 200px;
-				font-size: 14px;
+				font-size: 18px;
 			}
 		}
 		&.login-buttons {

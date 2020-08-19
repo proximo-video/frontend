@@ -44,8 +44,8 @@ const FeaturesTiles = ({
   );
 
   const sectionHeader = {
-    title: 'Build up the whole picture',
-    paragraph: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum — semper quis lectus nulla at volutpat diam ut venenatis.'
+    title: 'End-To-End encrypted real-time video calls.',
+    paragraph: 'Built in India by privacy-friendly Indians, Proximo is the easiest way to meet over video. There’s no app or software download required. Just choose your own personalized URL and meet using your internet browser - on mobile or desktop - with just one click.'
   };
 
   return (
@@ -56,6 +56,7 @@ const FeaturesTiles = ({
       <div className="container">
         <div className={innerClasses}>
           <SectionHeader data={sectionHeader} className="center-content" />
+          {/*<p>No login required to Join a video call.</p>*/}
           <div className={tilesClasses}>
 
             <div className="tiles-item reveal-from-bottom">
