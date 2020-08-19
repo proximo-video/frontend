@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 import Logo from './partials/Logo';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../redux/actions';
-import Button from '../elements/Button'
+import Button from '../elements/Button';
+
 
 
 const propTypes = {
@@ -64,7 +65,7 @@ const Header = ({
   }
 
   const logoutFunc = async () => {
-    let response = await fetch('https://proximo-video.herokuapp.com/logout', { credentials: 'include' });
+    let response = await fetch('http://api.proximo.pw/logout', { credentials: 'include' });
     if (response.ok) {
       dispatch(logout());
     }
@@ -99,7 +100,9 @@ const Header = ({
             'site-header-inner',
             bottomDivider && 'has-bottom-divider'
           )}>
-          <Logo />
+          {/*<Logo />*/}
+          <Logo/>
+
           {!hideNav &&
             <>
               <button

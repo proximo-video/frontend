@@ -1,7 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
-import Image from '../../elements/Image';
+// import Image from '../../elements/Image';
+import {ReactComponent as BrandLogo} from '../../../assets/images/logo.svg';
 
 const Logo = ({
   className,
@@ -20,11 +21,7 @@ const Logo = ({
     >
       <h1 className="m-0">
         <Link to="/">
-          <Image
-            src='/logo.svg'
-            alt="Open"
-            width={64}
-            height={32} />
+          <BrandLogo/>
         </Link>
       </h1>
     </div>

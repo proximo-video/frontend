@@ -621,6 +621,12 @@
 .split-item-content {
 	margin: 0 !important;
 	max-width: 50%;
+	&.reveal-from-right {
+		padding-left: 20px;
+	}
+	&.reveal-from-left {
+		padding-right: 15px;
+	}
 	@media only screen and (max-width: 645px){
 		max-width: 100%;
 	}
@@ -631,6 +637,7 @@
 
 .split-item-image {
 	min-width: 50% !important;
+	box-shadow: 3px 3px 16px 3px rgba(0, 0, 0, 0.5);
 	&.room-entry-image {
 		min-width: 70%;
 	}

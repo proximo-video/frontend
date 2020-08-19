@@ -34,7 +34,7 @@ const App = (props) => {
   let location = useLocation();
   useEffect(() => {
     const fetchData = async () => {
-      let response = await fetch('https://proximo-video.herokuapp.com/getUser', { credentials: 'include' });
+      let response = await fetch('http://api.proximo.pw/getUser', { credentials: 'include' });
       if (response.ok) {
         let data = await response.json()
         console.log(data);

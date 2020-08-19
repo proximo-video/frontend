@@ -47,7 +47,7 @@ function Room(props) {
     useEffect(() => {
         const checkRoom = async () => {
             try {
-                let response = await fetch('https://proximo-video.herokuapp.com/checkRoom', {
+                let response = await fetch('http://api.proximo.pw/checkRoom', {
                     method: 'POST',
                     credentials: 'include',
                     headers: {
@@ -67,7 +67,7 @@ function Room(props) {
 
         const getIceServer = async () => {
             try {
-                let response = await fetch('https://proximo-video.herokuapp.com/iceserver');
+                let response = await fetch('http://api.proximo.pw/iceserver');
                 if (response.ok) {
                     let data = await response.json()
                     setIceSuccess(true);

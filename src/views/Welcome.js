@@ -15,7 +15,7 @@ function Welcome(props) {
         let service;
         scope === null ? service = "github" : service = "google";
         const fetchData = async () => {
-            let response = await fetch('https://proximo-video.herokuapp.com/auth', {
+            let response = await fetch('http://api.proximo.pw/auth', {
                 method: 'POST',
                 credentials: 'include',
                 headers: {

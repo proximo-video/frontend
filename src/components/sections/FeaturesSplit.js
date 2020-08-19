@@ -51,7 +51,7 @@ const FeaturesSplit = ({
 
   const sectionHeader = {
     title: 'Workflow that just works',
-    paragraph: "Simple design. Join with just one click. No emails, no promotional content we believe in privacy and quality."
+    paragraph: "Simple design. Join with just one click. No emails, no promotional content. We believe in privacy and quality."
   };
 
   return (
@@ -63,7 +63,6 @@ const FeaturesSplit = ({
         <div className={innerClasses}>
           <SectionHeader data={sectionHeader} className="center-content" />
           <div className={splitClasses}>
-
             <div className="split-item">
               <div className="split-item-content center-content-mobile reveal-from-left" data-reveal-container=".split-item">
                 <div className="text-xxs text-color-primary fw-600 tt-u mb-8">
