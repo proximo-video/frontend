@@ -154,6 +154,15 @@ function User(props) {
         if (response.ok) {
             await fetchData();
         }
+        else if (response.status === 404) {
+            Error("user-rooms-error", "Room not found.", "Error", 5000);
+        }
+        else if (response.status === 400) {
+            Error("user-rooms-error", "Bad request.", "Error", 5000);
+        }
+        else {
+            Error("user-rooms-error", "Internal server error.", "Error", 5000);
+        }
     }
 
     const openDeleteModal = (id) => {
