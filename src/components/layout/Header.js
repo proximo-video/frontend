@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import Logo from './partials/Logo';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../../redux/actions';
+import Button from '../elements/Button'
+
 
 const propTypes = {
   navPosition: PropTypes.string,
@@ -32,6 +35,7 @@ const Header = ({
 }) => {
   const isLogged = useSelector(state => state.isLogged);
   const [isActive, setIsactive] = useState(false);
+  const dispatch = useDispatch();
 
   const nav = useRef(null);
   const hamburger = useRef(null);
@@ -57,6 +61,14 @@ const Header = ({
     document.body.classList.remove('off-nav-is-active');
     nav.current && (nav.current.style.maxHeight = null);
     setIsactive(false);
+  }
+
+  const logoutFunc = async () => {
+    let response = await fetch('https://proximo-video.herokuapp.com/logout', { credentials: 'include' });
+    if (response.ok) {
+      dispatch(logout());
+    }
+    closeMenu();
   }
 
   const keyPress = (e) => {
@@ -113,9 +125,9 @@ const Header = ({
                       className="list-reset header-nav-right"
                     >
                       <li>
-                        {window.location.pathname !== '/login' && (isLogged ?
-                          <Link to="#0" className="button button-primary button-wide-mobile button-sm" onClick={closeMenu}>Logout</Link>
-                          : <Link to={{pathname:"/login", state:{ prevPath: window.location.pathname }}} className="button button-primary button-wide-mobile button-sm" onClick={closeMenu}>Login</Link>
+                        {(window.location.pathname !== '/login' && window.location.pathname !== '/') && (isLogged ?
+                          <Button className="button button-primary button-wide-mobile button-sm" onClick={logoutFunc}>Logout</Button>
+                          : <Link to={{ pathname: "/login", state: { prevPath: window.location.pathname } }} className="button button-primary button-wide-mobile button-sm" onClick={closeMenu}>Login</Link>
                         )}
                       </li>
                     </ul>}

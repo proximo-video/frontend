@@ -7,7 +7,8 @@ import { FaTrash } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { setName, setRooms, setId } from '../redux/actions';
 import NotificationContainer from "./Room/Notification/NotificationContainer";
-import {Error} from "./Room/Notification/NotificationManager";
+import { Error } from "./Room/Notification/NotificationManager";
+import { Redirect } from "react-router-dom";
 
 
 function GenRooms(props) {
@@ -33,10 +34,10 @@ function GenRooms(props) {
                         <div className="margin-bottom-mobile m-16 room-lock-toggle">
                             {
                                 showToggleLoader ?
-                                    <div className="toggle-lock-loader"/>
+                                    <div className="toggle-lock-loader" />
                                     :
                                     <Switch roomid={props.room_id} className="has-text-white-ter mr-6"
-                                            checked={props.is_locked || false} onChange={(e) =>  handleToggleRoomClick(e, props.room_id)}>
+                                        checked={props.is_locked || false} onChange={(e) => handleToggleRoomClick(e, props.room_id)}>
                                         {props.is_locked ? "Locked" : "Open"}
                                     </Switch>
                             }
@@ -68,7 +69,7 @@ function User(props) {
     const roomInputHandle = (event) => {
         const roomId = event.target.value.trim();
         setRoomIdInput(event.target.value);
-        if(roomId !== '' && roomId.match(/^[0-9a-zA-Z]+$/)) {
+        if (roomId !== '' && roomId.match(/^[0-9a-zA-Z]+$/)) {
             event.target.style.border = '3px solid green';
             setShowRoomNameWarning(false);
         }
@@ -116,12 +117,12 @@ function User(props) {
                     headers: {
                         'Content-Type': 'application/json;charset=utf-8'
                     },
-                    body: JSON.stringify({room_id: roomName, is_locked: true})
+                    body: JSON.stringify({ room_id: roomName, is_locked: true })
                 });
                 if (response.ok) {
                     await fetchData();
                 }
-                else if(response.status === 409) {
+                else if (response.status === 409) {
                     Error("user-rooms-error", "Room already exists.", "Error", 5000);
                 }
                 else if (response.status === 406) {
@@ -226,7 +227,7 @@ function User(props) {
                 <h6 className={"h6-message"}>Create your private rooms here.</h6>
                 <p className={"x-small-message"}>*At max 3 private rooms are allowed per user.</p>
                 <div className="input-area">
-                    <label className={"input-label"} style={showRoomNameWarning ? {display: 'block'} : {}}>
+                    <label className={"input-label"} style={showRoomNameWarning ? { display: 'block' } : {}}>
                         Room name can only be alphanumeric:
                     </label>
                     <input
@@ -235,22 +236,22 @@ function User(props) {
                         value={roomIdInput}
                         onChange={roomInputHandle}
                         placeholder={"Room Name"}
-                        style={showRoomNameWarning ? {border: '3px solid #f26b4c'} : {}}
+                        style={showRoomNameWarning ? { border: '3px solid #f26b4c' } : {}}
                     />
                     <Button color="primary add-room-button" onClick={addRoom}>Create Room</Button>
                     {showDeleteModal()}
                 </div>
                 <div className={"rooms"}>
-                    {showAddRoomLoader && <><div className="add-room-loader"/><h6>Creating room. Please wait.</h6></>}
+                    {showAddRoomLoader && <><div className="add-room-loader" /><h6>Creating room. Please wait.</h6></>}
                     <p className={"small-message" + (rooms.length !== 0 ? ' empty-rooms-message' : '')}>{rooms.length === 0 ? 'Your rooms will be displayed here.' : 'These are your rooms.'}</p>
                     {rooms.length === 0 && <p className={"small-message"}>Go on! Create one.</p>}
                     {rooms.length !== 0 && <p className={"x-small-message"}>*At max 4 people are allowed at a time per room.</p>}
-                    {rooms ? rooms.map((value, key) => <GenRooms key={key} room_id={value.room_id} is_locked={value.is_locked} toggleRoom={toggleRoom} openDeleteModal={() => openDeleteModal(value.room_id)}/>) : <></>}
+                    {rooms ? rooms.map((value, key) => <GenRooms key={key} room_id={value.room_id} is_locked={value.is_locked} toggleRoom={toggleRoom} openDeleteModal={() => openDeleteModal(value.room_id)} />) : <></>}
                 </div>
-                <NotificationContainer id={"user-rooms-error"} containerClassName={"rooms-error"}/>
+                <NotificationContainer id={"user-rooms-error"} containerClassName={"rooms-error"} />
             </div>
         </div>
-    ) : <></>;
+    ) : <Redirect to='/login'/>;
 
 }
 
