@@ -62,14 +62,14 @@ const Hero = ({
       <div className="container-sm">
         <div className={innerClasses}>
           <div className="hero-content">
-            <h1 className="mt-0 mb-16 reveal-from-bottom" data-reveal-delay="200">
+            <h1 className="mt-0 mb-16 reveal-from-bottom heading" data-reveal-delay="200">
               Bring people together with <span className="text-color-primary">Proximo</span>
             </h1>
             <div className="container-xs">
-              <p className="m-0 mb-32 reveal-from-bottom" data-reveal-delay="400">
-                Our landing page template works on all devices, so you only have to set it up once, and get beautiful results forever.
+              <p className="m-0 mb-32 reveal-from-bottom para-description" data-reveal-delay="400">
+                Host or join high-performing video conference meetings, go live, collaborate with your friends, and share anywhere.
                 </p>
-              <div className="reveal-from-bottom" data-reveal-delay="600">
+              <div className="reveal-from-bottom login-buttons" data-reveal-delay="600">
                 <ButtonGroup>
                   <Button tag="a" color="dark" wideMobile href="https://accounts.google.com/o/oauth2/v2/auth?client_id=287838666978-fnnt6fujf4malkfn3ppoqrrdcfqk75h1.apps.googleusercontent.com&redirect_uri=http://localhost:8000/welcome.html&response_type=code&scope=profile">
                     Login with <img className="logo" src={GoogleLogo} alt="Google Login"></img>
