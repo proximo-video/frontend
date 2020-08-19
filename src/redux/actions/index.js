@@ -130,6 +130,20 @@ export const sendMessage = (value) => {
     }
 }
 
+export const remoteDisconnected = (value) => {
+    return {
+        type: 'REMOTEDISCONNECTED',
+        value
+    }
+}
+
+export const remoteConnected = (value) => {
+    return {
+        type: 'REMOTECONNECTED',
+        value
+    }
+}
+
 export const sendMessageSocket = (value) => {
     return {
         type: 'SENDMESSAGESOCKET',
