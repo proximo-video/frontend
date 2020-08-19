@@ -125,7 +125,7 @@ const Header = ({
                       className="list-reset header-nav-right"
                     >
                       <li>
-                        {window.location.pathname !== '/login' && (isLogged ?
+                        {(window.location.pathname !== '/login' && window.location.pathname !== '/') && (isLogged ?
                           <Button className="button button-primary button-wide-mobile button-sm" onClick={logoutFunc}>Logout</Button>
                           : <Link to={{ pathname: "/login", state: { prevPath: window.location.pathname } }} className="button button-primary button-wide-mobile button-sm" onClick={closeMenu}>Login</Link>
                         )}
