@@ -119,6 +119,18 @@ function User(props) {
                 if (response.ok) {
                     await fetchData();
                 }
+                else if(response.status === 409) {
+                    Error("user-rooms-error", "Room already present.", "Error", 5000);
+                }
+                else if (response.status === 406) {
+                    Error("user-rooms-error", "Can't proceed request. At max 3 private rooms are allowed.", "Error", 5000);
+                }
+                else if (response.status === 400) {
+                    Error("user-rooms-error", "Bad request.", "Error", 5000);
+                }
+                else {
+                    Error("user-rooms-error", "Internal server error.", "Error", 5000);
+                }
                 setRoomIdInput("");
                 document.getElementById('room-name-input').style.border = 'none';
                 element.removeAttribute("disabled");
