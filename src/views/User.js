@@ -8,6 +8,47 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setName, setRooms, setId } from '../redux/actions';
 
 
+function GenRooms(props) {
+    const [showToggleLoader, setShowToggleLoader] = useState(false);
+
+    const handleToggleRoomClick = async (e, id) => {
+        setShowToggleLoader(true);
+        const ele = e.target;
+        ele.setAttribute("disabled", true);
+        await props.toggleRoom(id);
+        ele.removeAttribute("disabled");
+        setShowToggleLoader(false);
+    }
+
+    return (
+        <div className="card has-background-dark mb-32">
+            <div className="card-content">
+                <div className="level">
+                    <div className="level-left">
+                        <span className="has-text-white-ter	">{props.room_id}</span>
+                    </div>
+                    <div className="level-right">
+                        <div className="margin-bottom-mobile m-16 room-lock-toggle">
+                            {
+                                showToggleLoader ?
+                                    <div className="toggle-lock-loader"/>
+                                    :
+                                    <Switch roomid={props.room_id} className="has-text-white-ter mr-6"
+                                            checked={props.is_locked || false} onChange={(e) =>  handleToggleRoomClick(e, props.room_id)}>
+                                        {props.is_locked ? "Locked" : "Open"}
+                                    </Switch>
+                            }
+                        </div>
+                        <div className=" m-8"><Button color="primary goto-room-button"><Link to={{ pathname: "/" + props.room_id }}>Go To Room</Link></Button></div>
+                        <Button color="danger delete-room-button" className="ml-8" roomid={props.room_id} onClick={props.openDeleteModal}><FaTrash className="has-text-white" /></Button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+
 function User(props) {
     const dispatch = useDispatch();
     const id = useSelector(state => state.id);
@@ -17,7 +58,6 @@ function User(props) {
     const [showModal, setShowModal] = useState(false);
     const [deleteRoomId, setDeleteRoomId] = useState("");
     const [roomIdInput, setRoomIdInput] = useState("");
-    const [showToggleLoader, setShowToggleLoader] = useState('');
     const [showAddRoomLoader, setShowAddRoomLoader] = useState(false);
 
     const roomInputHandle = (event) => {
@@ -44,8 +84,6 @@ function User(props) {
         if (roomIdInput.match(/^[0-9a-zA-Z]+$/)) {
             setShowAddRoomLoader(true);
             element.setAttribute("disabled", "true");
-            // console.log(element);
-            // console.log("Clicked");
             let response = await fetch('https://proximo-video.herokuapp.com/newRoom', {
                 method: 'POST',
                 credentials: 'include',
@@ -65,11 +103,7 @@ function User(props) {
         }
     }
 
-    const toggleRoom = async (e) => {
-        const element = e.target;
-        const id = element.getAttribute("roomid");
-        setShowToggleLoader(id);
-        element.setAttribute("disabled", true);
+    const toggleRoom = async (id) => {
         let response = await fetch('https://proximo-video.herokuapp.com/toggle', {
             method: 'POST',
             credentials: 'include',
@@ -79,15 +113,11 @@ function User(props) {
             body: JSON.stringify({ room_id: id })
         });
         if (response.ok) {
-            fetchData();
+            await fetchData();
         }
-        element.removeAttribute("disabled");
-        setShowToggleLoader('');
     }
 
-    const openDeleteModal = (e) => {
-        const id = e.currentTarget.getAttribute("roomid");
-        console.log(id);
+    const openDeleteModal = (id) => {
         setDeleteRoomId(id);
         setShowModal(true);
     }
@@ -109,7 +139,7 @@ function User(props) {
             body: JSON.stringify({ room_id: deleteRoomId })
         });
         if (response.ok) {
-            fetchData();
+            await fetchData();
         }
         setDeleteRoomId("");
         element.removeAttribute("disabled");
@@ -130,38 +160,9 @@ function User(props) {
         )
     }
 
-    const genRooms = (value, key) => {
-        return (
-            <div className="card has-background-dark mb-32" key={key}>
-                <div className="card-content">
-                    <div className="level">
-                        <div className="level-left">
-                            <span className="has-text-white-ter	">{value.room_id}</span>
-                        </div>
-                        <div className="level-right">
-                            <div className="margin-bottom-mobile m-16 room-lock-toggle">
-                                {
-                                    showToggleLoader === value.room_id ?
-                                        <div className="toggle-lock-loader"/>
-                                    :
-                                    <Switch roomid={value.room_id} className="has-text-white-ter mr-6"
-                                            checked={value.is_locked || false} onChange={toggleRoom}>
-                                        {value.is_locked ? "Locked" : "Open"}
-                                    </Switch>
-                                }
-                            </div>
-                            <div className=" m-8"><Button color="primary goto-room-button"><Link to={{ pathname: "/" + value.room_id }}>Go To Room</Link></Button></div>
-                            <Button color="danger delete-room-button" className="ml-8" roomid={value.room_id} onClick={openDeleteModal}><FaTrash className="has-text-white" /></Button>
-                        </div>
-                    </div>
-                </div>
-            </div>)
-    }
-
     return isLogged ? (
         <div className="section">
             <div className="container user-rooms">
-                {/*<div className="h2 mb-32  ta-c">Welcome {name}</div>*/}
                 <h2>Welcome {name}</h2>
                 <h6>Create your private rooms here.</h6>
                 <p>*At max 3 private rooms are allowed per user.</p>
@@ -173,7 +174,7 @@ function User(props) {
                 <div className={"rooms"}>
                     {showAddRoomLoader && <><div className="add-room-loader"/><h6>Creating room. Please wait.</h6></>}
                     <p>{rooms.length === 0 ? 'Your rooms will be displayed here.' : 'These are your rooms.'}</p>
-                    {rooms ? rooms.map((value, key) => genRooms(value, key)) : <></>}
+                    {rooms ? rooms.map((value, key) => <GenRooms key={key} room_id={value.room_id} is_locked={value.is_locked} toggleRoom={toggleRoom} openDeleteModal={() => openDeleteModal(value.room_id)}/>) : <></>}
                 </div>
             </div>
         </div>
