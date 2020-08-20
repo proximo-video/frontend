@@ -44,8 +44,9 @@ const Testimonial = ({
   );
 
   const sectionHeader = {
-    title: 'Customer testimonials',
-    paragraph: 'Vitae aliquet nec ullamcorper sit amet risus nullam eget felis semper quis lectus nulla at volutpat diam ut venenatis tellus—in ornare.'
+    title: 'User testimonials',
+    paragraph: 'Building a good user experience does not happen by accident. It happens by design.' +
+        ' We build what we believe.'
   };
 
   return (
