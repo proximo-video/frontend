@@ -3,8 +3,6 @@ import classNames from 'classnames';
 import { SectionProps } from '../../utils/SectionProps';
 import ButtonGroup from '../elements/ButtonGroup';
 import Button from '../elements/Button';
-import Image from '../elements/Image';
-import Modal from '../elements/Modal';
 import GoogleLogo from '../../assets/images/google.png';
 import GithubLogo from '../../assets/images/github.png';
 // import {Error} from "../../views/Room/Notification/NotificationManager";
@@ -29,17 +27,9 @@ const Hero = ({
   ...props
 }) => {
 
-  const [videoModalActive, setVideomodalactive] = useState(false);
 
-  const openModal = (e) => {
-    e.preventDefault();
-    setVideomodalactive(true);
-  }
 
-  const closeModal = (e) => {
-    e.preventDefault();
-    setVideomodalactive(false);
-  }   
+
 
   const outerClasses = classNames(
     'hero section center-content',
@@ -82,7 +72,7 @@ const Hero = ({
   const goToRoom = () => {
     const roomName = roomIdInput.trim();
     if (roomName !== '' && roomName.match(/^[0-9a-zA-Z]+$/)) {
-        props.history.push('/' + roomName);
+      props.history.push('/' + roomName);
     } else {
       setShowRoomNameWarning(true);
     }
@@ -106,10 +96,10 @@ const Hero = ({
                 <ButtonGroup>
                   <Button tag="a" color="dark" wideMobile href="https://accounts.google.com/o/oauth2/v2/auth?client_id=287838666978-fnnt6fujf4malkfn3ppoqrrdcfqk75h1.apps.googleusercontent.com&redirect_uri=http://localhost:8000/welcome.html&response_type=code&scope=profile">
                     Login with <img className="logo" src={GoogleLogo} alt="Google Login"></img>
-                    </Button>
+                  </Button>
                   <Button tag="a" wideMobile href="https://github.com/login/oauth/authorize?client_id=a3b7842c5f4c93cc4b7d&redirect_uri=https://proximo.pw/welcome">
-                  Login with <img className="logo" src={GithubLogo} alt="Github Login"></img>
-                    </Button>
+                    Login with <img className="logo" src={GithubLogo} alt="Github Login"></img>
+                  </Button>
                 </ButtonGroup>
               </div>
               <div className={"join-area"}>
@@ -123,12 +113,12 @@ const Hero = ({
                     Room name can only be alphanumeric:
                   </label>
                   <input
-                      id={"room-name-input"}
-                      className={"form-input"}
-                      value={roomIdInput}
-                      onChange={roomInputHandle}
-                      placeholder={"Room Name"}
-                      style={showRoomNameWarning ? { border: '3px solid #f26b4c' } : {}}
+                    id={"room-name-input"}
+                    className={"form-input"}
+                    value={roomIdInput}
+                    onChange={roomInputHandle}
+                    placeholder={"Room Name"}
+                    style={showRoomNameWarning ? { border: '3px solid #f26b4c' } : {}}
                   />
                   <Button color="primary add-room-button" onClick={goToRoom}>Go to room</Button>
                 </div>
@@ -136,26 +126,11 @@ const Hero = ({
             </div>
           </div>
           <div className="hero-figure reveal-from-bottom illustration-element-01" data-reveal-value="20px" data-reveal-delay="800">
-            <a
-              data-video="https://player.vimeo.com/video/174002812"
-              href="#0"
-              aria-controls="video-modal"
-              onClick={openModal}
-            >
-              <Image
-                className="has-shadow"
-                src={require('./../../assets/images/video-placeholder.jpg')}
-                alt="Hero"
-                width={896}
-                height={504} />
-            </a>
+            <picture>
+              <source srcset="/images/roomview.webp" />
+              <img alt="roomview" src="/images/roomview.jpg" />
+            </picture>
           </div>
-          <Modal
-            id="video-modal"
-            show={videoModalActive}
-            handleClose={closeModal}
-            video="https://player.vimeo.com/video/174002812"
-            videoTag="iframe" />
         </div>
       </div>
     </section>
