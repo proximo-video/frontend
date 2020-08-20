@@ -1,6 +1,7 @@
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { login,setId,setName,setRooms } from '../redux/actions';
+import { login, setId, setName, setRooms, error } from '../redux/actions';
+import { httpRequestError, authError } from '../ErrorsList';
 function Welcome(props) {
     const dispatch = useDispatch();
     useEffect(() => {
@@ -10,7 +11,7 @@ function Welcome(props) {
         const state = urlParams.get("state");
         const redirectURL = new URLSearchParams(state).get("path");
         console.log(redirectURL)
-        const noRedirect = ['/','/privacy-policy','/about-us']        
+        const noRedirect = ['/', '/privacy-policy', '/about-us']
         const scope = urlParams.get("scope")
         let service;
         scope === null ? service = "github" : service = "google";
@@ -30,13 +31,21 @@ function Welcome(props) {
                 if (data.rooms)
                     dispatch(setRooms(data.rooms));
                 dispatch(login());
-                if(noRedirect.indexOf(redirectURL)!==-1 || !redirectURL)
+                if (noRedirect.indexOf(redirectURL) !== -1 || !redirectURL)
                     props.history.push('/user');
                 else
                     props.history.push(redirectURL)
             }
+            else {
+                dispatch(error(authError));
+                props.history.push('/login');
+            }
         }
-        fetchData();
+        try {
+            fetchData();
+        } catch (e) {
+            dispatch(error(httpRequestError))
+        }
         // eslint-disable-next-line
     }, []);
 

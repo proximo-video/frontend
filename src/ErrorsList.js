@@ -1,0 +1,2 @@
+export const httpRequestError = "Unable to connect to our server. Please check your internet connection and try again.";
+export const authError = "Internal server error, failed to login. Please try again. "
