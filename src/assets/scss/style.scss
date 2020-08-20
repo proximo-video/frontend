@@ -375,6 +375,54 @@
 	  }
   }
 
+.site-header-inner {
+	position: relative;
+	.brand {
+		position: relative;
+		left: -60px;
+		.m-0 {
+			svg {
+				height: 50px;
+				@media only screen and (max-width: 640px) {
+					height: 40px;
+				}
+			}
+		}
+		@media only screen and (max-width: 640px) {
+			left: -70px;
+		}
+	}
+}
+
+.site-footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	.container {
+		padding: 0 !important;
+		margin: 0 !important;
+		max-width: 100% !important;
+		.site-footer-inner {
+			width: 90%;
+			margin: 0 auto;
+			position: relative;
+			.brand {
+				position: relative;
+				left: -68px;
+				svg {
+					height: 50px;
+					@media only screen and (max-width: 640px) {
+						height: 40px;
+					}
+				}
+				@media only screen and (max-width: 640px) {
+					left: 0;
+				}
+			}
+		}
+	}
+}
+
 .hero-content {
 	.reveal-from-bottom {
 		&.heading {
