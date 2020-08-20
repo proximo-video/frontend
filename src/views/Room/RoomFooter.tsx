@@ -222,7 +222,14 @@ function RoomFooter(props: RoomFooterProps) {
                 />
                 {
                     isMobile &&
-                    <ControlButton className={'toggle-camera'} iconColor={buttonsData[7].onIconColor} onClick={onToggleCamButtonClick} icon={buttonsData[7].onIcon}/>
+                    <ControlButton
+                        className={'toggle-camera'}
+                        iconColor={buttonsData[7].onIconColor}
+                        onClick={onToggleCamButtonClick}
+                        icon={buttonsData[7].onIcon}
+                        disabled={!isVideo}
+                        legend={!isVideo ? "Can't toggle cam when video is off" : ''}
+                    />
                 }
                 {/*screen share button*/}
                 <ControlButton
