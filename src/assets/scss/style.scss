@@ -399,7 +399,7 @@
 	position: relative;
 	.brand {
 		position: relative;
-		left: -60px;
+		left: -2%;
 		.m-0 {
 			svg {
 				height: 50px;
@@ -409,7 +409,10 @@
 			}
 		}
 		@media only screen and (max-width: 640px) {
-			left: -70px;
+			@-moz-document url-prefix() {
+				left: 0 !important;
+			}
+			left: -20%;
 		}
 	}
 }
