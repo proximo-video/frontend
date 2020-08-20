@@ -65,6 +65,7 @@ const App = (props) => {
   }, [location]);
 
   return (fetched ?
+    <>
     <Switch>
       <AppRoute exact path="/" component={Home} layout={LayoutDefault} />
       <AppRoute exact path="/welcome" component={Welcome} layout={WhiteLayout} />
@@ -73,8 +74,9 @@ const App = (props) => {
       <AppRoute exact path="/login" component={SignIn} layout={LayoutDefault}/>
       <Route exact path="/error" render={() => <LayoutDefault><ErrorNotFound ErrorCode={404} ErrorMessage={"page not found"}/></LayoutDefault>}/>
       <AppRoute path="/:roomId" component={Room} layout={WhiteLayout} />
-      <NotificationContainer id={"generic-error-notification"} containerClassName={"generic-error-notification"}/>
     </Switch>
+    <NotificationContainer id={"generic-error-notification"} containerClassName={"generic-error-notification"}/>
+    </>
     : <Preloader/>
   );
 }

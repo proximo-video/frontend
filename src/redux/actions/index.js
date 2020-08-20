@@ -55,6 +55,13 @@ export const addEntryRequest = (value) => {
     }
 }
 
+export const error = (value) => {
+    return {
+        type: 'ERROR',
+        value
+    }
+}
+
 export const removeUser = (value) => {
     return {
         type: 'REMOVEUSER',
