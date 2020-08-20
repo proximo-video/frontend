@@ -1,7 +1,8 @@
 import GetLocalWebCamFeed from '../utils/GetLocalWebCamFeed';
 import { existingTracks } from './webRTC'
 import { detect } from 'detect-browser';
-import { getUserMedia, getUserScreen, sendMessage } from '../redux/actions';
+import { getUserMedia, getUserScreen, sendMessage, error } from '../redux/actions';
+import { mediaStreamError } from '../ErrorsList';
 const browser = detect();
 export let localStream;
 let displayMediaOptions = {
@@ -15,7 +16,11 @@ const getUserMediaMiddleware = store => next => async (action) => {
     switch (action.type) {
         case 'GETUSERMEDIA':
             if (action.value) {
-                localStream = await GetLocalWebCamFeed(userMediaPreference.isAudio, true, userMediaPreference.cameraView);
+                try {
+                    localStream = await GetLocalWebCamFeed(userMediaPreference.isAudio, true, userMediaPreference.cameraView);
+                } catch (e) {
+                    store.dispatch(error(mediaStreamError));
+                }
                 if (browser && browser.name === 'firefox') {
                     localStream.getVideoTracks().forEach(track => {
                         track.enabled = userMediaPreference.isVideo;
@@ -70,7 +75,7 @@ const getUserMediaMiddleware = store => next => async (action) => {
             });
             break;
         case 'TOGGLECAMERAVIEW':
-            localStream.getTracks().forEach((track)=>{
+            localStream.getTracks().forEach((track) => {
                 track.stop();
             })
             break;
@@ -78,24 +83,28 @@ const getUserMediaMiddleware = store => next => async (action) => {
             const id = store.getState().id;
             const userScreen = store.getState().userScreen
             if (action.value) {
-                const screenStream = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
-                if (!screenStream)
-                    return;
-                localStream.getVideoTracks().forEach(track => {
-                    track.stop();
-                    localStream.removeTrack(track);
-                });
-                screenStream.getVideoTracks()[0].addEventListener('ended', () => store.dispatch(getUserScreen(false)));
-                localStream.addTrack(screenStream.getVideoTracks()[0])
-                existingTracks.forEach((value, key) => {
-                    for (const rtpSender of value) {
-                        if (rtpSender.track.kind === 'video') {
-                            if (screenStream.getVideoTracks().length) {
-                                rtpSender.replaceTrack(screenStream.getVideoTracks()[0])
+                try {
+                    const screenStream = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
+                    if (!screenStream)
+                        return;
+                    localStream.getVideoTracks().forEach(track => {
+                        track.stop();
+                        localStream.removeTrack(track);
+                    });
+                    screenStream.getVideoTracks()[0].addEventListener('ended', () => store.dispatch(getUserScreen(false)));
+                    localStream.addTrack(screenStream.getVideoTracks()[0])
+                    existingTracks.forEach((value, key) => {
+                        for (const rtpSender of value) {
+                            if (rtpSender.track.kind === 'video') {
+                                if (screenStream.getVideoTracks().length) {
+                                    rtpSender.replaceTrack(screenStream.getVideoTracks()[0])
+                                }
                             }
                         }
-                    }
-                })
+                    })
+                } catch (e) {
+                    store.dispatch(error(mediaStreamError))
+                }
             }
             else {
                 localStream.getTracks().forEach(track => {
