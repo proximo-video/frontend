@@ -7,6 +7,8 @@ import Image from '../elements/Image';
 import Modal from '../elements/Modal';
 import GoogleLogo from '../../assets/images/google.png';
 import GithubLogo from '../../assets/images/github.png';
+// import {Error} from "../../views/Room/Notification/NotificationManager";
+// import { UseHistory } from "react-router-dom";
 
 const propTypes = {
   ...SectionProps.types
@@ -53,7 +55,38 @@ const Hero = ({
     topDivider && 'has-top-divider',
     bottomDivider && 'has-bottom-divider'
   );
+  const [roomIdInput, setRoomIdInput] = useState("");
+  const [showRoomNameWarning, setShowRoomNameWarning] = useState(false);
+  const [showJoinInputArea, setShowJoinInputArea] = useState(false);
 
+  const handleJoinButtonClick = () => {
+    setShowJoinInputArea(true);
+  }
+
+  const roomInputHandle = (event) => {
+    const roomId = event.target.value.trim();
+    setRoomIdInput(event.target.value);
+
+    if (roomId !== '' && roomId.match(/^[0-9a-zA-Z]+$/)) {
+      event.target.style.border = '3px solid green';
+      setShowRoomNameWarning(false);
+    }
+    else if (roomId !== '')
+      setShowRoomNameWarning(true);
+    else if (roomId === '') {
+      event.target.style.border = 'none';
+      setShowRoomNameWarning(false);
+    }
+  }
+
+  const goToRoom = () => {
+    const roomName = roomIdInput.trim();
+    if (roomName !== '' && roomName.match(/^[0-9a-zA-Z]+$/)) {
+        props.history.push('/' + roomName);
+    } else {
+      setShowRoomNameWarning(true);
+    }
+  }
   return (
     <section
       {...props}
@@ -78,6 +111,27 @@ const Hero = ({
                   Login with <img className="logo" src={GithubLogo} alt="Github Login"></img>
                     </Button>
                 </ButtonGroup>
+              </div>
+              <div className={"join-area"}>
+                <p>Or join meeting without login</p>
+                {/*<Button>Join</Button>*/}
+                <Button onClick={handleJoinButtonClick} tag="a" color="dark" wideMobile className={"join-area-button" + (showJoinInputArea ? ' hide' : '')}>
+                  Join
+                </Button>
+                <div className={"input-area" + (showJoinInputArea ? ' show' : '')}>
+                  <label className={"input-label"} style={showRoomNameWarning ? { display: 'block' } : {}}>
+                    Room name can only be alphanumeric:
+                  </label>
+                  <input
+                      id={"room-name-input"}
+                      className={"form-input"}
+                      value={roomIdInput}
+                      onChange={roomInputHandle}
+                      placeholder={"Room Name"}
+                      style={showRoomNameWarning ? { border: '3px solid #f26b4c' } : {}}
+                  />
+                  <Button color="primary add-room-button" onClick={goToRoom}>Go to room</Button>
+                </div>
               </div>
             </div>
           </div>

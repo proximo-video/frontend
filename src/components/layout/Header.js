@@ -133,6 +133,9 @@ const Header = ({
                           : <Link to={{ pathname: "/login", state: { prevPath: window.location.pathname } }} className="button button-primary button-wide-mobile button-sm" onClick={closeMenu}>Login</Link>
                         )}
                       </li>
+                      <li style={{fontSize: 'medium'}}>
+                        <Link to="#0">About Us</Link>
+                      </li>
                     </ul>}
                 </div>
               </nav>
