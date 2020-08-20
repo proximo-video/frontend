@@ -727,3 +727,95 @@
 		padding: 0 !important;
 	}
 }
+
+.login-container {
+	width: 100%;
+	height: 60vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-grow: 1;
+	position: relative;
+	margin-top: 10%;
+	margin-bottom: 5%;
+	@media only screen and (max-width: 1200px) {
+		margin-top: 12%;
+	}
+	@media only screen and (max-width: 768px) {
+		margin-top: 17%;
+		height: 65vh;
+	}
+	@media only screen and (max-width: 500px) {
+		margin-top: 25%;
+		height: 70vh;
+	}
+	.login-container-inner {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background: #1d2134 !important;
+		box-shadow: 0 8px 16px 7px rgba(0,0,0,.6);
+		position: absolute;
+		height: 100%;
+		width: 47%;
+		@media only screen and (max-width: 1200px) {
+			width: 60%;
+		}
+		@media only screen and (max-width: 768px) {
+			width: 80%;
+		}
+		@media only screen and (max-width: 500px) {
+			width: 90%;
+		}
+		.card-content {
+			height: 100%;
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			.login-h1 {
+				text-align: center;
+				margin: 0;
+				margin-bottom: 10px;
+				text-align: center;
+			}
+			.login-h6 {
+				margin-top: 0;
+				margin-bottom: 10%;
+				color: #a6a8ab;
+				text-align: center;
+			}
+
+			.login-medium {
+				font-size: medium;
+				color: #908484;
+				margin-bottom: 10%;
+				text-align: center;
+			}
+
+			.button-group {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				.button {
+					border-radius: 5px;
+					min-height: 60px;
+					text-align: center;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					box-shadow: 3px 3px 16px 3px rgba(0, 0, 0, 0.5);
+					opacity: 0.9;
+					&:hover {
+						opacity: 1;
+						box-shadow: 3px 3px 16px 7px rgba(0, 0, 0, 0.7);
+					}
+					&.button-dark {
+						background: #2a3152 !important
+					}
+				}
+			}
+		}
+	}
+}
