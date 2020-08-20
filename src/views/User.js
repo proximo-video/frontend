@@ -107,7 +107,7 @@ function User(props) {
                 setRoomIdInput("");
                 document.getElementById('room-name-input').style.border = 'none';
             }
-            else if (roomName === 'user' || roomName === 'privacy-policy' || roomName === 'about-us' || roomName === 'login' || roomName === 'error') {
+            else if (roomName === 'user' || roomName === 'privacy-policy' || roomName === 'about-us' || roomName === 'login' || roomName === 'error' || roomName === 'welcome') {
                 Error("user-rooms-error", `Room name: ${roomName} not allowed.`, "Error", 5000);
                 setRoomIdInput("");
                 document.getElementById('room-name-input').style.border = 'none';
