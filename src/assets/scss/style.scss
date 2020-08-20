@@ -432,6 +432,9 @@
 			.brand {
 				position: relative;
 				left: -68px;
+				@-moz-document url-prefix() {
+					left: 0 !important;
+				}
 				svg {
 					height: 50px;
 					@media only screen and (max-width: 640px) {
@@ -790,9 +793,25 @@
 	}
 }
 
-
+.split-item {
+	&.mobile-view {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		.split-item-content {
+			margin-right: 15% !important;
+			@media only screen and (max-width: 640px) {
+				margin-right: 0 !important;
+			}
+		}
+	}
+	@media only screen and (max-width: 640px) {
+		margin-bottom: 15%;
+	}
+}
 
 .split-item-content {
+	text-align: center;
 	margin: 0 !important;
 	max-width: 50%;
 	&.reveal-from-right {
@@ -825,6 +844,16 @@
 	}
 	&.room-entry-image {
 		min-width: 70%;
+	}
+}
+
+.section-header {
+	&.home-page {
+		.container-xs {
+			@media only screen and (max-width: 640px) {
+				margin-bottom: 8%;
+			}
+		}
 	}
 }
 
