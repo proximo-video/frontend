@@ -130,15 +130,13 @@ const FeaturesSplit = ({
               <div className={
                 classNames(
                   'split-item-image center-content-mobile reveal-from-bottom',
-                  imageFill && 'split-item-image-fill', 'room-entry-image'
+                  imageFill && 'split-item-image-fill','mobile-view-container'
                 )}
                 data-reveal-container=".split-item">
-                <Image
-                  src={'/images/room_entry.jpg'}
-                  alt="Features split 03"
-                  width={700}
-                  height={450}
-                />
+                <picture className={classNames('mobile-view-image')}>
+                  <source srcset="/images/mobileview.webp" />
+                  <img className={classNames('mobile-view-image')} alt="roomview" src="/images/mobileview.png" />
+                </picture>
               </div>
             </div>
 
@@ -162,7 +160,7 @@ const FeaturesSplit = ({
                 data-reveal-container=".split-item">
                 <picture>
                   <source srcset="/images/userpage.webp" />
-                  <img alt="roomview" src="/images/userpage.jpg" />
+                  <img alt="roomview" src="/images/userpage.png" />
                 </picture>
               </div>
             </div>
