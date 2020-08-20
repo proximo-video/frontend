@@ -160,6 +160,7 @@ export default function RoomMain(props: RoomMainProps) {
         let displayAvatar: boolean = false;
         let displayName: string = '';
         let isScreen: boolean = false;
+        let disconnected: boolean = false;
         if (users.hasOwnProperty(key)) {
             if (users[key].hasOwnProperty('isAudio'))
                 displayMicOff = !users[key]['isAudio'];
@@ -168,7 +169,9 @@ export default function RoomMain(props: RoomMainProps) {
             if (users[key].hasOwnProperty('displayName'))
                 displayName = users[key]['displayName'];
             if (users[key].hasOwnProperty('isScreen'))
-                isScreen = users[key]['isScreen']
+                isScreen = users[key]['isScreen'];
+            if (users[key].hasOwnProperty('disconnected'))
+                disconnected = users[key]['disconnected'];
         } else if (key === id) {
             displayMicOff = !isAudio;
             displayAvatar = !isVideo && !userScreen;
@@ -203,7 +206,7 @@ export default function RoomMain(props: RoomMainProps) {
                         </div>
                     }
                     {
-                        key !== id &&
+                        disconnected &&
                         <div className={"presentation-message reconnect-message"}>
                             <p>Connection interrupted. Trying to reconnect...</p>
                         </div>
