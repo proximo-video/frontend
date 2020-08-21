@@ -67,6 +67,12 @@ const PersonalMedia = (props) => {
                         <p>Your camera is off</p>
                         {!isAudio && <p>Your mic is off</p>}
                     </div>
+                    {
+                        !props.mediaSuccess &&
+                        <div className={"overlay-message"}>
+                            <p style={{textAlign: 'center', padding: '20px'}}>You need to allow access to your cam and mic to join. Try again, and select "Allow" when prompted</p>
+                        </div>
+                    }
                     <div className="is-center-flex video-controls">
                         <div className={"button-wrapper"}>
                             <ControlButton
