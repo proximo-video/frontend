@@ -22,7 +22,7 @@ const FooterNav = ({
           <Link to="/privacy-policy">Privacy Policy</Link>
         </li>
         <li>
-          <Link to="#0">About Us</Link>
+          <Link to="/about-us">About Us</Link>
         </li>
         <li>
         <a target='_blank' rel="noopener noreferrer" href="https://status.proximo.pw">API Status</a>

@@ -134,7 +134,7 @@ const Header = ({
                         )}
                       </li>
                       <li style={{fontSize: 'medium'}}>
-                        <Link to="#0">About Us</Link>
+                        <Link to="/about-us">About Us</Link>
                       </li>
                     </ul>}
                 </div>
