@@ -831,11 +831,27 @@
 	}
 }
 
+.hero-figure {
+	display: inline-flex;
+	box-shadow: 3px 3px 16px 3px rgba(0, 0, 0, 0.5);
+	transform: translate3d(0, 0, 0);
+	transition: transform 0.4s ease-out;
+	opacity: 0.9;
+	&:hover {
+		opacity: 1;
+		box-shadow: 0 9px 16px 10px rgba(0,0,0,.8);
+		transform: translate3d(0, 20px, 0);
+		transition: transform 0.4s ease-out;
+	}
+
+}
+
 .split-item-image {
 	min-width: 50% !important;
 	box-shadow: 3px 3px 16px 3px rgba(0, 0, 0, 0.5);
 	transform: translate3d(0, 0, 0);
 	transition: transform 0.4s ease-out;
+	opacity: 0.9;
 	&:hover {
 		opacity: 1;
 		box-shadow: 0 9px 16px 10px rgba(0,0,0,.8);

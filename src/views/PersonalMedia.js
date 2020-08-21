@@ -74,12 +74,14 @@ const PersonalMedia = (props) => {
                                 icon={(isVideo ? buttonsData[0].onIcon : buttonsData[0].offIcon)}
                                 iconColor={(isVideo ? buttonsData[0].onIconColor : buttonsData[0].offIconColor)}
                                 onClick={toggleVideoStream}
+                                disabled={!props.mediaSuccess}
                             />
                             <ControlButton
                                 className={(isAudio ? buttonsData[1].onClass : buttonsData[1].offClass) + ' room-entry-button'}
                                 icon={(isAudio ? buttonsData[1].onIcon : buttonsData[1].offIcon)}
                                 iconColor={(isAudio ? buttonsData[1].onIconColor : buttonsData[1].offIconColor)}
                                 onClick={toggleAudioStream}
+                                disabled={!props.mediaSuccess}
                             />
                             {/*<button className="icon-button" disabled={!props.mediaSuccess} onClick={toggleAudioStream}>{isAudio ? <IoMdMic className="cntrl-button medium-icon" /> : <IoMdMicOff className="cntrl-button" />}</button>*/}
                             {/*<button className="icon-button" disabled={!props.mediaSuccess} onClick={toggleVideoStream}>{isVideo ? <RiCameraLine className="cntrl-button medium-icon" /> : <RiCameraOffLine className="cntrl-button" />}</button>*/}
