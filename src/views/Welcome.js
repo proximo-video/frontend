@@ -15,8 +15,6 @@ function Welcome(props) {
         const scope = urlParams.get("scope")
         let service;
         scope === null ? service = "github" : service = "google";
-        console.log("Code: ", code);
-        // eslint-disable-next-line
         const fetchData = async () => {
             try {
                 let response = await fetch('https://api.proximo.pw/auth', {
@@ -47,7 +45,7 @@ function Welcome(props) {
                 dispatch(error(httpRequestError))
             }
         }
-        // fetchData();
+        fetchData();
         // eslint-disable-next-line
     }, []);
 
