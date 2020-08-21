@@ -103,7 +103,7 @@ const Hero = ({
                 </ButtonGroup>
               </div>
               <div className={"join-area"}>
-                <p>Or join meeting without login</p>
+                <p>Or join a meeting without logging in</p>
                 {/*<Button>Join</Button>*/}
                 <Button onClick={handleJoinButtonClick} tag="a" color="dark" wideMobile className={"join-area-button" + (showJoinInputArea ? ' hide' : '')}>
                   Join

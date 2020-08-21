@@ -51,9 +51,8 @@ const FeaturesSplit = ({
 
   const sectionHeader = {
     title: 'Workflow that just works',
-    paragraph: "Simple design. Join with just one click. No emails, no promotional content. We believe in privacy and quality."
-  };
-
+    paragraph: "Simple design. There’s no need to install any app or software. Just choose your own personalized URL and meet using your internet browser with just one click."
+  }
   return (
     <section
       {...props}
@@ -95,10 +94,10 @@ const FeaturesSplit = ({
                   Beautiful UI
                   </div>
                 <h3 className="mt-0 mb-12">
-                  Dark theme UI.
+                  Functional UI.
                   </h3>
                 <p className="m-0">
-                  Collaborate with your team or friends. Experience amazing simple but robust UI. With quality video calls.
+                Host presentations and collaborate with team members using the screen sharing feature and share your thoughts using built in chat.
                   </p>
               </div>
               <div className={
@@ -107,30 +106,29 @@ const FeaturesSplit = ({
                   imageFill && 'split-item-image-fill'
                 )}
                 data-reveal-container=".split-item">
-                <Image
-                  src={'/images/room_entry.jpg'}
-                  alt="Features split 02"
-                  width={528}
-                  height={396} />
+                <picture>
+                  <source srcset="/images/ui.webp" />
+                  <img alt="roomview" src="/images/ui.png" />
+                </picture>
               </div>
             </div>
 
             <div className="split-item mobile-view">
               <div className="split-item-content center-content-mobile reveal-from-left" data-reveal-container=".split-item">
                 <div className="text-xxs text-color-primary fw-600 tt-u mb-8">
-                  No login required to join.
+                  Mobile Friendly
                   </div>
                 <h3 className="mt-0 mb-12">
-                  Join with one click.
+                  Meetings on the go
                   </h3>
                 <p className="m-0">
-                  Join any room meeting with just one click with any chosen name.
+                  Join from any mobile device on Android or iOS without installing anything.
                   </p>
               </div>
               <div className={
                 classNames(
                   'split-item-image center-content-mobile reveal-from-bottom',
-                  imageFill && 'split-item-image-fill','mobile-view-container'
+                  imageFill && 'split-item-image-fill', 'mobile-view-container'
                 )}
                 data-reveal-container=".split-item">
                 <picture className={classNames('mobile-view-image')}>
@@ -142,7 +140,7 @@ const FeaturesSplit = ({
             <div className="split-item">
               <div className="split-item-content center-content-mobile reveal-from-right" data-reveal-container=".split-item">
                 <div className="text-xxs text-color-primary fw-600 tt-u mb-8">
-                  User page
+                  Multiple Rooms
                 </div>
                 <h3 className="mt-0 mb-12">
                   Multiple private rooms.

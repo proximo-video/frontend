@@ -68,7 +68,6 @@ const App = (props) => {
       const page = location.pathname;
       trackPage(page);
     }
-    dispatch(error("There has been an Error"))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
