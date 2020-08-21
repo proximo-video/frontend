@@ -981,3 +981,214 @@
 		background: #2a3152 !important;
 	}
 }
+
+.about-us-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	height: 130vh;
+	@media only screen and (max-width: 365px) {
+		height: 145vh;
+	}
+	margin-top: 5%;
+	.about-us-h1 {
+		margin-bottom: 0 !important;
+		text-align: center;
+	}
+	.about-me {
+		text-align: center;
+		position: absolute;
+		z-index: 1;
+		top: 70%;
+		max-width: 90%;
+		//@media only screen and (max-width: 1200px) {
+		//	top: 70%;
+		//}
+		@media only screen and (max-width: 1100px) {
+			top: 62%;
+		}
+		@media only screen and (max-width: 950px) {
+			top: 55%;
+		}
+		@media only screen and (max-width: 768px) {
+			top: 45%;
+		}
+		@media only screen and (max-width: 685px) {
+			top: 40%;
+		}
+		//@media only screen and (max-width: 605px) {
+		//	top: 40%;
+		//}
+		@media only screen and (max-width: 530px) {
+			top: 35%;
+		}
+		@media only screen and (max-width: 365px) {
+			top: 33%;
+		}
+		@media only screen and (device-width: 1024px) {
+			top: 40%;
+		}
+		//@media only screen and (max-height: 1024px) {
+		//	top: 40%;
+		//}
+		//@media only screen and (max-height: 1366px) {
+		//	top: 40%;
+		//}
+		.urls {
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			a {
+				margin: 0 10px;
+			}
+		}
+	}
+	.about-us-details {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100%;
+		width: 100%;
+	}
+	.about-us-single {
+		height: 80%;
+		width: 30%;
+		margin: 0 5%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+		top: -8%;
+		@media only screen and (max-width: 1200px) {
+			width: 35%;
+		}
+		@media only screen and (max-width: 605px) {
+			width: 40%;
+		}
+		@media only screen and (max-width: 500px) {
+			width: 45%;
+			margin: 0 2%;
+		}
+		@media only screen and (max-width: 430px) {
+			width: 50%;
+			margin: 0 1%;
+		}
+		//@media only screen and (max-width: 430px) {
+		//	width: 55%;
+		//	margin: 0 1%;
+		//}
+	}
+	.avatar-container {
+		height: 100%;
+		width: 100%;
+		z-index: 1;
+		position: absolute;
+		top: 0;
+	}
+	.avatar-background {
+		background: transparent;
+		transform: translate3d(0, 10%, 0);
+		height: 115%;
+		width: 100%;
+		z-index: 0;
+		position: absolute;
+		top: 0;
+		border-radius: 40px;
+		@media only screen and (max-width: 1100px) {
+			height: 108%;
+		}
+		@media only screen and (max-width: 950px) {
+			height: 105%;
+		}
+		@media only screen and (max-width: 768px) {
+			height: 100%;
+		}
+		@media only screen and (max-width: 365px) {
+			height: 115%;
+		}
+		@media only screen and (device-width: 768px) {
+			height: 80%;
+		}
+
+		@media only screen and (device-width: 1024px) {
+			height: 75%;
+		}
+
+		@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+			/* For portrait layouts only */
+		}
+
+		@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+			/* For landscape layouts only */
+		}
+		//@media only screen and (min-height: 1000px) {
+		//	height: 85%;
+		//}
+		//@media only screen and (min-height: 1300px), screen and (max-height: 1400px) {
+		//	height: 80%;
+		//}
+		//@media only screen and (max-height: 668px) {
+		//	height: 120%;
+		//}
+		//@media only screen and (max-height: 740px) {
+		//	height: 97%;
+		//}
+		//@media only screen and (max-height: 640px) {
+		//	height: 110%;
+		//}
+
+		//@media only screen and (max-height: 1366px) {
+		//	height: 80%;
+		//}
+		//@media only screen and (max-width: 530px) {
+		//	height: 98%;
+		//}
+	}
+	#about-us-single1 {
+		.avatar-container {
+			background: url("/images/tripathi_avatar2.png") no-repeat;
+			background-size: contain;
+			transform: translate3d(0, 0, 0);
+			transition: background 2s ease-out, transform 2s ease-out;
+		}
+		&:hover {
+			.avatar-container {
+				background: url("/images/tripathi_avatar1.png") no-repeat;
+				background-size: contain;
+				transform: translate3d(0, 8%, 0);
+				transition: background 4s ease-out, transform 2s ease-out;
+			}
+			.avatar-background {
+				background: #3f475f;
+				box-shadow: 0 9px 16px 10px rgba(0,0,0,.8);
+				transform: translate3d(0, 0, 0);
+				transition: all 1s ease-out;
+			}
+		}
+	}
+	#about-us-single2 {
+		.avatar-container {
+			background: url("/images/aniket_avatar2.png") no-repeat;
+			background-size: contain;
+			transform: translate3d(0, 0, 0);
+			transition: background 2s ease-out, transform 2s ease-out;
+		}
+		&:hover {
+			.avatar-container {
+				background: url("/images/aniket_avatar1.png") no-repeat;
+				background-size: contain;
+				transform: translate3d(0, 8%, 0);
+				transition: background 4s ease-out, transform 2s ease-out;
+			}
+			.avatar-background {
+				background: #3f475f;
+				box-shadow: 0 9px 16px 10px rgba(0,0,0,.8);
+				transform: translate3d(0, 0, 0);
+				transition: all 1s ease-out;
+			}
+		}
+	}
+}
+

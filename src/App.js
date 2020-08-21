@@ -22,6 +22,7 @@ import SignIn from './views/SignIn';
 import NotificationContainer from "./views/Room/Notification/NotificationContainer";
 import { Route } from "react-router-dom";
 import {ErrorNotFound} from "./views/ErrorNotFound";
+import AboutUs from "./views/AboutUs";
 
 // Initialize Google Analytics
 ReactGA.initialize(process.env.REACT_APP_GA_CODE);
@@ -72,6 +73,7 @@ const App = (props) => {
       <AppRoute exact path="/privacy-policy" component={PrivacyPolicy} layout={LayoutDefault}/>
       <AppRoute exact path="/login" component={SignIn} layout={LayoutDefault}/>
       <Route exact path="/error" render={() => <LayoutDefault><ErrorNotFound ErrorCode={404} ErrorMessage={"page not found"}/></LayoutDefault>}/>
+      <AppRoute exact path="/about-us" component={AboutUs} layout={LayoutDefault}/>
       <AppRoute path="/:roomId" component={Room} layout={WhiteLayout} />
       <NotificationContainer id={"generic-error-notification"} containerClassName={"generic-error-notification"}/>
     </Switch>
