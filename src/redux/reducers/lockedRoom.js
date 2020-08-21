@@ -18,6 +18,8 @@ export const acceptEntryReducer = (state = 'W', action) => {
             return 'W';
         case 'REJECTENTRY':
             return 'R';
+        case 'ROOMFULL':
+            return 'F';
         default:
             break;
     }

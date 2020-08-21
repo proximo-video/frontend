@@ -5,10 +5,10 @@ import Button from '../components/elements/Button';
 import Modal from '../components/elements/Modal';
 import { FaTrash } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { setName, setRooms, setId } from '../redux/actions';
-import NotificationContainer from "./Room/Notification/NotificationContainer";
+import { setName, setRooms, setId, error } from '../redux/actions';
 import { Error } from "./Room/Notification/NotificationManager";
 import { Redirect } from "react-router-dom";
+import { httpRequestError } from '../ErrorsList';
 
 
 function GenRooms(props) {
@@ -82,20 +82,24 @@ function User(props) {
     }
 
     const fetchData = async () => {
-        let response = await fetch('https://api.proximo.pw/getUser', { credentials: 'include' });
-        if (response.ok) {
-            let data = await response.json()
-            // console.log(data);
-            // console.log("id", id);
-            dispatch(setId(data.id));
-            dispatch(setName(data.name));
-            if (data.rooms)
-                dispatch(setRooms(data.rooms));
-            else
-                dispatch(setRooms([]));
-        }
-        else {
-            props.history.push("/");
+        try {
+            let response = await fetch('https://api.proximo.pw/getUser', { credentials: 'include' });
+            if (response.ok) {
+                let data = await response.json()
+                // console.log(data);
+                // console.log("id", id);
+                dispatch(setId(data.id));
+                dispatch(setName(data.name));
+                if (data.rooms)
+                    dispatch(setRooms(data.rooms));
+                else
+                    dispatch(setRooms([]));
+            }
+            else {
+                props.history.push("/");
+            }
+        } catch (e) {
+            dispatch(error(httpRequestError));
         }
     }
     const addRoom = async (e) => {
@@ -103,12 +107,12 @@ function User(props) {
         const roomName = roomIdInput.trim();
         if (roomName !== '' && roomName.match(/^[0-9a-zA-Z]+$/)) {
             if (rooms.length >= 3) {
-                Error("user-rooms-error", "Can't proceed request. At max 3 private rooms are allowed.", "Error", 5000);
+                Error("generic-error-notification", "Can't proceed request. At max 3 private rooms are allowed.", "Error", 5000);
                 setRoomIdInput("");
                 document.getElementById('room-name-input').style.border = 'none';
             }
             else if (roomName === 'user' || roomName === 'privacy-policy' || roomName === 'about-us' || roomName === 'login' || roomName === 'error' || roomName === 'welcome') {
-                Error("user-rooms-error", `Room name: ${roomName} not allowed.`, "Error", 5000);
+                Error("generic-error-notification", `Room name: ${roomName} not allowed.`, "Error", 5000);
                 setRoomIdInput("");
                 document.getElementById('room-name-input').style.border = 'none';
             }
@@ -116,33 +120,37 @@ function User(props) {
                 setShowRoomNameWarning(false);
                 setShowAddRoomLoader(true);
                 element.setAttribute("disabled", "true");
-                let response = await fetch('https://api.proximo.pw/newRoom', {
-                    method: 'POST',
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json;charset=utf-8'
-                    },
-                    body: JSON.stringify({ room_id: roomName, is_locked: true })
-                });
-                if (response.ok) {
-                    await fetchData();
+                try {
+                    let response = await fetch('https://api.proximo.pw/newRoom', {
+                        method: 'POST',
+                        credentials: 'include',
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8'
+                        },
+                        body: JSON.stringify({ room_id: roomName, is_locked: true })
+                    });
+                    if (response.ok) {
+                        await fetchData();
+                    }
+                    else if (response.status === 409) {
+                        Error("generic-error-notification", "Room already exists.", "Error", 5000);
+                    }
+                    else if (response.status === 406) {
+                        Error("generic-error-notification", "Can't complete request. At max 3 private rooms are allowed.", "Error", 5000);
+                    }
+                    else if (response.status === 400) {
+                        Error("generic-error-notification", "Bad request.", "Error", 5000);
+                    }
+                    else {
+                        Error("generic-error-notification", "Internal server error.", "Error", 5000);
+                    }
+                    setRoomIdInput("");
+                    document.getElementById('room-name-input').style.border = 'none';
+                    element.removeAttribute("disabled");
+                    setShowAddRoomLoader(false);
+                } catch (e) {
+                    dispatch(error(httpRequestError))
                 }
-                else if (response.status === 409) {
-                    Error("user-rooms-error", "Room already exists.", "Error", 5000);
-                }
-                else if (response.status === 406) {
-                    Error("user-rooms-error", "Can't proceed request. At max 3 private rooms are allowed.", "Error", 5000);
-                }
-                else if (response.status === 400) {
-                    Error("user-rooms-error", "Bad request.", "Error", 5000);
-                }
-                else {
-                    Error("user-rooms-error", "Internal server error.", "Error", 5000);
-                }
-                setRoomIdInput("");
-                document.getElementById('room-name-input').style.border = 'none';
-                element.removeAttribute("disabled");
-                setShowAddRoomLoader(false);
             }
         } else {
             // alert("Enter numbers and alphabets only.");
@@ -151,25 +159,29 @@ function User(props) {
     }
 
     const toggleRoom = async (id) => {
-        let response = await fetch('https://api.proximo.pw/toggle', {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({ room_id: id })
-        });
-        if (response.ok) {
-            await fetchData();
-        }
-        else if (response.status === 404) {
-            Error("user-rooms-error", "Room not found.", "Error", 5000);
-        }
-        else if (response.status === 400) {
-            Error("user-rooms-error", "Bad request.", "Error", 5000);
-        }
-        else {
-            Error("user-rooms-error", "Internal server error.", "Error", 5000);
+        try {
+            let response = await fetch('https://api.proximo.pw/toggle', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify({ room_id: id })
+            });
+            if (response.ok) {
+                await fetchData();
+            }
+            else if (response.status === 404) {
+                Error("generic-error-notification", "Room not found.", "Error", 5000);
+            }
+            else if (response.status === 400) {
+                Error("generic-error-notification", "Bad request.", "Error", 5000);
+            }
+            else {
+                Error("generic-error-notification", "Internal server error.", "Error", 5000);
+            }
+        } catch (e) {
+            dispatch(error(httpRequestError))
         }
     }
 
@@ -186,25 +198,29 @@ function User(props) {
     const deleteRoom = async (e) => {
         const element = e.target;
         element.setAttribute("disabled", "true")
-        let response = await fetch('https://api.proximo.pw/deleteRoom', {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({ room_id: deleteRoomId })
-        });
-        if (response.ok) {
-            await fetchData();
-        }
-        else if (response.status === 404) {
-            Error("user-rooms-error", "Room not found.", "Error", 5000);
-        }
-        else if (response.status === 400) {
-            Error("user-rooms-error", "Bad request.", "Error", 5000);
-        }
-        else {
-            Error("user-rooms-error", "Internal server error.", "Error", 5000);
+        try {
+            let response = await fetch('https://api.proximo.pw/deleteRoom', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify({ room_id: deleteRoomId })
+            });
+            if (response.ok) {
+                await fetchData();
+            }
+            else if (response.status === 404) {
+                Error("generic-error-notification", "Room not found.", "Error", 5000);
+            }
+            else if (response.status === 400) {
+                Error("generic-error-notification", "Bad request.", "Error", 5000);
+            }
+            else {
+                Error("generic-error-notification", "Internal server error.", "Error", 5000);
+            }
+        } catch (e) {
+            dispatch(error(httpRequestError))
         }
         setDeleteRoomId("");
         element.removeAttribute("disabled");
@@ -253,10 +269,9 @@ function User(props) {
                     {rooms.length !== 0 && <p className={"x-small-message"}>*At max 4 people are allowed at a time per room.</p>}
                     {rooms ? rooms.map((value, key) => <GenRooms key={key} room_id={value.room_id} is_locked={value.is_locked} toggleRoom={toggleRoom} openDeleteModal={() => openDeleteModal(value.room_id)} />) : <></>}
                 </div>
-                <NotificationContainer id={"user-rooms-error"} containerClassName={"rooms-error"} />
             </div>
         </div>
-    ) : <Redirect to='/login'/>;
+    ) : <Redirect to='/login' />;
 
 }
 

@@ -3,8 +3,9 @@ import RoomEntry from './RoomEntry';
 import { v4 as uuidv4 } from 'uuid';
 import LayoutDefault from '../layouts/LayoutDefault'
 import { useDispatch, useSelector } from 'react-redux';
-import { setId, closeMedia, getUserMedia, setIceServers, connectSocket, setRoomOwner } from '../redux/actions';
+import { setId, closeMedia, getUserMedia, setIceServers, connectSocket, setRoomOwner, error } from '../redux/actions';
 import RoomView from './Room/RoomView';
+import { httpRequestError } from '../ErrorsList';
 
 function Room(props) {
     const dispatch = useDispatch();
@@ -62,7 +63,9 @@ function Room(props) {
                 else {
                     console.log("Not Found");
                 }
-            } catch (e) { console.error(e) }
+            } catch (e) {
+                dispatch(error(httpRequestError))
+            }
         }
 
         const getIceServer = async () => {
@@ -86,7 +89,11 @@ function Room(props) {
                 dispatch(setRoomOwner(true));
         }
         checkRoom();
+        try{
         getIceServer();
+        }catch(e){
+            dispatch(error(httpRequestError))
+        }
         setFetched(true);
         return () => {
             // console.log("Byee Room")

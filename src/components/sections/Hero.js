@@ -103,7 +103,7 @@ const Hero = ({
                 </ButtonGroup>
               </div>
               <div className={"join-area"}>
-                <p>Or join meeting without login</p>
+                <p>Or join a meeting without logging in</p>
                 {/*<Button>Join</Button>*/}
                 <Button onClick={handleJoinButtonClick} tag="a" color="dark" wideMobile className={"join-area-button" + (showJoinInputArea ? ' hide' : '')}>
                   Join
@@ -127,7 +127,7 @@ const Hero = ({
           </div>
           <div className="hero-figure reveal-from-bottom illustration-element-01" data-reveal-value="20px" data-reveal-delay="800">
             <picture>
-              <source srcset="/images/roomview.webp" />
+              <source srcSet="/images/roomview.webp" />
               <img alt="roomview" src="/images/roomview.jpg" />
             </picture>
           </div>
