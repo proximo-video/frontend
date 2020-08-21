@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login, setId, setName, setRooms, logout, error } from './redux/actions';
 import './App.css';
 import { Error } from './views/Room/Notification/NotificationManager';
-import {httpRequestError} from './ErrorsList';
+import { httpRequestError } from './ErrorsList';
 
 
 // Layouts
@@ -40,26 +40,27 @@ const App = (props) => {
   let location = useLocation();
   useEffect(() => {
     const fetchData = async () => {
-      let response = await fetch('https://api.proximo.pw/getUser', { credentials: 'include' });
-      if (response.ok) {
-        let data = await response.json()
-        console.log(data);
-        dispatch(login())
-        dispatch(setId(data.id));
-        dispatch(setName(data.name));
-        if (data.rooms)
-          dispatch(setRooms(data.rooms));
+      try {
+        let response = await fetch('https://api.proximo.pw/getUser', { credentials: 'include' });
+        if (response.ok) {
+          let data = await response.json()
+          console.log(data);
+          dispatch(login())
+          dispatch(setId(data.id));
+          dispatch(setName(data.name));
+          if (data.rooms)
+            dispatch(setRooms(data.rooms));
+        }
+        else {
+          dispatch(logout())
+        }
+        setFetched(true);
+      } catch (e) {
+        dispatch(error(httpRequestError))
       }
-      else {
-        dispatch(logout())
-      }
-      setFetched(true);
     }
-    try {
-      fetchData();
-    } catch (e) {
-      dispatch(error(httpRequestError))
-    }
+
+    fetchData();
     // eslint-disable-next-line
   }, [])
 
