@@ -42,6 +42,12 @@ export const acceptEntry = () => {
     }
 }
 
+export const roomFull = () => {
+    return {
+        type: 'ROOMFULL'
+    }
+}
+
 export const rejectEntry = () => {
     return {
         type: 'REJECTENTRY'

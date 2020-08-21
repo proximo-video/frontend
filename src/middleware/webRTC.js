@@ -1,5 +1,5 @@
 import { localStream } from './getUserMedia';
-import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference, meetingEnded, addEntryRequest, acceptEntry, rejectEntry, remoteConnected, remoteDisconnected } from '../redux/actions'
+import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference, meetingEnded, addEntryRequest, acceptEntry, rejectEntry, remoteConnected, remoteDisconnected, roomFull, error, reset } from '../redux/actions'
 let socket;
 let iceServers;
 let connections = new Map();
@@ -111,7 +111,13 @@ const socketAndWebRTC = (params, store) => {
                 case "REJECT":
                     store.dispatch(rejectEntry());
                     break;
+                case "FULL":
+                    store.dispatch(roomFull())
+                    break;
                 case "WAIT":
+                    break;
+                case "ERROR":
+                    store.dispatch(error(jsonData.data));
                     break;
                 default:
                     break;
@@ -141,7 +147,8 @@ const socketAndWebRTC = (params, store) => {
         };
 
         socket.onclose = function (event) {
-            window.location.reload();
+            store.dispatch(reset());
+            connectToWebSocket();
             console.log('WebSocket Connection Closed. Please Reload the page.');
             // document.getElementById("sendOfferButton").disabled = true;
             // document.getElementById("answerButton").disabled = true;
