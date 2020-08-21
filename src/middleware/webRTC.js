@@ -190,7 +190,13 @@ const socketAndWebRTC = (params, store) => {
         // Add both video and audio tracks to the connection
         for (const track of localStream.getTracks()) {
             // console.log("Sending Stream.")
-            rtcRtpSenderList.push(connection.addTrack(track, localStream));
+            const rtcRtPSender = connection.addTrack(track, localStream)
+            const parameters = rtcRtPSender.getParameters();
+            parameters.encodings[0].maxBitrate = 128000;
+            if (track.kind === 'video')
+                parameters.encodings[0].scaleResolutionDownBy = 1;
+            rtcRtPSender.setParameters(parameters);
+            rtcRtpSenderList.push(rtcRtPSender);
         }
         existingTracks.set(toUser, rtcRtpSenderList)
 
