@@ -1,5 +1,8 @@
-async function GetLocalWebCamFeed(audio, video, facingMode) {
+// import { useDispatch } from "react-redux";
+import {error} from "../redux/actions";
 
+async function GetLocalWebCamFeed(audio, video, facingMode, dispatch) {
+    // const dispatch = useDispatch();
     let constraints = {
         width: { ideal: 640 },
         height: { ideal: 480 },
@@ -15,12 +18,18 @@ async function GetLocalWebCamFeed(audio, video, facingMode) {
             stream.getAudioTracks()[0].enabled = audio;
             return stream;
         }
-        catch (e) { console.log(e.name + ": " + e.message); };
+        catch (e) {
+            // console.log(e.name + ": " + e.message);
+            dispatch(error(e.name + ": " + e.message));
+        };
     } else {
         try {
             let stream = await navigator.getWebcam({ audio: true, video: video });
             stream.getAudioTracks()[0].enabled = audio;
-        } catch (e) { console.log(e.name + ": " + e.message); };
+        } catch (e) {
+            // console.log(e.name + ": " + e.message);
+            dispatch(error(e.name + ": " + e.message));
+        };
 
     }
 }
