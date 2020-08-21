@@ -127,7 +127,7 @@ const Hero = ({
           </div>
           <div className="hero-figure reveal-from-bottom illustration-element-01" data-reveal-value="20px" data-reveal-delay="800">
             <picture>
-              <source srcset="/images/roomview.webp" />
+              <source srcSet="/images/roomview.webp" />
               <img alt="roomview" src="/images/roomview.jpg" />
             </picture>
           </div>

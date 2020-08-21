@@ -1,5 +1,6 @@
 import { localStream } from './getUserMedia';
 import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference, meetingEnded, addEntryRequest, acceptEntry, rejectEntry, remoteConnected, remoteDisconnected, roomFull, error, reset } from '../redux/actions'
+import { httpRequestError } from '../ErrorsList';
 let socket;
 let iceServers;
 let connections = new Map();
@@ -47,15 +48,20 @@ const webRTCMiddleware = store => next => action => {
 export default webRTCMiddleware;
 // eslint-disable-next-line
 const sendMessage = (params, store) => {
-    channels.forEach(channel => {
-        if (channel) {
-            channel.send(JSON.stringify({
-                "from": params.id,
-                "action": params.action,
-                "message": params.message
-            }))
-        }
-    });
+    try {
+        channels.forEach(channel => {
+            if (channel) {
+                channel.send(JSON.stringify({
+                    "from": params.id,
+                    "action": params.action,
+                    "message": params.message
+                }))
+            }
+        });
+    } catch (e) {
+        if (params.action === 'MESSAGE')
+            store.dispatch(error("Error in sending message.Please try again"));
+    }
     if (params.action === 'MESSAGE')
         store.dispatch(addMessage({ id: params.id, message: params.message }))
 }
@@ -76,8 +82,13 @@ const socketAndWebRTC = (params, store) => {
     const connectToWebSocket = () => {
         const webSocketConnection = "wss://api.proximo.pw/ws";
         // const webSocketConnection = "ws://localhost:8080/ws";
-        if (!socket)
-            socket = new WebSocket(webSocketConnection);
+        if (!socket) {
+            try {
+                socket = new WebSocket(webSocketConnection);
+            } catch (e) {
+                store.dispatch(error(httpRequestError));
+            }
+        }
         socket.onopen = function (event) {
             console.log('WebSocket Connection Open.');
             socket.send(JSON.stringify(
@@ -161,8 +172,20 @@ const socketAndWebRTC = (params, store) => {
         const configuration = {
             iceServers: iceServers
         }
-
-        let connection = new RTCPeerConnection(configuration);
+        let connection
+        try {
+            connection = new RTCPeerConnection(configuration);
+        } catch (e) {
+            try {
+                connection = new RTCPeerConnection(configuration);
+            } catch (e) {
+                try {
+                    connection = new RTCPeerConnection(configuration);
+                } catch (e) {
+                    store.dispatch(error("Unable to establish connection with remote peer.Please try again later."))
+                }
+            }
+        }
         const rtcRtpSenderList = [];
         // Add both video and audio tracks to the connection
         for (const track of localStream.getTracks()) {

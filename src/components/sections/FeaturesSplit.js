@@ -107,7 +107,7 @@ const FeaturesSplit = ({
                 )}
                 data-reveal-container=".split-item">
                 <picture>
-                  <source srcset="/images/ui.webp" />
+                  <source srcSet="/images/ui.webp" />
                   <img alt="roomview" src="/images/ui.png" />
                 </picture>
               </div>
@@ -132,7 +132,7 @@ const FeaturesSplit = ({
                 )}
                 data-reveal-container=".split-item">
                 <picture className={classNames('mobile-view-image')}>
-                  <source srcset="/images/mobileview.webp" />
+                  <source srcSet="/images/mobileview.webp" />
                   <img className={classNames('mobile-view-image')} alt="roomview" src="/images/mobileview.png" />
                 </picture>
               </div>
@@ -156,7 +156,7 @@ const FeaturesSplit = ({
                 )}
                 data-reveal-container=".split-item">
                 <picture>
-                  <source srcset="/images/userpage.webp" />
+                  <source srcSet="/images/userpage.webp" />
                   <img alt="roomview" src="/images/userpage.png" />
                 </picture>
               </div>
