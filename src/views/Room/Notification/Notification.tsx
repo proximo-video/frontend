@@ -46,13 +46,13 @@ export default function Notification(props: NotificationProps) {
 
     const handleDenyClick = () => {
         dispatch(sendMessageSocket({action:'REJECT',id:id,toId:requestMessage.id}))
-        console.log("User entry denied:", requestMessage.displayName, requestMessage.id);
+        // console.log("User entry denied:", requestMessage.displayName, requestMessage.id);
         requestHide();
     }
 
     const handleAcceptClick = () => {
         dispatch(sendMessageSocket({action:'APPROVE',id:id,toId:requestMessage.id}))
-        console.log("User entry accepted:", requestMessage.displayName, requestMessage.id);
+        // console.log("User entry accepted:", requestMessage.displayName, requestMessage.id);
         requestHide();
     }
 
