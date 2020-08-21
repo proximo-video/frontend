@@ -18,7 +18,7 @@ export default function AboutUs() {
                         </div>
                         <div className={"about-me"}>
                             <h6>Rishabh Tripathi</h6>
-                            <p>Hi! I am Rishabh. I am a developer, traveler, and an occasional adventure seeker. I hope
+                            <p>Hi! I am Rishabh. I am a developer, traveler, and an adventure seeker. I hope
                                 you loved this website. Feel free to check out my profiles :).</p>
                             <div className={"urls"}>
                                 <a href={"https://www.linkedin.com/in/ristri/"}><FaLinkedinIn/></a>
@@ -34,7 +34,7 @@ export default function AboutUs() {
                         </div>
                         <div className={"about-me"} style={{visibility: "hidden"}}>
                             <h6>Rishabh Tripathi</h6>
-                            <p>Hi! I am Rishabh. I am a developer, traveler, and an occasional adventure seeker. I hope
+                            <p>Hi! I am Rishabh. I am a developer, traveler, and an adventure seeker. I hope
                                 you loved this website. Feel free to check out my profiles :).</p>
                             <div className={"urls"}>
                                 <a href={"https://www.linkedin.com/in/ristri/"}><FaLinkedinIn/></a>
@@ -52,7 +52,7 @@ export default function AboutUs() {
                         </div>
                         <div className={"about-me"}>
                             <h6>Aniket Singh</h6>
-                            <p>Hi! I am Aniket. I am a developer, traveler, and an occasional adventure seeker. I hope
+                            <p>Hi! I am Aniket. I am a developer, traveler, and an adventure seeker. I hope
                                 you loved this website. Feel free to check out my profiles :).</p>
                             <div className={"urls"}>
                                 <a href={"https://www.linkedin.com/in/aniketsingh0104/"}><FaLinkedinIn/></a>
@@ -68,7 +68,7 @@ export default function AboutUs() {
                         </div>
                         <div className={"about-me"} style={{visibility: "hidden"}}>
                             <h6>Aniket Singh</h6>
-                            <p>Hi! I am Aniket. I am a developer, traveler, and an occasional adventure seeker. I hope
+                            <p>Hi! I am Aniket. I am a developer, traveler, and an adventure seeker. I hope
                                 you loved this website. Feel free to check out my profiles :).</p>
                             <div className={"urls"}>
                                 <a href={"https://www.linkedin.com/in/aniketsingh0104/"}><FaLinkedinIn/></a>
