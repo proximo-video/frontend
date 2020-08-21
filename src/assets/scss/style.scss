@@ -1029,136 +1029,136 @@
 		height: 90vh;
 	}
 
-
 	margin-top: 5%;
-	.about-us-h1 {
-		margin-bottom: 0 !important;
-		text-align: center;
-	}
-	.about-me {
-		text-align: center;
-		max-width: 90%;
-		margin: 0 auto;
-		.urls {
-			width: 100%;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			a {
-				margin: 0 10px;
-			}
-		}
-	}
-	.about-us-details {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 100%;
+}
+.about-us-h1 {
+	margin-bottom: 0 !important;
+	text-align: center;
+}
+
+.about-me {
+	text-align: center;
+	max-width: 90%;
+	margin: 0 auto;
+	.urls {
 		width: 100%;
-	}
-	.about-us-single {
-		height: 80%;
-		width: 30%;
-		margin: 0 5%;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		position: relative;
-		top: -8%;
-		@media only screen and (max-width: 1200px) {
-			width: 35%;
-		}
-		@media only screen and (max-width: 605px) {
-			width: 40%;
-		}
-		@media only screen and (max-width: 500px) {
-			width: 45%;
-			margin: 0 2%;
-		}
-		@media only screen and (max-width: 430px) {
-			width: 50%;
-			margin: 0 1%;
+		a {
+			margin: 0 10px;
 		}
 	}
+}
+.about-us-details {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	width: 100%;
+}
+.about-us-single {
+	height: 80%;
+	width: 30%;
+	margin: 0 5%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	top: -8%;
+	@media only screen and (max-width: 1200px) {
+		width: 35%;
+	}
+	@media only screen and (max-width: 605px) {
+		width: 40%;
+	}
+	@media only screen and (max-width: 500px) {
+		width: 45%;
+		margin: 0 2%;
+	}
+	@media only screen and (max-width: 430px) {
+		width: 50%;
+		margin: 0 1%;
+	}
+}
+.avatar-container {
+	margin: 0 auto;
+}
+.avatar-and-details {
+	z-index: 1;
+	position: absolute;
+	top: 0;
+	padding: 5% 0;
+}
+.avatar-background {
+	background: transparent;
+	transform: translate3d(0, 20%, 0);
+	transition: all 1s ease-out;
+	z-index: 0;
+	position: absolute;
+	border-radius: 40px;
+	top: 0;
+	padding: 5% 0;
+}
+#about-us-single1 {
 	.avatar-container {
-		margin: 0 auto;
+		background: url("/images/tripathi_avatar2.png") no-repeat;
+		background-size: contain;
+		transition: background 2s ease-out;
+		img {
+			visibility: hidden;
+		}
 	}
 	.avatar-and-details {
-		z-index: 1;
-		position: absolute;
-		top: 0;
-		padding: 5% 0;
+		transform: translate3d(0, 0, 0);
+		transition: transform 2s ease-out;
 	}
-	.avatar-background {
-		background: transparent;
-		transform: translate3d(0, 20%, 0);
-		transition: all 1s ease-out;
-		z-index: 0;
-		position: absolute;
-		border-radius: 40px;
-		top: 0;
-		padding: 5% 0;
-	}
-	#about-us-single1 {
+	&:hover {
 		.avatar-container {
-			background: url("/images/tripathi_avatar2.png") no-repeat;
+			background: url("/images/tripathi_avatar1.png") no-repeat;
 			background-size: contain;
-			transition: background 2s ease-out;
-			img {
-				visibility: hidden;
-			}
+			transition: background 4s ease-out;
 		}
 		.avatar-and-details {
-			transform: translate3d(0, 0, 0);
+			transform: translate3d(0, 10%, 0);
 			transition: transform 2s ease-out;
 		}
-		&:hover {
-			.avatar-container {
-				background: url("/images/tripathi_avatar1.png") no-repeat;
-				background-size: contain;
-				transition: background 4s ease-out;
-			}
-			.avatar-and-details {
-				transform: translate3d(0, 10%, 0);
-				transition: transform 2s ease-out;
-			}
-			.avatar-background {
-				background: #3f475f;
-				box-shadow: 0 9px 16px 10px rgba(0,0,0,.8);
-				transform: translate3d(0, 10%, 0);
-				transition: all 1s ease-out;
-			}
+		.avatar-background {
+			background: #3f475f;
+			box-shadow: 0 9px 16px 10px rgba(0,0,0,.8);
+			transform: translate3d(0, 10%, 0);
+			transition: all 1s ease-out;
 		}
 	}
-	#about-us-single2 {
+}
+#about-us-single2 {
+	.avatar-container {
+		background: url("/images/aniket_avatar2.png") no-repeat;
+		background-size: contain;
+		transition: background 2s ease-out;
+		img {
+			visibility: hidden;
+		}
+	}
+	.avatar-and-details {
+		transform: translate3d(0, 0, 0);
+		transition: transform 2s ease-out;
+	}
+	&:hover {
 		.avatar-container {
-			background: url("/images/aniket_avatar2.png") no-repeat;
+			background: url("/images/aniket_avatar1.png") no-repeat;
 			background-size: contain;
-			transition: background 2s ease-out;
-			img {
-				visibility: hidden;
-			}
+			transition: background 4s ease-out;
 		}
 		.avatar-and-details {
-			transform: translate3d(0, 0, 0);
+			transform: translate3d(0, 10%, 0);
 			transition: transform 2s ease-out;
 		}
-		&:hover {
-			.avatar-container {
-				background: url("/images/aniket_avatar1.png") no-repeat;
-				background-size: contain;
-				transition: background 4s ease-out;
-			}
-			.avatar-and-details {
-				transform: translate3d(0, 10%, 0);
-				transition: transform 2s ease-out;
-			}
-			.avatar-background {
-				background: #3f475f;
-				box-shadow: 0 9px 16px 10px rgba(0,0,0,.8);
-				transform: translate3d(0, 10%, 0);
-				transition: all 1s ease-out;
-			}
+		.avatar-background {
+			background: #3f475f;
+			box-shadow: 0 9px 16px 10px rgba(0,0,0,.8);
+			transform: translate3d(0, 10%, 0);
+			transition: all 1s ease-out;
 		}
 	}
 }

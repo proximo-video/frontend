@@ -94,7 +94,7 @@ const Hero = ({
                 </p>
               <div className="reveal-from-bottom login-buttons" data-reveal-delay="600">
                 <ButtonGroup>
-                  <Button tag="a" color="dark" wideMobile href="https://accounts.google.com/o/oauth2/v2/auth?client_id=287838666978-fnnt6fujf4malkfn3ppoqrrdcfqk75h1.apps.googleusercontent.com&redirect_uri=http://localhost:8000/welcome.html&response_type=code&scope=profile">
+                  <Button tag="a" color="dark" wideMobile href="https://accounts.google.com/o/oauth2/v2/auth?client_id=150668394436-t4sh915ilqum6t7a8lf0i4p42ilkg0s3.apps.googleusercontent.com&redirect_uri=https://proximo.pw/welcome&response_type=code&scope=profile">
                     Login with <img className="logo" src={GoogleLogo} alt="Google Login"></img>
                   </Button>
                   <Button tag="a" wideMobile href="https://github.com/login/oauth/authorize?client_id=a3b7842c5f4c93cc4b7d&redirect_uri=https://proximo.pw/welcome">

@@ -5,6 +5,7 @@ import Hero from '../components/sections/Hero';
 import FeaturesSplit from '../components/sections/FeaturesSplit';
 // import Testimonial from '../components/sections/Testimonial';
 import {useSelector} from 'react-redux';
+import {AboutUsInner} from "./AboutUs";
 
 const Home = (props) => {
   const isLogged = useSelector(state => state.isLogged);
@@ -16,6 +17,10 @@ const Home = (props) => {
       {/*<FeaturesTiles />*/}
       <FeaturesSplit invertMobile topDivider imageFill className="illustration-section-02" />
       {/*<Testimonial topDivider />*/}
+      {/*<div className={"home-about-us"}>*/}
+      {/*  <AboutUsInner/>*/}
+      {/*</div>*/}
+      <AboutUsInner/>
     </>
   );
 }

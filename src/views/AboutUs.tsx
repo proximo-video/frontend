@@ -2,13 +2,9 @@ import React from "react";
 import {FaGlobeAmericas, FaLinkedinIn, GoMarkGithub} from "react-icons/all";
 
 
-export interface AboutUs {
-
-}
-
-export default function AboutUs() {
+export function AboutUsInner() {
     return (
-        <div className={"about-us-container"}>
+        <>
             <h1 className={"about-us-h1"}>Team</h1>
             <div className={"about-us-details"}>
                 <div id={"about-us-single1"} className={"about-us-single"}>
@@ -80,6 +76,19 @@ export default function AboutUs() {
                     </div>
                 </div>
             </div>
+        </>
+    );
+}
+
+
+export interface AboutUs {
+
+}
+
+export default function AboutUs() {
+    return (
+        <div className={"about-us-container"}>
+            <AboutUsInner/>
         </div>
     );
 }
