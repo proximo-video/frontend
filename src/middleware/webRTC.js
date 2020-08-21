@@ -189,14 +189,14 @@ const socketAndWebRTC = (params, store) => {
         const rtcRtpSenderList = [];
         // Add both video and audio tracks to the connection
         for (const track of localStream.getTracks()) {
-            // console.log("Sending Stream.")
-            const rtcRtPSender = connection.addTrack(track, localStream)
-            const parameters = rtcRtPSender.getParameters();
-            parameters.encodings[0].maxBitrate = 128000;
-            if (track.kind === 'video')
-                parameters.encodings[0].scaleResolutionDownBy = 1;
-            rtcRtPSender.setParameters(parameters);
-            rtcRtpSenderList.push(rtcRtPSender);
+            // console.log("Sending Stream.") 
+            // const parameters = rtcRtPSender.getParameters();
+            // console.log(parameters)
+            // parameters.encodings[0].maxBitrate = 128000;
+            // if (track.kind === 'video')
+            //     parameters.encodings[0].scaleResolutionDownBy = 1;
+            // rtcRtPSender.setParameters(parameters);
+            rtcRtpSenderList.push(connection.addTrack(track, localStream));
         }
         existingTracks.set(toUser, rtcRtpSenderList)
 
@@ -349,6 +349,19 @@ const socketAndWebRTC = (params, store) => {
 
                 // Set Offer for negotiation
                 connections.get(toUser).setLocalDescription(offer);
+                if (existingTracks.has(toUser)) {
+                    try {
+                        existingTracks.get(toUser).forEach((rtcRtPSender) => {
+                            const parameters = rtcRtPSender.getParameters();
+                            console.log(parameters)
+                            parameters.encodings[0].maxBitrate = 128000;
+                            rtcRtPSender.setParameters(parameters);
+                        }
+                        )
+                    }catch(e){
+                        
+                    }
+                }
             },
             error => {
                 console.log('Error when creating an offer.');
@@ -440,6 +453,19 @@ const socketAndWebRTC = (params, store) => {
         if (params.id !== id) {
             console.log("Recieved The Offer.");
             connections.get(toUser).setRemoteDescription(new RTCSessionDescription(offer));
+            if (existingTracks.has(toUser)) {
+                try {
+                    existingTracks.get(toUser).forEach((rtcRtPSender) => {
+                        const parameters = rtcRtPSender.getParameters();
+                        console.log(parameters)
+                        parameters.encodings[0].maxBitrate = 128000;
+                        rtcRtPSender.setParameters(parameters);
+                    }
+                    )
+                } catch (e) {
+
+                }
+            }
             createAndSendAnswer(toUser)
             // document.getElementById("answerButton").disabled = false;
             // document.getElementById("sendOfferButton").disabled = true;
