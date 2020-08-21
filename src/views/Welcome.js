@@ -16,6 +16,7 @@ function Welcome(props) {
         let service;
         scope === null ? service = "github" : service = "google";
         console.log("Code: ", code);
+        // eslint-disable-next-line
         const fetchData = async () => {
             try {
                 let response = await fetch('https://api.proximo.pw/auth', {
