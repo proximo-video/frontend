@@ -1003,32 +1003,6 @@
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	height: 130vh;
-	@media only screen and (max-width: 365px) {
-		height: 145vh;
-	}
-	/* Portrait and Landscape */
-	@media only screen
-		and (min-width: 375px)
-		and (max-width: 812px)
-		and (-webkit-min-device-pixel-ratio: 3) {
-			height: 100vh;
-	}
-
-	@media only screen
-	and (min-width: 414px)
-	and (max-width: 736px)
-	and (-webkit-min-device-pixel-ratio: 3) {
-		height: 120vh;
-	}
-
-	@media only screen
-	and (min-width: 768px)
-	and (max-width: 1100px)
-	and (-webkit-min-device-pixel-ratio: 2) {
-		height: 90vh;
-	}
-
 	margin-top: 5%;
 }
 .about-us-h1 {
@@ -1056,6 +1030,7 @@
 	align-items: center;
 	height: 100%;
 	width: 100%;
+	margin-bottom: 20%;
 }
 .about-us-single {
 	height: 80%;
@@ -1095,7 +1070,7 @@
 	transform: translate3d(0, 20%, 0);
 	transition: all 1s ease-out;
 	z-index: 0;
-	position: absolute;
+	position: relative;
 	border-radius: 40px;
 	top: 0;
 	padding: 5% 0;
