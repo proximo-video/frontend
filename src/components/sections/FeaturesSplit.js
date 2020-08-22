@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { SectionSplitProps } from '../../utils/SectionProps';
 import SectionHeader from './partials/SectionHeader';
 import Image from '../elements/Image';
-import {isSafari} from "../../views/Home";
+// import {isSafari} from "../../views/Home";
 
 const propTypes = {
   ...SectionSplitProps.types
@@ -108,11 +108,7 @@ const FeaturesSplit = ({
                 )}
                 data-reveal-container=".split-item">
                 <picture>
-                  {
-                    isSafari() ?
-                        <img alt="roomview" src="/images/ui.png" />
-                        : <source srcSet="/images/ui.webp" />
-                  }
+                    <img alt="roomview" src="/images/ui.png" />
                 </picture>
               </div>
             </div>
@@ -136,11 +132,7 @@ const FeaturesSplit = ({
                 )}
                 data-reveal-container=".split-item">
                 <picture className={classNames('mobile-view-image')}>
-                  {
-                    isSafari() ?
-                        <img className={classNames('mobile-view-image')} alt="roomview" src="/images/mobileview.png" />
-                        : <source srcSet="/images/mobileview.webp"/>
-                  }
+                    <img className={classNames('mobile-view-image')} alt="roomview" src="/images/mobileview.png" />
                 </picture>
               </div>
             </div>
@@ -163,10 +155,7 @@ const FeaturesSplit = ({
                 )}
                 data-reveal-container=".split-item">
                 <picture>
-                  {
-                      isSafari() ? <img alt="roomview" src="/images/userpage.png" />
-                        : <source srcSet="/images/userpage.webp"/>
-                  }
+                  <img alt="roomview" src="/images/userpage.png" />
                 </picture>
               </div>
             </div>
