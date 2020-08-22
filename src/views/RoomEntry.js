@@ -20,8 +20,7 @@ const RoomEntry = (props) => {
             e.target.style.border = '2px solid green';
             dispatch(setName(e.target.value));
             setShowNameWarning(false);
-        }
-        else
+        } else
             setShowNameWarning(true);
     }
     const onCancelButtonClick = () => {
@@ -47,42 +46,61 @@ const RoomEntry = (props) => {
                         <PersonalMedia mediaSuccess={props.mediaSuccess} setMediaSuccess={props.setMediaSuccess}/>
                         {
                             props.acceptEntry === 'R' ?
-                            <div className={"waiting-message-area"}>
-                                <h6>Owner doesn't want you in the meeting. Sorry..!</h6>
-                            </div> :
-                            !props.showWaiting ?
-                            <div className="room-entry-form">
-                                {
-                                    props.logged && name !== '' ?
-                                        <h4>
-                                            {`Join as ${name}`}
-                                        </h4> :
-                                        <div className={"input-area"}>
-                                            <label className={"input-label"} style={showNameWarning ? {display: 'block'} : {}}>
-                                                Name is required:
-                                            </label>
-                                            <input
-                                                required
-                                                type="text"
-                                                onChange={nameInputHandler}
-                                                id="input-name"
-                                                placeholder="Name"
-                                                className={"room-entry-input"}
-                                                style={showNameWarning ? {border: '2px solid #f26b4c'} : {}}
-                                            />
+                                <div className={"waiting-message-area"}>
+                                    <h6>Owner doesn't want you in the meeting. Sorry..!</h6>
+                                </div> :
+                                !props.showWaiting ?
+                                    <div className="room-entry-form">
+                                        {
+                                            props.logged && name !== '' ?
+                                                <h4>
+                                                    {`Join as ${name}`}
+                                                </h4> :
+                                                <div className={"input-area"}>
+                                                    <label className={"input-label"}
+                                                           style={showNameWarning ? {display: 'block'} : {}}>
+                                                        Name is required:
+                                                    </label>
+                                                    <input
+                                                        required
+                                                        type="text"
+                                                        onChange={nameInputHandler}
+                                                        id="input-name"
+                                                        placeholder="Name"
+                                                        className={"room-entry-input"}
+                                                        style={showNameWarning ? {border: '2px solid #f26b4c'} : {}}
+                                                    />
+                                                </div>
+                                        }
+                                        <div className={"room-entry-buttons"}>
+                                            {
+                                                !props.iceSuccess ?
+                                                    <div className={"loader-button"}>
+                                                        <div className="loader"/>
+                                                        <p>Gathering connection requirements.</p>
+                                                        <p>Please wait...!</p>
+                                                    </div>
+                                                    :
+                                                    (
+                                                        !props.mediaSuccess ?
+                                                            <div className={"loader-button"}>
+                                                                <p>Please allow camera and mic access to start the meeting.</p>
+                                                            </div> :
+                                                            <Button color="primary" wide className={"join-button"}
+                                                                    disabled={!(props.mediaSuccess && props.iceSuccess)}
+                                                                    onClick={onJoinButtonClick}>{isRoomOwner ? 'Start' : 'Join'}</Button>
+                                                    )
+                                            }
+                                            <Button color="primary" onClick={onCancelButtonClick} wide
+                                                    className={"cancel-button"}>Cancel</Button>
                                         </div>
-                                }
-                                <div className={"room-entry-buttons"}>
-                                    <Button color="primary" wide className={"join-button"}
-                                            disabled={!(props.mediaSuccess && props.iceSuccess)}
-                                            onClick={onJoinButtonClick}>{isRoomOwner ? 'Start' : 'Join'}</Button>
-                                    <Button color="primary" onClick={onCancelButtonClick} wide className={"cancel-button"}>Cancel</Button>
-                                </div>
-                            </div> :
-                            <div className={"waiting-message-area"}>
-                                <div className="loader"/>
-                                {!props.isRoomOwner && props.isRoomLocked ? <h6>Waiting for room owner to let you in.</h6> : <h6>Checking room status.</h6>}
-                            </div>
+                                    </div> :
+                                    <div className={"waiting-message-area"}>
+                                        <div className="loader"/>
+                                        {!props.isRoomOwner && props.isRoomLocked ?
+                                            <h6>Waiting for room owner to let you in.</h6> :
+                                            <h6>Checking room status.</h6>}
+                                    </div>
                         }
                     </div>
                 </div>

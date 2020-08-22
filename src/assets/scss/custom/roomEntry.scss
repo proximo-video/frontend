@@ -61,6 +61,12 @@
     align-items: center;
     flex-direction: column;
     border-radius: 20px;
+    &.no-media {
+      background-color: rgba(191, 48, 48, 0.9);
+      p {
+        margin: 0 auto !important;
+      }
+    }
   }
   .cntrl-button {
     &.room-entry-button {
@@ -82,6 +88,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 10%;
     .room-entry-container {
       //display: inline-flex;
       width: 90vw;
@@ -150,6 +157,29 @@
             align-items: center;
             width: 80%;
             margin-top: 12%;
+            .loader-button {
+              max-width: 45%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+              .loader {
+                border: 2px solid #f3f3f3;
+                border-radius: 50%;
+                border-top: 1px solid black;
+                width: 17px;
+                height: 17px;
+                -webkit-animation: spin 1.5s linear infinite; /* Safari */
+                animation: spin 1.5s linear infinite;
+              }
+              p {
+                font-size: x-small;
+                padding: 0 !important;
+                text-align: center;
+                margin: 0 !important;
+                color: white;
+              }
+            }
             button {
               border-radius: 10px;
               max-width: 45%;

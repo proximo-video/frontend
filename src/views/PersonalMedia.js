@@ -69,11 +69,11 @@ const PersonalMedia = (props) => {
                     </div>
                     {
                         !props.mediaSuccess &&
-                        <div className={"overlay-message"}>
+                        <div className={"overlay-message no-media"}>
                             <p style={{textAlign: 'center', padding: '20px'}}>You need to allow access to your cam and mic to join. Try again, and select "Allow" when prompted</p>
                         </div>
                     }
-                    <div className="is-center-flex video-controls">
+                    <div className="is-center-flex video-controls" style={!props.mediaSuccess ? {display: 'none'} : {}}>
                         <div className={"button-wrapper"}>
                             <ControlButton
                                 className={(isVideo ? buttonsData[0].onClass : buttonsData[0].offClass) + ' room-entry-button'}
