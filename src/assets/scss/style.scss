@@ -563,17 +563,17 @@
 			min-height: 55px;
 			display: flex;
 			position: absolute;
-			top: 100%;
+			top: 110%;
 			width: 80%;
 			justify-content: center;
 			align-items: center;
 			//position: relative;
-			@media only screen and (max-width: 850px) {
-				//flex-direction: column;
-				margin-top: 20px;
-				width: 90%;
-				top: 20%;
-			}
+			//@media only screen and (max-width: 850px) {
+			//	//flex-direction: column;
+			//	margin-top: 20px;
+			//	width: 90%;
+			//	top: 20%;
+			//}
 			.input-label {
 				position: absolute;
 				top: -5%;
