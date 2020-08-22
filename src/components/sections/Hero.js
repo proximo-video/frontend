@@ -5,7 +5,6 @@ import ButtonGroup from '../elements/ButtonGroup';
 import Button from '../elements/Button';
 import GoogleLogo from '../../assets/images/google.png';
 import GithubLogo from '../../assets/images/github.png';
-import { isSafari } from "../../views/Home";
 // import {Error} from "../../views/Room/Notification/NotificationManager";
 // import { UseHistory } from "react-router-dom";
 
