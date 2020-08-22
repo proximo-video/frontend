@@ -69,7 +69,8 @@ const Hero = ({
     }
   }
 
-  const goToRoom = () => {
+  const goToRoom = (e) => {
+    e.preventDefault();
     const roomName = roomIdInput.trim();
     if (roomName !== '' && roomName.match(/^[0-9a-zA-Z]+$/)) {
       props.history.push('/' + roomName);
@@ -112,15 +113,17 @@ const Hero = ({
                   <label className={"input-label"} style={showRoomNameWarning ? { display: 'block' } : {}}>
                     Room name can only be alphanumeric:
                   </label>
-                  <input
-                    id={"room-name-input"}
-                    className={"form-input"}
-                    value={roomIdInput}
-                    onChange={roomInputHandle}
-                    placeholder={"Room Name"}
-                    style={showRoomNameWarning ? { border: '3px solid #f26b4c' } : {}}
-                  />
-                  <Button color="primary add-room-button" onClick={goToRoom}>Go to room</Button>
+                  <form onSubmit={goToRoom} className={"home-page-join-form"}>
+                    <input
+                      id={"room-name-input"}
+                      className={"form-input"}
+                      value={roomIdInput}
+                      onChange={roomInputHandle}
+                      placeholder={"Room Name"}
+                      style={showRoomNameWarning ? { border: '3px solid #f26b4c' } : {}}
+                    />
+                    <Button color="primary add-room-button" onClick={goToRoom}>Go to room</Button>
+                  </form>
                 </div>
               </div>
             </div>

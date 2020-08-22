@@ -536,7 +536,7 @@
 		}
 		.join-area-button {
 			position: absolute;
-			top: 100%;
+			top: 110%;
 			border-radius: 5px;
 			min-height: 55px;
 			text-align: center;
@@ -1142,5 +1142,12 @@
 	.about-us-h1 {
 		margin: 25px 0 0 0 !important;
 	}
+}
+
+.home-page-join-form {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
 }
 

@@ -73,7 +73,7 @@ export function AboutUsInner(props: AboutUsInnerProps) {
                     </div>
                     <div className={"avatar-background"}>
                         <div className={"avatar-container"} style={{visibility: "hidden"}}>
-                            <img src={"images/aniket_avatar1.png"} alt={"avatar"}/>
+                            <img src={"images/aniket_avatar2.png"} alt={"avatar"}/>
                         </div>
                         <div className={"about-me"} style={{visibility: "hidden"}}>
                             <h6>Aniket Singh</h6>
