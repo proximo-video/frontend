@@ -70,7 +70,7 @@ function Room(props) {
                     setRoomLocked(data.is_locked)
                 }
                 else {
-                    props.history.push('error');
+                    props.history.push('/error');
                 }
             } catch (e) {
                 dispatch(error(httpRequestError))
