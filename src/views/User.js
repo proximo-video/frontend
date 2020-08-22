@@ -103,6 +103,7 @@ function User(props) {
         }
     }
     const addRoom = async (e) => {
+        e.preventDefault();
         const element = e.target;
         const roomName = roomIdInput.trim();
         if (roomName !== '' && roomName.match(/^[0-9a-zA-Z]+$/)) {
