@@ -52,6 +52,8 @@ export const remoteUsersReducer = (state = {}, action) => {
                 return newState;
             }
             break;
+        case 'RESET':
+            return {};
         default:
             break;
     }

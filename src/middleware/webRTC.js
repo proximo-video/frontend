@@ -7,6 +7,7 @@ let connections = new Map();
 let channels = new Map();
 export let existingTracks = new Map();
 export let remoteStreams = new Map();
+let iceCandidates = new Map();
 const webRTCMiddleware = store => next => action => {
     switch (action.type) {
         case 'CONNECTSOCKET':
@@ -34,11 +35,16 @@ const webRTCMiddleware = store => next => action => {
             break;
         case 'RESET':
             socket = null;
-            iceServers = null;
-            connections = new Map();
-            channels = new Map();
+            channels.forEach(channel => {
+                channel.close()
+            });
+            connections.forEach((connection) => {
+                connection.close();
+            });
             existingTracks = new Map();
             remoteStreams = new Map();
+            connections = new Map();
+            channels = new Map();
             break;
         default:
             break;
@@ -354,12 +360,12 @@ const socketAndWebRTC = (params, store) => {
                         existingTracks.get(toUser).forEach((rtcRtPSender) => {
                             const parameters = rtcRtPSender.getParameters();
                             console.log(parameters)
-                            parameters.encodings[0].maxBitrate = 128000;
+                            parameters.encodings[0].maxBitrate = 200000;
                             rtcRtPSender.setParameters(parameters);
                         }
                         )
-                    }catch(e){
-                        
+                    } catch (e) {
+
                     }
                 }
             },
@@ -425,7 +431,7 @@ const socketAndWebRTC = (params, store) => {
 
         channel.onerror = function (event) {
             console.log('DataChannel Error.');
-            console.error(event)
+            console.error(event.errorDetail)
         };
 
         channel.onclose = function (event) {
@@ -434,10 +440,13 @@ const socketAndWebRTC = (params, store) => {
     }
 
     const handleCandidate = (candidate, id, toUser) => {
-        if (!connections.has(toUser))
-            createRTCPeerConnection(toUser);
-        // Avoid accepting the ice candidate if this is a message created by the current peer
-        if (params.id !== id) {
+        if (!connections.has(toUser)) {
+            if (!iceCandidates.has(toUser)) {
+                iceCandidates.set(toUser, [candidate]);
+            } else {
+                iceCandidates.get(toUser).push(candidate)
+            }
+        } else if (params.id !== id) {
             // console.log("Adding Ice Candidate - " + candidate.candidate);
             connections.get(toUser).addIceCandidate(new RTCIceCandidate(candidate));
         }
@@ -458,13 +467,18 @@ const socketAndWebRTC = (params, store) => {
                     existingTracks.get(toUser).forEach((rtcRtPSender) => {
                         const parameters = rtcRtPSender.getParameters();
                         console.log(parameters)
-                        parameters.encodings[0].maxBitrate = 128000;
+                        parameters.encodings[0].maxBitrate = 200000;
                         rtcRtPSender.setParameters(parameters);
                     }
                     )
                 } catch (e) {
 
                 }
+            }
+            if (iceCandidates.has(toUser)) {
+                iceCandidates.get(toUser).forEach(candidate => {
+                    connections.get(toUser).addIceCandidate(new RTCIceCandidate(candidate));
+                })
             }
             createAndSendAnswer(toUser)
             // document.getElementById("answerButton").disabled = false;
