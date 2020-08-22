@@ -1,5 +1,4 @@
 import React, {useEffect, useRef} from "react";
-import NotificationContainer from "./Notification/NotificationContainer";
 import {Message} from "./Notification/NotificationManager";
 import MessageComponent from "./MessageComponent";
 import {RootStateOrAny, useSelector} from "react-redux";
