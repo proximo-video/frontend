@@ -67,6 +67,18 @@ export const error = (value) => {
         value
     }
 }
+export const success = (value) => {
+    return {
+        type: 'SUCCESS',
+        value
+    }
+}
+export const warning = (value) => {
+    return {
+        type: 'WARNING',
+        value
+    }
+}
 
 export const removeUser = (value) => {
     return {

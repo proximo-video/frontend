@@ -4,7 +4,7 @@ import { combineReducers } from 'redux';
 import { getUserMediaReducer, getUserMediaPreferenceReducer, getUserScreenReducer } from './video';
 import { remoteStreamCountReducer, messagesReducer, meetingEndedReducer } from './webRTC';
 import { entryRequestListReducer, acceptEntryReducer } from './lockedRoom';
-import {errorReducer} from './error'
+import {errorReducer, successReducer, warningReducer} from './error'
 
 const allReducers = combineReducers({
     isLogged: isLoggedReducer,
@@ -21,7 +21,9 @@ const allReducers = combineReducers({
     meetingEnded: meetingEndedReducer,
     entryRequestList: entryRequestListReducer,
     acceptEntry: acceptEntryReducer,
-    error:errorReducer
+    error:errorReducer,
+    success:successReducer,
+    warning:warningReducer
 })
 
 export default allReducers;
