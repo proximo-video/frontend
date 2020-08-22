@@ -103,6 +103,7 @@ function User(props) {
         }
     }
     const addRoom = async (e) => {
+        e.preventDefault();
         const element = e.target;
         const roomName = roomIdInput.trim();
         if (roomName !== '' && roomName.match(/^[0-9a-zA-Z]+$/)) {
@@ -253,15 +254,17 @@ function User(props) {
                     <label className={"input-label"} style={showRoomNameWarning ? { display: 'block' } : {}}>
                         Room name can only be alphanumeric:
                     </label>
-                    <input
-                        id={"room-name-input"}
-                        className={"form-input"}
-                        value={roomIdInput}
-                        onChange={roomInputHandle}
-                        placeholder={"Room Name"}
-                        style={showRoomNameWarning ? { border: '3px solid #f26b4c' } : {}}
-                    />
-                    <Button color="primary add-room-button" onClick={addRoom}>Create Room</Button>
+                    <form onSubmit={addRoom} className={"input-area-form"}>
+                        <input
+                            id={"room-name-input"}
+                            className={"form-input"}
+                            value={roomIdInput}
+                            onChange={roomInputHandle}
+                            placeholder={"Room Name"}
+                            style={showRoomNameWarning ? { border: '3px solid #f26b4c' } : {}}
+                        />
+                        <Button color="primary add-room-button" onClick={addRoom}>Create Room</Button>
+                    </form>
                     {showDeleteModal()}
                 </div>
                 <div className={"rooms"}>
