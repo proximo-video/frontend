@@ -192,9 +192,19 @@
                 opacity: 1;
               }
             }
-            .cancel-button {
-              background: #C91F37;
+            .share-button {
+              background: #93e093;
               margin-left: auto;
+              min-width: 45%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 48px;
+              outline: none;
+              border: none;
+              svg {
+                margin-left: 8%;
+              }
             }
             .join-button {
               background: #6b6dff;

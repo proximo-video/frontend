@@ -231,7 +231,7 @@ function RoomFooter(props: RoomFooterProps) {
                         legend={!isVideo ? "Can't toggle cam when video is off" : ''}
                     />
                 }
-                {/*screen share button*/}
+                {/*screen screen button*/}
                 <ControlButton
                     className={(userScreen ? buttonsData[2].onClass : buttonsData[2].offClass)}
                     legend={isMobile ? '' : (userScreen ? buttonsData[2].onLegend : buttonsData[2].offLegend)}

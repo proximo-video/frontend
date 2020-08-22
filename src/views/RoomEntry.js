@@ -4,13 +4,18 @@ import PersonalMedia from './PersonalMedia';
 import {useDispatch, useSelector} from 'react-redux';
 import {setName} from '../redux/actions';
 import '../assets/scss/custom/roomEntry.scss';
+import {FiCopy, FiShare2} from "react-icons/fi";
+import {checkIsMobile} from "./Room/RoomFooter";
+import ReactTooltip from "react-tooltip";
 // import { useHistory } from "react-router-dom";
 
 const RoomEntry = (props) => {
+    const isMobile = checkIsMobile();
     const isRoomOwner = useSelector((state) => state.isRoomOwner);
     const name = useSelector((state) => state.name).trim();
     const dispatch = useDispatch();
     const [showNameWarning, setShowNameWarning] = useState(false);
+    const [copyLinkLegend, setCopyLinkLegend] = useState('Copy Link');
     // const acceptEntry = useSelector(state => state.acceptEntry);
     // console.log('name:', name);
     // const history = useHistory();
@@ -23,9 +28,35 @@ const RoomEntry = (props) => {
         } else
             setShowNameWarning(true);
     }
-    const onCancelButtonClick = () => {
 
+    const onMouseOutCopyButton = () => {
+        setCopyLinkLegend('Copy Link');
     }
+
+    const copyLinkToClipBoard = async () => {
+        const linkToCopy = window.location.href;
+        await navigator.clipboard.writeText(linkToCopy);
+        setCopyLinkLegend('Link Copied');
+    };
+
+    const onShareButtonClick = async () => {
+        if (isMobile) {
+            const linkToShare = window.location.href;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Proximo',
+                    text: 'Join meeting:',
+                    url: linkToShare,
+                })
+                    .then(() => console.log('Successful share'))
+                    .catch((error) => console.log('Error sharing', error));
+            } else
+                await copyLinkToClipBoard();
+        }
+        else
+            await copyLinkToClipBoard();
+    };
+
     const onJoinButtonClick = () => {
         const nameEle = document.getElementById('input-name');
         let currName = '';
@@ -91,8 +122,21 @@ const RoomEntry = (props) => {
                                                                     onClick={onJoinButtonClick}>{isRoomOwner ? 'Start' : 'Join'}</Button>
                                                     )
                                             }
-                                            <Button color="primary" onClick={onCancelButtonClick} wide
-                                                    className={"cancel-button"}>Cancel</Button>
+                                            <ReactTooltip id={'room-entry-copy'} place="top" type="dark" effect="solid" className="tooltip">
+                                                <span>
+                                                    {isMobile ? '' : copyLinkLegend}
+                                                </span>
+                                            </ReactTooltip>
+                                            <button
+                                                data-for={'room-entry-copy'}
+                                                data-tip
+                                                onClick={onShareButtonClick}
+                                                disabled={!document.queryCommandSupported('copy')}
+                                                className={"share-button"}
+                                                onMouseLeave={!isMobile ? onMouseOutCopyButton : null}
+                                            >
+                                                Share {isMobile ? <FiShare2/> : <FiCopy/>}
+                                            </button>
                                         </div>
                                     </div> :
                                     <div className={"waiting-message-area"}>
