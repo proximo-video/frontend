@@ -90,7 +90,7 @@ const Hero = ({
             </h1>
             <div className="container-xs">
               <p className="m-0 mb-32 reveal-from-bottom para-description" data-reveal-delay="400">
-                Host or join high-performing video conference meetings, go live, collaborate with your friends, and share anywhere.
+                Host or join high-performing video meetings, go live, collaborate with your friends, and share anywhere.
                 </p>
               <div className="reveal-from-bottom login-buttons" data-reveal-delay="600">
                 <ButtonGroup>

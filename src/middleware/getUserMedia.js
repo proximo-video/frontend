@@ -45,37 +45,45 @@ const getUserMediaMiddleware = store => next => async (action) => {
             }
             break;
         case 'TOGGLEVIDEO':
-            if (browser && browser.name === 'firefox') {
-                localStream.getVideoTracks().forEach(track => {
-                    track.enabled = !userMediaPreference.isVideo;
+            if (localStream) {
+                if (browser && browser.name === 'firefox') {
+                    localStream.getVideoTracks().forEach(track => {
+                        track.enabled = !userMediaPreference.isVideo;
+                    });
+                } else if (userMediaPreference.isVideo) {
+                    localStream.getVideoTracks().forEach(track => {
+                        track.stop();
+                    });
+                } else {
+                    localStream.getTracks().forEach(track => {
+                        track.stop();
+                    });
+                }
+            }
+            break;
+        case 'TOGGLEAUDIO':
+            if (localStream) {
+                localStream.getAudioTracks().forEach(track => {
+                    track.enabled = !userMediaPreference.isAudio;
                 });
-            } else if (userMediaPreference.isVideo) {
+            }
+            break;
+        case 'CLOSEMEDIA':
+            if (localStream) {
                 localStream.getVideoTracks().forEach(track => {
                     track.stop();
                 });
-            } else {
-                localStream.getTracks().forEach(track => {
+                localStream.getAudioTracks().forEach(track => {
                     track.stop();
                 });
             }
             break;
-        case 'TOGGLEAUDIO':
-            localStream.getAudioTracks().forEach(track => {
-                track.enabled = !userMediaPreference.isAudio;
-            });
-            break;
-        case 'CLOSEMEDIA':
-            localStream.getVideoTracks().forEach(track => {
-                track.stop();
-            });
-            localStream.getAudioTracks().forEach(track => {
-                track.stop();
-            });
-            break;
         case 'TOGGLECAMERAVIEW':
-            localStream.getTracks().forEach((track) => {
-                track.stop();
-            })
+            if (localStream) {
+                localStream.getTracks().forEach((track) => {
+                    track.stop();
+                })
+            }
             break;
         case 'GETUSERSCREEN':
             const id = store.getState().id;
