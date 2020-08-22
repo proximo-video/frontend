@@ -7,7 +7,7 @@ import FeaturesSplit from '../components/sections/FeaturesSplit';
 import {useSelector} from 'react-redux';
 import {AboutUsInner} from "./AboutUs";
 import {browser} from "./Room/RoomFooter";
-import Button from "../components/elements/Button";
+// import Button from "../components/elements/Button";
 import Modal from "../components/elements/Modal";
 
 export function isSafari() {
