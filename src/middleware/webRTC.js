@@ -1,6 +1,7 @@
 import { localStream } from './getUserMedia';
-import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference, meetingEnded, addEntryRequest, acceptEntry, rejectEntry, remoteConnected, remoteDisconnected, roomFull, error, reset, success, warning } from '../redux/actions'
+import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference, meetingEnded, addEntryRequest, acceptEntry, rejectEntry, remoteConnected, remoteDisconnected, roomFull, error, reset, success, warning, errorRedirect } from '../redux/actions'
 import { httpRequestError } from '../ErrorsList';
+let socketError = false;
 let socket;
 let iceServers;
 let connections = new Map();
@@ -11,6 +12,7 @@ let iceCandidates = new Map();
 const webRTCMiddleware = store => next => action => {
     switch (action.type) {
         case 'CONNECTSOCKET':
+            socketError = false;
             socketAndWebRTC(action.value, store);
             break;
         case 'SETICESERVERS':
@@ -88,13 +90,14 @@ const socketAndWebRTC = (params, store) => {
     const connectToWebSocket = () => {
         const webSocketConnection = "wss://api.proximo.pw/ws";
         // const webSocketConnection = "ws://localhost:8080/ws";
-        console.log('socket',socket)
-        if (!socket) {
+        console.log('socket', socket)
+        if (!socket && !socketError) {
             console.log("Creating socket")
             try {
                 socket = new WebSocket(webSocketConnection);
             } catch (e) {
                 store.dispatch(error(httpRequestError));
+                socketError = true;
             }
         }
         socket.onopen = function (event) {
@@ -136,6 +139,8 @@ const socketAndWebRTC = (params, store) => {
                 case "WAIT":
                     break;
                 case "ERROR":
+                    socketError = true;
+                    store.dispatch(errorRedirect(true));
                     store.dispatch(error(jsonData.data));
                     break;
                 default:
@@ -169,7 +174,10 @@ const socketAndWebRTC = (params, store) => {
             store.dispatch(reset());
             store.dispatch(warning("Connection Interrupted. Trying to reconnect ..."))
             store.dispatch(deleteRemoteStream());
-            connectToWebSocket();
+            //setTimeout(function(){ alert("Hello"); }, 3000);
+            if (!socketError) {
+                connectToWebSocket();
+            }
             console.log('WebSocket Connection Closed. Please Reload the page.');
             // document.getElementById("sendOfferButton").disabled = true;
             // document.getElementById("answerButton").disabled = true;
