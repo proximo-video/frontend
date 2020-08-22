@@ -80,7 +80,13 @@ const RoomEntry = (props) => {
                                 <div className={"waiting-message-area"}>
                                     <h6>Owner doesn't want you in the meeting. Sorry..!</h6>
                                 </div> :
-                                !props.showWaiting ?
+                                (
+                                    props.acceptEntry === 'F' ?
+                                        <div className={"waiting-message-area"}>
+                                            <h6>Room is full. Sorry! We currently only allow 4 users at a time per room.</h6>
+                                        </div>
+                                    :
+                                    !props.showWaiting ?
                                     <div className="room-entry-form">
                                         {
                                             props.logged && name !== '' ?
@@ -144,7 +150,7 @@ const RoomEntry = (props) => {
                                         {!props.isRoomOwner && props.isRoomLocked ?
                                             <h6>Waiting for room owner to let you in.</h6> :
                                             <h6>Checking room status.</h6>}
-                                    </div>
+                                    </div>)
                         }
                     </div>
                 </div>
