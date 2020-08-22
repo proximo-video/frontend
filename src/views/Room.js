@@ -6,12 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setId, closeMedia, getUserMedia, setIceServers, connectSocket, setRoomOwner, error } from '../redux/actions';
 import RoomView from './Room/RoomView';
 import { httpRequestError } from '../ErrorsList';
+import Preloader from '../utils/Preloader';
 
 function Room(props) {
     const dispatch = useDispatch();
     const id = useSelector(state => state.id);
     const isRoomOwner = useSelector(state => state.isRoomOwner);
     const acceptEntry = useSelector(state => state.acceptEntry);
+    const errorRedirect = useSelector(state => state.errorRedirect);
     const [isRoomLocked, setRoomLocked] = useState(false);
     const [showWaiting, setShowWaiting] = useState(false);
     // eslint-disable-next-line
@@ -45,6 +47,13 @@ function Room(props) {
         if (acceptEntry === 'A')
             setStartRoomView(true);
     }, [acceptEntry]);
+
+    useEffect(() => {
+        if (errorRedirect)
+            props.history.push('/roomerror')
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [errorRedirect]);
+
     useEffect(() => {
         const checkRoom = async () => {
             try {
@@ -61,11 +70,12 @@ function Room(props) {
                     setRoomLocked(data.is_locked)
                 }
                 else {
-                    console.log("Not Found");
+                    props.history.push('error');
                 }
             } catch (e) {
                 dispatch(error(httpRequestError))
             }
+            setFetched(true);
         }
 
         const getIceServer = async () => {
@@ -89,12 +99,11 @@ function Room(props) {
                 dispatch(setRoomOwner(true));
         }
         checkRoom();
-        try{
-        getIceServer();
-        }catch(e){
+        try {
+            getIceServer();
+        } catch (e) {
             dispatch(error(httpRequestError))
         }
-        setFetched(true);
         return () => {
             // console.log("Byee Room")
             // if (connections) {
@@ -122,11 +131,13 @@ function Room(props) {
         setShowWaiting(true);
     }
     return (
-        !startRoomView ?
-            <LayoutDefault>
-                {!fetched ? <></> : <RoomEntry isRoomLocked={isRoomLocked} isRoomOwner={isRoomOwner} acceptEntry={acceptEntry} showWaiting={showWaiting} logged={isLogged} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess} />}
-            </LayoutDefault>
-            : <RoomView />
+        fetched ?
+            !startRoomView ?
+                <LayoutDefault>
+                    {<RoomEntry isRoomLocked={isRoomLocked} isRoomOwner={isRoomOwner} acceptEntry={acceptEntry} showWaiting={showWaiting} logged={isLogged} createSocket={createSocket} iceSuccess={iceSuccess} mediaSuccess={mediaSuccess} setMediaSuccess={setMediaSuccess} />}
+                </LayoutDefault>
+                : <RoomView />
+            : <Preloader></Preloader>
     );
 }
 

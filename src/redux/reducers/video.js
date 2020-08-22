@@ -14,7 +14,7 @@ export const getUserScreenReducer = (state = false, action) => {
     return state;
 }
 
-export const getUserMediaPreferenceReducer = (state = { isVideo: true, isAudio: true, cameraView: "user" }, action) => {
+export const getUserMediaPreferenceReducer = (state = { isVideo: false, isAudio: true, cameraView: "user" }, action) => {
     switch (action.type) {
         case 'TOGGLEVIDEO':
             const isVideo = state.isVideo;

@@ -67,6 +67,14 @@ export const error = (value) => {
         value
     }
 }
+
+export const errorRedirect = (value) => {
+    return {
+        type: 'ERRORREDIRECT',
+        value
+    }
+}
+
 export const success = (value) => {
     return {
         type: 'SUCCESS',

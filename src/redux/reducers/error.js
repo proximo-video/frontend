@@ -1,4 +1,4 @@
-export const errorReducer = (state ="", action) => {
+export const errorReducer = (state = "", action) => {
     switch (action.type) {
         case 'ERROR':
             return action.value
@@ -8,7 +8,7 @@ export const errorReducer = (state ="", action) => {
     return state;
 }
 
-export const successReducer = (state ="", action) => {
+export const successReducer = (state = "", action) => {
     switch (action.type) {
         case 'SUCCESS':
             return action.value
@@ -18,10 +18,22 @@ export const successReducer = (state ="", action) => {
     return state;
 }
 
-export const warningReducer = (state ="", action) => {
+export const warningReducer = (state = "", action) => {
     switch (action.type) {
         case 'WARNING':
             return action.value
+        default:
+            break;
+    }
+    return state;
+}
+
+export const errorRedirectReducer = (state = false, action) => {
+    switch (action.type) {
+        case 'ERRORREDIRECT':
+            return action.value;
+        case 'RESET':
+            return false;
         default:
             break;
     }
