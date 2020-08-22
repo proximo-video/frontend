@@ -1,5 +1,5 @@
 import { localStream } from './getUserMedia';
-import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference, meetingEnded, addEntryRequest, acceptEntry, rejectEntry, remoteConnected, remoteDisconnected, roomFull, error, reset } from '../redux/actions'
+import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference, meetingEnded, addEntryRequest, acceptEntry, rejectEntry, remoteConnected, remoteDisconnected, roomFull, error, reset, success } from '../redux/actions'
 import { httpRequestError } from '../ErrorsList';
 let socket;
 let iceServers;
@@ -303,6 +303,7 @@ const socketAndWebRTC = (params, store) => {
                     channels.delete(toUser);
                     existingTracks.delete(toUser);
                     store.dispatch(deleteRemoteStream());
+                    store.dispatch(success("User left"))
                     store.dispatch(deleteRemoteUser(toUser))
                     console.log(event);
                     break;
@@ -316,7 +317,8 @@ const socketAndWebRTC = (params, store) => {
                     channels.delete(toUser);
                     existingTracks.delete(toUser);
                     store.dispatch(deleteRemoteStream());
-                    store.dispatch(deleteRemoteUser(toUser))
+                    store.dispatch(success("User left"))
+                    store.dispatch(deleteRemoteUser(toUser));
                     break;
                 default:
                     break;
@@ -400,6 +402,7 @@ const socketAndWebRTC = (params, store) => {
                 case 'LEAVEROOM':
                     if (connections.has(data.from)) {
                         console.log("yes", data.from)
+                        store.dispatch(success("User left"))
                         connections.get(data.from).close();
                         connections.delete(data.from);
                         remoteStreams.delete(data.from);
@@ -414,6 +417,7 @@ const socketAndWebRTC = (params, store) => {
                         store.dispatch(meetingEnded());
                     }
                     else if (connections.has(data.message.id)) {
+                        store.dispatch(success("User left"))
                         connections.get(data.message.id).close();
                         connections.delete(data.message.id);
                         remoteStreams.delete(data.message.id);
@@ -424,6 +428,7 @@ const socketAndWebRTC = (params, store) => {
                     }
                     break;
                 case 'ENDMEETING':
+                    store.dispatch(success("Room Owner Ended the Meeting"))
                     store.dispatch(meetingEnded());
                     break;
                 default:

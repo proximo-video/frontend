@@ -5,7 +5,7 @@ import ReactGA from 'react-ga';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, setId, setName, setRooms, logout, error } from './redux/actions';
 import './App.css';
-import { Error } from './views/Room/Notification/NotificationManager';
+import { Error, Success, Warning } from './views/Room/Notification/NotificationManager';
 import { httpRequestError } from './ErrorsList';
 
 
@@ -36,6 +36,8 @@ const trackPage = page => {
 const App = (props) => {
   const [fetched, setFetched] = useState(false);
   const errorDetails = useSelector(state => state.error);
+  const successDetails = useSelector(state => state.success);
+  const warningDetails = useSelector(state => state.warning);
   const dispatch = useDispatch();
   let location = useLocation();
   useEffect(() => {
@@ -73,12 +75,28 @@ const App = (props) => {
   }, [location]);
 
   useEffect(() => {
-    if (Object.keys(errorDetails).length !== 0) {
-      console.log(errorDetails)
-      Error("generic-error-notification", errorDetails, 'Error', 5000)
+    if (errorDetails) {
+      Error("generic-error-notification", errorDetails, 'Error', 8000)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errorDetails]);
+
+  useEffect(() => {
+    if (successDetails) {
+      Success("generic-error-notification", successDetails, '', 5000)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [successDetails]);
+
+  useEffect(() => {
+    if (warningDetails) {
+      Warning("generic-error-notification", warningDetails, 'Warning', 8000)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [warningDetails]);
+
+
+
   return (fetched ?
     <>
       <Switch>
