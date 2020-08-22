@@ -33,7 +33,7 @@ export function AboutUsInner(props: AboutUsInnerProps) {
                                 <a href={"https://www.linkedin.com/in/ristri/"}><FaLinkedinIn /></a>
                                 <a href={"https://github.com/ristri"}><GoMarkGithub /></a>
                                 {/*eslint-disable-next-line*/}
-                                <a href={"#"}><FaGlobeAmericas /></a>
+                                <a href='https://tripathi.dev'><FaGlobeAmericas /></a>
                             </div>
                         </div>
                     </div>
