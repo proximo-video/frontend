@@ -43,13 +43,13 @@ export function AboutUsInner(props: AboutUsInnerProps) {
                         </div>
                         <div className={"about-me"} style={{visibility: "hidden"}}>
                             <h6>Rishabh Tripathi</h6>
-                            <p>Hi! I am Rishabh. I am a developer, traveler, and an adventure seeker. I hope
-                                you loved this website. Feel free to check out my profiles :).</p>
+                            <p>Hi! I am Rishabh. I am a developer, dreamer, and an adventure seeker. I love
+                               working on challenging problems. Let's be friends.</p>
                             <div className={"urls"}>
                                 <a href={"https://www.linkedin.com/in/ristri/"}><FaLinkedinIn/></a>
                                 <a href={"https://github.com/ristri"}><GoMarkGithub/></a>
                                 {/*eslint-disable-next-line*/}
-                                <a href={"#"}><FaGlobeAmericas/></a>
+                                <a href='https://tripathi.dev'><FaGlobeAmericas/></a>
                             </div>
                         </div>
                     </div>
