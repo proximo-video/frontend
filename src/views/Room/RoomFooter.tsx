@@ -54,7 +54,7 @@ ControlButton.defaultProps = {
     legend: ''
 }
 
-const browser = detect();
+export const browser = detect();
 
 export const checkIsMobile = () => {
     return browser.os === 'Android OS' || browser.os === 'iOS' || browser.os === 'BlackBerry OS' || browser.os === 'Windows Mobile';

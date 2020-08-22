@@ -5,6 +5,7 @@ import ButtonGroup from '../elements/ButtonGroup';
 import Button from '../elements/Button';
 import GoogleLogo from '../../assets/images/google.png';
 import GithubLogo from '../../assets/images/github.png';
+import {isSafari} from "../../views/Home";
 // import {Error} from "../../views/Room/Notification/NotificationManager";
 // import { UseHistory } from "react-router-dom";
 
@@ -130,8 +131,10 @@ const Hero = ({
           </div>
           <div className="hero-figure reveal-from-bottom illustration-element-01" data-reveal-value="20px" data-reveal-delay="800">
             <picture>
-              <source srcSet="/images/roomview.webp" />
-              <img alt="roomview" src="/images/roomview.jpg" />
+              {
+                isSafari() ? <img alt="roomview" src="/images/roomview.jpg" />
+                    : <source srcSet="/images/roomview.webp" />
+              }
             </picture>
           </div>
         </div>
