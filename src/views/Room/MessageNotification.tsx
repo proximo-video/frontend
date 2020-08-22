@@ -20,11 +20,12 @@ export default function MessageNotification(props: MessageNotificationProps) {
             if (lastMessage.id !== id && lastMessage.message !== '') {
                 const displayName = users.hasOwnProperty(lastMessage.id)?users[lastMessage.id].displayName:'User Left';
                 const messageComponent = <MessageComponent id={lastMessage.id} message={lastMessage.message} displayName={displayName} messageBodyClassName={"side-message-body"} className={"side-message-component"}/>;
-                Message("messages", messageComponent, '', 5000, props.handleMessageNotificationClick);
+                Message("generic-error-notification", messageComponent, '', 5000, props.handleMessageNotificationClick);
             }
         }
         // eslint-disable-next-line
     }, [messages]);
 
-    return <NotificationContainer id={"messages"} position={'bottom-left'}/>;
+    // return <NotificationContainer id={"messages"} position={'bottom-left'}/>;
+    return null;
 }
