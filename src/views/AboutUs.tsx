@@ -30,10 +30,10 @@ export function AboutUsInner(props: AboutUsInnerProps) {
                             <p>Hi! I am Rishabh. I am a developer, dreamer, and an adventure seeker. I love
                                working on challenging problems. Let's be friends.</p>
                             <div className={"urls"}>
-                                <a href={"https://www.linkedin.com/in/ristri/"}><FaLinkedinIn /></a>
-                                <a href={"https://github.com/ristri"}><GoMarkGithub /></a>
+                                <a target={"_blank"} href={"https://www.linkedin.com/in/ristri/"}><FaLinkedinIn /></a>
+                                <a target={"_blank"} href={"https://github.com/ristri"}><GoMarkGithub /></a>
                                 {/*eslint-disable-next-line*/}
-                                <a href='https://tripathi.dev'><FaGlobeAmericas /></a>
+                                <a target={"_blank"} href='https://tripathi.dev'><FaGlobeAmericas /></a>
                             </div>
                         </div>
                     </div>
@@ -46,10 +46,10 @@ export function AboutUsInner(props: AboutUsInnerProps) {
                             <p> Hi! I am Rishabh. I am a developer, dreamer, and an adventure seeker. I love
                                working on challenging problems. Let's be friends.</p>
                             <div className={"urls"}>
-                                <a href={"https://www.linkedin.com/in/ristri/"}><FaLinkedinIn /></a>
-                                <a href={"https://github.com/ristri"}><GoMarkGithub /></a>
+                                <a target={"_blank"} href={"https://www.linkedin.com/in/ristri/"}><FaLinkedinIn /></a>
+                                <a target={"_blank"} href={"https://github.com/ristri"}><GoMarkGithub /></a>
                                 {/*eslint-disable-next-line*/}
-                                <a href='https://tripathi.dev'><FaGlobeAmericas /></a>
+                                <a target={"_blank"} href='https://tripathi.dev'><FaGlobeAmericas /></a>
                             </div>
                         </div>
                     </div>
@@ -64,10 +64,10 @@ export function AboutUsInner(props: AboutUsInnerProps) {
                             <p>Hi! I am Aniket. I am a developer, traveler, and an adventure seeker. I hope
                                 you loved this website. Feel free to check out my profiles :).</p>
                             <div className={"urls"}>
-                                <a href={"https://www.linkedin.com/in/aniketsingh0104/"}><FaLinkedinIn /></a>
-                                <a href={"https://github.com/aniketsingh0104"}><GoMarkGithub /></a>
+                                <a target={"_blank"} href={"https://www.linkedin.com/in/aniketsingh0104/"}><FaLinkedinIn /></a>
+                                <a target={"_blank"} href={"https://github.com/aniketsingh0104"}><GoMarkGithub /></a>
                                 {/*eslint-disable-next-line*/}
-                                <a href={"#"}><FaGlobeAmericas /></a>
+                                <a target={"_blank"} href={"#"}><FaGlobeAmericas /></a>
                             </div>
                         </div>
                     </div>
@@ -80,10 +80,10 @@ export function AboutUsInner(props: AboutUsInnerProps) {
                             <p>Hi! I am Aniket. I am a developer, traveler, and an adventure seeker. I hope
                                 you loved this website. Feel free to check out my profiles :).</p>
                             <div className={"urls"}>
-                                <a href={"https://www.linkedin.com/in/aniketsingh0104/"}><FaLinkedinIn /></a>
-                                <a href={"https://github.com/aniketsingh0104"}><GoMarkGithub /></a>
+                                <a target={"_blank"} href={"https://www.linkedin.com/in/aniketsingh0104/"}><FaLinkedinIn /></a>
+                                <a target={"_blank"} href={"https://github.com/aniketsingh0104"}><GoMarkGithub /></a>
                                 {/*eslint-disable-next-line*/}
-                                <a href={"#"}><FaGlobeAmericas /></a>
+                                <a target={"_blank"} href={"#"}><FaGlobeAmericas /></a>
                             </div>
                         </div>
                     </div>
