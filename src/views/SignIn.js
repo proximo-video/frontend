@@ -18,7 +18,7 @@ const SignIn = (props) => {
                 <div className={"card-content"}>
                     <h1 className={"login-h1"}>Login</h1>
                     <h6 className={"login-h6"}>To experience some awesomeness.</h6>
-                    <p className={"login-medium"}>We are committed to deliver quality experience.</p>
+                    <p className={"login-medium"}>Create your own rooms with personalized URL</p>
                     <ButtonGroup>
                         <Button tag="a" color="dark" wideMobile href={"https://accounts.google.com/o/oauth2/v2/auth?client_id=150668394436-t4sh915ilqum6t7a8lf0i4p42ilkg0s3.apps.googleusercontent.com&redirect_uri=https://proximo.pw/welcome&response_type=code&scope=profile&state=" + state}>
                             Login with <img className="logo" src={GoogleLogo} alt="Google Login"></img>
