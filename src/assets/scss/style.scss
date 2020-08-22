@@ -568,12 +568,12 @@
 			justify-content: center;
 			align-items: center;
 			//position: relative;
-			//@media only screen and (max-width: 850px) {
-			//	//flex-direction: column;
-			//	margin-top: 20px;
-			//	width: 90%;
-			//	top: 20%;
-			//}
+			@media only screen and (max-width: 850px) {
+				width: 90%;
+				//flex-direction: column;
+				//margin-top: 20px;
+				//top: 20%;
+			}
 			.input-label {
 				position: absolute;
 				top: -5%;
@@ -1149,5 +1149,18 @@
 	align-items: center;
 	justify-content: center;
 	width: 100%;
+}
+
+.room-delete-modal {
+	&.modal-content {
+		padding-top: 0 !important;
+		padding-bottom: 40px;
+		.delete-modal-buttons {
+			display: flex;
+			.button {
+				margin: 0 !important;
+			}
+		}
+	}
 }
 
