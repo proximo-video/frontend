@@ -1,5 +1,5 @@
 import { localStream } from './getUserMedia';
-import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference, meetingEnded, addEntryRequest, acceptEntry, rejectEntry, remoteConnected, remoteDisconnected, roomFull, error, reset, success } from '../redux/actions'
+import { addRemoteStream, deleteRemoteStream, addRemoteUser, deleteRemoteUser, addMessage, setRemoteMediaPreference, meetingEnded, addEntryRequest, acceptEntry, rejectEntry, remoteConnected, remoteDisconnected, roomFull, error, reset, success, warning } from '../redux/actions'
 import { httpRequestError } from '../ErrorsList';
 let socket;
 let iceServers;
@@ -167,6 +167,7 @@ const socketAndWebRTC = (params, store) => {
 
         socket.onclose = function (event) {
             store.dispatch(reset());
+            store.dispatch(warning("Connection Interrupted. Trying to reconnect ..."))
             store.dispatch(deleteRemoteStream());
             connectToWebSocket();
             console.log('WebSocket Connection Closed. Please Reload the page.');
