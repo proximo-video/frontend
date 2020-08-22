@@ -34,7 +34,7 @@ const webRTCMiddleware = store => next => action => {
             }
             break;
         case 'RESET':
-            socket = null;
+            socket = undefined;
             channels.forEach(channel => {
                 channel.close()
             });
@@ -88,7 +88,9 @@ const socketAndWebRTC = (params, store) => {
     const connectToWebSocket = () => {
         const webSocketConnection = "wss://api.proximo.pw/ws";
         // const webSocketConnection = "ws://localhost:8080/ws";
+        console.log('socket',socket)
         if (!socket) {
+            console.log("Creating socket")
             try {
                 socket = new WebSocket(webSocketConnection);
             } catch (e) {
@@ -165,6 +167,7 @@ const socketAndWebRTC = (params, store) => {
 
         socket.onclose = function (event) {
             store.dispatch(reset());
+            store.dispatch(deleteRemoteStream());
             connectToWebSocket();
             console.log('WebSocket Connection Closed. Please Reload the page.');
             // document.getElementById("sendOfferButton").disabled = true;
