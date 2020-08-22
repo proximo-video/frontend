@@ -20,7 +20,7 @@ const Home = (props) => {
       {/*<div className={"home-about-us"}>*/}
       {/*  <AboutUsInner/>*/}
       {/*</div>*/}
-      <AboutUsInner/>
+      <AboutUsInner className={"home-about-us"} heading={"Meet the creators"} headingType={2}/>
     </>
   );
 }

@@ -230,12 +230,14 @@ function User(props) {
 
     const showDeleteModal = () => {
         return (
-            <Modal show={showModal} handleClose={closeDeleteModal}>
+            <Modal className={"room-delete-modal"} show={showModal} handleClose={closeDeleteModal}>
                 <div>
                     <h3>Warning</h3>
                     <p>{deleteRoomId} will be deleted</p>
-                    <Button color="danger" onClick={deleteRoom} className="m-8">Delete</Button>
-                    <Button onClick={closeDeleteModal} className="m-8">Cancel</Button>
+                    <div className={"delete-modal-buttons"}>
+                        <Button color="danger" onClick={deleteRoom} className="m-8">Delete</Button>
+                        <Button onClick={closeDeleteModal} className="m-8">Cancel</Button>
+                    </div>
                 </div>
             </Modal>
         )

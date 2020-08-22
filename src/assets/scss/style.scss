@@ -536,7 +536,7 @@
 		}
 		.join-area-button {
 			position: absolute;
-			top: 100%;
+			top: 110%;
 			border-radius: 5px;
 			min-height: 55px;
 			text-align: center;
@@ -563,16 +563,16 @@
 			min-height: 55px;
 			display: flex;
 			position: absolute;
-			top: 100%;
+			top: 110%;
 			width: 80%;
 			justify-content: center;
 			align-items: center;
 			//position: relative;
 			@media only screen and (max-width: 850px) {
-				//flex-direction: column;
-				margin-top: 20px;
 				width: 90%;
-				top: 20%;
+				//flex-direction: column;
+				//margin-top: 20px;
+				//top: 20%;
 			}
 			.input-label {
 				position: absolute;
@@ -1003,32 +1003,6 @@
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	height: 130vh;
-	@media only screen and (max-width: 365px) {
-		height: 145vh;
-	}
-	/* Portrait and Landscape */
-	@media only screen
-		and (min-width: 375px)
-		and (max-width: 812px)
-		and (-webkit-min-device-pixel-ratio: 3) {
-			height: 100vh;
-	}
-
-	@media only screen
-	and (min-width: 414px)
-	and (max-width: 736px)
-	and (-webkit-min-device-pixel-ratio: 3) {
-		height: 120vh;
-	}
-
-	@media only screen
-	and (min-width: 768px)
-	and (max-width: 1100px)
-	and (-webkit-min-device-pixel-ratio: 2) {
-		height: 90vh;
-	}
-
 	margin-top: 5%;
 }
 .about-us-h1 {
@@ -1056,6 +1030,7 @@
 	align-items: center;
 	height: 100%;
 	width: 100%;
+	margin-bottom: 20%;
 }
 .about-us-single {
 	height: 80%;
@@ -1095,7 +1070,7 @@
 	transform: translate3d(0, 20%, 0);
 	transition: all 1s ease-out;
 	z-index: 0;
-	position: absolute;
+	position: relative;
 	border-radius: 40px;
 	top: 0;
 	padding: 5% 0;
@@ -1159,6 +1134,35 @@
 			box-shadow: 0 9px 16px 10px rgba(0,0,0,.8);
 			transform: translate3d(0, 10%, 0);
 			transition: all 1s ease-out;
+		}
+	}
+}
+
+.home-about-us {
+	.about-us-h1 {
+		margin: 25px 0 0 0 !important;
+	}
+}
+
+.home-page-join-form {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+}
+
+.room-delete-modal {
+	.modal-content {
+		padding-top: 0 !important;
+		padding-bottom: 40px;
+		.delete-modal-buttons {
+			display: flex;
+			.button {
+				margin: 0 !important;
+				&:first-child {
+					margin-right: 10px !important;
+				}
+			}
 		}
 	}
 }
