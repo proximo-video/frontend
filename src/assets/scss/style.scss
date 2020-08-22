@@ -1159,6 +1159,9 @@
 			display: flex;
 			.button {
 				margin: 0 !important;
+				&:first-child {
+					margin-right: 10px !important;
+				}
 			}
 		}
 	}
