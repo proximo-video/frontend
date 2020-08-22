@@ -1,11 +1,24 @@
 import React from "react";
 import {FaGlobeAmericas, FaLinkedinIn, GoMarkGithub} from "react-icons/all";
 
+export interface AboutUsInnerProps {
+    className: string;
+    heading: string;
+    headingType: 1 | 2 | 3;
+}
 
-export function AboutUsInner() {
+export function AboutUsInner(props: AboutUsInnerProps) {
     return (
-        <>
-            <h1 className={"about-us-h1"}>Team</h1>
+        <div className={props.className}>
+            {
+                props.headingType === 1 ?
+                <h1 className={"about-us-h1"}>{props.heading}</h1> :
+                    (
+                        props.headingType === 2 ?
+                            <h2 className={"about-us-h1"}>{props.heading}</h2> :
+                            <h3 className={"about-us-h1"}>{props.heading}</h3>
+                    )
+            }
             <div className={"about-us-details"}>
                 <div id={"about-us-single1"} className={"about-us-single"}>
                     <div className={"avatar-and-details"}>
@@ -76,8 +89,14 @@ export function AboutUsInner() {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
+}
+
+AboutUsInner.defaultProps = {
+    className: '',
+    heading: 'Team',
+    headingType: 1,
 }
 
 
