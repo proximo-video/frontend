@@ -102,7 +102,7 @@ function RoomFooter(props: RoomFooterProps) {
                 setIsPinned(!isPinnedRef.current);
                 isPinnedRef.current = !isPinnedRef.current;
             }
-            else if(!isPinnedRef.current) {
+            else if(!isPinnedRef.current && buttonsElement) {
                 if (buttonsElement.current.style.bottom === '-65px')
                     buttonsElement.current.style.bottom = '25px';
                 timeFadeout();
