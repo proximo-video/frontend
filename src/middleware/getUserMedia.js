@@ -89,28 +89,29 @@ const getUserMediaMiddleware = store => next => async (action) => {
             const id = store.getState().id;
             const userScreen = store.getState().userScreen
             if (action.value) {
+                let screenStream;
                 try {
-                    const screenStream = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
-                    if (!screenStream)
-                        return;
-                    localStream.getVideoTracks().forEach(track => {
-                        track.stop();
-                        localStream.removeTrack(track);
-                    });
-                    screenStream.getVideoTracks()[0].addEventListener('ended', () => store.dispatch(getUserScreen(false)));
-                    localStream.addTrack(screenStream.getVideoTracks()[0])
-                    existingTracks.forEach((value, key) => {
-                        for (const rtpSender of value) {
-                            if (rtpSender.track.kind === 'video') {
-                                if (screenStream.getVideoTracks().length) {
-                                    rtpSender.replaceTrack(screenStream.getVideoTracks()[0])
-                                }
-                            }
-                        }
-                    })
+                    screenStream = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
                 } catch (e) {
                     store.dispatch(error(mediaStreamError))
                 }
+                if (!screenStream)
+                    return;
+                localStream.getVideoTracks().forEach(track => {
+                    track.stop();
+                    localStream.removeTrack(track);
+                });
+                screenStream.getVideoTracks()[0].addEventListener('ended', () => store.dispatch(getUserScreen(false)));
+                localStream.addTrack(screenStream.getVideoTracks()[0])
+                existingTracks.forEach((value, key) => {
+                    for (const rtpSender of value) {
+                        if (rtpSender.track.kind === 'video') {
+                            if (screenStream.getVideoTracks().length) {
+                                rtpSender.replaceTrack(screenStream.getVideoTracks()[0])
+                            }
+                        }
+                    }
+                })
             }
             else {
                 localStream.getTracks().forEach(track => {
