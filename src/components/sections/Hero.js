@@ -94,6 +94,7 @@ const Hero = ({
                 Host or join high-performing video meetings, go live, collaborate with your friends, and share anywhere.
                 </p>
               <div className="reveal-from-bottom login-buttons" data-reveal-delay="600">
+                <p style={{textAlign: 'center'}}>Login to create your own meeting room.</p>
                 <ButtonGroup>
                   <Button tag="a" color="dark" wideMobile href="https://accounts.google.com/o/oauth2/v2/auth?client_id=150668394436-t4sh915ilqum6t7a8lf0i4p42ilkg0s3.apps.googleusercontent.com&redirect_uri=https://proximo.pw/welcome&response_type=code&scope=profile">
                     Login with <img className="logo" src={GoogleLogo} alt="Google Login"></img>
