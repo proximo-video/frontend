@@ -6,7 +6,7 @@ import FeaturesSplit from '../components/sections/FeaturesSplit';
 // import Testimonial from '../components/sections/Testimonial';
 import {useSelector} from 'react-redux';
 import {AboutUsInner} from "./AboutUs";
-import {browser} from "./Room/RoomFooter";
+// import {browser} from "./Room/RoomFooter";
 // import Button from "../components/elements/Button";
 // import Modal from "../components/elements/Modal";
 
