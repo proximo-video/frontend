@@ -67,7 +67,7 @@ export function AboutUsInner(props: AboutUsInnerProps) {
                                 <a rel="noopener noreferrer" target={"_blank"} href={"https://www.linkedin.com/in/aniketsingh0104/"}><FaLinkedinIn /></a>
                                 <a rel="noopener noreferrer" target={"_blank"} href={"https://github.com/aniketsingh0104"}><GoMarkGithub /></a>
                                 {/*eslint-disable-next-line*/}
-                                <a rel="noopener noreferrer" target={"_blank"} href={"#"}><FaGlobeAmericas /></a>
+                                <a rel="noopener noreferrer" target={"_blank"} href={"https://aniketsingh.netlify.app/"}><FaGlobeAmericas /></a>
                             </div>
                         </div>
                     </div>
@@ -83,7 +83,7 @@ export function AboutUsInner(props: AboutUsInnerProps) {
                                 <a rel="noopener noreferrer" target={"_blank"} href={"https://www.linkedin.com/in/aniketsingh0104/"}><FaLinkedinIn /></a>
                                 <a rel="noopener noreferrer" target={"_blank"} href={"https://github.com/aniketsingh0104"}><GoMarkGithub /></a>
                                 {/*eslint-disable-next-line*/}
-                                <a rel="noopener noreferrer" target={"_blank"} href={"#"}><FaGlobeAmericas /></a>
+                                <a rel="noopener noreferrer" target={"_blank"} href={"https://aniketsingh.netlify.app/"}><FaGlobeAmericas /></a>
                             </div>
                         </div>
                     </div>
