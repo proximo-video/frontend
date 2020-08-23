@@ -14,7 +14,7 @@ import LayoutDefault from './layouts/LayoutDefault';
 import WhiteLayout from './layouts/WhiteLayout';
 
 // Views 
-import Home, {isSafari} from './views/Home';
+import Home from './views/Home';
 import Welcome from './views/Welcome';
 import User from './views/User';
 import Room from './views/Room';
@@ -26,6 +26,7 @@ import { Route } from "react-router-dom";
 import { ErrorNotFound } from "./views/ErrorNotFound";
 import AboutUs from "./views/AboutUs";
 import Modal from "./components/elements/Modal";
+import {browser} from "./views/Room/RoomFooter";
 // Initialize Google Analytics
 ReactGA.initialize(process.env.REACT_APP_GA_CODE);
 
@@ -33,6 +34,14 @@ const trackPage = page => {
   ReactGA.set({ page });
   ReactGA.pageview(page);
 };
+
+export function isSafari() {
+  return browser.name === 'safari';
+}
+
+export function isIos() {
+  return browser.os === 'iOS';
+}
 
 const App = (props) => {
   const [fetched, setFetched] = useState(false);
@@ -97,20 +106,29 @@ const App = (props) => {
     if (warningDetails) {
       Warning("generic-error-notification", warningDetails, 'Warning', 8000)
     }
-    if (isSafari())
+    if (isSafari() || isIos())
       setShowModal(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [warningDetails]);
 
   const ShowBrowserWarningModal = () => {
+    let warning;
+    if (isIos()) {
+      warning = "We are currently in Beta, as of now our support on mobile devices is currently limited to Android. We cannot guarantee to delivery same experience in iOS. " +
+          "We recommend you to try accessing this website on Android, or on your PC.";
+    }
+    else {
+      warning = "We recommend you to use Firefox or Chrome for better user experience. We cannot guarantee to delivery same experience in other browsers."
+    }
     return (
         <Modal show={showModal} handleClose={closeDeleteModal}>
           <div>
             <h3>Warning</h3>
             <h5>Hi! Pardon the interruption.</h5>
             <h6>
-              We recommend you to use <b>Firefox</b> or <b>Chrome</b> for better user experience.
-              We cannot guarantee to delivery same experience in other browsers.
+              {warning}
+              {/*We recommend you to use <b>Firefox</b> or <b>Chrome</b> for better user experience.*/}
+              {/*We cannot guarantee to delivery same experience in other browsers.*/}
             </h6>
           </div>
         </Modal>
