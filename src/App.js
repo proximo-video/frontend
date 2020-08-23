@@ -143,7 +143,7 @@ const App = (props) => {
         <AppRoute exact path="/user" component={User} layout={LayoutDefault} />
         <AppRoute exact path="/privacy-policy" component={PrivacyPolicy} layout={LayoutDefault} />
         <AppRoute exact path="/login" component={SignIn} layout={LayoutDefault} />
-        <Route exact path="/error" render={() => <LayoutDefault><ErrorNotFound ErrorCode={404} ErrorMessage={"Page Not Found"} /></LayoutDefault>} />
+        <Route exact path="/error" render={() => <LayoutDefault><ErrorNotFound ErrorCode={404} ErrorMessage={"Room Not Found. If you are trying to join a room then please login and create one then join."} /></LayoutDefault>} />
         <Route exact path="/roomerror" render={() => <LayoutDefault><ErrorNotFound /></LayoutDefault>} />
         <AppRoute exact path="/about-us" component={AboutUs} layout={LayoutDefault} />
         <AppRoute path="/:roomId" component={Room} layout={WhiteLayout} />
