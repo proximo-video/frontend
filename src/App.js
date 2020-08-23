@@ -25,6 +25,8 @@ import NotificationContainer from "./views/Room/Notification/NotificationContain
 import { Route } from "react-router-dom";
 import { ErrorNotFound } from "./views/ErrorNotFound";
 import AboutUs from "./views/AboutUs";
+import Modal from "./components/elements/Modal";
+import {browser} from "./views/Room/RoomFooter";
 // Initialize Google Analytics
 ReactGA.initialize(process.env.REACT_APP_GA_CODE);
 
@@ -33,13 +35,25 @@ const trackPage = page => {
   ReactGA.pageview(page);
 };
 
+export function isSafari() {
+  return browser.name === 'safari';
+}
+
+export function isIos() {
+  return browser.os === 'iOS';
+}
+
 const App = (props) => {
   const [fetched, setFetched] = useState(false);
   const errorDetails = useSelector(state => state.error);
   const successDetails = useSelector(state => state.success);
   const warningDetails = useSelector(state => state.warning);
   const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
   let location = useLocation();
+  const closeDeleteModal = () => {
+    setShowModal(false);
+  }
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -92,10 +106,34 @@ const App = (props) => {
     if (warningDetails) {
       Warning("generic-error-notification", warningDetails, 'Warning', 8000)
     }
+    if (isSafari() || isIos())
+      setShowModal(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [warningDetails]);
 
-
+  const ShowBrowserWarningModal = () => {
+    let warning;
+    if (isIos()) {
+      warning = "We are currently in Beta, as of now our support on mobile devices is currently limited to Android. We cannot guarantee to deliver the same experience in iOS. " +
+          "We recommend you to try accessing this website on Android, or on your PC.";
+    }
+    else {
+      warning = "We recommend you to use Firefox or Chrome for better user experience. We cannot guarantee to deliver the same experience in other browsers."
+    }
+    return (
+        <Modal show={showModal} handleClose={closeDeleteModal}>
+          <div>
+            <h3>Warning</h3>
+            <h5>Hi! Pardon the interruption.</h5>
+            <h6>
+              {warning}
+              {/*We recommend you to use <b>Firefox</b> or <b>Chrome</b> for better user experience.*/}
+              {/*We cannot guarantee to delivery same experience in other browsers.*/}
+            </h6>
+          </div>
+        </Modal>
+    );
+  }
 
   return (fetched ?
     <>
@@ -110,6 +148,7 @@ const App = (props) => {
         <AppRoute exact path="/about-us" component={AboutUs} layout={LayoutDefault} />
         <AppRoute path="/:roomId" component={Room} layout={WhiteLayout} />
       </Switch>
+      {ShowBrowserWarningModal()}
       <NotificationContainer id={"generic-error-notification"} containerClassName={"generic-error-notification"} />
     </>
     : <>
