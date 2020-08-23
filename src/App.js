@@ -114,11 +114,11 @@ const App = (props) => {
   const ShowBrowserWarningModal = () => {
     let warning;
     if (isIos()) {
-      warning = "We are currently in Beta, as of now our support on mobile devices is currently limited to Android. We cannot guarantee to delivery same experience in iOS. " +
+      warning = "We are currently in Beta, as of now our support on mobile devices is currently limited to Android. We cannot guarantee to deliver the same experience in iOS. " +
           "We recommend you to try accessing this website on Android, or on your PC.";
     }
     else {
-      warning = "We recommend you to use Firefox or Chrome for better user experience. We cannot guarantee to delivery same experience in other browsers."
+      warning = "We recommend you to use Firefox or Chrome for better user experience. We cannot guarantee to deliver the same experience in other browsers."
     }
     return (
         <Modal show={showModal} handleClose={closeDeleteModal}>
