@@ -21,7 +21,7 @@ export function ErrorNotFound(props: ErrorNotFoundProps) {
             if (!errorMessage)
                 props.history.push('/error');
             setErrorMessage(errorDetails);
-            console.log(errorDetails)
+            // console.log(errorDetails)
         }
         // eslint-disable-next-line
     }, []);

@@ -48,7 +48,7 @@ const RoomEntry = (props) => {
                     text: 'Join meeting:',
                     url: linkToShare,
                 })
-                    .then(() => console.log('Successful share'))
+                    .then()
                     .catch((error) => console.log('Error sharing', error));
             } else
                 await copyLinkToClipBoard();

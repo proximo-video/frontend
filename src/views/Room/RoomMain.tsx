@@ -101,7 +101,7 @@ export default function RoomMain(props: RoomMainProps) {
     const handleRemoveUser = (userId: string) => {
         dispatch(sendMessage({id:id,action:'REMOVEUSER',message:{id:userId}}))
         dispatch(removeUser(userId));
-        console.log("User removed:", userId);
+        // console.log("User removed:", userId);
     }
 
 

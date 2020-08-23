@@ -46,7 +46,7 @@ const App = (props) => {
         let response = await fetch('https://api.proximo.pw/getUser', { credentials: 'include' });
         if (response.ok) {
           let data = await response.json()
-          console.log(data);
+          // console.log(data);
           dispatch(login())
           dispatch(setId(data.id));
           dispatch(setName(data.name));

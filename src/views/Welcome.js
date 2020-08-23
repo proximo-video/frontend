@@ -10,7 +10,7 @@ function Welcome(props) {
         const code = urlParams.get("code");
         const state = urlParams.get("state");
         const redirectURL = new URLSearchParams(state).get("path");
-        console.log(redirectURL)
+        // console.log(redirectURL)
         const noRedirect = ['/', '/privacy-policy', '/about-us']
         const scope = urlParams.get("scope")
         let service;

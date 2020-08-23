@@ -90,9 +90,9 @@ const socketAndWebRTC = (params, store) => {
     const connectToWebSocket = () => {
         const webSocketConnection = "wss://api.proximo.pw/ws";
         // const webSocketConnection = "ws://localhost:8080/ws";
-        console.log('socket', socket)
+        // console.log('socket', socket)
         if (!socket && !socketError) {
-            console.log("Creating socket")
+            // console.log("Creating socket")
             try {
                 socket = new WebSocket(webSocketConnection);
             } catch (e) {
@@ -101,7 +101,7 @@ const socketAndWebRTC = (params, store) => {
             }
         }
         socket.onopen = function (event) {
-            console.log('WebSocket Connection Open.');
+            // console.log('WebSocket Connection Open.');
             socket.send(JSON.stringify(
                 {
                     action: params.action,
@@ -117,7 +117,7 @@ const socketAndWebRTC = (params, store) => {
             let jsonData = JSON.parse(event.data);
             switch (jsonData.action) {
                 case "READY":
-                    console.log("Got Ready")
+                    // console.log("Got Ready")
                     let toUser = jsonData.from;
                     if (connections.has(toUser))
                         connections.get(toUser).close();
@@ -149,7 +149,7 @@ const socketAndWebRTC = (params, store) => {
 
             switch (jsonData.type) {
                 case 'CANDIDATE':
-                    console.log('Received The Candidate');
+                    // console.log('Received The Candidate');
                     handleCandidate(jsonData.data, jsonData.id, jsonData.from);
                     break;
                 case 'OFFER':
@@ -167,7 +167,7 @@ const socketAndWebRTC = (params, store) => {
 
         socket.onerror = function (event) {
             console.error(event);
-            console.log('WebSocket Connection Error. Make sure web socket URL is correct and web socket server is up and running at - ' + webSocketConnection);
+            // console.log('WebSocket Connection Error. Make sure web socket URL is correct and web socket server is up and running at - ' + webSocketConnection);
         };
 
         socket.onclose = function (event) {
@@ -178,7 +178,7 @@ const socketAndWebRTC = (params, store) => {
             if (!socketError) {
                 connectToWebSocket();
             }
-            console.log('WebSocket Connection Closed. Please Reload the page.');
+            // console.log('WebSocket Connection Closed. Please Reload the page.');
             // document.getElementById("sendOfferButton").disabled = true;
             // document.getElementById("answerButton").disabled = true;
         };
@@ -281,7 +281,7 @@ const socketAndWebRTC = (params, store) => {
         // }
 
         connection.onnegotiationneeded = function () {
-            console.log('Negotiation');
+            // console.log('Negotiation');
         }
 
         // This event logs messages and handles button state according to WebRTC connection state changes
@@ -289,11 +289,11 @@ const socketAndWebRTC = (params, store) => {
             switch (connection.connectionState) {
                 case "connected":
                     store.dispatch(remoteConnected(toUser));
-                    console.log("Web RTC Peer Connection Connected.");
+                    // console.log("Web RTC Peer Connection Connected.");
                     break;
                 case "disconnected":
                     store.dispatch(remoteDisconnected(toUser));
-                    console.log("Web RTC Peer Connection Disconnected. Please reload the page to reconnect.");
+                    // console.log("Web RTC Peer Connection Disconnected. Please reload the page to reconnect.");
                     // deleteStream(toUser);
                     // try {
                     //     connection.restartIce();
@@ -303,7 +303,7 @@ const socketAndWebRTC = (params, store) => {
                     // }
                     break;
                 case "failed":
-                    console.log("Web RTC Peer Connection Failed. Please reload the page to reconnect.");
+                    // console.log("Web RTC Peer Connection Failed. Please reload the page to reconnect.");
                     if (remoteStreams.delete(toUser)) {
                         remoteStreams = new Map(remoteStreams);
                     }
@@ -314,10 +314,10 @@ const socketAndWebRTC = (params, store) => {
                     store.dispatch(deleteRemoteStream());
                     store.dispatch(success("User left"))
                     store.dispatch(deleteRemoteUser(toUser))
-                    console.log(event);
+                    // console.log(event);
                     break;
                 case "closed":
-                    console.log("Web RTC Peer Connection Closed. Please reload the page to reconnect.");
+                    // console.log("Web RTC Peer Connection Closed. Please reload the page to reconnect.");
                     if (remoteStreams.delete(toUser)) {
                         remoteStreams = new Map(remoteStreams);
                     }
@@ -334,7 +334,7 @@ const socketAndWebRTC = (params, store) => {
             }
         }
         connections.set(toUser, connection);
-        console.log("Web RTC Peer Connection Created.");
+        // console.log("Web RTC Peer Connection Created.");
         // document.getElementById("sendOfferButton").disabled = false;
     }
 
@@ -344,7 +344,7 @@ const socketAndWebRTC = (params, store) => {
         // }
 
         // Create Data channel
-        console.log(connections.get(toUser))
+        // console.log(connections.get(toUser))
         let channel = connections.get(toUser).createDataChannel('channel', {});
         setChannelEvents(channel);
         channels.set(toUser, channel);
@@ -373,7 +373,7 @@ const socketAndWebRTC = (params, store) => {
                     try {
                         existingTracks.get(toUser).forEach((rtcRtPSender) => {
                             const parameters = rtcRtPSender.getParameters();
-                            console.log(parameters)
+                            // console.log(parameters)
                             parameters.encodings[0].maxBitrate = 200000;
                             rtcRtPSender.setParameters(parameters);
                         }
@@ -384,7 +384,7 @@ const socketAndWebRTC = (params, store) => {
                 }
             },
             error => {
-                console.log('Error when creating an offer.');
+                // console.log('Error when creating an offer.');
                 console.error(error);
             }
         );
@@ -400,7 +400,7 @@ const socketAndWebRTC = (params, store) => {
         }
         channel.onmessage = function (event) {
             var data = JSON.parse(event.data);
-            console.log('from', data.from)
+            // console.log('from', data.from)
             switch (data.action) {
                 case 'MESSAGE':
                     store.dispatch(addMessage({ id: data.from, message: data.message }));
@@ -410,7 +410,7 @@ const socketAndWebRTC = (params, store) => {
                     break;
                 case 'LEAVEROOM':
                     if (connections.has(data.from)) {
-                        console.log("yes", data.from)
+                        // console.log("yes", data.from)
                         store.dispatch(success("User left"))
                         connections.get(data.from).close();
                         connections.delete(data.from);
@@ -447,12 +447,12 @@ const socketAndWebRTC = (params, store) => {
         };
 
         channel.onerror = function (event) {
-            console.log('DataChannel Error.');
+            // console.log('DataChannel Error.');
             console.error(event.errorDetail)
         };
 
         channel.onclose = function (event) {
-            console.log('DataChannel Closed.');
+            // console.log('DataChannel Closed.');
         };
     }
 
@@ -477,13 +477,13 @@ const socketAndWebRTC = (params, store) => {
             createRTCPeerConnection(toUser);
         // Avoid accepting the Offer if this is a message created by the current peer
         if (params.id !== id) {
-            console.log("Recieved The Offer.");
+            // console.log("Recieved The Offer.");
             connections.get(toUser).setRemoteDescription(new RTCSessionDescription(offer));
             if (existingTracks.has(toUser)) {
                 try {
                     existingTracks.get(toUser).forEach((rtcRtPSender) => {
                         const parameters = rtcRtPSender.getParameters();
-                        console.log(parameters)
+                        // console.log(parameters)
                         parameters.encodings[0].maxBitrate = 200000;
                         rtcRtPSender.setParameters(parameters);
                     }
@@ -509,7 +509,7 @@ const socketAndWebRTC = (params, store) => {
     const handleAnswer = (answer, id, toUser) => {
         // Avoid accepting the Answer if this is a message created by the current peer
         if (params.id !== id) {
-            console.log("Recieved The Answer");
+            // console.log("Recieved The Answer");
             connections.get(toUser).setRemoteDescription(new RTCSessionDescription(answer));
         }
     }
@@ -519,7 +519,7 @@ const socketAndWebRTC = (params, store) => {
         // Create Answer
         connections.get(toUser).createAnswer().then(
             answer => {
-                console.log('Sent The Answer.');
+                // console.log('Sent The Answer.');
 
                 // Set Answer for negotiation
                 connections.get(toUser).setLocalDescription(answer);
@@ -538,7 +538,7 @@ const socketAndWebRTC = (params, store) => {
                 ));
             },
             error => {
-                console.log('Error when creating an answer.');
+                // console.log('Error when creating an answer.');
                 console.error(error);
             }
         );

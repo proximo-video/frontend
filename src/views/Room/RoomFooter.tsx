@@ -79,7 +79,7 @@ function RoomFooter(props: RoomFooterProps) {
     const userScreen = useSelector((state: RootStateOrAny) => state.userScreen);
     const history = useHistory();
     let timer: NodeJS.Timeout = null;
-    const timeVisible = 5000;
+    const timeVisible = 3000;
     const buttonsElement = useRef(null);
     const pinButton = useRef(null);
     const dispatch = useDispatch();
@@ -135,7 +135,7 @@ function RoomFooter(props: RoomFooterProps) {
     const onEndMeetingButtonClick = () => {
         dispatch(sendMessage({id:id,action:'ENDMEETING'}));
         dispatch(meetingEnded());
-        console.log("End meeting:");
+        // console.log("End meeting:");
     }
 
     const onToggleCamButtonClick = () => {
@@ -161,7 +161,7 @@ function RoomFooter(props: RoomFooterProps) {
                 text: 'Join meeting:',
                 url: linkToShare,
             })
-                .then(() => console.log('Successful share'))
+                .then()
                 .catch((error) => console.log('Error sharing', error));
         } else
             await copyLinkToClipBoard();
