@@ -122,7 +122,7 @@ const FeaturesSplit = ({
                   Meetings on the go
                   </h3>
                 <p className="m-0">
-                  Join from any mobile device on Android or iOS without installing anything.
+                  Join from any mobile device on Android without installing anything.
                   </p>
               </div>
               <div className={
