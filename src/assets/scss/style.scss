@@ -1063,12 +1063,19 @@
 }
 .avatar-container {
 	margin: 0 auto;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
 }
 .avatar-and-details {
 	z-index: 1;
 	position: absolute;
 	top: 0;
 	padding: 5% 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 .avatar-background {
 	background: transparent;
