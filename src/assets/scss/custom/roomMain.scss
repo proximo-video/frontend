@@ -199,6 +199,21 @@ body {
       }
     }
   }
+  &.mobile {
+    .dropdown {
+      right: 0;
+      top: 0;
+      .dropdown-content {
+        right: 0;
+        top: 0;
+        .option {
+          span {
+            font-size: small;
+          }
+        }
+      }
+    }
+  }
 
   //.reconnect-message {
   //  font-size: medium;

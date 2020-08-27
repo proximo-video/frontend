@@ -181,7 +181,7 @@ export default function RoomMain(props: RoomMainProps) {
         webRTCMedia.push(
             <div
                 key={key}
-                className={(props.fullscreenVideoId === key ? 'fullscreen' : (props.maxVideoId === '' ? "video" : (props.maxVideoId === key ? "expanded" : "webrtc-media-cell")))}
+                className={(props.fullscreenVideoId === key ? 'fullscreen' : (props.maxVideoId === '' ? "video" : (props.maxVideoId === key ? "expanded" : ("webrtc-media-cell" + (size.width <= 700 ? " mobile" : "")))))}
                 style={(props.fullscreenVideoId !== '' ? (props.fullscreenVideoId === key ? {} : {display: "none"}) : (props.maxVideoId !== '' ? (props.maxVideoId === key ? maxMediaStyle : normalMediaStyle) : {}))}
                 onDoubleClick={() => props.onFullscreenClick(key)}
             >
