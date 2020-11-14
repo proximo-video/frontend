@@ -34,12 +34,12 @@
 <script>
   window.onload = function () {
     google.accounts.id.initialize({
-      client_id: '150668394436-t4sh915ilqum6t7a8lf0i4p42ilkg0s3.apps.googleusercontent.com'
+      client_id: '150668394436-t4sh915ilqum6t7a8lf0i4p42ilkg0s3.apps.googleusercontent.com',
     });
     google.accounts.id.prompt((notification) => {
       if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
         // try next provider if OneTap is not displayed or skipped
-        console.log("Not Visible")
+        console.log("Not Visible", notification)
       }
     });
   }
