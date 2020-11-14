@@ -137,15 +137,6 @@ const App = (props) => {
     );
   }
 
-  const oneTapLogin = () => {
-    return (
-      <div id="g_id_onload"
-        data-client_id="150668394436-t4sh915ilqum6t7a8lf0i4p42ilkg0s3.apps.googleusercontent.com"
-        data-login_uri="https://proximo.pw/welcome">
-      </div>
-    )
-  }
-
   return (fetched ?
     <>
       <Suspense fallback={<></>}>
@@ -161,7 +152,6 @@ const App = (props) => {
           <AppRoute path="/:roomId" component={Room} layout={WhiteLayout} />
         </Switch>
       </Suspense>
-      {oneTapLogin()}
       {ShowBrowserWarningModal()}
       <NotificationContainer id={"generic-error-notification"} containerClassName={"generic-error-notification"} />
     </>
