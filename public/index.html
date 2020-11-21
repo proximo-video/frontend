@@ -14,6 +14,7 @@
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -29,36 +30,5 @@
 <body class="has-animations">
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root" class="body-wrap"></div>
-  <div id="g_id_onload"
-       data-client_id="150668394436-t4sh915ilqum6t7a8lf0i4p42ilkg0s3.apps.googleusercontent.com"
-       data-login_uri="https://proximo.pw/welcome"
-       data-moment_callback="continueWithNextIdp"
-  >
-  </div>
 </body>
-<script src="https://accounts.google.com/gsi/client" async defer></script>
-<script>
-  function continueWithNextIdp(notification) {
-    console.log("Before if cond:", notification);
-    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-      // try Next provider if One Tap is not displayed or skipped
-      console.log("Not displayed:", notification);
-    }
-  }
-</script>
-<!--<script>-->
-<!--  window.onload = function () {-->
-<!--    google.accounts.id.initialize({-->
-<!--      client_id: '150668394436-t4sh915ilqum6t7a8lf0i4p42ilkg0s3.apps.googleusercontent.com',-->
-<!--    });-->
-<!--    google.accounts.id.prompt((notification) => {-->
-<!--      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {-->
-<!--        // try next provider if OneTap is not displayed or skipped-->
-<!--        console.log("Not Visible", notification)-->
-<!--      }-->
-<!--    });-->
-<!--  }-->
-<!--</script>-->
-
-
 </html>

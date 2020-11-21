@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login, setId, setName, setRooms, logout, error } from './redux/actions';
 import './App.css';
 import { Error, Success, Warning } from './views/Room/Notification/NotificationManager';
-import { httpRequestError } from './ErrorsList';
+import {httpRequestError} from './ErrorsList';
 
 
 import Preloader from './utils/Preloader';
@@ -19,6 +19,9 @@ import { browser } from "./views/Room/RoomFooter";
 // Layouts
 import LayoutDefault from './layouts/LayoutDefault';
 import WhiteLayout from './layouts/WhiteLayout';
+import {Login} from "./utils/Login";
+import {oneTapLogin} from "./utils/Constants/stringConst";
+import {History} from "./utils/History";
 
 // Views 
 
@@ -45,11 +48,22 @@ export function isIos() {
   return browser.os === 'iOS';
 }
 
+const OneTapLogin = (dispatch) => {
+  window.google.accounts.id.initialize({
+    client_id: '150668394436-t4sh915ilqum6t7a8lf0i4p42ilkg0s3.apps.googleusercontent.com',
+    callback: (response) => {
+      Login(oneTapLogin, History, dispatch, response);
+    }
+  });
+  window.google.accounts.id.prompt();
+}
+
 const App = (props) => {
   const [ fetched, setFetched ] = useState(false);
   const errorDetails = useSelector(state => state.error);
   const successDetails = useSelector(state => state.success);
   const warningDetails = useSelector(state => state.warning);
+  const isLoggedIn = useSelector(state => state.isLogged);
   const dispatch = useDispatch();
   const [ showModal, setShowModal ] = useState(false);
   let location = useLocation();
@@ -152,6 +166,8 @@ const App = (props) => {
           <AppRoute path="/:roomId" component={Room} layout={WhiteLayout} />
         </Switch>
       </Suspense>
+      {!isLoggedIn && OneTapLogin(dispatch)}
+      {/*{}*/}
       {ShowBrowserWarningModal()}
       <NotificationContainer id={"generic-error-notification"} containerClassName={"generic-error-notification"} />
     </>
