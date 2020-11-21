@@ -9,7 +9,7 @@ export const Login = (authType, history, dispatch, googleResponse = '') => {
     const urlParams = new URLSearchParams(queryString);
     const code = urlParams.get("code");
     const state = urlParams.get("state");
-    const redirectURL = new URLSearchParams(state).get("path");
+    const redirectURL = (authType === oneTapLogin?window.location.pathname:new URLSearchParams(state).get("path"));
     const fetchUrl = authType === oneTapLogin?authURLs.oneTapLogin:authURLs.oAuth2Login;
     const scope = urlParams.get("scope");
     let service;
